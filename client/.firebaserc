@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "small-moodle": {
+      "hosting": {
+        "SmallMoodle": [
+          "small-moodle"
+        ]
+      }
+    }
+  }
+}

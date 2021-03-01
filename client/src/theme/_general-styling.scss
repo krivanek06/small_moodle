@@ -306,10 +306,11 @@ ion-skeleton-text {
   }
 }
 
+
 // class to add for each popover
 .custom-popover .popover-wrapper {
   background: #fefefe;
-  --width: 550px;
+  --width: 600px;
 
   @media (max-width: #{$st-var-sm-split}) {
     --width: 92%;

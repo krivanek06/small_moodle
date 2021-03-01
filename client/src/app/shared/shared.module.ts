@@ -5,6 +5,7 @@ import {ObjNgForPipe} from "./pipes/obj-ng-for.pipe";
 import {DefaultImgDirective} from "./directives/default-img.directive";
 import {GenericListComponent} from "./components/generic/generic-list/generic-list.component";
 import {GenericCardComponent} from "./components/generic/generic-card/generic-card.component";
+import {HeaderComponent} from "./components/header/header.component";
 
 
 
@@ -14,7 +15,8 @@ import {GenericCardComponent} from "./components/generic/generic-card/generic-ca
     ObjNgForPipe,
     DefaultImgDirective,
     GenericListComponent,
-    GenericCardComponent
+    GenericCardComponent,
+    HeaderComponent
   ],
   imports: [
     SharedModulesModule
@@ -25,7 +27,8 @@ import {GenericCardComponent} from "./components/generic/generic-card/generic-ca
     ObjNgForPipe,
     DefaultImgDirective,
     GenericListComponent,
-    GenericCardComponent
+    GenericCardComponent,
+    HeaderComponent
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar class="ion-padding-horizontal">
+    <ion-text class="st-fit-content st-title">menu</ion-text>
+
+
+    <ion-buttons slot="end">
+      <!-- user is logged in -->
+      <ng-container *ngIf="user$ | async as user; else logInSection">
+        <ion-chip [disabled]="true" class="ion-margin-end">
+          <ion-avatar>
+            <ion-img [src]="user.photoURL"></ion-img>
+          </ion-avatar>
+          <ion-label>{{ user.displayName }}</ion-label>
+        </ion-chip>
+
+
+        <ion-button color="danger" fill="clear" shape="round" (click)="logout()">
+          Logout
+        </ion-button>
+      </ng-container>
+
+      <!-- user not logged in -->
+      <ng-template #logInSection>
+        <ion-button color="primary" fill="clear" shape="round" (click)="authenticate()">
+          LogIn
+        </ion-button>
+      </ng-template>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

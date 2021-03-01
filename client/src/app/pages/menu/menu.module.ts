@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {MenuPage} from './menu.page';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../shared/shared.module";
+import {AuthenticationFeatureModule} from "../../features/authentication-feature/authentication-feature.module";
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    AuthenticationFeatureModule,
     RouterModule.forChild(routes),
   ],
   declarations: [MenuPage]

@@ -1,0 +1,15 @@
+@import "variables";
+
+:host {
+  ion-chip {
+    width: 175px;
+    padding-left: 10px;
+    opacity: 1;
+    ion-avatar {
+      margin-right: 16px;
+    }
+    @media (max-width: #{$st-var-sm-split}) {
+      display: none;
+    }
+  }
+}

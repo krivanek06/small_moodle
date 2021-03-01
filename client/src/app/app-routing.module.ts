@@ -1,8 +1,29 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
+import {AppComponent} from "./app.component";
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: AppComponent,
+    children: [
+      {
+        path: 'menu',
+        loadChildren: () => import('./pages/menu/menu.module').then(m => m.MenuPageModule)
+      },
+      {
+        path: '',
+        redirectTo: 'menu',
+        pathMatch: 'full'
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: 'menu'
+  }
+];
 
 @NgModule({
   imports: [
@@ -14,4 +35,5 @@ const routes: Routes = [];
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

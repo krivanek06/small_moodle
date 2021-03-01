@@ -1,0 +1,10 @@
+@import "src/theme/variables";
+
+:host {
+  .left-padding-small-screen {
+    padding-left: 16px !important;
+    @media (max-width: #{$st-var-sm-split}) {
+      padding-left: 8px !important;
+    }
+  }
+}

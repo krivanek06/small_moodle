@@ -1,35 +1,31 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterModule} from "@angular/router";
-import {AngularFirestoreModule} from "@angular/fire/firestore";
-import {AngularFireAuthModule} from "@angular/fire/auth";
-import {AngularFireStorageModule} from "@angular/fire/storage";
-import {IonicModule} from "@ionic/angular";
+import {SharedModulesModule} from "./shared-modules.module";
+import {RelativeTimePipe} from "./pipes/relatimeTime.pipe";
+import {ObjNgForPipe} from "./pipes/obj-ng-for.pipe";
+import {DefaultImgDirective} from "./directives/default-img.directive";
+import {GenericListComponent} from "./components/generic/generic-list/generic-list.component";
+import {GenericCardComponent} from "./components/generic/generic-card/generic-card.component";
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    RelativeTimePipe,
+    ObjNgForPipe,
+    DefaultImgDirective,
+    GenericListComponent,
+    GenericCardComponent
+  ],
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
-    IonicModule
+    SharedModulesModule
   ],
   exports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
-    IonicModule
+    SharedModulesModule,
+    RelativeTimePipe,
+    ObjNgForPipe,
+    DefaultImgDirective,
+    GenericListComponent,
+    GenericCardComponent
   ]
 })
 export class SharedModule { }

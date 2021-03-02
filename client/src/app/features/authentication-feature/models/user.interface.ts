@@ -1,3 +1,5 @@
+import {Course, CoursePublic} from "../../course-feature/model/courses.interface";
+
 export interface StUserMain {
   uid: string;
   displayName: string;
@@ -5,18 +7,12 @@ export interface StUserMain {
   accountCreatedDate: string;
 }
 
-export interface StUserCourseMember extends StUserMain {
-  received_grade: String;
-  received_points: any[];
-  /**
-   * received_points - testName, testId, points
-   */
-}
+
 
 export interface StUserPublic extends StUserMain {
-  last_login: string;
-  courses_taken: any[];
-  courses_manage: any[];
+  lastLogin: string;
+  coursesTaken: CoursePublic[] | Course[];  // CoursePublic is when student is searching else it is Course
+  coursesManage: CoursePublic[] | Course[];
   isOnline: boolean;
 }
 
@@ -25,9 +21,9 @@ export interface StUserPrivate {
   locale: string;
   roles: string[];
   logs: string[];
-  active_test: any;
-  courses_invitation_send: string[];
-  courses_invitation_received: string[];
+  activeTest: any;
+  coursesInvitationSend: string[];
+  coursesInvitationReceived: string[];
 }
 
 export interface StUserLogin {

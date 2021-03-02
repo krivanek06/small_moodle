@@ -3,7 +3,7 @@ import {AuthFeatureService} from "./auth-feature.service";
 import {StUser} from "../models/user.interface";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {USER_ROLES} from "../models/user.const";
+import {USER_ROLES} from "../models/user.enums";
 
 @Injectable({
   providedIn: 'root'

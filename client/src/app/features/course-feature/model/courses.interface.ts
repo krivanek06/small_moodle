@@ -1,4 +1,5 @@
-import {StUserCourseMember, StUserMain} from "../../authentication-feature/models/user.interface";
+import {StUserMain} from "../../authentication-feature/models/user.interface";
+import {CourseTestPublic, CourseTestReceivedPoints} from "../../course-test-feature/model/course-test.model";
 
 export interface CoursePublic {
   Id: string;
@@ -11,17 +12,42 @@ export interface CoursePublic {
   durationFrom: string;
   durationTo: string;
   numberOfParticipants: number;
+  numberOfTests: number;
+  courseGradingResults?: CourseGradingResults;
+  gradings: CourseGrading[];
 }
 
-export interface CoursePrivate extends CoursePublic {
-  upcoming_tests: any[]
+export interface CoursePrivate {
+  upcomingTests: CourseTestPublic[];
+  numberOfUncorrectedTests: number;
   markers: StUserMain[];
   participants: StUserCourseMember[];
-  gradings: CourseGrading[];
+}
+
+export interface Course extends CoursePublic, CoursePrivate {
+
 }
 
 export interface CourseGrading {
   mark: string;
-  points_min?: number;
-  points_max?: number;
+  pointsMin?: number;
+  pointsMax?: number;
 }
+
+// statistics at the end of course - how many students got what grade
+export interface CourseGradingResults extends CourseGrading{
+  numberOfParticipants: number;
+}
+
+export interface StUserCourseMember extends StUserMain {
+  receivedGrade?: String;
+  receivedPoints: CourseTestReceivedPoints[];
+  gradeChangeHistory?: CourseGradeChangeHistory[];
+}
+
+export interface CourseGradeChangeHistory {
+  changedBy: StUserMain;
+  gradeBefore: string;
+  gradeAfter: string;
+}
+

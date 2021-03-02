@@ -21,6 +21,7 @@ export const buildUserPublic = (uid:string, displayName: string, photoURL: strin
     photoURL: photoURL || 'gs://small-moodle.appspot.com/default/default_user.png',
     last_login: getCurrentIOSDate(),
     accountCreatedDate: getCurrentIOSDate(),
+    isOnline: true,
     courses_manage: [],
     courses_taken: []
   };

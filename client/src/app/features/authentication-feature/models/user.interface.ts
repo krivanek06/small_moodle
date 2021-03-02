@@ -1,11 +1,23 @@
-export interface StUserPublic {
+export interface StUserMain {
   uid: string;
   displayName: string;
   photoURL?: string;
   accountCreatedDate: string;
+}
+
+export interface StUserCourseMember extends StUserMain {
+  received_grade: String;
+  received_points: any[];
+  /**
+   * received_points - testName, testId, points
+   */
+}
+
+export interface StUserPublic extends StUserMain {
   last_login: string;
   courses_taken: any[];
   courses_manage: any[];
+  isOnline: boolean;
 }
 
 export interface StUserPrivate {

@@ -1,9 +1,0 @@
-<!-- header info -->
-<ion-list-header [ngClass]="{'ion-margin-top': applyMarginTop}">
-    <ion-icon *ngIf="iconTitle" class="st-icon-title" [name]="iconTitle"></ion-icon>
-
-    <ion-label class="st-flex-col" [ngClass]="{'c-margin-top': !additionalInfo && !iconTitle}">
-        <ion-text *ngIf="title" class="st-font-size-18 st-font-0"> {{ title}}</ion-text>
-        <ion-text *ngIf="additionalInfo" class="st-font-size-13 st-font-4"> {{ additionalInfo}}</ion-text>
-    </ion-label>
-</ion-list-header>

@@ -1,0 +1,72 @@
+<ion-grid class="ion-padding-horizontal">
+  <ion-row>
+    <ion-col size="12" size-lg="9">
+      <ion-row>
+
+        <!-- courses manage -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Manage courses'">
+            <app-courses-manage></app-courses-manage>
+          </app-generic-card>
+        </ion-col>
+
+        <!-- courses active -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Active courses'">
+            <app-courses-active></app-courses-active>
+          </app-generic-card>
+        </ion-col>
+
+        <!-- courses completed -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Completed courses'">
+            <app-courses-completed></app-courses-completed>
+          </app-generic-card>
+        </ion-col>
+
+        <!-- user logs -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Latest activities'">
+            <app-account-logs></app-account-logs>
+          </app-generic-card>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+
+    <!-- sidebar info -->
+    <ion-col size="3" class="ion-hide-lg-down">
+      <ion-row>
+        <!-- course invitations -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Course invitations'">
+            <app-course-invitations></app-course-invitations>
+          </app-generic-card>
+        </ion-col>
+
+        <!-- test calendar -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Upcoming tests'">
+            <app-custom-calendar></app-custom-calendar>
+          </app-generic-card>
+        </ion-col>
+
+
+        <!-- course categories -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Course categories'">
+            <app-course-categories
+              (categoryClickedEmitter)="searchCoursesByCategory($event)">
+            </app-course-categories>
+          </app-generic-card>
+        </ion-col>
+
+        <!-- search users -->
+        <ion-col size="12">
+          <app-generic-card [title]="'Search users'">
+            <app-account-search></app-account-search>
+          </app-generic-card>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>

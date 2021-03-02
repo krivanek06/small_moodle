@@ -82,6 +82,20 @@ ion-spinner {
   font-size: 18px !important;
 }
 
+.st-dot {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.st-b-red {
+  background-color: red;
+}
+.st-b-green {
+  background-color: green;
+}
+
+
 // ---------------------------------------------
 // - DATA LABELS
 .st-data-label-parent {

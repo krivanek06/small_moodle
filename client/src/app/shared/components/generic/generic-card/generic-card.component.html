@@ -1,12 +1,19 @@
-<!-- body -->
-<ion-card [class]="additionalClasses" [ngClass]="{'left-padding-small-screen': applyLeftPadding}">
-    <ion-card-header *ngIf="!removeHeader">
-        <ion-card-subtitle>
-            {{ subtitle }}
-        </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-        <ng-content></ng-content>
-        <div *ngIf="showNoData" style="margin-top: 16px">No data has been found...</div>
-    </ion-card-content>
+<!-- header -->
+<ion-list-header *ngIf="title">
+  <ion-label class="st-flex-col st-font-size-18 st-font-4 c-margin-top">
+    {{ title}}
+  </ion-label>
+</ion-list-header>
+
+<!-- card -->
+<ion-card [class]="additionalClasses" class="left-padding-small-screen">
+  <ion-card-header *ngIf="cardSubtitle">
+    <ion-card-subtitle>
+      {{ cardSubtitle }}
+    </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ng-content></ng-content>
+    <div *ngIf="showNoData" style="margin-top: 16px">No data has been found...</div>
+  </ion-card-content>
 </ion-card>

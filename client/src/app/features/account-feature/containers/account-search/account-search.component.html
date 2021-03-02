@@ -1,0 +1,41 @@
+<form [formGroup]="form">
+  <ion-item>
+    <ion-label position="floating">Search user by name</ion-label>
+    <ion-input placeholder="Enter name" formControlName="displayName"></ion-input>
+  </ion-item>
+</form>
+
+<!-- searched name's results -->
+<ion-list>
+
+  <ion-item button>
+    <ion-label>
+      Meno Prizvisko
+    </ion-label>
+    <ion-label class="st-display-flex-center">
+      <div class="st-dot st-b-green"></div>
+      <ion-text>Online</ion-text>
+    </ion-label>
+  </ion-item>
+
+  <ion-item button>
+    <ion-label>
+      Meno Prizvisko
+    </ion-label>
+    <ion-label class="st-display-flex-center">
+      <div class="st-dot st-b-green"></div>
+      <ion-text>Online</ion-text>
+    </ion-label>
+  </ion-item>
+
+  <ion-item button>
+    <ion-label>
+      Meno Prizvisko
+    </ion-label>
+    <ion-label class="st-display-flex-center">
+      <div class="st-dot st-b-red"></div>
+      <ion-text>Offline</ion-text>
+    </ion-label>
+  </ion-item>
+
+</ion-list>

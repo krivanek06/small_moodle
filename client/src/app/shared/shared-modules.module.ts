@@ -7,6 +7,7 @@ import {AngularFireAuthModule} from "@angular/fire/auth";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {IonicModule} from "@ionic/angular";
 import {HttpClientModule} from "@angular/common/http";
+import {NgCalendarModule} from "ionic2-calendar";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    IonicModule
+    IonicModule,
+    NgCalendarModule
   ],
   exports: [
     CommonModule,
@@ -30,7 +32,8 @@ import {HttpClientModule} from "@angular/common/http";
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    IonicModule
+    IonicModule,
+    NgCalendarModule
   ]
 })
 export class SharedModulesModule {

@@ -1,0 +1,66 @@
+<ion-text class="st-title">
+  Search course
+</ion-text>
+
+<!-- select form -->
+<form [formGroup]="form" style="margin-bottom: 40px">
+  <ion-item-group class="st-flex ion-justify-content-between">
+    <ion-item class="st-width-100 ion-margin-horizontal">
+      <ion-label position="floating">Course category</ion-label>
+      <ion-select [value]="defaultCategory" interface="popover" formControlName="category">
+        <ion-select-option value="FMFI">FMFI</ion-select-option>
+        <ion-select-option value="INF">INF</ion-select-option>
+        <ion-select-option value="CHEM">CHEM</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="st-width-100 ion-margin-horizontal">
+      <ion-label position="floating">Course year</ion-label>
+      <ion-select value="2021" interface="popover" formControlName="year">
+        <ion-select-option value="2021">2021</ion-select-option>
+        <ion-select-option value="2020">2020</ion-select-option>
+        <ion-select-option value="2019">2019</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-item-group>
+</form>
+
+<!-- course result -->
+<ion-text class="st-title">
+  Courses {{ year.value }} {{ category.value }}
+</ion-text>
+
+<ion-list>
+  <ion-item class="st-font-1-bold">
+    <ion-label>ID</ion-label>
+    <ion-label>Name</ion-label>
+    <ion-label>Teacher</ion-label>
+    <ion-label>Students</ion-label>
+    <ion-label>Success rate</ion-label>
+    <ion-label>Tests</ion-label>
+    <ion-label>Course start</ion-label>
+    <ion-label>Course end</ion-label>
+  </ion-item>
+
+  <ion-item [button]="allowCourseSelect" (click)="selectCourse()">
+    <ion-label>123.</ion-label>
+    <ion-label>Course1</ion-label>
+    <ion-label>Meno Priezvisko</ion-label>
+    <ion-label>23</ion-label>
+    <ion-label>65%</ion-label>
+    <ion-label>3</ion-label>
+    <ion-label>20.01.2021</ion-label>
+    <ion-label>12.05.2021</ion-label>
+  </ion-item>
+
+  <ion-item [button]="allowCourseSelect" (click)="selectCourse()">
+    <ion-label>123.</ion-label>
+    <ion-label>Course1</ion-label>
+    <ion-label>Meno Priezvisko</ion-label>
+    <ion-label>23</ion-label>
+    <ion-label>65%</ion-label>
+    <ion-label>5</ion-label>
+    <ion-label>20.01.2021</ion-label>
+    <ion-label>12.05.2021</ion-label>
+  </ion-item>
+</ion-list>

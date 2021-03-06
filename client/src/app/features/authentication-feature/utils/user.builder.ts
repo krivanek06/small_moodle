@@ -23,8 +23,7 @@ export const buildUserPublic = (uid:string, displayName: string, photoURL: strin
     lastLogin: getCurrentIOSDate(),
     accountCreatedDate: getCurrentIOSDate(),
     isOnline: true,
-    coursesManage: [],
-    coursesTaken: []
+    courses: []
   };
   return userPublic
 };

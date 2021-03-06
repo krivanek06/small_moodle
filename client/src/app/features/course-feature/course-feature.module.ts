@@ -8,7 +8,14 @@ import {CourseCategoriesComponent} from "./components/course-categories/course-c
 import {CourseSearchComponent} from "./containers/course-search/course-search.component";
 import {CourseSearchModalComponent} from "./entry-points/course-search-modal/course-search-modal.component";
 import { CourseNearestTestPipe } from './pipes/course-nearest-test.pipe';
-
+import { CourseReceivedPointsPipe } from './pipes/course-received-points.pipe';
+import { CourseStudentPositionPipe } from './pipes/course-student-position.pipe';
+import { CourseStudentGradePipe } from './pipes/course-student-grade.pipe';
+import {CourseInviteMemberPopOverComponent} from "./entry-points/course-invite-member-pop-over/course-invite-member-pop-over.component";
+import { CourseFilterManagedPipe } from './pipes/course-filter-managed.pipe';
+import { CourseFilterActivePipe } from './pipes/course-filter-active.pipe';
+import { CourseFilterCompletedPipe } from './pipes/course-filter-completed.pipe';
+import { CourseFilterManagedOpenPipe } from './pipes/course-filter-managed-open.pipe';
 
 
 @NgModule({
@@ -20,7 +27,15 @@ import { CourseNearestTestPipe } from './pipes/course-nearest-test.pipe';
     CourseCategoriesComponent,
     CourseSearchComponent,
     CourseSearchModalComponent,
-    CourseNearestTestPipe
+    CourseNearestTestPipe,
+    CourseReceivedPointsPipe,
+    CourseStudentPositionPipe,
+    CourseStudentGradePipe,
+    CourseInviteMemberPopOverComponent,
+    CourseFilterManagedPipe,
+    CourseFilterActivePipe,
+    CourseFilterCompletedPipe,
+    CourseFilterManagedOpenPipe
   ],
   exports: [
     CoursesActiveComponent,
@@ -29,7 +44,15 @@ import { CourseNearestTestPipe } from './pipes/course-nearest-test.pipe';
     CourseInvitationsComponent,
     CourseCategoriesComponent,
     CourseSearchComponent,
-    CourseSearchModalComponent
+    CourseSearchModalComponent,
+    CourseNearestTestPipe,
+    CourseReceivedPointsPipe,
+    CourseStudentPositionPipe,
+    CourseStudentGradePipe,
+    CourseInviteMemberPopOverComponent,
+    CourseFilterManagedPipe,
+    CourseFilterCompletedPipe,
+    CourseFilterActivePipe
   ],
   imports: [
     SharedModule

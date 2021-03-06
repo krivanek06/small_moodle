@@ -1,8 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Course, CoursePublic} from "../../model/courses.interface";
-import {coursePublic} from "../../model/course.random.data";
-import {StUserCourse} from "../../../authentication-feature/models/user.interface";
-import {markerCourse, teacherCourse} from "../../../authentication-feature/models/user.random.data";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {StUserCourse, StUserMain} from "../../../authentication-feature/models/user.interface";
+import {CoursePublic} from "../../model/courses.interface";
 
 @Component({
   selector: 'app-courses-manage',
@@ -10,18 +8,20 @@ import {markerCourse, teacherCourse} from "../../../authentication-feature/model
   styleUrls: ['./courses-manage.component.scss'],
 })
 export class CoursesManageComponent implements OnInit {
+  @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
+
   @Input() userCourses: StUserCourse[] = [];
   @Input() enableClick = true;
+  @Input() authenticatedUser: StUserMain;
 
-  constructor() { }
-
-  ngOnInit() {
-    this.userCourses = [
-      {...teacherCourse},
-      {...teacherCourse},
-      {...markerCourse},
-      {...markerCourse}
-    ]
+  constructor() {
   }
 
+  ngOnInit() {
+  }
+
+  clickedCourse(userCourse: StUserCourse) {
+    console.log('emitting')
+    this.clickedCourseEmitter.emit(userCourse.course)
+  }
 }

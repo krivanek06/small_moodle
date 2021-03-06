@@ -5,6 +5,12 @@ import {CourseInvitation} from "../../../../features/course-feature/model/course
 import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
 import {StUserPublic} from "../../../../features/authentication-feature/models/user.interface";
 import {AccountProfileModalComponent} from "../../../../features/account-feature/entry-components/account-profile-modal/account-profile-modal.component";
+import {
+  markerCourse,
+  studentCourse, stUser,
+  teacherCourse, userMain
+} from "../../../../features/authentication-feature/models/user.random.data";
+import {course} from "../../../../features/course-feature/model/course.random.data";
 
 @Component({
   selector: 'app-dashboard-authenticated',
@@ -12,6 +18,10 @@ import {AccountProfileModalComponent} from "../../../../features/account-feature
   styleUrls: ['./dashboard-authenticated.component.scss'],
 })
 export class DashboardAuthenticatedComponent implements OnInit {
+
+  // TODO delete later
+  userMain = userMain;
+  user = stUser;
 
   constructor(private modalController: ModalController) {
   }

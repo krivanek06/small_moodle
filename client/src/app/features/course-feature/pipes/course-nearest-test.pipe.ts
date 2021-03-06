@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {CourseTestPublic} from "../../course-test-feature/model/course-test.model";
 
 @Pipe({
@@ -6,9 +6,13 @@ import {CourseTestPublic} from "../../course-test-feature/model/course-test.mode
 })
 export class CourseNearestTestPipe implements PipeTransform {
 
-  transform(tests: CourseTestPublic[]): unknown {
+  /**
+   * Return date in string format for nearest test from tests
+   * @param tests - confirmed test in group
+   */
+  transform(tests: CourseTestPublic[]): string {
     console.log(tests)
-    return null;
+    return 'TODO implement';
   }
 
 }

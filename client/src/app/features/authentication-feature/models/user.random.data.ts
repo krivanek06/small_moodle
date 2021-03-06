@@ -1,10 +1,12 @@
-import {StUserCourse, StUserMain, StUserPrivate, StUserPublic} from "./user.interface";
+import {StUser, StUserCourse, StUserMain, StUserPrivate, StUserPublic} from "./user.interface";
 import {CourseGrading, CourseGradingResults} from "../../course-feature/model/courses.interface";
 import {COURSE_ROLES_ENUM} from "../../course-feature/model/course.enum";
+import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
+import {course} from "../../course-feature/model/course.random.data";
 
 export const userMain: StUserMain = {
   uid: '123465',
-  accountCreatedDate: '20.02.1998 15:22',
+  accountCreatedDate: getCurrentIOSDate(),
   displayName: 'Meno Priezvisko',
   photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
 }
@@ -78,8 +80,8 @@ export const studentCourse: StUserCourse = {
     creatorName: userMain,
     shortName: 'TIA',
     longName: 'Tvorba Internatovych aplikacii',
-    durationFrom: '14.02.2021',
-    durationTo: '15.05.2021',
+    durationFrom: getCurrentIOSDate(),
+    durationTo: getCurrentIOSDate(),
     numberOfParticipants: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
@@ -97,8 +99,8 @@ export const teacherCourse: StUserCourse = {
     creatorName: userMain,
     shortName: 'TIA3',
     longName: 'Tvorba Internatovych aplikacii',
-    durationFrom: '14.02.2021',
-    durationTo: '15.05.2021',
+    durationFrom: getCurrentIOSDate(),
+    durationTo: getCurrentIOSDate(),
     numberOfParticipants: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
@@ -116,8 +118,8 @@ export const markerCourse: StUserCourse = {
     creatorName: userMain,
     shortName: 'TIA4',
     longName: 'Tvorba Internatovych aplikacii',
-    durationFrom: '14.02.2021',
-    durationTo: '15.05.2021',
+    durationFrom: getCurrentIOSDate(),
+    durationTo: getCurrentIOSDate(),
     numberOfParticipants: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
@@ -127,7 +129,7 @@ export const markerCourse: StUserCourse = {
 
 export const userPublic: StUserPublic = {
   ...userMain,
-  lastLogin: '15.02.2020 12:30',
+  lastLogin: getCurrentIOSDate(),
   courses: [{
     ...studentCourse
   }, {
@@ -150,4 +152,31 @@ export const userPrivate: StUserPrivate = {
   activeTest: null,
   coursesInvitationSend: [],
   coursesInvitationReceived: []
+}
+
+export const stUser: StUser = {
+  ...userMain,
+  lastLogin: getCurrentIOSDate(),
+  courses: [{
+    role: COURSE_ROLES_ENUM.STUDENT,
+    course: course
+  }, {
+    role: COURSE_ROLES_ENUM.STUDENT,
+    course: course
+  }, {
+    role: COURSE_ROLES_ENUM.STUDENT,
+    course: course
+  }, {
+    role: COURSE_ROLES_ENUM.TEACHER,
+    course: course
+  },{
+    role: COURSE_ROLES_ENUM.TEACHER,
+    course: course
+  },{
+    role: COURSE_ROLES_ENUM.MARKER,
+    course: course
+  }
+  ],
+  isOnline: true,
+  ...userPrivate
 }

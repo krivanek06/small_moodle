@@ -1,6 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, NavParams} from "@ionic/angular";
+import {ModalController, NavParams, PopoverController} from "@ionic/angular";
 import {StUserPublic} from "../../../authentication-feature/models/user.interface";
+import {
+  markerCourse,
+  studentCourse,
+  teacherCourse,
+  userMain
+} from "../../../authentication-feature/models/user.random.data";
+import {CourseInviteMemberPopOverComponent} from "../../../course-feature/entry-points/course-invite-member-pop-over/course-invite-member-pop-over.component";
 
 @Component({
   selector: 'app-account-profile-modal',
@@ -10,7 +17,13 @@ import {StUserPublic} from "../../../authentication-feature/models/user.interfac
 export class AccountProfileModalComponent implements OnInit {
   userPublic: StUserPublic;
 
+  // TODO delete later
+  teacherCourse = teacherCourse;
+  studentCourse = studentCourse;
+  markerCourse = markerCourse;
+
   constructor(private modalController: ModalController,
+              private popoverController: PopoverController,
               private navParams: NavParams) {
   }
 
@@ -23,5 +36,15 @@ export class AccountProfileModalComponent implements OnInit {
     this.modalController.dismiss();
   }
 
+  async inviteMemberIntoCourse() {
+    const modal = await this.popoverController.create({
+      component: CourseInviteMemberPopOverComponent,
+      cssClass: 'custom-popover',
+      componentProps: {
+        userMain
+      }
+    })
+    await modal.present();
+  }
 }
 

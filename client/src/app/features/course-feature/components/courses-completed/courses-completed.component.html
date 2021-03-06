@@ -3,35 +3,18 @@
   <ion-item class="st-font-1-bold">
     <ion-label>ID</ion-label>
     <ion-label>Name</ion-label>
-    <ion-label>Points</ion-label>
-    <ion-label>Status</ion-label>
-    <ion-label>Position</ion-label>
+    <ion-label *ngIf="authenticatedUser">Points</ion-label>
+    <ion-label *ngIf="authenticatedUser">Grade</ion-label>
+    <ion-label *ngIf="authenticatedUser">Position</ion-label>
     <ion-label>Course length</ion-label>
   </ion-item>
 
-  <ion-item button>
-    <ion-label>123.</ion-label>
-    <ion-label>Course1</ion-label>
-    <ion-label>18 (61.45%)</ion-label>
-    <ion-label>Passed</ion-label>
-    <ion-label>3. (91.2%)</ion-label>
-    <ion-label>1.12.2019 - 3.03.2020</ion-label>
+  <ion-item [button]="enableClick" *ngFor="let course of courses">
+    <ion-label>{{ course.Id }}.</ion-label>
+    <ion-label>{{ course.longName }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{ course.students | courseReceivedPoints: authenticatedUser.uid }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{ course.students | courseStudentGrade: authenticatedUser.uid }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{ course.students | courseStudentPosition: authenticatedUser.uid }}</ion-label>
+    <ion-label>{{ course.durationFrom | date: 'dd.MM.YYYY' }} - {{ course.durationTo | date: 'dd.MM.YYYY' }}</ion-label>
   </ion-item>
-  <ion-item button>
-    <ion-label>222.</ion-label>
-    <ion-label>Course2</ion-label>
-    <ion-label>18 (61.45%)</ion-label>
-    <ion-label>Passed</ion-label>
-    <ion-label>3. (91.2%)</ion-label>
-    <ion-label>1.12.2019 - 3.03.2020</ion-label>
-  </ion-item>
-  <ion-item button>
-    <ion-label>124.</ion-label>
-    <ion-label>Course3</ion-label>
-    <ion-label>18 (61.45%)</ion-label>
-    <ion-label>Failed</ion-label>
-    <ion-label>3. (91.2%)</ion-label>
-    <ion-label>1.12.2019 - 3.03.2020</ion-label>
-  </ion-item>
-
 </ion-list>

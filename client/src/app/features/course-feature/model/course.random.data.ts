@@ -9,6 +9,7 @@ import {
 } from "./courses.interface";
 import {COURSE_ROLES_ENUM} from "./course.enum";
 import {CourseTestStateEnum} from "../../course-test-feature/model/course-test.enums";
+import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 
 
 export const courseGradingResults: CourseGradingResults[] = [
@@ -78,14 +79,14 @@ export const coursePublic: CoursePublic = {
   category: 'FMFI',
   creatorName: {
     uid: '123465',
-    accountCreatedDate: '20.02.1998 15:22',
+    accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
     photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
   },
   shortName: 'TIA',
   longName: 'Tvorba Internatovych aplikacii',
-  durationFrom: '14.02.2021',
-  durationTo: '15.05.2021',
+  durationFrom: getCurrentIOSDate(),
+  durationTo: getCurrentIOSDate(),
   numberOfParticipants: 21,
   numberOfTests: 3,
   courseGradingResults: courseGradingResults,
@@ -95,7 +96,7 @@ export const coursePublic: CoursePublic = {
 
 export const userCourseStudent: StUserCourseStudent = {
   uid: '123465',
-  accountCreatedDate: '20.02.1998 15:22',
+  accountCreatedDate: getCurrentIOSDate(),
   displayName: 'Meno Priezvisko',
   photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   receivedPoints: [{
@@ -112,7 +113,7 @@ export const userCourseStudent: StUserCourseStudent = {
   gradeChangeHistory: [{
     changedBy: {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
@@ -126,14 +127,14 @@ export const userCourseStudent: StUserCourseStudent = {
     testName: 'TIA - Test1',
     createdBy: {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
-    lastEdited: '20.02.2021',
+    lastEdited: getCurrentIOSDate(),
     duration: 90,
-    availableFrom: '15:30 15.01.2021',
-    availableTo: '18:30 15.01.2021',
+    availableFrom: getCurrentIOSDate(),
+    availableTo: getCurrentIOSDate(),
     state: CourseTestStateEnum.APPROVED,
     questions: [],
     testResults: []
@@ -144,19 +145,19 @@ export const coursePrivate: CoursePrivate = {
   markers: [
     {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
     {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
     {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     }
@@ -179,14 +180,14 @@ export const coursePrivate: CoursePrivate = {
     testName: 'TIA - Test2',
     createdBy: {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
-    lastEdited: '20.02.2021',
+    lastEdited: getCurrentIOSDate(),
     duration: 90,
-    availableFrom: '15:30 15.03.2021',
-    availableTo: '18:30 15.03.2021',
+    availableFrom: getCurrentIOSDate(),
+    availableTo: getCurrentIOSDate(),
   }]
 }
 
@@ -203,14 +204,14 @@ export const courseInvitation: CourseInvitation = {
     category: 'FMFI',
     creatorName: {
       uid: '123465',
-      accountCreatedDate: '20.02.1998 15:22',
+      accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno123 Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
     shortName: 'ADS',
     longName: 'Algoritmy a datove struktury',
-    durationFrom: '14.02.2021',
-    durationTo: '15.05.2021',
+    durationFrom: getCurrentIOSDate(),
+    durationTo: getCurrentIOSDate(),
     numberOfParticipants: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
@@ -218,10 +219,10 @@ export const courseInvitation: CourseInvitation = {
   },
   invitedBy: {
     uid: '123465',
-    accountCreatedDate: '20.02.1998 15:22',
+    accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko22',
     photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
   },
-  invitationCreatedDate: '12.02.2021 15:22',
+  invitationCreatedDate: getCurrentIOSDate(),
   invitedAs: COURSE_ROLES_ENUM.STUDENT
 }

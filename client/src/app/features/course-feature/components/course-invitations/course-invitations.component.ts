@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CourseInvitation} from "../../model/courses.interface";
+import {courseInvitation} from "../../model/course.random.data";
 
 @Component({
   selector: 'app-course-invitations',
@@ -6,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-invitations.component.scss'],
 })
 export class CourseInvitationsComponent implements OnInit {
+  @Output() clickedInvitationEmitter: EventEmitter<CourseInvitation> = new EventEmitter<CourseInvitation>();
 
-  constructor() { }
+  @Input() courseInvitations: CourseInvitation[] = [];
 
-  ngOnInit() {}
+  constructor() {
+  }
+
+  ngOnInit() {
+    // TODO DELETE LATER
+    this.courseInvitations = [
+      {...courseInvitation},
+      {...courseInvitation}
+    ]
+  }
+
+  clickedCourse(course: CourseInvitation) {
+    this.clickedInvitationEmitter.emit(course);
+  }
 
 }

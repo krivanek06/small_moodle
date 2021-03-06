@@ -12,7 +12,7 @@
   <app-course-search
     [defaultCategory]="categoryName"
     [allowCourseSelect]="true"
-    (selectedCourseEmitter)="selectCourse()">
+    (selectedCourseEmitter)="selectCourse($event)">
   </app-course-search>
 
 </ion-content>

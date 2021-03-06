@@ -1,4 +1,4 @@
-function time(target, name, descriptor) {
+export function time(target, name, descriptor) {
   const orig = descriptor.value
   descriptor.value = function (...args) {
     const start = performance.now()

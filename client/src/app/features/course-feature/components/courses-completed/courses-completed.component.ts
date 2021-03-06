@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CoursePublic} from "../../model/courses.interface";
 
 @Component({
   selector: 'app-courses-completed',
@@ -6,10 +7,13 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./courses-completed.component.scss'],
 })
 export class CoursesCompletedComponent implements OnInit {
-  @Input() overviewMode = false;    // true iff searching user
-  @Input() user
-  constructor() { }
+  @Input() courses: CoursePublic[] = [];
+  @Input() enableClick = true;
 
-  ngOnInit() {}
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
 
 }

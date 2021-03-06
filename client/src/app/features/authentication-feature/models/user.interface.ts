@@ -1,4 +1,7 @@
-import {Course, CoursePublic} from "../../course-feature/model/courses.interface";
+import {Course, CourseInvitation, CoursePublic} from "../../course-feature/model/courses.interface";
+import {USER_LOG_TYPE_ENUM} from "./user.enums";
+import {CourseTestPublic} from "../../course-test-feature/model/course-test.model";
+import {COURSE_ROLES_ENUM} from "../../course-feature/model/course.enum";
 
 export interface StUserMain {
   uid: string;
@@ -11,19 +14,29 @@ export interface StUserMain {
 
 export interface StUserPublic extends StUserMain {
   lastLogin: string;
-  coursesTaken: CoursePublic[] | Course[];  // CoursePublic is when student is searching else it is Course
-  coursesManage: CoursePublic[] | Course[];
+  courses: StUserCourse[];
   isOnline: boolean;
+}
+
+export interface StUserCourse {
+  role: COURSE_ROLES_ENUM;
+  course: CoursePublic | Course; // CoursePublic is when student is searching else it is Course
 }
 
 export interface StUserPrivate {
   email: string;
   locale: string;
   roles: string[];
-  logs: string[];
-  activeTest: any;
-  coursesInvitationSend: string[];
-  coursesInvitationReceived: string[];
+  logs: UserLogs[];
+  activeTest: CourseTestPublic;
+  coursesInvitationSend: CourseInvitation[];
+  coursesInvitationReceived: CourseInvitation[];
+}
+
+export interface UserLogs {
+  message: string;
+  type: USER_LOG_TYPE_ENUM;
+  id: string;
 }
 
 export interface StUserLogin {

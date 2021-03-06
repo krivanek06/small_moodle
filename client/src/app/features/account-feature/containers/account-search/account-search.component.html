@@ -7,35 +7,11 @@
 
 <!-- searched name's results -->
 <ion-list>
-
-  <ion-item button>
-    <ion-label>
-      Meno Prizvisko
-    </ion-label>
-    <ion-label class="st-display-flex-center">
-      <div class="st-dot st-b-green"></div>
-      <ion-text>Online</ion-text>
-    </ion-label>
-  </ion-item>
-
-  <ion-item button>
-    <ion-label>
-      Meno Prizvisko
-    </ion-label>
-    <ion-label class="st-display-flex-center">
-      <div class="st-dot st-b-green"></div>
-      <ion-text>Online</ion-text>
-    </ion-label>
-  </ion-item>
-
-  <ion-item button>
-    <ion-label>
-      Meno Prizvisko
-    </ion-label>
-    <ion-label class="st-display-flex-center">
-      <div class="st-dot st-b-red"></div>
-      <ion-text>Offline</ion-text>
-    </ion-label>
-  </ion-item>
-
+  <app-account-identification-item *ngFor="let user of searchedUsers"
+                                   (click)="clickedUser(user)"
+                                   [showItemBorder]="true"
+                                   [userMain]="user"
+                                   [isOnline]="user.isOnline"
+                                   [enableClick]="true">
+  </app-account-identification-item>
 </ion-list>

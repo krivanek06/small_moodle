@@ -5,6 +5,7 @@ export interface CourseTestReceivedPoints {
   testId: string;
   testName: string;
   receivedPoints: number;
+  totalPoints: number;
 }
 
 export interface CourseTestPublic {

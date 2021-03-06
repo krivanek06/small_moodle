@@ -15,8 +15,7 @@ export class HeaderComponent implements OnInit {
   user$: Observable<StUser>;
 
   constructor(private popoverController: PopoverController,
-              private authService: AuthFeatureService,
-              private ionicDialogService: IonicDialogService) {
+              private authService: AuthFeatureService) {
   }
 
   ngOnInit() {
@@ -34,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   async logout() {
     await this.authService.logout();
-    this.ionicDialogService.presentToast('Your have been successfully logged out');
+    IonicDialogService.presentToast('Your have been successfully logged out');
   }
 
 }

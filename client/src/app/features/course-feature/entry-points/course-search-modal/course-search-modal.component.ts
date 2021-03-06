@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from "@ionic/angular";
+import {CoursePublic} from "../../model/courses.interface";
+import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
 
 @Component({
   selector: 'app-course-search-modal',
@@ -8,6 +10,7 @@ import {ModalController, NavParams} from "@ionic/angular";
 })
 export class CourseSearchModalComponent implements OnInit {
   categoryName: string;
+
   constructor(private modalController: ModalController,
               private navParams: NavParams) {
   }
@@ -16,8 +19,12 @@ export class CourseSearchModalComponent implements OnInit {
     this.categoryName = this.navParams.get('categoryName')
   }
 
-  selectCourse() {
-
+  async selectCourse(course: CoursePublic) {
+    const message = `Do you want to enroll into course ${course.Id}, ${course.longName} as student ?`;
+    if (await IonicDialogService.presentAlertConfirm(message)) {
+      console.log('Enrolling into course ')   // TODO call firebase
+      IonicDialogService.presentToast(`Your request has been sent, please wait for confirmation`);
+    }
   }
 
   dismissModal() {

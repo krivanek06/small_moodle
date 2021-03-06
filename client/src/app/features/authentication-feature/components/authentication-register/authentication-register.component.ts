@@ -13,8 +13,7 @@ export class AuthenticationRegisterComponent implements OnInit {
   @Output() registrationEmitter: EventEmitter<RegisterIUser> = new EventEmitter<RegisterIUser>();
   registrationForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
-              private ionicDialogService: IonicDialogService) {
+  constructor(private formBuilder: FormBuilder) {
 
   }
 
@@ -29,7 +28,7 @@ export class AuthenticationRegisterComponent implements OnInit {
 
   register() {
     if (this.registrationForm.invalid) {
-      this.ionicDialogService.presentToast('Form is invalid, please fill all fields');
+      IonicDialogService.presentToast('Form is invalid, please fill all fields');
       return;
     }
     if (this.password1.value !== this.password2.value) {
@@ -37,7 +36,7 @@ export class AuthenticationRegisterComponent implements OnInit {
       this.password2.patchValue(null);
       this.password1.updateValueAndValidity();
       this.password2.updateValueAndValidity();
-      this.ionicDialogService.presentToast('Passwords do not match!');
+      IonicDialogService.presentToast('Passwords do not match!');
       return;
     }
 

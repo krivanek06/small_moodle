@@ -3,7 +3,7 @@ import {AuthFeatureService} from "./auth-feature.service";
 import {StUser} from "../models/user.interface";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {USER_ROLES} from "../models/user.enums";
+import {USER_ROLES_ENUM} from "../models/user.enums";
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +22,19 @@ export class AuthUserFeatureService {
   }
 
   isUserTeacher(): Boolean {
-    return this.user.roles.includes(USER_ROLES.TEACHER);
+    return this.user.roles.includes(USER_ROLES_ENUM.TEACHER);
   }
 
   isUserTeacherObs(): Observable<Boolean> {
-    return this.authService.getUser().pipe(map(user => user.roles.includes(USER_ROLES.TEACHER)));
+    return this.authService.getUser().pipe(map(user => user.roles.includes(USER_ROLES_ENUM.TEACHER)));
   }
 
   isUserAdmin(): Boolean {
-    return this.user.roles.includes(USER_ROLES.ADMIN);
+    return this.user.roles.includes(USER_ROLES_ENUM.ADMIN);
   }
 
   isUserAdminObs(): Observable<Boolean> {
-    return this.authService.getUser().pipe(map(user => user.roles.includes(USER_ROLES.ADMIN)));
+    return this.authService.getUser().pipe(map(user => user.roles.includes(USER_ROLES_ENUM.ADMIN)));
   }
 
 }

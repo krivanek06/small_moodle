@@ -2,53 +2,63 @@ import {Injectable} from '@angular/core';
 import {AlertController, ToastController} from '@ionic/angular';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class IonicDialogService {
 
-    constructor(private alertController: AlertController,
-                private toastController: ToastController) {
+  private static alertController: AlertController | undefined;
+  private static toastController: ToastController | undefined;
+
+  public constructor(alertController: AlertController,
+                     toastController: ToastController) {
+    IonicDialogService.alertController = alertController;
+    IonicDialogService.toastController = toastController;
+  }
+
+
+  static async presentAlertConfirm(message: string, cancelButton = 'Cancel'): Promise<boolean> {
+    if (!IonicDialogService.alertController) {
+      throw new Error('IonicDialogService.alertController not initialized');
+    }
+    return new Promise(async (resolve) => {
+      const alert = await IonicDialogService.alertController.create({
+        cssClass: 'my-custom-alert-class',
+        // header: 'Confirm!',
+        message,
+        buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              resolve(true);
+            }
+          },
+          {
+            text: cancelButton,
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              resolve(false);
+            }
+          }
+        ]
+      });
+      await alert.present();
+    });
+  }
+
+
+  static async presentToast(message) {
+    if(!IonicDialogService.toastController) {
+      throw new Error('IonicDialogService.toastController not initialized');
     }
 
-
-    async presentAlertConfirm(message: string) {
-        return new Promise(async (resolve) => {
-            const alert = await this.alertController.create({
-                cssClass: 'my-custom-alert-class',
-                // header: 'Confirm!',
-                message,
-                buttons: [
-                    {
-                        text: 'Yes',
-                        handler: () => {
-                            resolve(true);
-                        }
-                    },
-                    {
-                        text: 'Cancel',
-                        role: 'cancel',
-                        cssClass: 'secondary',
-                        handler: (blah) => {
-                            resolve(false);
-                        }
-                    }
-                ]
-            });
-            await alert.present();
-        });
-    }
-
-
-    async presentToast(message) {
-        const toast = await this.toastController.create({
-            message,
-            duration: 2500,
-            color: 'dark',
-            position: 'bottom',
-        });
-        toast.present();
-    }
+    const toast = await IonicDialogService.toastController.create({
+      message,
+      duration: 2500,
+      color: 'dark',
+      position: 'bottom',
+    });
+    toast.present();
+  }
 
 
 }

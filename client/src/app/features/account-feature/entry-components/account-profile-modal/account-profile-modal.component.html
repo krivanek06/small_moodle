@@ -8,26 +8,47 @@
     </ion-buttons>
   </ion-toolbar>
 
-    <!-- selected user's info -->
-    <ion-toolbar>
-      <ion-label>
-        <ion-text class="c-user-name">
-          Meno Priezvisko
-        </ion-text>
-        <div class="st-flex">
-          <div class="st-dot st-b-green"></div>
-          <ion-text>Online</ion-text>
-        </div>
-      </ion-label>
+  <!-- selected user's info -->
+  <ion-toolbar>
+    <ion-label class="st-display-flex-center">
+      <app-account-identification-item
+        [userMain]="userPublic"
+        [isOnline]="userPublic.isOnline">
+      </app-account-identification-item>
+    </ion-label>
 
-      <ion-buttons slot="end">
-        <ion-button color="primary">
-          <ion-icon name="close-outline"></ion-icon>
-          Invite into course
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="primary">
+        Invite into course
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 
-    <!-- selected user's courses -->
+  <!-- selected user's courses -->
+  <ion-grid class="ion-padding-horizontal">
 
+    <!-- courses manage -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-title>Manage courses</ion-title>
+        <app-courses-manage></app-courses-manage>
+      </ion-col>
+    </ion-row>
+
+    <!-- courses active -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-title>Active courses</ion-title>
+        <app-courses-active></app-courses-active>
+      </ion-col>
+    </ion-row>
+
+    <!-- courses completed -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-title>Completed courses</ion-title>
+        <app-courses-completed></app-courses-completed>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

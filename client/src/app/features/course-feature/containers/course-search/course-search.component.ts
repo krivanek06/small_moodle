@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CoursePublic} from "../../model/courses.interface";
+import {coursePublic} from "../../model/course.random.data";
 
 @Component({
   selector: 'app-course-search',
@@ -7,7 +9,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
   styleUrls: ['./course-search.component.scss'],
 })
 export class CourseSearchComponent implements OnInit {
-  @Output() selectedCourseEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() allowCourseSelect = false;
   @Input() defaultCategory: string;
@@ -32,18 +34,18 @@ export class CourseSearchComponent implements OnInit {
 
   selectCourse() {
     if (this.allowCourseSelect) {
-      this.selectedCourseEmitter.emit()
+      this.selectedCourseEmitter.emit(coursePublic) // TODO change later
     }
   }
 
   private watchForm() {
-    this.form.valueChanges.subscribe(console.log)
+    this.form.valueChanges.subscribe(console.log) // TODO make call to firebase
   }
 
   private initForm() {
     this.form = this.fb.group({
-      category: ['', Validators.required],
-      year: ['', Validators.required]
+      category: [this.defaultCategory, Validators.required],
+      year: ['2021', Validators.required]
     })
   }
 

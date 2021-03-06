@@ -1,36 +1,38 @@
-<ion-text class="st-title">
-  Search course
-</ion-text>
-
 <!-- select form -->
-<form [formGroup]="form" style="margin-bottom: 40px">
-  <ion-item-group class="st-flex ion-justify-content-between">
-    <ion-item class="st-width-100 ion-margin-horizontal">
-      <ion-label position="floating">Course category</ion-label>
-      <ion-select [value]="defaultCategory" interface="popover" formControlName="category">
-        <ion-select-option value="FMFI">FMFI</ion-select-option>
-        <ion-select-option value="INF">INF</ion-select-option>
-        <ion-select-option value="CHEM">CHEM</ion-select-option>
-      </ion-select>
-    </ion-item>
+<ion-list class="ion-padding">
+  <ion-text class="st-title">
+    Search course
+  </ion-text>
 
-    <ion-item class="st-width-100 ion-margin-horizontal">
-      <ion-label position="floating">Course year</ion-label>
-      <ion-select value="2021" interface="popover" formControlName="year">
-        <ion-select-option value="2021">2021</ion-select-option>
-        <ion-select-option value="2020">2020</ion-select-option>
-        <ion-select-option value="2019">2019</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-item-group>
-</form>
+  <form [formGroup]="form" style="margin-bottom: 40px">
+    <ion-item-group class="st-flex ion-justify-content-between">
+      <ion-item class="st-width-100 ion-margin-horizontal">
+        <ion-label position="floating">Course category</ion-label>
+        <ion-select [value]="defaultCategory" interface="popover" formControlName="category">
+          <ion-select-option value="FMFI">FMFI</ion-select-option>
+          <ion-select-option value="INF">INF</ion-select-option>
+          <ion-select-option value="CHEM">CHEM</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="st-width-100 ion-margin-horizontal">
+        <ion-label position="floating">Course year</ion-label>
+        <ion-select value="2021" interface="popover" formControlName="year">
+          <ion-select-option value="2021">2021</ion-select-option>
+          <ion-select-option value="2020">2020</ion-select-option>
+          <ion-select-option value="2019">2019</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-item-group>
+  </form>
+</ion-list>
 
 <!-- course result -->
-<ion-text class="st-title">
-  Courses {{ year.value }} {{ category.value }}
-</ion-text>
+<ion-list class="ion-padding">
+  <ion-text class="st-title">
+    Courses {{ year.value }} {{ category.value }}, founded 124
+  </ion-text>
 
-<ion-list>
   <ion-item class="st-font-1-bold">
     <ion-label>ID</ion-label>
     <ion-label>Name</ion-label>
@@ -64,3 +66,21 @@
     <ion-label>12.05.2021</ion-label>
   </ion-item>
 </ion-list>
+
+
+<!--
+<ion-footer class="ion-padding">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="listing-buttons">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button class="listing-buttons">
+        <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>-->

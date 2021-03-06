@@ -39,7 +39,7 @@
         <!-- course invitations -->
         <ion-col size="12">
           <app-generic-card [title]="'Course invitations'">
-            <app-course-invitations></app-course-invitations>
+            <app-course-invitations (clickedInvitationEmitter)="showCourseInvitation($event)"></app-course-invitations>
           </app-generic-card>
         </ion-col>
 
@@ -63,7 +63,7 @@
         <!-- search users -->
         <ion-col size="12">
           <app-generic-card [title]="'Search users'">
-            <app-account-search></app-account-search>
+            <app-account-search (clickedUserEmitter)="showUserInformation($event)"></app-account-search>
           </app-generic-card>
         </ion-col>
       </ion-row>

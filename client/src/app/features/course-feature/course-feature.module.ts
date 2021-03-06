@@ -7,6 +7,7 @@ import {CourseInvitationsComponent} from "./components/course-invitations/course
 import {CourseCategoriesComponent} from "./components/course-categories/course-categories.component";
 import {CourseSearchComponent} from "./containers/course-search/course-search.component";
 import {CourseSearchModalComponent} from "./entry-points/course-search-modal/course-search-modal.component";
+import { CourseNearestTestPipe } from './pipes/course-nearest-test.pipe';
 
 
 
@@ -18,7 +19,8 @@ import {CourseSearchModalComponent} from "./entry-points/course-search-modal/cou
     CourseInvitationsComponent,
     CourseCategoriesComponent,
     CourseSearchComponent,
-    CourseSearchModalComponent
+    CourseSearchModalComponent,
+    CourseNearestTestPipe
   ],
   exports: [
     CoursesActiveComponent,

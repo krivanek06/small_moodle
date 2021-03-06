@@ -3,6 +3,8 @@ import {AccountLogsComponent} from "./components/account-logs/account-logs.compo
 import {SharedModule} from "../../shared/shared.module";
 import {AccountSearchComponent} from "./containers/account-search/account-search.component";
 import {AccountProfileModalComponent} from "./entry-components/account-profile-modal/account-profile-modal.component";
+import {AccountIdentificationItemComponent} from "./components/account-identification-item/account-identification-item.component";
+import {CourseFeatureModule} from "../course-feature/course-feature.module";
 
 
 
@@ -10,15 +12,18 @@ import {AccountProfileModalComponent} from "./entry-components/account-profile-m
   declarations: [
     AccountLogsComponent,
     AccountSearchComponent,
-    AccountProfileModalComponent
+    AccountProfileModalComponent,
+    AccountIdentificationItemComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    CourseFeatureModule
   ],
   exports: [
     AccountLogsComponent,
     AccountSearchComponent,
-    AccountProfileModalComponent
+    AccountProfileModalComponent,
+    AccountIdentificationItemComponent
   ]
 })
 export class AccountFeatureModule { }

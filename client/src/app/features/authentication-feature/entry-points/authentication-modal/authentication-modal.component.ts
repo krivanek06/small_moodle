@@ -18,8 +18,7 @@ export class AuthenticationModalComponent implements OnInit {
   segmentValue = 'login';
 
   constructor(private authFeatureService: AuthFeatureService,
-              private popoverController: PopoverController,
-              private ionicDialogService: IonicDialogService) {
+              private popoverController: PopoverController) {
   }
 
   ngOnInit() {
@@ -33,10 +32,10 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.normalLogin(data);
       await this.popoverController.dismiss();
-      this.ionicDialogService.presentToast('Your are successfully logged in');
+      IonicDialogService.presentToast('Your are successfully logged in');
     } catch (e) {
       this.loginComp.loginForm.reset();
-      this.ionicDialogService.presentToast(e.message);
+      IonicDialogService.presentToast(e.message);
     }
   }
 
@@ -44,10 +43,10 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.normalRegistration(registerIUser);
       await this.popoverController.dismiss();
-      this.ionicDialogService.presentToast('Your account has been successfully created');
+      IonicDialogService.presentToast('Your account has been successfully created');
     } catch (e) {
       this.registrationComp.registrationForm.reset();
-      this.ionicDialogService.presentToast(e.message);
+      IonicDialogService.presentToast(e.message);
     }
   }
 
@@ -55,10 +54,10 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.googleSignIn();
       await this.popoverController.dismiss();
-      this.ionicDialogService.presentToast('Your account has been successfully created');
+      IonicDialogService.presentToast('Your account has been successfully created');
     } catch (e) {
       this.registrationComp.registrationForm.reset();
-      this.ionicDialogService.presentToast(e.message);
+      IonicDialogService.presentToast(e.message);
     }
   }
 

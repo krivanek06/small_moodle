@@ -1,21 +1,25 @@
 <ion-content class="ion-padding">
   <ion-toolbar>
     <ion-list>
-      <ion-radio-group value="student">
-        <ion-list-header>
-          <ion-label>Invite {{ userMain.displayName }}</ion-label>
-        </ion-list-header>
-        <ion-item-group class="st-flex-space-between">
-          <ion-item class="c-radio">
-            <ion-label>Student</ion-label>
-            <ion-radio slot="start" color="tertiary" value="student" class="ion-margin-end"></ion-radio>
-          </ion-item>
+      <ion-list-header class="st-flex-col">
+        <ion-label>Invite {{ userMain.displayName }}</ion-label>
+        <ion-label>Choose course</ion-label>
+      </ion-list-header>
 
-          <ion-item class="c-radio">
-            <ion-label>Marker</ion-label>
-            <ion-radio slot="start" color="tertiary" value="marker" class="ion-margin-end"></ion-radio>
-          </ion-item>
-        </ion-item-group>
+      <ion-radio-group [value]="selectedCourseRole" class="st-flex-space-between" [(ngModel)]="selectedCourseRole">
+        <ion-item class="c-radio">
+          <ion-label>{{ COURSE_ROLES_ENUM.STUDENT }}</ion-label>
+          <ion-radio slot="start" color="tertiary"
+                     [value]="COURSE_ROLES_ENUM.STUDENT"
+                     class="ion-margin-end"></ion-radio>
+        </ion-item>
+
+        <ion-item class="c-radio">
+          <ion-label>{{ COURSE_ROLES_ENUM.MARKER }}</ion-label>
+          <ion-radio slot="start" color="tertiary"
+                     [value]="COURSE_ROLES_ENUM.MARKER"
+                     class="ion-margin-end"></ion-radio>
+        </ion-item>
       </ion-radio-group>
     </ion-list>
   </ion-toolbar>
@@ -24,16 +28,15 @@
   <ion-list>
     <ion-item class="st-font-1-bold">
       <ion-label>ID</ion-label>
-      <ion-label>Name</ion-label>
+      <ion-label class="c-course-name">Name</ion-label>
       <ion-label>Length</ion-label>
     </ion-item>
 
     <!-- table body -->
-    <ion-item button
-              *ngFor="let course of stUser.courses | courseFilterManagedOpen"
+    <ion-item button *ngFor="let course of stUser.courses | courseFilterManagedOpen"
               (click)="sendInvitationToCourse(course.course)">
       <ion-label>{{ course.course.Id }}</ion-label>
-      <ion-label>{{ course.course.longName }}</ion-label>
+      <ion-label class="c-course-name">{{ course.course.longName }}</ion-label>
       <ion-label>{{ course.course.durationFrom | date: 'dd.MM.YYYY' }}
         - {{ course.course.durationTo | date: 'dd.MM.YYYY' }}</ion-label>
     </ion-item>

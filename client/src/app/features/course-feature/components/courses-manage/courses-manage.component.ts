@@ -21,7 +21,9 @@ export class CoursesManageComponent implements OnInit {
   }
 
   clickedCourse(userCourse: StUserCourse) {
-    console.log('emitting')
+    if(!this.enableClick){
+      return;
+    }
     this.clickedCourseEmitter.emit(userCourse.course)
   }
 }

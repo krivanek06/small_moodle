@@ -1,5 +1,5 @@
 export enum COURSE_ROLES_ENUM {
-  TEACHER = 'TEACHER',
-  MARKER = 'MARKER',
-  STUDENT = 'STUDENT'
+  TEACHER = 'Teacher',
+  MARKER = 'Marker',
+  STUDENT = 'Student'
 }

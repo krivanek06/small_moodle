@@ -33,7 +33,7 @@
         <ion-title>Manage courses</ion-title>
         <app-courses-manage
           [enableClick]="false"
-          [userCourses]="[teacherCourse, teacherCourse, markerCourse]">
+          [userCourses]="userPublic.courses | courseFilterManaged">
         </app-courses-manage>
       </ion-col>
     </ion-row>
@@ -44,7 +44,7 @@
         <ion-title>Active courses</ion-title>
         <app-courses-active
           [enableClick]="false"
-          [courses]="[studentCourse.course, studentCourse.course, studentCourse.course]">
+          [courses]="userPublic.courses | courseFilterActive">
         </app-courses-active>
       </ion-col>
     </ion-row>
@@ -55,7 +55,7 @@
         <ion-title>Completed courses</ion-title>
         <app-courses-completed
           [enableClick]="false"
-          [courses]="[studentCourse.course, studentCourse.course, studentCourse.course]">
+          [courses]="userPublic.courses | courseFilterCompleted">
         </app-courses-completed>
       </ion-col>
     </ion-row>

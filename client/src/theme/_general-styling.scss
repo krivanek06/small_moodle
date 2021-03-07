@@ -256,13 +256,9 @@ ion-spinner {
 
 // BUTTONS
 
-.st-button {
-  width: 70%;
-  color: white !important;
-  margin: 8px !important;
-  @media (max-width: #{$st-var-md-split}) {
-    width: 100% !important;
-  }
+.st-button-full {
+  width: 100%;
+  margin: 10px;
 }
 
 .st-buttons-container {

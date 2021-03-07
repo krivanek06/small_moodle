@@ -16,6 +16,7 @@ import { CourseFilterManagedPipe } from './pipes/course-filter-managed.pipe';
 import { CourseFilterActivePipe } from './pipes/course-filter-active.pipe';
 import { CourseFilterCompletedPipe } from './pipes/course-filter-completed.pipe';
 import { CourseFilterManagedOpenPipe } from './pipes/course-filter-managed-open.pipe';
+import {CourseInvitationConfirmationPopOverComponent} from "./entry-points/course-invitation-confirmation-pop-over/course-invitation-confirmation-pop-over.component";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { CourseFilterManagedOpenPipe } from './pipes/course-filter-managed-open.
     CourseFilterManagedPipe,
     CourseFilterActivePipe,
     CourseFilterCompletedPipe,
-    CourseFilterManagedOpenPipe
+    CourseFilterManagedOpenPipe,
+    CourseInvitationConfirmationPopOverComponent
   ],
   exports: [
     CoursesActiveComponent,
@@ -52,7 +54,8 @@ import { CourseFilterManagedOpenPipe } from './pipes/course-filter-managed-open.
     CourseInviteMemberPopOverComponent,
     CourseFilterManagedPipe,
     CourseFilterCompletedPipe,
-    CourseFilterActivePipe
+    CourseFilterActivePipe,
+    CourseInvitationConfirmationPopOverComponent
   ],
   imports: [
     SharedModule

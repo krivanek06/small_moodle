@@ -17,30 +17,30 @@ export const courseGradingResults: CourseGradingResults[] = [
     mark: 'A',
     pointsMax: 100,
     pointsMin: 90,
-    numberOfParticipants: 8
+    numberOfStudents: 8
   },
   {
     mark: 'B',
     pointsMax: 89,
     pointsMin: 80,
-    numberOfParticipants: 5
+    numberOfStudents: 5
   },
   {
     mark: 'C',
     pointsMax: 79,
     pointsMin: 70,
-    numberOfParticipants: 3
+    numberOfStudents: 3
   },
   {
     mark: 'D',
     pointsMax: 69,
     pointsMin: 60,
-    numberOfParticipants: 9
+    numberOfStudents: 9
   },
   {
     mark: 'Fx',
     pointsMax: 59,
-    numberOfParticipants: 10
+    numberOfStudents: 10
   }
 ]
 
@@ -77,7 +77,7 @@ export const coursePublic: CoursePublic = {
   year: 2020,
   isOpen: true,
   category: 'FMFI',
-  creatorName: {
+  creator: {
     uid: '123465',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
@@ -87,7 +87,7 @@ export const coursePublic: CoursePublic = {
   longName: 'Tvorba Internatovych aplikacii',
   durationFrom: getCurrentIOSDate(),
   durationTo: getCurrentIOSDate(),
-  numberOfParticipants: 21,
+  numberOfStudents: 21,
   numberOfTests: 3,
   courseGradingResults: courseGradingResults,
   gradings: courseGradings
@@ -120,25 +120,7 @@ export const userCourseStudent: StUserCourseStudent = {
     gradeAfter: 'A',
     gradeBefore: 'B'
   }],
-  receivedGrade: 'A',
-  takenTests: [{
-    testId: 'Tet1234',
-    courseId: 'Course123',
-    testName: 'TIA - Test1',
-    createdBy: {
-      uid: '123465',
-      accountCreatedDate: getCurrentIOSDate(),
-      displayName: 'Meno Priezvisko',
-      photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
-    },
-    lastEdited: getCurrentIOSDate(),
-    duration: 90,
-    availableFrom: getCurrentIOSDate(),
-    availableTo: getCurrentIOSDate(),
-    state: CourseTestStateEnum.APPROVED,
-    questions: [],
-    testResults: []
-  }]
+  receivedGrade: 'A'
 }
 
 export const coursePrivate: CoursePrivate = {
@@ -188,6 +170,7 @@ export const coursePrivate: CoursePrivate = {
     duration: 90,
     availableFrom: getCurrentIOSDate(),
     availableTo: getCurrentIOSDate(),
+    testPoints: 90
   }]
 }
 
@@ -202,7 +185,7 @@ export const courseInvitation: CourseInvitation = {
     year: 2020,
     isOpen: true,
     category: 'FMFI',
-    creatorName: {
+    creator: {
       uid: '123465',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno123 Priezvisko',
@@ -212,7 +195,7 @@ export const courseInvitation: CourseInvitation = {
     longName: 'Algoritmy a datove struktury',
     durationFrom: getCurrentIOSDate(),
     durationTo: getCurrentIOSDate(),
-    numberOfParticipants: 21,
+    numberOfStudents: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
     gradings: courseGradings

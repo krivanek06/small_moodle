@@ -1,0 +1,21 @@
+<ion-list>
+  <!-- table header -->
+  <ion-item class="st-font-1-bold">
+    <ion-label>ID</ion-label>
+    <ion-label>Name</ion-label>
+    <ion-label>Date</ion-label>
+    <ion-label>Received points</ion-label>
+    <ion-label>Evaluator</ion-label>
+  </ion-item>
+
+  <!-- table body -->
+  <ion-item button *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
+    <ion-label>{{ test.testId }}</ion-label>
+    <ion-label>{{ test.testName }}</ion-label>
+    <ion-label>{{ test.availableFrom | date: 'dd.MM.YYYY' }}</ion-label>
+    <ion-label>{{ test.receivedPoints }}</ion-label>
+    <ion-label>{{ test.marker?.displayName }}</ion-label>
+  </ion-item>
+
+
+</ion-list>

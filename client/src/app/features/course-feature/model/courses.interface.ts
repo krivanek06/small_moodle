@@ -12,12 +12,12 @@ export interface CoursePublic {
   year: number;
   isOpen: boolean;
   category: string;
-  creatorName: StUserMain;
+  creator: StUserMain;
   shortName: string;
   longName: string;
   durationFrom: string;
   durationTo: string;
-  numberOfParticipants: number;
+  numberOfStudents: number;
   numberOfTests: number;
   courseGradingResults?: CourseGradingResults[];
   gradings: CourseGrading[];
@@ -42,16 +42,13 @@ export interface CourseGrading {
 
 // statistics at the end of course - how many students got what grade
 export interface CourseGradingResults extends CourseGrading{
-  numberOfParticipants: number;
+  numberOfStudents: number;
 }
 
 export interface StUserCourseStudent extends StUserMain {
   receivedGrade?: String;
   receivedPoints: CourseTestReceivedPoints[];
   gradeChangeHistory?: CourseGradeChangeHistory[];
-
-  // Test which user has completed -  only load data for authenticated user
-  takenTests?: CourseTest[];
 }
 
 export interface CourseGradeChangeHistory {

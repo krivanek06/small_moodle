@@ -17,9 +17,10 @@ export interface CourseTestPublic {
   duration: number;
   availableFrom: string;
   availableTo: string;
+  testPoints: number;
 }
 
-export interface CourseTest extends CourseTestPublic{
+export interface CourseTest extends CourseTestPublic {
   state: CourseTestStateEnum;
   testResults?: CourseTestResults[];
   questions: CourseTestQuestion[];
@@ -44,7 +45,7 @@ export interface CourseTestResults {
 
 // -----------------------
 
-export interface CourseTestTaken extends CourseTestResults {
+export interface CourseTestTaken extends CourseTestResults, CourseTestPublic {
   answers: CourseTestTakenAnswers[];
 }
 

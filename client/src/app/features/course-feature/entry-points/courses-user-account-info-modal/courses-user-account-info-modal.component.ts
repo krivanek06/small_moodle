@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from "@ionic/angular";
 import {StUserPublic} from "../../../authentication-feature/models/user.interface";
-import {AccountService} from "../../services/account.service";
-import {convertStUserPublicToMain} from "../../utils/convertor.util";
+import {AccountService} from "../../../account-feature/services/account.service";
+import {convertStUserPublicToMain} from "../../../account-feature/utils/convertor.util";
 
 @Component({
-  selector: 'app-account-profile-modal',
-  templateUrl: './account-profile-modal.component.html',
-  styleUrls: ['./account-profile-modal.component.scss'],
+  selector: 'app-courses-user-account-info-modal',
+  templateUrl: './courses-user-account-info-modal.component.html',
+  styleUrls: ['./courses-user-account-info-modal.component.scss'],
 })
-export class AccountProfileModalComponent implements OnInit {
+export class CoursesUserAccountInfoModalComponent implements OnInit {
   userPublic: StUserPublic;
 
   constructor(private modalController: ModalController,

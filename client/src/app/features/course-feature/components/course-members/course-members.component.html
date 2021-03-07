@@ -1,0 +1,26 @@
+<ion-list>
+  <ion-list-header>
+    <ion-label>Evaluators</ion-label>
+  </ion-list-header>
+
+  <!-- teacher -->
+  <app-account-identification-item [userMain]="course.creator"></app-account-identification-item>
+
+  <!-- markers -->
+  <app-account-identification-item
+    *ngFor="let marker of course.markers"
+    [userMain]="marker">
+  </app-account-identification-item>
+</ion-list>
+
+
+<ion-list>
+  <ion-list-header>
+    <ion-label>Students</ion-label>
+  </ion-list-header>
+
+  <!-- students -->
+  <app-account-identification-item
+    *ngFor="let student of course.students">
+  </app-account-identification-item>
+</ion-list>

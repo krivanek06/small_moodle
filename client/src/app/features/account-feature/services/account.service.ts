@@ -35,7 +35,7 @@ export class AccountService {
     }
 
     // confirmation message with selected course info
-    const message = `Sending invitation to ${userMain.displayName} into course ${coursePublic.longName}`;
+    const message = `Invite ${userMain.displayName} into course ${coursePublic.longName}`;
     modal = await this.popoverController.create({
       component: CourseInvitationConfirmationPopOverComponent,
       cssClass: 'custom-popover',

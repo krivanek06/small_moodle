@@ -5,6 +5,7 @@ import {AuthFeatureService} from "../../../features/authentication-feature/servi
 import {Observable} from "rxjs";
 import {StUser} from "../../../features/authentication-feature/models/user.interface";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -15,12 +16,17 @@ export class HeaderComponent implements OnInit {
   user$: Observable<StUser>;
 
   constructor(private popoverController: PopoverController,
-              private authService: AuthFeatureService) {
+              private authService: AuthFeatureService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.user$ = this.authService.getUser();
     this.user$.subscribe(console.log)
+  }
+
+  redirectToDashboard(){
+    this.router.navigate(['menu/dashboard'])
   }
 
   async authenticate() {

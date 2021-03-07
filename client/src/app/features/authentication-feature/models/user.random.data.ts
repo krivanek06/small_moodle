@@ -16,30 +16,30 @@ const courseGradingResults: CourseGradingResults[] = [
     mark: 'A',
     pointsMax: 100,
     pointsMin: 90,
-    numberOfParticipants: 8
+    numberOfStudents: 8
   },
   {
     mark: 'B',
     pointsMax: 89,
     pointsMin: 80,
-    numberOfParticipants: 5
+    numberOfStudents: 5
   },
   {
     mark: 'C',
     pointsMax: 79,
     pointsMin: 70,
-    numberOfParticipants: 3
+    numberOfStudents: 3
   },
   {
     mark: 'D',
     pointsMax: 69,
     pointsMin: 60,
-    numberOfParticipants: 9
+    numberOfStudents: 9
   },
   {
     mark: 'Fx',
     pointsMax: 59,
-    numberOfParticipants: 10
+    numberOfStudents: 10
   }
 ]
 
@@ -77,12 +77,12 @@ export const studentCourse: StUserCourse = {
     year: 2020,
     isOpen: true,
     category: 'FMFI',
-    creatorName: userMain,
+    creator: userMain,
     shortName: 'TIA',
     longName: 'Tvorba Internatovych aplikacii',
     durationFrom: getCurrentIOSDate(),
     durationTo: getCurrentIOSDate(),
-    numberOfParticipants: 21,
+    numberOfStudents: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
     gradings: courseGradings
@@ -96,12 +96,12 @@ export const teacherCourse: StUserCourse = {
     year: 2020,
     isOpen: true,
     category: 'FMFI',
-    creatorName: userMain,
+    creator: userMain,
     shortName: 'TIA3',
     longName: 'Tvorba Internatovych aplikacii',
     durationFrom: getCurrentIOSDate(),
     durationTo: getCurrentIOSDate(),
-    numberOfParticipants: 21,
+    numberOfStudents: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
     gradings: courseGradings
@@ -115,12 +115,12 @@ export const markerCourse: StUserCourse = {
     year: 2020,
     isOpen: true,
     category: 'FMFI',
-    creatorName: userMain,
+    creator: userMain,
     shortName: 'TIA4',
     longName: 'Tvorba Internatovych aplikacii',
     durationFrom: getCurrentIOSDate(),
     durationTo: getCurrentIOSDate(),
-    numberOfParticipants: 21,
+    numberOfStudents: 21,
     numberOfTests: 3,
     courseGradingResults: courseGradingResults,
     gradings: courseGradings

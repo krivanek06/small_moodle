@@ -1,16 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController} from "@ionic/angular";
-import {CourseSearchModalComponent} from "../../../../features/course-feature/entry-points/course-search-modal/course-search-modal.component";
-import {CourseInvitation} from "../../../../features/course-feature/model/courses.interface";
-import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
+import {CourseInvitation, CoursePublic} from "../../../../features/course-feature/model/courses.interface";
 import {StUserPublic} from "../../../../features/authentication-feature/models/user.interface";
-import {AccountProfileModalComponent} from "../../../../features/account-feature/entry-components/account-profile-modal/account-profile-modal.component";
-import {
-  markerCourse,
-  studentCourse, stUser,
-  teacherCourse, userMain
-} from "../../../../features/authentication-feature/models/user.random.data";
-import {course} from "../../../../features/course-feature/model/course.random.data";
+import {stUser, userMain} from "../../../../features/authentication-feature/models/user.random.data";
+import {DashboardAuthenticatedFacadeService} from "../../services/dashboard-authenticated-facade.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard-authenticated',
@@ -23,37 +16,26 @@ export class DashboardAuthenticatedComponent implements OnInit {
   userMain = userMain;
   user = stUser;
 
-  constructor(private modalController: ModalController) {
+  constructor(private dashboardAuthenticatedFacadeService: DashboardAuthenticatedFacadeService,
+              private router: Router) {
   }
 
   ngOnInit() {
   }
 
-  async searchCoursesByCategory(categoryName: string) {
-    const modal = await this.modalController.create({
-      component: CourseSearchModalComponent,
-      componentProps: {categoryName},
-      cssClass: 'custom-modal'
-    });
-    await modal.present();
+  searchCoursesByCategory(categoryName: string) {
+    this.dashboardAuthenticatedFacadeService.searchCoursesByCategory(categoryName);
   }
 
-  async showCourseInvitation(invitation: CourseInvitation) {
-    const message = `Do you want to accept course invitation into ${invitation.course.longName} as ${invitation.invitedAs} ? `;
-    const res = await IonicDialogService.presentAlertConfirm(message, 'No');
-    if (res) {
-      console.log('accepted course invitation') // TODO call service
-    } else {
-      console.log('declined course invitation') // TODO call service
-    }
+  showCourseInvitation(invitation: CourseInvitation) {
+    this.dashboardAuthenticatedFacadeService.showCourseInvitation(invitation);
   }
 
-  async showUserInformation(userPublic: StUserPublic) {
-    const modal = await this.modalController.create({
-      component: AccountProfileModalComponent,
-      componentProps: {userPublic},
-      cssClass: 'custom-modal'
-    });
-    await modal.present();
+  showUserInformation(userPublic: StUserPublic) {
+    this.dashboardAuthenticatedFacadeService.showUserInformation(userPublic);
+  }
+
+  redirectToCourse(coursePublic: CoursePublic) {
+    this.router.navigate([`menu/course/${coursePublic.Id}`])
   }
 }

@@ -255,6 +255,14 @@
     }
   }
 
+  ion-list{
+    ion-list-header {
+      ion-text {
+        white-space: pre-line !important;
+      }
+    }
+  }
+
   ion-card {
     padding: 3px 16px;
 

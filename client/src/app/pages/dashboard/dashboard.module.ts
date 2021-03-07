@@ -6,6 +6,7 @@ import {CourseFeatureModule} from "../../features/course-feature/course-feature.
 import {AccountFeatureModule} from "../../features/account-feature/account-feature.module";
 import {DashboardAuthenticatedComponent} from "./pages/dashboard-authenticated/dashboard-authenticated.component";
 import {DashboardUnauthenticatedComponent} from "./pages/dashboard-unauthenticated/dashboard-unauthenticated.component";
+import {DashboardAuthenticatedFacadeService} from "./services/dashboard-authenticated-facade.service";
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
     DashboardPage,
     DashboardAuthenticatedComponent,
     DashboardUnauthenticatedComponent
+  ],
+  providers: [
+    DashboardAuthenticatedFacadeService
   ]
 })
 export class DashboardPageModule {}

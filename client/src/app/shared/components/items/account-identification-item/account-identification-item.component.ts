@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {StUserMain} from "../../../authentication-feature/models/user.interface";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
 
 @Component({
   selector: 'app-account-identification-item',
@@ -7,6 +7,7 @@ import {StUserMain} from "../../../authentication-feature/models/user.interface"
   styleUrls: ['./account-identification-item.component.scss'],
 })
 export class AccountIdentificationItemComponent implements OnInit {
+  @Output() clickedItemEmitter: EventEmitter<StUserMain> = new EventEmitter<StUserMain>();
   @Input() userMain: StUserMain;
   @Input() isOnline: boolean;
 
@@ -19,4 +20,9 @@ export class AccountIdentificationItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  clickedItem() {
+    if (this.enableClick) {
+      this.clickedItemEmitter.emit(this.userMain);
+    }
+  }
 }

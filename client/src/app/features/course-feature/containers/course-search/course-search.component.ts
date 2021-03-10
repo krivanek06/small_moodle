@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CoursePublic} from "../../model/courses.interface";
+import {CoursePublic} from "../../model/courses-firebase.interface";
 import {coursePublic} from "../../model/course.random.data";
 
 @Component({

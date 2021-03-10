@@ -6,7 +6,7 @@ import {
   CoursePrivate,
   CoursePublic,
   StUserCourseStudent
-} from "./courses.interface";
+} from "./courses-firebase.interface";
 import {COURSE_ROLES_ENUM} from "./course.enum";
 import {CourseTestStateEnum} from "../../course-test-feature/model/course-test.enums";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";

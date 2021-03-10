@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Course, CoursePublic} from "../../model/courses.interface";
-import {StUserMain} from "../../../authentication-feature/models/user.interface";
+import {Course, CoursePublic} from "../../../model/courses-firebase.interface";
+import {StUserMain} from "../../../../authentication-feature/models/user.interface";
 
 @Component({
   selector: 'app-courses-completed',

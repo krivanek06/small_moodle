@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StUserCourse, StUserMain} from "../../../authentication-feature/models/user.interface";
-import {CoursePublic} from "../../model/courses.interface";
+import {StUserCourse, StUserMain} from "../../../../authentication-feature/models/user.interface";
+import {CoursePublic} from "../../../model/courses-firebase.interface";
 
 @Component({
   selector: 'app-courses-manage',

@@ -47,6 +47,13 @@
     </ion-item>
   </ion-list>
 
+  <ion-list>
+    <form [formGroup]="form">
+      <app-course-member-type-radio formControlName="courseRole">
+      </app-course-member-type-radio>
+    </form>
+  </ion-list>
+
   <!-- confirmation checkbox -->
   <ion-list>
     <ion-item>

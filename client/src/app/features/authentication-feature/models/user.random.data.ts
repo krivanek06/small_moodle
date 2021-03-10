@@ -1,5 +1,5 @@
 import {StUser, StUserCourse, StUserMain, StUserPrivate, StUserPublic} from "./user.interface";
-import {CourseGrading, CourseGradingResults} from "../../course-feature/model/courses.interface";
+import {CourseGrading, CourseGradingResults} from "../../course-feature/model/courses-firebase.interface";
 import {COURSE_ROLES_ENUM} from "../../course-feature/model/course.enum";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 import {course} from "../../course-feature/model/course.random.data";

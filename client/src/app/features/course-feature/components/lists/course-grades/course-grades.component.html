@@ -1,0 +1,13 @@
+<ion-list>
+  <ion-item class="st-font-1-bold">
+    <ion-label>Grade</ion-label>
+    <ion-label>Min points</ion-label>
+    <ion-label>Max points</ion-label>
+  </ion-item>
+
+  <ion-item *ngFor="let grade of grades">
+    <ion-label>{{ grade.mark }}</ion-label>
+    <ion-label>{{ grade.pointsMin }}</ion-label>
+    <ion-label>{{ grade.pointsMax }}</ion-label>
+  </ion-item>
+</ion-list>

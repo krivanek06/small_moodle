@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from "@ionic/angular";
-import {CoursePublic} from "../../model/courses.interface";
+import {CoursePublic} from "../../model/courses-firebase.interface";
 import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
 
 @Component({

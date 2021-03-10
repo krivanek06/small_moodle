@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {CoursesActiveComponent} from "./components/courses-active/courses-active.component";
-import {CoursesCompletedComponent} from "./components/courses-completed/courses-completed.component";
-import {CoursesManageComponent} from "./components/courses-manage/courses-manage.component";
+import {CoursesActiveComponent} from "./components/lists/courses-active/courses-active.component";
+import {CoursesCompletedComponent} from "./components/lists/courses-completed/courses-completed.component";
+import {CoursesManageComponent} from "./components/lists/courses-manage/courses-manage.component";
 import {SharedModule} from "../../shared/shared.module";
-import {CourseInvitationsComponent} from "./components/course-invitations/course-invitations.component";
-import {CourseCategoriesComponent} from "./components/course-categories/course-categories.component";
+import {CourseInvitationsComponent} from "./components/lists/course-invitations/course-invitations.component";
+import {CourseCategoriesComponent} from "./components/lists/course-categories/course-categories.component";
 import {CourseSearchComponent} from "./containers/course-search/course-search.component";
 import {CourseSearchModalComponent} from "./entry-points/course-search-modal/course-search-modal.component";
 import {CourseNearestTestPipe} from './pipes/course-nearest-test.pipe';
@@ -17,9 +17,10 @@ import {CourseFilterActivePipe} from './pipes/course-filter-active.pipe';
 import {CourseFilterCompletedPipe} from './pipes/course-filter-completed.pipe';
 import {CourseFilterManagedOpenPipe} from './pipes/course-filter-managed-open.pipe';
 import {CourseInvitationConfirmationPopOverComponent} from "./entry-points/course-invitation-confirmation-pop-over/course-invitation-confirmation-pop-over.component";
-import {CourseMembersComponent} from "./components/course-members/course-members.component";
-import {AccountFeatureModule} from "../account-feature/account-feature.module";
+import {CourseMembersComponent} from "./components/lists/course-members/course-members.component";
 import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component";
+import {CourseGradesComponent} from "./components/lists/course-grades/course-grades.component";
+import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-type-radio/course-member-type-radio.component";
 
 
 @NgModule({
@@ -42,7 +43,9 @@ import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-
     CourseFilterManagedOpenPipe,
     CourseInvitationConfirmationPopOverComponent,
     CourseMembersComponent,
-    CoursesUserAccountInfoModalComponent
+    CoursesUserAccountInfoModalComponent,
+    CourseGradesComponent,
+    CourseMemberTypeRadioComponent
   ],
   exports: [
     CoursesActiveComponent,
@@ -62,11 +65,12 @@ import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-
     CourseFilterActivePipe,
     CourseInvitationConfirmationPopOverComponent,
     CourseMembersComponent,
-    CoursesUserAccountInfoModalComponent
+    CoursesUserAccountInfoModalComponent,
+    CourseGradesComponent,
+    CourseMemberTypeRadioComponent
   ],
   imports: [
-    SharedModule,
-    AccountFeatureModule
+      SharedModule
   ]
 })
 export class CourseFeatureModule {

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseInvitation} from "../../model/courses.interface";
-import {courseInvitation} from "../../model/course.random.data";
+import {CourseInvitation} from "../../../model/courses-firebase.interface";
+import {courseInvitation} from "../../../model/course.random.data";
 
 @Component({
   selector: 'app-course-invitations',

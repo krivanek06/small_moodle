@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CourseInvitation, CoursePublic} from "../../../../features/course-feature/model/courses.interface";
+import {CourseInvitation, CoursePublic} from "../../../../features/course-feature/model/courses-firebase.interface";
 import {StUserPublic} from "../../../../features/authentication-feature/models/user.interface";
 import {stUser, userMain} from "../../../../features/authentication-feature/models/user.random.data";
 import {DashboardAuthenticatedFacadeService} from "../../services/dashboard-authenticated-facade.service";

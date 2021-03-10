@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StUserPublic} from "../../../authentication-feature/models/user.interface";
-import {AutoUnsub} from "../../../../core/decorators/autounsub.decorator";
 import {userPublic} from "../../../authentication-feature/models/user.random.data";
 
 //@AutoUnsub()
@@ -12,7 +11,8 @@ import {userPublic} from "../../../authentication-feature/models/user.random.dat
 })
 export class AccountSearchComponent implements OnInit {
   @Output() clickedUserEmitter: EventEmitter<StUserPublic> = new EventEmitter<StUserPublic>();
-  @Input() searchedUsers: StUserPublic[] = [];
+
+  searchedUsers: StUserPublic[] = []; // TODO will be obs - data from firebase
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -33,7 +33,7 @@ export class AccountSearchComponent implements OnInit {
     ]
   }
 
-  clickedUser(user: StUserPublic){
+  clickedUser(user: StUserPublic) {
     this.clickedUserEmitter.emit(user);
   }
 
@@ -44,7 +44,7 @@ export class AccountSearchComponent implements OnInit {
   }
 
   // TODO test with @AutoUnsub
-  private watchForm(){
+  private watchForm() {
     this.displayName.valueChanges.subscribe(name => {
       console.log('nae', name)
     })

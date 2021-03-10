@@ -21,7 +21,7 @@ const routes: Routes = [
     SharedModule,
     CourseFeatureModule,
     AccountFeatureModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   declarations: [
     DashboardPage,

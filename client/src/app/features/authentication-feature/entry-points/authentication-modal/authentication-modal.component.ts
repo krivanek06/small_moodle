@@ -43,7 +43,7 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.normalRegistration(registerIUser);
       await this.popoverController.dismiss();
-      IonicDialogService.presentToast('Your account has been successfully created');
+      IonicDialogService.presentToast('Your items has been successfully created');
     } catch (e) {
       this.registrationComp.registrationForm.reset();
       IonicDialogService.presentToast(e.message);
@@ -54,7 +54,7 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.googleSignIn();
       await this.popoverController.dismiss();
-      IonicDialogService.presentToast('Your account has been successfully created');
+      IonicDialogService.presentToast('Your items has been successfully created');
     } catch (e) {
       this.registrationComp.registrationForm.reset();
       IonicDialogService.presentToast(e.message);

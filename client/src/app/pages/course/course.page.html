@@ -1,24 +1,93 @@
 <ion-content class="ion-padding">
-  <ion-title class="st-title">
-    Course: XYZ
-  </ion-title>
-  <ion-grid class="ion-margin-vertical">
-    <ion-row>
-      <ion-col size="12" size-md="9">
-        <app-course-page-tests-view-container></app-course-page-tests-view-container>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
+        <ion-title class="st-title">
+          Course: XYZ
+        </ion-title>
+      </ion-col>
+    </ion-row>
 
-        <!-- course members
+    <!-- all course tests - view for teacher and markers -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
+        <app-generic-card [title]="'Course tests'">
+          <app-course-tests-overview
+            [courseTests]="[courseTestApproved, courseTestApproved, courseTestWaitingApproval]">
+          </app-course-tests-overview>
+          <ion-buttons class="ion-justify-content-end c-small-padding">
+            <ion-button color="primary" class="c-small-padding">Create test</ion-button>
+          </ion-buttons>
+        </app-generic-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- upcoming tests - view for students -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
+        <app-generic-card [title]="'Upcoming tests'">
+          <app-course-tests-overview
+            [courseTests]="[courseTestApproved, courseTestApproved]">
+          </app-course-tests-overview>
+        </app-generic-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- completed tests - view for students -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
+        <app-generic-card [title]="'Completed tests'">
+          <app-course-tests-student-completed
+            [courseTakenTests]="[courseTakenTest, courseTakenTest, courseTakenTest]">
+          </app-course-tests-student-completed>
+        </app-generic-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
         <ion-row>
-          <ion-col size="12">
+          <!-- course members-->
+          <ion-col size="12" size-lg="8">
             <app-generic-card [title]="'Course members'">
-              <app-course-members></app-course-members>
+              <app-course-members
+                [memberType]="'Evaluators'"
+                [members]="[userMain, userMain, userMain, userMain]">
+              </app-course-members>
+              <app-course-members
+                [memberType]="'Students'"
+                [enableClick]="true"
+                [members]="[userCourseStudent, userCourseStudent, userCourseStudent, userCourseStudent, userCourseStudent,
+                userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
+                userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
+                userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
+                userCourseStudent]">
+              </app-course-members>
             </app-generic-card>
           </ion-col>
-        </ion-row>-->
-      </ion-col>
 
-      <ion-col size="12" size-md="3">
-        <!-- show course grades and search users components -->
+          <!-- grades -->
+          <ion-col size="12" size-lg="4">
+            <ion-row>
+              <ion-col size="12">
+                <app-generic-card [title]="'Course grading'">
+                  <app-course-grades [grades]="course.gradings">
+                  </app-course-grades>
+                  <ion-buttons class="ion-justify-content-end c-small-padding">
+                    <ion-button color="warning" class="c-small-padding">Edit</ion-button>
+                  </ion-buttons>
+                </app-generic-card>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <app-generic-card [title]="'Invite member'">
+                  <app-account-search (clickedUserEmitter)="inviteUser($event)"></app-account-search>
+                </app-generic-card>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

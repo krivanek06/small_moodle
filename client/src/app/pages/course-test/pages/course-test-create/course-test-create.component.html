@@ -1,0 +1,16 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="10" size-xl="9">
+      <app-course-test-info
+        (approveTestEmitter)="approveTest($event)"
+        [loggedInUser]="stUserMain"
+        [courseTestTaken]="courseTakenTest">
+      </app-course-test-info>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="10" size-xl="9">
+      <app-course-test-form></app-course-test-form>
+    </ion-col>
+  </ion-row>
+</ion-grid>

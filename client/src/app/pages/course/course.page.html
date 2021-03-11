@@ -16,7 +16,9 @@
             [courseTests]="[courseTestApproved, courseTestApproved, courseTestWaitingApproval]">
           </app-course-tests-overview>
           <ion-buttons class="ion-justify-content-end c-small-padding">
-            <ion-button color="primary" class="c-small-padding">Create test</ion-button>
+            <ion-button color="primary" class="c-small-padding" (click)="redirectToCourseTest()">
+              Create test
+            </ion-button>
           </ion-buttons>
         </app-generic-card>
       </ion-col>

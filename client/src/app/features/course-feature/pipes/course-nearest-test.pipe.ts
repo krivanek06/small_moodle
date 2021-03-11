@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {CourseTestPublic} from "../../course-test-feature/model/course-test.model";
+import {CourseTestPublic} from "../../course-test-feature/model/course-test-firebase.model";
 
 @Pipe({
   name: 'courseNearestTest'

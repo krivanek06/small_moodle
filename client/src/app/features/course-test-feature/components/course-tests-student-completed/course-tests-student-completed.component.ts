@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseTest, CourseTestTaken} from "../../model/course-test.model";
+import {CourseTest, CourseTestTaken} from "../../model/course-test-firebase.model";
 
 @Component({
   selector: 'app-course-tests-student-completed',

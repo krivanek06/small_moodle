@@ -1,0 +1,28 @@
+@import "variables";
+
+:host {
+  ion-textarea {
+    min-height: 65px;
+  }
+
+  .c-comment-item {
+    width: 50%;
+    @media (max-width: #{$st-var-xs-split}) {
+      width: 100%;
+    }
+  }
+
+  .c-question-points-wrapper {
+    padding-left: 16px;
+    padding-right: 16px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .c-question-wrapper {
+    padding-left: 16px;
+    margin-top: 30px;
+    margin-bottom: 16px;
+  }
+}

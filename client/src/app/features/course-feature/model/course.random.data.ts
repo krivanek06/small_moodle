@@ -8,7 +8,6 @@ import {
   StUserCourseStudent
 } from "./courses-firebase.interface";
 import {COURSE_ROLES_ENUM} from "./course.enum";
-import {CourseTestStateEnum} from "../../course-test-feature/model/course-test.enums";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 
 
@@ -158,7 +157,9 @@ export const coursePrivate: CoursePrivate = {
   ],
   confirmedTests: [{
     testId: 'Tet1234',
-    courseId: 'Course123',
+    course: {
+      ...coursePublic
+    },
     testName: 'TIA - Test2',
     createdBy: {
       uid: '123465',

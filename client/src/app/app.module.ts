@@ -9,7 +9,6 @@ import {environment} from "../environments/environment";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from "@angular/common";
 import {RouteReuseStrategy} from "@angular/router";
-
 @NgModule({
   declarations: [
     AppComponent

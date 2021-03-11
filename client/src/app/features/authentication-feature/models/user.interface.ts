@@ -1,6 +1,6 @@
 import {Course, CourseInvitation, CoursePublic} from "../../course-feature/model/courses-firebase.interface";
 import {USER_LOG_TYPE_ENUM} from "./user.enums";
-import {CourseTestPublic} from "../../course-test-feature/model/course-test.model";
+import {CourseTestPublic} from "../../course-test-feature/model/course-test-firebase.model";
 import {COURSE_ROLES_ENUM} from "../../course-feature/model/course.enum";
 
 export interface StUserMain {

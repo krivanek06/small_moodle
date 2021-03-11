@@ -1,0 +1,39 @@
+<ion-list>
+  <ion-item lines="none">
+    <ion-label>
+      <ion-button color="primary" fill="clear">{{ courseTestTaken.course.longName }}</ion-button>
+    </ion-label>
+    <ion-label *ngIf="loggedInUser.uid === courseTestTaken.course.creator.uid">
+      <ion-buttons class="ion-justify-content-end">
+        <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
+        <ion-button color="danger" (click)="approveTest(false)">Delete</ion-button>
+      </ion-buttons>
+    </ion-label>
+  </ion-item>
+
+  <!-- test info -->
+  <ion-item lines="none" *ngIf="courseTestTaken.state !== CourseTestResultState.TESTING">
+    <ion-label>
+      <ion-text>Created</ion-text>
+      <app-account-identification-item
+        [userMain]="courseTestTaken.createdBy">
+      </app-account-identification-item>
+    </ion-label>
+    <ion-label>
+      <ion-text>Submitted</ion-text>
+      <app-account-identification-item
+        [userMain]="courseTestTaken.student">
+      </app-account-identification-item>
+    </ion-label>
+    <ion-label>
+      <ion-text>Rated</ion-text>
+      <app-account-identification-item
+        *ngIf="courseTestTaken.marker; else addAsMarker"
+        [userMain]="courseTestTaken.marker">
+      </app-account-identification-item>
+      <ng-template #addAsMarker>
+        <ion-button fill="clear">Set as marker</ion-button>
+      </ng-template>
+    </ion-label>
+  </ion-item>
+</ion-list>

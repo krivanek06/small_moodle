@@ -3,7 +3,7 @@ import {
   CourseTest,
   CourseTestPublic,
   CourseTestReceivedPoints
-} from "../../course-test-feature/model/course-test.model";
+} from "../../course-test-feature/model/course-test-firebase.model";
 import {COURSE_ROLES_ENUM} from "./course.enum";
 
 

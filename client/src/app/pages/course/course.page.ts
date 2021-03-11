@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {course, userCourseStudent} from "../../features/course-feature/model/course.random.data";
 import {
   courseTakenTest,
@@ -26,6 +26,7 @@ export class CoursePage implements OnInit {
   userMain = userMain;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private courseFeatureService: CourseFeatureService) {
   }
 
@@ -38,5 +39,9 @@ export class CoursePage implements OnInit {
   async inviteUser(userPublic: StUserPublic) {
     const res = await this.courseFeatureService.inviteMemberIntoCourseConfirm('Invite user into course', this.course, COURSE_ROLES_ENUM.STUDENT, false)
     console.log('inviteUser', res)
+  }
+
+  redirectToCourseTest() {
+    this.router.navigate(['menu/course-test'])
   }
 }

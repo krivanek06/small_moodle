@@ -4,6 +4,8 @@ import {CourseTestsOverviewComponent} from "./components/course-tests-overview/c
 import {CourseTestsStudentCompletedComponent} from "./components/course-tests-student-completed/course-tests-student-completed.component";
 import {CourseTestFormComponent} from "./components/course-test-form/course-test-form.component";
 import {CourseTestInfoComponent} from "./components/course-test-info/course-test-info.component";
+import {CourseTestFormButtonsComponent} from "./components/course-test-form-buttons/course-test-form-buttons.component";
+import {CourseTestBackButtonComponent} from "./components/course-test-back-button/course-test-back-button.component";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import {CourseTestInfoComponent} from "./components/course-test-info/course-test
     CourseTestsOverviewComponent,
     CourseTestsStudentCompletedComponent,
     CourseTestFormComponent,
-    CourseTestInfoComponent
+    CourseTestInfoComponent,
+    CourseTestFormButtonsComponent,
+    CourseTestBackButtonComponent
   ],
   imports: [
     SharedModule
@@ -20,7 +24,9 @@ import {CourseTestInfoComponent} from "./components/course-test-info/course-test
     CourseTestsOverviewComponent,
     CourseTestsStudentCompletedComponent,
     CourseTestFormComponent,
-    CourseTestInfoComponent
+    CourseTestInfoComponent,
+    CourseTestFormButtonsComponent,
+    CourseTestBackButtonComponent
   ]
 })
 export class CourseTestFeatureModule { }

@@ -9,6 +9,7 @@ import {
 } from "./courses-firebase.interface";
 import {COURSE_ROLES_ENUM} from "./course.enum";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
+import {CourseTestStateEnum} from "../../course-test-feature/model/course-test.enums";
 
 
 export const courseGradingResults: CourseGradingResults[] = [
@@ -160,6 +161,7 @@ export const coursePrivate: CoursePrivate = {
     course: {
       ...coursePublic
     },
+    testState: CourseTestStateEnum.APPROVED,
     testName: 'TIA - Test2',
     createdBy: {
       uid: '123465',

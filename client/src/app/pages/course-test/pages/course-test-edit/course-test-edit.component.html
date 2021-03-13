@@ -9,18 +9,27 @@
 
       <!-- buttons to save / delete / accept test -->
       <app-course-test-form-buttons
+        [loggedInUser]="stUserMain"
+        [courseTestPublic]="courseTestWaitingApproval"
+        (sendTestToApprovalEmitter)="sendTestToApproval()"
         (saveTestEmitter)="saveTest()"
-        (deleteTestEmitter)="deleteTest()">
+        (deleteTestEmitter)="deleteTest()"
+        (approveTestEmitter)="approveTest($event)">
       </app-course-test-form-buttons>
 
       <ion-text class="st-error st-flex ion-justify-content-center ion-padding">{{ errorMessage }}</ion-text>
     </ion-col>
   </ion-row>
 
+
+
   <!-- test form -->
   <ion-row class="ion-justify-content-center">
     <ion-col size="12" size-lg="10" size-xl="9">
-      <app-course-test-form></app-course-test-form>
+      <app-course-test-form
+        [user]="stUserMain"
+        [courseTest]="courseTestWaitingApproval">
+      </app-course-test-form>
     </ion-col>
   </ion-row>
 </ion-grid>

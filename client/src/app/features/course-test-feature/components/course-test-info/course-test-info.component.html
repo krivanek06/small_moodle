@@ -1,18 +1,5 @@
 <ion-list>
-  <ion-item lines="none">
-    <ion-label>
-      <ion-button color="primary" fill="clear">{{ courseTestTaken.course.longName }}</ion-button>
-    </ion-label>
-    <ion-label *ngIf="loggedInUser.uid === courseTestTaken.course.creator.uid">
-      <ion-buttons class="ion-justify-content-end">
-        <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
-        <ion-button color="danger" (click)="approveTest(false)">Delete</ion-button>
-      </ion-buttons>
-    </ion-label>
-  </ion-item>
-
-  <!-- test info -->
-  <ion-item lines="none" *ngIf="courseTestTaken.state !== CourseTestResultState.TESTING">
+  <ion-item lines="none" *ngIf="courseTestTaken && courseTestTaken?.testFormState !== CourseTestFormEnum.TAKE">
     <ion-label>
       <ion-text>Created</ion-text>
       <app-account-identification-item

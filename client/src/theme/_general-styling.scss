@@ -239,6 +239,10 @@ ion-spinner {
   width: 49%;
 }
 
+.st-width-32{
+  width: 32%;
+}
+
 .st-height-100 {
   height: 100%;
 }
@@ -249,6 +253,11 @@ ion-spinner {
   @media (max-width: #{$st-var-xl-split}) {
     width: 100% !important;
   }
+}
+
+.st-error{
+  color: red;
+  font-size: 20px;
 }
 
 .st-display-flex-center {

@@ -10,6 +10,7 @@ import {userMain} from "../../features/authentication-feature/models/user.random
 import {StUserPublic} from "../../features/authentication-feature/models/user.interface";
 import {CourseFeatureService} from "../../features/course-feature/services/course-feature.service";
 import {COURSE_ROLES_ENUM} from "../../features/course-feature/model/course.enum";
+import {CourseTest} from "../../features/course-test-feature/model/course-test-firebase.model";
 
 @Component({
   selector: 'app-course',
@@ -41,7 +42,11 @@ export class CoursePage implements OnInit {
     console.log('inviteUser', res)
   }
 
-  redirectToCourseTest() {
-    this.router.navigate(['menu/course-test'])
+  redirectToCourseTestCreate() {
+    this.router.navigate(['menu/course-test']);
+  }
+
+  redirectToCourseTest(courseTest: CourseTest) {
+    this.router.navigate([`menu/course-test/edit/${courseTest.testId}`]);
   }
 }

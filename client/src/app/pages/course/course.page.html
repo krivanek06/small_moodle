@@ -13,10 +13,11 @@
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Course tests'">
           <app-course-tests-overview
+            (clickedEmitter)="redirectToCourseTest($event)"
             [courseTests]="[courseTestApproved, courseTestApproved, courseTestWaitingApproval]">
           </app-course-tests-overview>
           <ion-buttons class="ion-justify-content-end c-small-padding">
-            <ion-button color="primary" class="c-small-padding" (click)="redirectToCourseTest()">
+            <ion-button color="primary" class="c-small-padding" (click)="redirectToCourseTestCreate()">
               Create test
             </ion-button>
           </ion-buttons>

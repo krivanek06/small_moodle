@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {CourseTestComponent} from "./course-test.component";
 import {CourseTestCreateComponent} from "./pages/course-test-create/course-test-create.component";
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../shared/shared.module";
 import {CourseTestFeatureModule} from "../../features/course-test-feature/course-test-feature.module";
+import {CourseTestEditComponent} from "./pages/course-test-edit/course-test-edit.component";
 
 
 const routes: Routes = [
@@ -19,6 +19,9 @@ const routes: Routes = [
       }, {
         path: 'create',
         component: CourseTestCreateComponent
+      }, {
+        path: 'edit/:testId',
+        component: CourseTestEditComponent
       }
     ]
   }
@@ -27,7 +30,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     CourseTestComponent,
-    CourseTestCreateComponent
+    CourseTestCreateComponent,
+    CourseTestEditComponent
   ],
   imports: [
     SharedModule,

@@ -2,13 +2,17 @@
   <ion-list>
     <!-- test name + duration -->
     <ion-item-group class="st-flex-space-between">
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-32">
         <ion-label position="floating">Test name</ion-label>
         <ion-input placeholder="Set test name" formControlName="testName"></ion-input>
       </ion-item>
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-32">
         <ion-label position="floating">Test duration (min)</ion-label>
         <ion-input placeholder="Set test duration" formControlName="duration" type="number" min="0"></ion-input>
+      </ion-item>
+      <ion-item class="st-width-32">
+        <ion-label position="floating">Test points</ion-label>
+        <ion-input placeholder="Set test duration" formControlName="testPoints" type="number" min="0"></ion-input>
       </ion-item>
     </ion-item-group>
 
@@ -42,7 +46,7 @@
           <ion-text>Question #{{i + 1}}</ion-text>
 
           <ion-item-group class="st-flex-end">
-            <ion-item style="margin-right: 16px" *ngIf="state === CourseTestFormEnum.TAKE">
+            <ion-item style="margin-right: 16px" *ngIf="state === CourseTestFormStateEnum.TAKE">
               <ion-label position="floating">Received points</ion-label>
               <ion-input formControlName="receivedPoints" type="number" min="0"></ion-input>
             </ion-item>
@@ -58,19 +62,19 @@
           <ion-textarea autoGrow="true" placeholder="Add question" formControlName="question"></ion-textarea>
         </ion-item>
 
-        <ion-item *ngIf="state === CourseTestFormEnum.TAKE">
+        <ion-item *ngIf="state === CourseTestFormStateEnum.TAKE">
           <ion-label position="floating">Answer</ion-label>
           <ion-textarea autoGrow="true" placeholder="Add Answer" formControlName="answer"></ion-textarea>
         </ion-item>
 
-        <ion-item-group class="st-flex-end" *ngIf="state === CourseTestFormEnum.VALIDATE">
+        <ion-item-group class="st-flex-end" *ngIf="state === CourseTestFormStateEnum.VALIDATE">
           <ion-item class="c-comment-item">
             <ion-label position="floating">Comment</ion-label>
             <ion-textarea autoGrow="true" placeholder="Add Comment" formControlName="markerComment"></ion-textarea>
           </ion-item>
         </ion-item-group>
 
-        <ion-buttons class="ion-justify-content-end" *ngIf="state === CourseTestFormEnum.CREATE">
+        <ion-buttons class="ion-justify-content-end" *ngIf="canEditTest">
           <ion-button color="danger" (click)="deleteQuestion(i)">
             Remove
           </ion-button>
@@ -81,6 +85,6 @@
   </ng-container>
 </form>
 
-<ion-buttons class="ion-justify-content-center">
+<ion-buttons class="ion-justify-content-center" *ngIf="canEditTest">
   <ion-button type="button" fill="clear" color="primary" (click)="addQuestion()">Add question</ion-button>
 </ion-buttons>

@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {courseTakenTest} from "../../../../features/course-test-feature/model/course-test.random.data";
+import {Component, ContentChild, OnInit, ViewChild} from '@angular/core';
 import {stUser} from "../../../../features/authentication-feature/models/user.random.data";
 import {CourseTestService} from "../../../../features/course-test-feature/services/course-test.service";
+import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
+import {courseTakenTest} from "../../../../features/course-test-feature/model/course-test.random.data";
 
 
 @Component({
@@ -10,7 +11,11 @@ import {CourseTestService} from "../../../../features/course-test-feature/servic
   styleUrls: ['./course-test-create.component.scss'],
 })
 export class CourseTestCreateComponent implements OnInit {
-  courseTakenTest = courseTakenTest;
+
+
+  @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
+
+  errorMessage: string;
   stUserMain = stUser;
 
   constructor(private courseTestService: CourseTestService) {
@@ -19,7 +24,16 @@ export class CourseTestCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  approveTest(approve: boolean) {
-    this.courseTestService.approveCourseTest(approve, this.courseTakenTest)
+  saveTest() {
+    const res = this.courseTestForm.submitForm();
+    if (res) {
+      console.log('submitted', res)
+    }else{
+      this.errorMessage = 'Please fill all required fields';
+    }
+  }
+
+  deleteTest() {
+
   }
 }

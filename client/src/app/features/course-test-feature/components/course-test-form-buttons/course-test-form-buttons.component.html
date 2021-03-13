@@ -1,0 +1,40 @@
+<ion-list>
+  <ion-item lines="none">
+    <ng-container *ngIf="courseTestPublic; else createCourse">
+
+      <!-- test is approved -->
+      <ion-label *ngIf="courseTestPublic.testState === CourseTestStateEnum.APPROVED; else buttons">
+        Test is approved
+      </ion-label>
+
+      <ng-template #buttons>
+        <ion-label>
+          <ion-buttons class="ion-justify-content-end">
+            <!-- creator's buttons -->
+            <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid">
+              <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+              <ion-button color="success" (click)="sendToApproval()">Send to approve</ion-button>
+              <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+            </ng-container>
+
+            <!-- teachers's buttons -->
+            <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid">
+              <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
+              <ion-button color="danger" (click)="approveTest(false)">Delete</ion-button>
+            </ng-container>
+          </ion-buttons>
+        </ion-label>
+      </ng-template>
+    </ng-container>
+
+    <!-- save / delete -->
+    <ng-template #createCourse>
+      <ion-label>
+        <ion-buttons class="ion-justify-content-end">
+          <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+          <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+        </ion-buttons>
+      </ion-label>
+    </ng-template>
+  </ion-item>
+</ion-list>

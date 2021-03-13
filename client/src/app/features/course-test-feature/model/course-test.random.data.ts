@@ -1,11 +1,6 @@
-import {
-  CourseTest,
-  CourseTestPublic,
-  CourseTestResult,
-  CourseTestTaken
-} from "./course-test-firebase.model";
+import {CourseTest, CourseTestPublic, CourseTestResult, CourseTestTaken} from "./course-test-firebase.model";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
-import {CourseTestResultStateEnum, CourseTestStateEnum} from "./course-test.enums";
+import {CourseTestFormStateEnum,  CourseTestStateEnum} from "./course-test.enums";
 import {CoursePublic} from "../../course-feature/model/courses-firebase.interface";
 import {courseGradingResults, courseGradings} from "../../course-feature/model/course.random.data";
 
@@ -35,6 +30,7 @@ export const testPublic: CourseTestPublic = {
   course: {
     ...coursePublic
   },
+  testState: CourseTestStateEnum.WAITING_FOR_APPROVAL,
   testName: 'TIA - Test1',
   createdBy: {
     uid: '78654',
@@ -67,12 +63,12 @@ export const courseTestResult: CourseTestResult = {
   timeAwayOfTest: 90,
   timeStarted: getCurrentIOSDate(),
   timeEnded: getCurrentIOSDate(),
-  state: CourseTestResultStateEnum.GRADED
+  testFormState: CourseTestFormStateEnum.GRADED
 }
 
 export const courseTestApproved: CourseTest = {
   ...testPublic,
-  state: CourseTestStateEnum.APPROVED,
+  testState: CourseTestStateEnum.APPROVED,
   questions: [],
   testResults: [{...courseTestResult}, {
     receivedPoints: 22,
@@ -91,7 +87,7 @@ export const courseTestApproved: CourseTest = {
     takenTestId: 'test123',
     timeAwayOfTest: 90,
     timeStarted: getCurrentIOSDate(),
-    state: CourseTestResultStateEnum.TESTING
+    testFormState: CourseTestFormStateEnum.TAKE
   }]
 }
 
@@ -102,7 +98,7 @@ export const courseTestWaitingApproval: CourseTest = {
   },
   testName: 'TIA - Test1',
   createdBy: {
-    uid: '123465',
+    uid: '1234658',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
     photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -111,8 +107,39 @@ export const courseTestWaitingApproval: CourseTest = {
   duration: 90,
   availableFrom: getCurrentIOSDate(),
   availableTo: getCurrentIOSDate(),
-  state: CourseTestStateEnum.WAITING_FOR_APPROVAL,
-  questions: [],
+  testState: CourseTestStateEnum.WAITING_FOR_APPROVAL,
+  questions: [{
+    answer: null,
+    answerTime: null,
+    markerComment: null,
+    points: 2,
+    question: 'Question 1 something is yellow?',
+    receivedPoints: null
+  },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 2,
+      question: 'Question 3 something is yellow?',
+      receivedPoints: null
+    },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 1,
+      question: 'Something is yellow?',
+      receivedPoints: null
+    }],
   testResults: [],
   testPoints: 80
 }

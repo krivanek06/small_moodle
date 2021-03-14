@@ -17,12 +17,12 @@ import {CourseFilterActivePipe} from './pipes/course-filter-active.pipe';
 import {CourseFilterCompletedPipe} from './pipes/course-filter-completed.pipe';
 import {CourseFilterManagedOpenPipe} from './pipes/course-filter-managed-open.pipe';
 import {CourseInvitationConfirmationPopOverComponent} from "./entry-points/course-invitation-confirmation-pop-over/course-invitation-confirmation-pop-over.component";
-import {CourseMembersComponent} from "./components/lists/course-members/course-members.component";
 import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component";
 import {CourseGradesComponent} from "./components/lists/course-grades/course-grades.component";
 import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-type-radio/course-member-type-radio.component";
-import {CourseCreateFormComponent} from "./components/forms/course-create-form/course-create-form.component";
+import {CourseCreateFormComponent} from "./containers/course-create-form/course-create-form.component";
 import {CourseCreateEntryPointComponent} from "./entry-points/course-create-entry-point/course-create-entry-point.component";
+import {AccountFeatureModule} from "../account-feature/account-feature.module";
 
 
 @NgModule({
@@ -44,7 +44,6 @@ import {CourseCreateEntryPointComponent} from "./entry-points/course-create-entr
     CourseFilterCompletedPipe,
     CourseFilterManagedOpenPipe,
     CourseInvitationConfirmationPopOverComponent,
-    CourseMembersComponent,
     CoursesUserAccountInfoModalComponent,
     CourseGradesComponent,
     CourseMemberTypeRadioComponent,
@@ -68,14 +67,14 @@ import {CourseCreateEntryPointComponent} from "./entry-points/course-create-entr
     CourseFilterCompletedPipe,
     CourseFilterActivePipe,
     CourseInvitationConfirmationPopOverComponent,
-    CourseMembersComponent,
     CoursesUserAccountInfoModalComponent,
     CourseGradesComponent,
     CourseMemberTypeRadioComponent,
     CourseCreateEntryPointComponent
   ],
   imports: [
-      SharedModule
+    SharedModule,
+    AccountFeatureModule
   ]
 })
 export class CourseFeatureModule {

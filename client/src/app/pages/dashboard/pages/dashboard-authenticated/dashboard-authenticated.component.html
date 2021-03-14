@@ -11,6 +11,11 @@
               [authenticatedUser]="userMain"
               [userCourses]="user.courses | courseFilterManaged">
             </app-courses-manage>
+            <ion-buttons class="ion-justify-content-end st-small-padding">
+              <ion-button color="primary" class="st-small-padding" (click)="createCourse()">
+                Create course
+              </ion-button>
+            </ion-buttons>
           </app-generic-card>
         </ion-col>
 

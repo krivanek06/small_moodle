@@ -5,7 +5,7 @@ import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
 import auth from 'firebase';
 import firebase from 'firebase';
 import {Router} from "@angular/router";
-import {LoginIUser, RegisterIUser, StUser, StUserLogin} from "../models/user.interface";
+import {LoginIUser, RegisterIUser, StUser, StUserLogin, StUserMain} from "../models/user.interface";
 import {buildUserPrivate, buildUserPublic} from "../utils/user.builder";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map, takeUntil} from "rxjs/operators";
@@ -29,6 +29,16 @@ export class AuthFeatureService {
     }
 
     return this.user$.getValue();
+  }
+
+  get userMain(): StUserMain {
+    const user = this.user;
+    return {
+      uid: user.uid,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      accountCreatedDate: user.accountCreatedDate
+    }
   }
 
   getUser(): Observable<StUser> {

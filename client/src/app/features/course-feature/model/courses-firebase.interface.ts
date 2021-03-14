@@ -47,7 +47,7 @@ export interface CourseGradingResults extends CourseGrading{
 
 export interface StUserCourseStudent extends StUserMain {
   receivedGrade?: String;
-  receivedPoints: CourseTestReceivedPoints[];
+  receivedPoints?: CourseTestReceivedPoints[];
   gradeChangeHistory?: CourseGradeChangeHistory[];
 }
 

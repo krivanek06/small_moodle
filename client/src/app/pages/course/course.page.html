@@ -16,8 +16,8 @@
             (clickedEmitter)="redirectToCourseTest($event)"
             [courseTests]="[courseTestApproved, courseTestApproved, courseTestWaitingApproval]">
           </app-course-tests-overview>
-          <ion-buttons class="ion-justify-content-end c-small-padding">
-            <ion-button color="primary" class="c-small-padding" (click)="redirectToCourseTestCreate()">
+          <ion-buttons class="ion-justify-content-end st-small-padding">
+            <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">
               Create test
             </ion-button>
           </ion-buttons>
@@ -54,19 +54,19 @@
           <!-- course members-->
           <ion-col size="12" size-lg="8">
             <app-generic-card [title]="'Course members'">
-              <app-course-members
-                [memberType]="'Evaluators'"
+              <app-account-identification-list
+                [title]="'Evaluators'"
                 [members]="[userMain, userMain, userMain, userMain]">
-              </app-course-members>
-              <app-course-members
-                [memberType]="'Students'"
+              </app-account-identification-list>
+              <app-account-identification-list
+                [title]="'Students'"
                 [enableClick]="true"
                 [members]="[userCourseStudent, userCourseStudent, userCourseStudent, userCourseStudent, userCourseStudent,
                 userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
                 userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
                 userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
                 userCourseStudent]">
-              </app-course-members>
+              </app-account-identification-list>
             </app-generic-card>
           </ion-col>
 

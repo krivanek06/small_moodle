@@ -6,8 +6,7 @@ import {DefaultImgDirective} from "./directives/default-img.directive";
 import {GenericCardComponent} from "./components/generic/generic-card/generic-card.component";
 import {HeaderComponent} from "./containers/header/header.component";
 import {CustomCalendarComponent} from "./components/custom-calendar/custom-calendar.component";
-import {AccountIdentificationItemComponent} from "./components/items/account-identification-item/account-identification-item.component";
-
+import {InlineInputPopUpComponent} from "./entry-points/inline-input-pop-up/inline-input-pop-up.component";
 
 
 @NgModule({
@@ -18,7 +17,7 @@ import {AccountIdentificationItemComponent} from "./components/items/account-ide
     GenericCardComponent,
     HeaderComponent,
     CustomCalendarComponent,
-    AccountIdentificationItemComponent
+    InlineInputPopUpComponent
   ],
   imports: [
     SharedModulesModule
@@ -31,7 +30,7 @@ import {AccountIdentificationItemComponent} from "./components/items/account-ide
     GenericCardComponent,
     HeaderComponent,
     CustomCalendarComponent,
-    AccountIdentificationItemComponent
+    InlineInputPopUpComponent
   ]
 })
 export class SharedModule { }

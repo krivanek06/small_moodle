@@ -6,6 +6,7 @@ import {CourseTestFormComponent} from "./components/course-test-form/course-test
 import {CourseTestInfoComponent} from "./components/course-test-info/course-test-info.component";
 import {CourseTestFormButtonsComponent} from "./components/course-test-form-buttons/course-test-form-buttons.component";
 import {CourseTestBackButtonComponent} from "./components/course-test-back-button/course-test-back-button.component";
+import {AccountFeatureModule} from "../account-feature/account-feature.module";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {CourseTestBackButtonComponent} from "./components/course-test-back-butto
     CourseTestBackButtonComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    AccountFeatureModule
   ],
   exports: [
     CourseTestsOverviewComponent,

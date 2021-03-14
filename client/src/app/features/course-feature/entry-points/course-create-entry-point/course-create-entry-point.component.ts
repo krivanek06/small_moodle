@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ModalController} from "@ionic/angular";
+import {CourseCreate} from "../../model/course-module.interface";
 
 @Component({
   selector: 'app-course-create-entry-point',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseCreateEntryPointComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalController: ModalController) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
+  dismissModal() {
+    this.modalController.dismiss()
+  }
+
+  submittedForm(courseCreate: CourseCreate) {
+    this.modalController.dismiss({courseCreate})
+  }
 }

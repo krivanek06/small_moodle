@@ -23,6 +23,10 @@ export class DashboardAuthenticatedComponent implements OnInit {
   ngOnInit() {
   }
 
+  redirectToCourse(coursePublic: CoursePublic) {
+    this.router.navigate([`menu/course/${coursePublic.Id}`])
+  }
+
   searchCoursesByCategory(categoryName: string) {
     this.dashboardAuthenticatedFacadeService.searchCoursesByCategory(categoryName);
   }
@@ -35,7 +39,7 @@ export class DashboardAuthenticatedComponent implements OnInit {
     this.dashboardAuthenticatedFacadeService.showUserInformation(userPublic);
   }
 
-  redirectToCourse(coursePublic: CoursePublic) {
-    this.router.navigate([`menu/course/${coursePublic.Id}`])
+  createCourse() {
+    this.dashboardAuthenticatedFacadeService.createCourse();
   }
 }

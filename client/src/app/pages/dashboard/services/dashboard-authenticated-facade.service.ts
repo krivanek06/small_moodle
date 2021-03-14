@@ -6,6 +6,8 @@ import {CourseSearchModalComponent} from "../../../features/course-feature/entry
 import {CourseInvitation} from "../../../features/course-feature/model/courses-firebase.interface";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseFeatureService} from "../../../features/course-feature/services/course-feature.service";
+import {CourseCreateEntryPointComponent} from "../../../features/course-feature/entry-points/course-create-entry-point/course-create-entry-point.component";
+import {CourseCreate} from "../../../features/course-feature/model/course-module.interface";
 
 @Injectable()
 export class DashboardAuthenticatedFacadeService {
@@ -46,5 +48,20 @@ export class DashboardAuthenticatedFacadeService {
       cssClass: 'custom-modal'
     });
     await modal.present();
+  }
+
+  async createCourse() {
+    const modal = await this.modalController.create({
+      component: CourseCreateEntryPointComponent,
+      cssClass: 'custom-modal'
+    });
+    await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+    const courseCreate = resultPromise.data?.courseCreate as CourseCreate;
+    if (courseCreate) {
+      // TODO save into firestore
+      console.log('courseCreate', courseCreate)
+      IonicDialogService.presentToast(`Course ${courseCreate.coursePublic.longName} been created`);
+    }
   }
 }

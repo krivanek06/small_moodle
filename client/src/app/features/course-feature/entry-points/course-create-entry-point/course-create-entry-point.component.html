@@ -1,3 +1,16 @@
-<p>
-  course-create-entry-point works!
-</p>
+<ion-content class="ion-padding ion-margin">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- search component -->
+  <app-course-create-form
+    (formSubmitEmitter)="submittedForm($event)">
+  </app-course-create-form>
+
+</ion-content>

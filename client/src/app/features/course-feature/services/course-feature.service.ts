@@ -7,6 +7,7 @@ import {CourseInvitationConfirmationPopOverComponent} from "../entry-points/cour
 import {COURSE_ROLES_ENUM} from "../model/course.enum";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseInviteMemberConfirm} from "../model/course-module.interface";
+import {InlineInputPopUpComponent} from "../../../shared/entry-points/inline-input-pop-up/inline-input-pop-up.component";
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,21 @@ export class CourseFeatureService {
     const confirm = resultPromise.data?.accept as boolean;
     const role = resultPromise.data?.courseRole as COURSE_ROLES_ENUM;
     return {confirm, role};
+  }
+
+  async addNewCourseCategory() {
+    const modal = await this.popoverController.create({
+      component: InlineInputPopUpComponent,
+      cssClass: 'custom-popover',
+      componentProps: {
+        inputLabel: 'Please enter the name of new course category'
+      }
+    });
+    await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+    const name = resultPromise.data?.inputData;
+    if (name) {
+      IonicDialogService.presentToast(`Category XYZ has been created`);
+    }
   }
 }

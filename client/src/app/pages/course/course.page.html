@@ -30,6 +30,7 @@
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Upcoming tests'">
           <app-course-tests-overview
+            (clickedEmitter)="startTest($event)"
             [courseTests]="[courseTestApproved, courseTestApproved]">
           </app-course-tests-overview>
         </app-generic-card>

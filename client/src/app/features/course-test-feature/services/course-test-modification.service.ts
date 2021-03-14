@@ -6,7 +6,7 @@ import {CourseTestStateEnum} from "../model/course-test.enums";
 @Injectable({
   providedIn: 'root'
 })
-export class CourseTestService {
+export class CourseTestModificationService {
 
   constructor() {
   }

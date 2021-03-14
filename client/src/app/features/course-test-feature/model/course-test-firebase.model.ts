@@ -41,7 +41,7 @@ export interface CourseTestResult {
   takenTestId: string;
   student: StUserMain;
   receivedPoints?: number;
-  timeAwayOfTest: number;
+  timeAwayOfTest?: number;
   marker?: StUserMain;
   timeStarted: string;
   timeEnded?: string;

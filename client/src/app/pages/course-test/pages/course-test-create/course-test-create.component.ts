@@ -1,6 +1,6 @@
 import {Component, ContentChild, OnInit, ViewChild} from '@angular/core';
 import {stUser} from "../../../../features/authentication-feature/models/user.random.data";
-import {CourseTestService} from "../../../../features/course-test-feature/services/course-test.service";
+import {CourseTestModificationService} from "../../../../features/course-test-feature/services/course-test-modification.service";
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
 import {courseTakenTest} from "../../../../features/course-test-feature/model/course-test.random.data";
 
@@ -18,7 +18,7 @@ export class CourseTestCreateComponent implements OnInit {
   errorMessage: string;
   stUserMain = stUser;
 
-  constructor(private courseTestService: CourseTestService) {
+  constructor(private courseTestService: CourseTestModificationService) {
   }
 
   ngOnInit() {

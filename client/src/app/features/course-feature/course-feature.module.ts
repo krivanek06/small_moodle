@@ -21,6 +21,8 @@ import {CourseMembersComponent} from "./components/lists/course-members/course-m
 import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component";
 import {CourseGradesComponent} from "./components/lists/course-grades/course-grades.component";
 import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-type-radio/course-member-type-radio.component";
+import {CourseCreateFormComponent} from "./components/forms/course-create-form/course-create-form.component";
+import {CourseCreateEntryPointComponent} from "./entry-points/course-create-entry-point/course-create-entry-point.component";
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-
     CourseMembersComponent,
     CoursesUserAccountInfoModalComponent,
     CourseGradesComponent,
-    CourseMemberTypeRadioComponent
+    CourseMemberTypeRadioComponent,
+    CourseCreateFormComponent,
+    CourseCreateEntryPointComponent
   ],
   exports: [
     CoursesActiveComponent,
@@ -67,7 +71,8 @@ import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-
     CourseMembersComponent,
     CoursesUserAccountInfoModalComponent,
     CourseGradesComponent,
-    CourseMemberTypeRadioComponent
+    CourseMemberTypeRadioComponent,
+    CourseCreateEntryPointComponent
   ],
   imports: [
       SharedModule

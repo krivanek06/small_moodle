@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CourseTestService} from "../../../../features/course-test-feature/services/course-test.service";
+import {CourseTestModificationService} from "../../../../features/course-test-feature/services/course-test-modification.service";
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
 import {courseTestWaitingApproval} from "../../../../features/course-test-feature/model/course-test.random.data";
 import {stUser} from "../../../../features/authentication-feature/models/user.random.data";
@@ -17,7 +17,7 @@ export class CourseTestEditComponent implements OnInit {
   courseTestWaitingApproval = courseTestWaitingApproval;
   stUserMain = stUser;
 
-  constructor(private courseTestService: CourseTestService) {
+  constructor(private courseTestService: CourseTestModificationService) {
   }
 
   ngOnInit() {

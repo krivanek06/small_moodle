@@ -49,4 +49,8 @@ export class CoursePage implements OnInit {
   redirectToCourseTest(courseTest: CourseTest) {
     this.router.navigate([`menu/course-test/edit/${courseTest.testId}`]);
   }
+
+  startTest(courseTest: CourseTest) {
+
+  }
 }

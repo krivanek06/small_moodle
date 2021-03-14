@@ -1,6 +1,6 @@
 import {CourseTest, CourseTestPublic, CourseTestResult, CourseTestTaken} from "./course-test-firebase.model";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
-import {CourseTestFormStateEnum,  CourseTestStateEnum} from "./course-test.enums";
+import {CourseTestFormStateEnum, CourseTestStateEnum} from "./course-test.enums";
 import {CoursePublic} from "../../course-feature/model/courses-firebase.interface";
 import {courseGradingResults, courseGradings} from "../../course-feature/model/course.random.data";
 
@@ -146,6 +146,106 @@ export const courseTestWaitingApproval: CourseTest = {
 
 export const courseTakenTest: CourseTestTaken = {
   ...testPublic,
-  ...courseTestResult,
-  questions: []
+  receivedPoints: 15,
+  marker: {
+    uid: '123465',
+    accountCreatedDate: getCurrentIOSDate(),
+    displayName: 'Meno Priezvisko',
+    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+  },
+  student: {
+    uid: '123465',
+    accountCreatedDate: getCurrentIOSDate(),
+    displayName: 'Meno Priezvisko',
+    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+  },
+  takenTestId: 'test123',
+  timeAwayOfTest: 90,
+  timeStarted: getCurrentIOSDate(),
+  timeEnded: getCurrentIOSDate(),
+  testFormState: CourseTestFormStateEnum.TAKE,
+  questions: [
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    }, {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    }, {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    }, {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    },
+  ]
+}
+
+export const courseTakenTestCompleted: CourseTestTaken = {
+  ...testPublic,
+  receivedPoints: 15,
+  marker: {
+    uid: '123465',
+    accountCreatedDate: getCurrentIOSDate(),
+    displayName: 'Meno Priezvisko',
+    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+  },
+  student: {
+    uid: '123465',
+    accountCreatedDate: getCurrentIOSDate(),
+    displayName: 'Meno Priezvisko',
+    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+  },
+  takenTestId: 'test123',
+  timeAwayOfTest: 90,
+  timeStarted: getCurrentIOSDate(),
+  timeEnded: getCurrentIOSDate(),
+  testFormState: CourseTestFormStateEnum.GRADED,
+  questions: [
+    {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    }, {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    }, {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    }, {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    },
+  ]
 }

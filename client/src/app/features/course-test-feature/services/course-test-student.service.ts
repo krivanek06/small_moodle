@@ -4,13 +4,15 @@ import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {convertCourseTestIntoCourseTestTaken} from "../utils/course-test.convertor";
 import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {Observable, of} from "rxjs";
+import {AuthFeatureService} from "../../authentication-feature/services/auth-feature.service";
+import {CourseTestFormStateEnum} from "../model/course-test.enums";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseTestStudentService {
 
-  constructor() {
+  constructor(private authService: AuthFeatureService) {
   }
 
   async startCourseTest(courseTest: CourseTest, user: StUserMain) {
@@ -32,8 +34,17 @@ export class CourseTestStudentService {
 
   }
 
-  gradeCourseTest(takenTest: CourseTestTaken) {
-
+  gradeCourseTest(oldTest: CourseTestTaken, graded: CourseTest) {
+    const courseTest: CourseTestTaken = {
+      ...oldTest,
+      questions: graded.questions,
+      marker: this.authService.userMain,
+      receivedPoints: graded.questions.map(x => x.receivedPoints).reduce((a, b) => a + b, 0),
+      testFormState: CourseTestFormStateEnum.GRADED
+    };
+    console.log('courseTest', courseTest);
+    // TODO save into firestore
+    this.presentToaster('graded', courseTest);
   }
 
   private async presentDialog(action: string, {testName, course}: CourseTestPublic) {

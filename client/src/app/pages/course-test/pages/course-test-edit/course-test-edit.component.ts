@@ -4,6 +4,7 @@ import {CourseTestFormComponent} from "../../../../features/course-test-feature/
 import {courseTestWaitingApproval} from "../../../../features/course-test-feature/model/course-test.random.data";
 import {stUser} from "../../../../features/authentication-feature/models/user.random.data";
 import {CourseTest} from "../../../../features/course-test-feature/model/course-test-firebase.model";
+import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
 
 @Component({
   selector: 'app-course-test-edit',
@@ -13,6 +14,7 @@ import {CourseTest} from "../../../../features/course-test-feature/model/course-
 export class CourseTestEditComponent implements OnInit {
 
   @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
+  CourseTestFormStateEnum = CourseTestFormStateEnum;
   errorMessage: string;
   courseTestWaitingApproval = courseTestWaitingApproval;
   stUserMain = stUser;

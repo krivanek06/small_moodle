@@ -14,7 +14,7 @@ import {getCurrentIOSDate} from "../../../../core/utils/date-formatter.functions
   styleUrls: ['./course-test-form.component.scss'],
 })
 export class CourseTestFormComponent implements OnInit {
-  @Input() state: CourseTestFormStateEnum = CourseTestFormStateEnum.CREATE;
+  @Input() state: CourseTestFormStateEnum;
 
 
   // only if CourseTestFormEnum.CREATE;
@@ -28,7 +28,7 @@ export class CourseTestFormComponent implements OnInit {
 
   form: FormGroup;
 
-  canEditTest: boolean;
+  isCreatingState: boolean;
 
   constructor(private fb: FormBuilder) {
   }
@@ -58,7 +58,8 @@ export class CourseTestFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.canEditTest = (!this.courseTest && this.state === CourseTestFormStateEnum.CREATE) || this.courseTest.createdBy.uid === this.user.uid;
+    this.isCreatingState = this.state === CourseTestFormStateEnum.CREATE && (!this.courseTest || this.courseTest.createdBy.uid === this.user.uid);
+
     if (this.courseTest) {
       this.initFormWithQuestions();
     } else {
@@ -92,15 +93,24 @@ export class CourseTestFormComponent implements OnInit {
     const formGroup = this.fb.group({
       question: [{
         value: question?.question ?? '',
-        disabled: !this.canEditTest
+        disabled: !this.isCreatingState
       }, [Validators.required]],
       points: [{
         value: question?.points ?? 1,
-        disabled: !this.canEditTest
+        disabled: !this.isCreatingState
       }, [Validators.required, Validators.min(1)]],
-      answer: [question?.answer],
-      markerComment: [question?.markerComment],
-      receivedPoints: [question?.receivedPoints],
+      answer: [{
+        value: question?.answer,
+        disabled: this.state !== CourseTestFormStateEnum.TAKE
+      }],
+      markerComment: [{
+        value: question?.markerComment,
+        disabled: this.state !== CourseTestFormStateEnum.GRADE
+      }],
+      receivedPoints: [{
+        value: question?.receivedPoints,
+        disabled: this.state !== CourseTestFormStateEnum.GRADE
+      }],
       answerTime: [question?.answerTime]
     });
     this.questions.push(formGroup);
@@ -112,11 +122,11 @@ export class CourseTestFormComponent implements OnInit {
 
   private initFormWithQuestions() {
     this.form = this.fb.group({
-      testName: [{value: this.courseTest.testName, disabled: !this.canEditTest}],
-      duration: [{value: this.courseTest.duration, disabled: !this.canEditTest}],
-      availableFrom: [{value: this.courseTest.availableFrom, disabled: !this.canEditTest}],
-      availableTo: [{value: this.courseTest.availableTo, disabled: !this.canEditTest}],
-      testPoints: [{value: this.courseTest.testPoints, disabled: !this.canEditTest}],
+      testName: [{value: this.courseTest.testName, disabled: !this.isCreatingState}],
+      duration: [{value: this.courseTest.duration, disabled: !this.isCreatingState}],
+      availableFrom: [{value: this.courseTest.availableFrom, disabled: !this.isCreatingState}],
+      availableTo: [{value: this.courseTest.availableTo, disabled: !this.isCreatingState}],
+      testPoints: [{value: this.courseTest.testPoints, disabled: !this.isCreatingState}],
       questions: this.fb.array([]),
     });
     this.courseTest.questions.forEach(question => this.addQuestion(question));

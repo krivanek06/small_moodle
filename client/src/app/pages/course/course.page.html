@@ -12,10 +12,10 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Course tests'">
-          <app-course-tests-overview
+          <app-course-test-public-table
             (clickedEmitter)="redirectToCourseTest($event)"
             [courseTests]="[courseTestApproved, courseTestApproved, courseTestWaitingApproval]">
-          </app-course-tests-overview>
+          </app-course-test-public-table>
           <ion-buttons class="ion-justify-content-end st-small-padding">
             <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">
               Create test
@@ -29,10 +29,10 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Upcoming tests'">
-          <app-course-tests-overview
+          <app-course-test-public-table
             (clickedEmitter)="startTest($event)"
             [courseTests]="[courseTestApproved, courseTestApproved]">
-          </app-course-tests-overview>
+          </app-course-test-public-table>
         </app-generic-card>
       </ion-col>
     </ion-row>
@@ -41,9 +41,9 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Completed tests'">
-          <app-course-tests-student-completed
+          <app-course-test-student-completed-table
             [courseTakenTests]="[courseTakenTest, courseTakenTest, courseTakenTest]">
-          </app-course-tests-student-completed>
+          </app-course-test-student-completed-table>
         </app-generic-card>
       </ion-col>
     </ion-row>

@@ -6,8 +6,8 @@ export enum CourseTestStateEnum {
 
 export enum CourseTestFormStateEnum {
   CREATE = 'CREATE',      // marker is creating new test
-  VALIDATE = 'VALIDATE',  // marker is validating student's answers
+  GRADE = 'GRADE',        // marker is validating student's answers
   TAKE = 'TAKE',          // student is taking the test
-  GRADED = 'GRADED',        // marker added points
+  GRADED = 'GRADED',      // marker added points
   PREVIEW = 'PREVIEW'     // marker + teacher - shows only questions & points, no edit available
 }

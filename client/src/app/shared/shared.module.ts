@@ -7,6 +7,7 @@ import {GenericCardComponent} from "./components/generic/generic-card/generic-ca
 import {HeaderComponent} from "./containers/header/header.component";
 import {CustomCalendarComponent} from "./components/custom-calendar/custom-calendar.component";
 import {InlineInputPopUpComponent} from "./entry-points/inline-input-pop-up/inline-input-pop-up.component";
+import {GridPageContentComponent} from "./components/layouts/grid-page-content/grid-page-content.component";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {InlineInputPopUpComponent} from "./entry-points/inline-input-pop-up/inli
     GenericCardComponent,
     HeaderComponent,
     CustomCalendarComponent,
-    InlineInputPopUpComponent
+    InlineInputPopUpComponent,
+    GridPageContentComponent
   ],
   imports: [
     SharedModulesModule
@@ -30,7 +32,8 @@ import {InlineInputPopUpComponent} from "./entry-points/inline-input-pop-up/inli
     GenericCardComponent,
     HeaderComponent,
     CustomCalendarComponent,
-    InlineInputPopUpComponent
+    InlineInputPopUpComponent,
+    GridPageContentComponent
   ]
 })
 export class SharedModule { }

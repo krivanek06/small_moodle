@@ -3,6 +3,7 @@ import {stUser} from "../../../../features/authentication-feature/models/user.ra
 import {CourseTestModificationService} from "../../../../features/course-test-feature/services/course-test-modification.service";
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
 import {courseTakenTest} from "../../../../features/course-test-feature/model/course-test.random.data";
+import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
 
 
 @Component({
@@ -14,7 +15,7 @@ export class CourseTestCreateComponent implements OnInit {
 
 
   @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
-
+  CourseTestFormStateEnum = CourseTestFormStateEnum;
   errorMessage: string;
   stUserMain = stUser;
 

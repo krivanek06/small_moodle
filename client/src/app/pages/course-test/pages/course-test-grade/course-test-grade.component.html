@@ -1,0 +1,13 @@
+<ion-grid>
+  <!-- test questions -->
+  <app-grid-page-content>
+    <app-course-test-form
+      [state]="CourseTestFormStateEnum.GRADE"
+      [courseTest]="courseTakenTestCompleted">
+    </app-course-test-form>
+
+    <ion-buttons class="ion-justify-content-end">
+      <ion-button color="primary" (click)="gradeTest()" fill="outline">Grade</ion-button>
+    </ion-buttons>
+  </app-grid-page-content>
+</ion-grid>

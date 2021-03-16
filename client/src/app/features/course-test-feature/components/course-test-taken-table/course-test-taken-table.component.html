@@ -1,0 +1,23 @@
+<ion-list>
+  <!-- table header -->
+  <ion-item class="st-font-1-bold">
+    <ion-label>Test ID</ion-label>
+    <ion-label>Student</ion-label>
+    <ion-label>Time started</ion-label>
+    <ion-label>Time finished</ion-label>
+    <ion-label>Time away</ion-label>
+    <ion-label>Evaluator</ion-label>
+    <ion-label>Received points</ion-label>
+  </ion-item>
+
+  <!-- table body -->
+  <ion-item button *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
+    <ion-label>{{ test.testId }}</ion-label>
+    <ion-label>{{ test.student?.displayName }}</ion-label>
+    <ion-label>{{ test.timeStarted | date: 'HH:mm dd.MM.YYYY' }}</ion-label>
+    <ion-label>{{ test.timeEnded | date: 'HH:mm dd.MM.YYYY' }}</ion-label>
+    <ion-label>{{ test.timeAwayOfTest | date: 'mm:ss' }}</ion-label>
+    <ion-label>{{ test.marker?.displayName }}</ion-label>
+    <ion-label>{{ test.receivedPoints }} ({{ 1 / test.testPoints  * test.receivedPoints | percent }})</ion-label>
+  </ion-item>
+</ion-list>

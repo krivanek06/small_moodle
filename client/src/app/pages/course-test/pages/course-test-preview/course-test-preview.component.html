@@ -1,3 +1,42 @@
-<p>
-  course-test-preview works!
-</p>
+<ion-grid>
+
+  <!-- back button + test started info -->
+  <app-grid-page-content>
+    <ion-row>
+      <ion-col size="12" size-sm="6">
+        <app-course-test-back-button
+          [courseId]="'course123'"
+          [courseName]="'Tvorba Internetovych applikacii'">
+        </app-course-test-back-button>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item lines="none">
+          <ion-label>Test started: 15</ion-label>
+          <ion-label>Test finished: 25</ion-label>
+          <ion-label>Test not started: 2</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </app-grid-page-content>
+
+
+  <!-- table test results -->
+  <app-grid-page-content>
+    <app-generic-card [title]="'Test results'">
+      <app-course-test-taken-table
+        (clickedEmitter)="redirectToCourseTestGrade($event)"
+        [courseTakenTests]="[courseTakenTest, courseTakenTestCompleted, courseTakenTest, courseTakenTestCompleted]">
+      </app-course-test-taken-table>
+    </app-generic-card>
+  </app-grid-page-content>
+
+  <!-- test questions -->
+  <app-grid-page-content>
+    <app-course-test-form
+      [state]="CourseTestFormStateEnum.PREVIEW"
+      [courseTest]="courseTestApproved">
+    </app-course-test-form>
+  </app-grid-page-content>
+
+</ion-grid>
+

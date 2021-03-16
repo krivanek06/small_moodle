@@ -69,7 +69,38 @@ export const courseTestResult: CourseTestResult = {
 export const courseTestApproved: CourseTest = {
   ...testPublic,
   testState: CourseTestStateEnum.APPROVED,
-  questions: [],
+  questions: [{
+    answer: null,
+    answerTime: null,
+    markerComment: null,
+    points: 2,
+    question: 'Question 1 something is yellow?',
+    receivedPoints: null
+  },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null
+    },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 2,
+      question: 'Question 3 something is yellow?',
+      receivedPoints: null
+    },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 1,
+      question: 'Something is yellow?',
+      receivedPoints: null
+    }],
   testResults: [{...courseTestResult}, {
     receivedPoints: 22,
     marker: {
@@ -146,7 +177,7 @@ export const courseTestWaitingApproval: CourseTest = {
 
 export const courseTakenTest: CourseTestTaken = {
   ...testPublic,
-  receivedPoints: 15,
+  receivedPoints: null,
   marker: {
     uid: '123465',
     accountCreatedDate: getCurrentIOSDate(),

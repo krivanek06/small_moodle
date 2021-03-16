@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StUserPublic} from "../../../authentication-feature/models/user.interface";
-import {userPublic} from "../../../authentication-feature/models/user.random.data";
+import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 
 //@AutoUnsub()
 @Component({
@@ -25,12 +25,6 @@ export class AccountSearchComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.watchForm();
-
-    this.searchedUsers = [
-      {...userPublic},
-      {...userPublic},
-      {...userPublic},
-    ]
   }
 
   clickedUser(user: StUserPublic) {
@@ -45,7 +39,10 @@ export class AccountSearchComponent implements OnInit {
 
   // TODO test with @AutoUnsub
   private watchForm() {
-    this.displayName.valueChanges.subscribe(name => {
+    this.displayName.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(name => {
       console.log('nae', name)
     })
   }

@@ -79,6 +79,8 @@ export const coursePublic: CoursePublic = {
   category: 'FMFI',
   creator: {
     uid: '123465',
+    firstName: 'Janko',
+    lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
     photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -98,6 +100,8 @@ export const userCourseStudent: StUserCourseStudent = {
   uid: '123465',
   accountCreatedDate: getCurrentIOSDate(),
   displayName: 'Meno Priezvisko',
+  lastName: 'Velky',
+  firstName: 'Janko',
   photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   receivedPoints: [{
     testId: 'Test1234',
@@ -113,6 +117,8 @@ export const userCourseStudent: StUserCourseStudent = {
   gradeChangeHistory: [{
     changedBy: {
       uid: '123465',
+      firstName: 'Janko',
+      lastName: 'Maly',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -127,18 +133,24 @@ export const coursePrivate: CoursePrivate = {
   markers: [
     {
       uid: '123465',
+      firstName: 'Janko',
+      lastName: 'Maly',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
     {
       uid: '123465',
+      firstName: 'Janko',
+      lastName: 'Maly',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
     },
     {
       uid: '123465',
+      firstName: 'Janko',
+      lastName: 'Maly',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -165,6 +177,8 @@ export const coursePrivate: CoursePrivate = {
     testName: 'TIA - Test2',
     createdBy: {
       uid: '123465',
+      firstName: 'Janko',
+      lastName: 'Maly',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -190,6 +204,8 @@ export const courseInvitation: CourseInvitation = {
     category: 'FMFI',
     creator: {
       uid: '123465',
+      firstName: 'Janko',
+      lastName: 'Maly',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno123 Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -205,6 +221,8 @@ export const courseInvitation: CourseInvitation = {
   },
   invitedBy: {
     uid: '123465',
+    firstName: 'Janko',
+    lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko22',
     photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'

@@ -20,6 +20,8 @@ export class AuthenticationRegisterComponent implements OnInit {
   ngOnInit() {
     this.registrationForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      firstName: ['', [Validators.required]],
+      lastName: [null],
       password1: ['', Validators.required],
       password2: ['', Validators.required]
     });
@@ -43,7 +45,9 @@ export class AuthenticationRegisterComponent implements OnInit {
     this.registrationEmitter.emit({
       email: this.email.value,
       password1: this.password1.value,
-      password2: this.password2.value
+      password2: this.password2.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value
     });
   }
 
@@ -57,6 +61,14 @@ export class AuthenticationRegisterComponent implements OnInit {
 
   get password2() {
     return this.registrationForm.get('password2');
+  }
+
+  get firstName() {
+    return this.registrationForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.registrationForm.get('lastName');
   }
 
 }

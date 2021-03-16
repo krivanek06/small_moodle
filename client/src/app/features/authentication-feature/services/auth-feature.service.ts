@@ -43,7 +43,9 @@ export class AuthFeatureService {
       uid: user.uid,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      accountCreatedDate: user.accountCreatedDate
+      accountCreatedDate: user.accountCreatedDate,
+      lastName: user.lastName,
+      firstName: user.firstName
     }
   }
 
@@ -59,7 +61,7 @@ export class AuthFeatureService {
 
   async normalRegistration(registerIUser: RegisterIUser) {
     const credentials = await this.afAuth.createUserWithEmailAndPassword(registerIUser.email, registerIUser.password1);
-    await this.signInUser(credentials);
+    await this.signInUser(credentials, registerIUser);
   }
 
   async normalLogin(loginIUser: LoginIUser) {
@@ -75,9 +77,9 @@ export class AuthFeatureService {
     await this.router.navigate(['/menu']);
   }
 
-  private async signInUser(credential: UserCredential): Promise<void> {
+  private async signInUser(credential: UserCredential, registerIUser?: RegisterIUser): Promise<void> {
     if (credential.additionalUserInfo.isNewUser) {
-      const user = await this.registerUser(credential);
+      const user = await this.registerUser(credential, registerIUser);
       this.user$.next(user);
     } else {
       this.storageService.saveData(this.AUTH_KEY, credential.user.uid);
@@ -106,11 +108,11 @@ export class AuthFeatureService {
     })
   }
 
-  private async registerUser(credential: UserCredential): Promise<StUser> {
+  private async registerUser(credential: UserCredential, registerIUser?: RegisterIUser): Promise<StUser> {
     const profile = credential.additionalUserInfo.profile as any;
     const user = credential.user;
 
-    const userPublic = buildUserPublic(user.uid, user.displayName || user.email.split('@')[0], user.photoURL);
+    const userPublic = buildUserPublic(user, registerIUser);
     const userPrivate = buildUserPrivate(credential.user.email, profile?.locale);
 
 

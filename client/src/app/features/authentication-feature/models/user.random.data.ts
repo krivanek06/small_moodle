@@ -8,7 +8,9 @@ export const userMain: StUserMain = {
   uid: '123465',
   accountCreatedDate: getCurrentIOSDate(),
   displayName: 'Meno Priezvisko',
-  photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+  photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+  firstName: 'Janko',
+  lastName: "Velky"
 }
 
 const courseGradingResults: CourseGradingResults[] = [
@@ -169,10 +171,10 @@ export const stUser: StUser = {
   }, {
     role: COURSE_ROLES_ENUM.TEACHER,
     course: course
-  },{
+  }, {
     role: COURSE_ROLES_ENUM.TEACHER,
     course: course
-  },{
+  }, {
     role: COURSE_ROLES_ENUM.MARKER,
     course: course
   }

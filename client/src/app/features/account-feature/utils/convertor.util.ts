@@ -5,7 +5,9 @@ export const convertStUserPublicToMain = (stUserPublic: StUserPublic): StUserMai
     uid: stUserPublic.uid,
     displayName: stUserPublic.displayName,
     photoURL: stUserPublic.photoURL,
-    accountCreatedDate: stUserPublic.accountCreatedDate
+    accountCreatedDate: stUserPublic.accountCreatedDate,
+    firstName: stUserPublic.firstName,
+    lastName: stUserPublic.lastName
   }
   return userMain;
 }

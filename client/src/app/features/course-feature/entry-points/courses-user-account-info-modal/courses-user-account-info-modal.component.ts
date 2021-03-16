@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from "@ionic/angular";
 import {StUserPublic} from "../../../authentication-feature/models/user.interface";
-import {CourseFeatureService} from "../../services/course-feature.service";
+import {CourseFeatureFacadeService} from "../../services/course-feature-facade.service";
 import {convertStUserPublicToMain} from "../../../account-feature/utils/convertor.util";
 import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
 
@@ -15,7 +15,7 @@ export class CoursesUserAccountInfoModalComponent implements OnInit {
 
   constructor(private modalController: ModalController,
               private navParams: NavParams,
-              private courseFeatureServiceService: CourseFeatureService) {
+              private courseFeatureServiceService: CourseFeatureFacadeService) {
   }
 
   ngOnInit() {

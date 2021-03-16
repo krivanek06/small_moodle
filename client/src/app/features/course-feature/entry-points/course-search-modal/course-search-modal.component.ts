@@ -20,7 +20,7 @@ export class CourseSearchModalComponent implements OnInit {
   }
 
   async selectCourse(course: CoursePublic) {
-    const message = `Do you want to enroll into course ${course.Id}, ${course.longName} as student ?`;
+    const message = `Do you want to enroll into course ${course.courseId}, ${course.longName} as student ?`;
     if (await IonicDialogService.presentAlertConfirm(message)) {
       console.log('Enrolling into course ')   // TODO call firebase
       IonicDialogService.presentToast(`Your request has been sent, please wait for confirmation`);

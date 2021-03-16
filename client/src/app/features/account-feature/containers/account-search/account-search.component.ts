@@ -1,9 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StUserPublic} from "../../../authentication-feature/models/user.interface";
-import {debounceTime, distinctUntilChanged} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {AccountFeatureDatabaseService} from "../../services/account-feature-database.service";
+import {Observable, of} from "rxjs";
 
-//@AutoUnsub()
 @Component({
   selector: 'app-account-search',
   templateUrl: './account-search.component.html',
@@ -12,10 +13,11 @@ import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 export class AccountSearchComponent implements OnInit {
   @Output() clickedUserEmitter: EventEmitter<StUserPublic> = new EventEmitter<StUserPublic>();
 
-  searchedUsers: StUserPublic[] = []; // TODO will be obs - data from firebase
+  searchedUsers$: Observable<StUserPublic[]>;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private accountFeatureService: AccountFeatureDatabaseService) {
   }
 
   get displayName(): AbstractControl {
@@ -37,14 +39,14 @@ export class AccountSearchComponent implements OnInit {
     });
   }
 
-  // TODO test with @AutoUnsub
   private watchForm() {
-    this.displayName.valueChanges.pipe(
+    this.searchedUsers$ = this.displayName.valueChanges.pipe(
       debounceTime(500),
-      distinctUntilChanged()
-    ).subscribe(name => {
-      console.log('nae', name)
-    })
+      distinctUntilChanged(),
+      switchMap(prefix => {
+        return prefix ? this.accountFeatureService.searchUser(prefix) : of(null)
+      })
+    );
   }
 
 }

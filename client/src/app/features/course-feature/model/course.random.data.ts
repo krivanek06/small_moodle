@@ -73,7 +73,7 @@ export const courseGradings: CourseGrading[] = [
 ]
 
 export const coursePublic: CoursePublic = {
-  Id: 'course123',
+  courseId: 'course123',
   year: 2020,
   isOpen: true,
   category: 'FMFI',
@@ -198,7 +198,7 @@ export const course: Course = {
 
 export const courseInvitation: CourseInvitation = {
   course: {
-    Id: 'AD123-45',
+    courseId: 'AD123-45',
     year: 2020,
     isOpen: true,
     category: 'FMFI',

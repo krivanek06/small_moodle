@@ -8,7 +8,7 @@ import {
 } from "../../features/course-test-feature/model/course-test.random.data";
 import {userMain} from "../../features/authentication-feature/models/user.random.data";
 import {StUserPublic} from "../../features/authentication-feature/models/user.interface";
-import {CourseFeatureService} from "../../features/course-feature/services/course-feature.service";
+import {CourseFeatureFacadeService} from "../../features/course-feature/services/course-feature-facade.service";
 import {COURSE_ROLES_ENUM} from "../../features/course-feature/model/course.enum";
 import {CourseTest} from "../../features/course-test-feature/model/course-test-firebase.model";
 
@@ -28,7 +28,7 @@ export class CoursePage implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private courseFeatureService: CourseFeatureService) {
+              private courseFeatureService: CourseFeatureFacadeService) {
   }
 
   ngOnInit() {

@@ -7,11 +7,12 @@
 
 <!-- searched name's results -->
 <ion-list>
-  <app-account-identification-item *ngFor="let user of searchedUsers"
-                                   (click)="clickedUser(user)"
-                                   [showItemBorder]="true"
-                                   [userMain]="user"
-                                   [isOnline]="user.isOnline"
-                                   [enableClick]="true">
+  <app-account-identification-item
+    *ngFor="let user of searchedUsers$ | async"
+    (click)="clickedUser(user)"
+    [showItemBorder]="true"
+    [userMain]="user"
+    [isOnline]="user.isOnline"
+    [enableClick]="true">
   </app-account-identification-item>
 </ion-list>

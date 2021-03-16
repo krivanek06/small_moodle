@@ -75,7 +75,7 @@ const courseGradings: CourseGrading[] = [
 export const studentCourse: StUserCourse = {
   role: COURSE_ROLES_ENUM.STUDENT,
   course: {
-    Id: 'course123',
+    courseId: 'course123',
     year: 2020,
     isOpen: true,
     category: 'FMFI',
@@ -94,7 +94,7 @@ export const studentCourse: StUserCourse = {
 export const teacherCourse: StUserCourse = {
   role: COURSE_ROLES_ENUM.TEACHER,
   course: {
-    Id: 'Managecourse123',
+    courseId: 'Managecourse123',
     year: 2020,
     isOpen: true,
     category: 'FMFI',
@@ -113,7 +113,7 @@ export const teacherCourse: StUserCourse = {
 export const markerCourse: StUserCourse = {
   role: COURSE_ROLES_ENUM.MARKER,
   course: {
-    Id: 'M789course123',
+    courseId: 'M789course123',
     year: 2020,
     isOpen: true,
     category: 'FMFI',

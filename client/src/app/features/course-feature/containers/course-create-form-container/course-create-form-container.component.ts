@@ -1,24 +1,27 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CourseCreate} from "../../model/course-module.interface";
-import {CourseFeatureService} from "../../services/course-feature.service";
+import {CourseFeatureFacadeService} from "../../services/course-feature-facade.service";
 import {StUserMain} from "../../../authentication-feature/models/user.interface";
-import {CoursePrivate, CoursePublic} from "../../model/courses-firebase.interface";
+import {CourseCategory, CoursePrivate, CoursePublic} from "../../model/courses-firebase.interface";
 import {AuthFeatureService} from "../../../authentication-feature/services/auth-feature.service";
 import {v4 as uuid} from 'uuid';
+import {CourseFeatureDatabaseService} from "../../services/course-feature-database.service";
+import {Observable} from "rxjs";
 
 @Component({
-  selector: 'app-course-create-form',
-  templateUrl: './course-create-form.component.html',
-  styleUrls: ['./course-create-form.component.scss'],
+  selector: 'app-course-create-form-container',
+  templateUrl: './course-create-form-container.component.html',
+  styleUrls: ['./course-create-form-container.component.scss'],
 })
-export class CourseCreateFormComponent implements OnInit {
+export class CourseCreateFormContainerComponent implements OnInit {
   @Output() formSubmitEmitter: EventEmitter<CourseCreate> = new EventEmitter<CourseCreate>();
-
+  categories$: Observable<CourseCategory>;
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private courseFeatureService: CourseFeatureService,
+              private courseFeatureFacadeService: CourseFeatureFacadeService,
+              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
               private authService: AuthFeatureService) {
   }
 
@@ -61,7 +64,7 @@ export class CourseCreateFormComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.addGrading();
-    this.form.valueChanges.subscribe(console.log)
+    this.categories$ = this.courseFeatureDatabaseService.getCourseCategories();
   }
 
   submitForm() {
@@ -70,7 +73,7 @@ export class CourseCreateFormComponent implements OnInit {
       return;
     }
     const coursePublic: CoursePublic = {
-      Id: uuid(),
+      courseId: uuid(),
       longName: this.longName.value,
       shortName: this.shortName.value,
       category: this.category.value,
@@ -107,10 +110,14 @@ export class CourseCreateFormComponent implements OnInit {
   }
 
   addCategory() {
-    this.courseFeatureService.addNewCourseCategory();
+    this.courseFeatureFacadeService.addNewCourseCategory();
   }
 
   addStudent(userMain: StUserMain) {
+    const students = this.students.value as StUserMain[];
+    if (students.map(x => x.uid).includes(userMain.uid)) {
+      return
+    }
     this.students.push(this.fb.group({
       uid: [userMain.uid],
       displayName: [userMain.displayName],
@@ -123,6 +130,10 @@ export class CourseCreateFormComponent implements OnInit {
   }
 
   addMarker(userMain: StUserMain) {
+    const markers = this.students.value as StUserMain[];
+    if (markers.map(x => x.uid).includes(userMain.uid)) {
+      return
+    }
     this.markers.push(this.fb.group({
       uid: [userMain.uid],
       displayName: [userMain.displayName],

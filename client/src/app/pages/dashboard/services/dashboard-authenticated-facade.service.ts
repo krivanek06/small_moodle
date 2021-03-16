@@ -5,7 +5,7 @@ import {ModalController, PopoverController} from "@ionic/angular";
 import {CourseSearchModalComponent} from "../../../features/course-feature/entry-points/course-search-modal/course-search-modal.component";
 import {CourseInvitation} from "../../../features/course-feature/model/courses-firebase.interface";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
-import {CourseFeatureService} from "../../../features/course-feature/services/course-feature.service";
+import {CourseFeatureFacadeService} from "../../../features/course-feature/services/course-feature-facade.service";
 import {CourseCreateEntryPointComponent} from "../../../features/course-feature/entry-points/course-create-entry-point/course-create-entry-point.component";
 import {CourseCreate} from "../../../features/course-feature/model/course-module.interface";
 
@@ -14,14 +14,14 @@ export class DashboardAuthenticatedFacadeService {
 
   constructor(private modalController: ModalController,
               private popoverController: PopoverController,
-              private courseFeatureService: CourseFeatureService) {
+              private courseFeatureFacadeService: CourseFeatureFacadeService) {
   }
 
   async showCourseInvitation(invitation: CourseInvitation) {
     const longName = invitation.course.longName;
     const message = `Accept invitation into course ${longName}`;
     console.log('invitation', invitation)
-    const result = await this.courseFeatureService.inviteMemberIntoCourseConfirm(message, invitation.course, invitation.invitedAs, true)
+    const result = await this.courseFeatureFacadeService.inviteMemberIntoCourseConfirm(message, invitation.course, invitation.invitedAs, true)
 
     if (result?.confirm) {
       console.log('accepted course invitation') // TODO call service
@@ -61,6 +61,7 @@ export class DashboardAuthenticatedFacadeService {
     if (courseCreate) {
       // TODO save into firestore
       console.log('courseCreate', courseCreate)
+      this.courseFeatureFacadeService.addNewCourse(courseCreate)
       IonicDialogService.presentToast(`Course ${courseCreate.coursePublic.longName} been created`);
     }
   }

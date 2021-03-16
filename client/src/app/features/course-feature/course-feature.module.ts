@@ -5,7 +5,7 @@ import {CoursesManageTableComponent} from "./components/lists/courses-manage-tab
 import {SharedModule} from "../../shared/shared.module";
 import {CourseInvitationsComponent} from "./components/lists/course-invitations/course-invitations.component";
 import {CourseCategoriesComponent} from "./components/lists/course-categories/course-categories.component";
-import {CourseSearchComponent} from "./containers/course-search/course-search.component";
+import {CourseSearchContainerComponent} from "./containers/course-search-container/course-search-container.component";
 import {CourseSearchModalComponent} from "./entry-points/course-search-modal/course-search-modal.component";
 import {CourseNearestTestPipe} from './pipes/course-nearest-test.pipe';
 import {CourseReceivedPointsPipe} from './pipes/course-received-points.pipe';
@@ -20,7 +20,7 @@ import {CourseInvitationConfirmationPopOverComponent} from "./entry-points/cours
 import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component";
 import {CourseGradesTableComponent} from "./components/lists/course-grades-table/course-grades-table.component";
 import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-type-radio/course-member-type-radio.component";
-import {CourseCreateFormComponent} from "./containers/course-create-form/course-create-form.component";
+import {CourseCreateFormContainerComponent} from "./containers/course-create-form-container/course-create-form-container.component";
 import {CourseCreateEntryPointComponent} from "./entry-points/course-create-entry-point/course-create-entry-point.component";
 import {AccountFeatureModule} from "../account-feature/account-feature.module";
 
@@ -32,7 +32,7 @@ import {AccountFeatureModule} from "../account-feature/account-feature.module";
     CoursesManageTableComponent,
     CourseInvitationsComponent,
     CourseCategoriesComponent,
-    CourseSearchComponent,
+    CourseSearchContainerComponent,
     CourseSearchModalComponent,
     CourseNearestTestPipe,
     CourseReceivedPointsPipe,
@@ -47,7 +47,7 @@ import {AccountFeatureModule} from "../account-feature/account-feature.module";
     CoursesUserAccountInfoModalComponent,
     CourseGradesTableComponent,
     CourseMemberTypeRadioComponent,
-    CourseCreateFormComponent,
+    CourseCreateFormContainerComponent,
     CourseCreateEntryPointComponent
   ],
   exports: [
@@ -56,7 +56,7 @@ import {AccountFeatureModule} from "../account-feature/account-feature.module";
     CoursesManageTableComponent,
     CourseInvitationsComponent,
     CourseCategoriesComponent,
-    CourseSearchComponent,
+    CourseSearchContainerComponent,
     CourseSearchModalComponent,
     CourseNearestTestPipe,
     CourseReceivedPointsPipe,

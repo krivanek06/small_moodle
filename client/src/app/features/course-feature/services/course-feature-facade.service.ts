@@ -6,15 +6,20 @@ import {CoursePublic} from "../model/courses-firebase.interface";
 import {CourseInvitationConfirmationPopOverComponent} from "../entry-points/course-invitation-confirmation-pop-over/course-invitation-confirmation-pop-over.component";
 import {COURSE_ROLES_ENUM} from "../model/course.enum";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
-import {CourseInviteMemberConfirm} from "../model/course-module.interface";
+import {CourseCreate, CourseInviteMemberConfirm} from "../model/course-module.interface";
 import {InlineInputPopUpComponent} from "../../../shared/entry-points/inline-input-pop-up/inline-input-pop-up.component";
+import {CourseFeatureDatabaseService} from "./course-feature-database.service";
+import {AccountFeatureDatabaseService} from "../../account-feature/services/account-feature-database.service";
+import {createCourseInvitation} from "../utils/course.convertor";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CourseFeatureService {
+export class CourseFeatureFacadeService {
 
-  constructor(private popoverController: PopoverController) {
+  constructor(private popoverController: PopoverController,
+              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+              private accountFeatureDatabaseService: AccountFeatureDatabaseService) {
   }
 
   async inviteMemberIntoCourse(userMain: StUserMain): Promise<void> {
@@ -77,7 +82,26 @@ export class CourseFeatureService {
     const resultPromise = await modal.onDidDismiss();
     const name = resultPromise.data?.inputData;
     if (name) {
-      IonicDialogService.presentToast(`Category XYZ has been created`);
+      console.log('name', name)
+      await this.courseFeatureDatabaseService.addCourseCategory(name);
+      IonicDialogService.presentToast(`Category ${name} has been created`);
     }
+  }
+
+  async addNewCourse(courseCreate: CourseCreate) {
+    // create public / private data
+    this.courseFeatureDatabaseService.saveCourse(courseCreate);
+
+    // invite people
+    const studentInvitation = createCourseInvitation(courseCreate.coursePublic, COURSE_ROLES_ENUM.STUDENT);
+    const markerInvitation = createCourseInvitation(courseCreate.coursePublic, COURSE_ROLES_ENUM.MARKER);
+
+    courseCreate.coursePrivate.markers.forEach(m => this.accountFeatureDatabaseService.invitePersonIntoCourse(m, markerInvitation));
+    courseCreate.coursePrivate.students.forEach(m => this.accountFeatureDatabaseService.invitePersonIntoCourse(m, studentInvitation));
+
+    // update my data -> course manage
+    this.accountFeatureDatabaseService.saveCourseForUser(courseCreate.coursePublic.creator, courseCreate.coursePublic, COURSE_ROLES_ENUM.TEACHER);
+
+    IonicDialogService.presentToast(`Course ${courseCreate.coursePublic.longName} has been created`);
   }
 }

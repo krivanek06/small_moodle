@@ -21,10 +21,10 @@
       </ion-item>
       <ion-item class="st-width-49">
         <ion-label position="floating">Category</ion-label>
-        <ion-select interface="popover" formControlName="category">
-          <ion-select-option value="FMFI">FMFI</ion-select-option>
-          <ion-select-option value="INF">INF</ion-select-option>
-          <ion-select-option value="CHEM">CHEM</ion-select-option>
+        <ion-select interface="popover" formControlName="category" *ngIf="categories$ | async as categories">
+          <ion-select-option *ngFor="let c of categories.data[0].categories" [value]="c.name">
+            {{ c.name }}
+          </ion-select-option>
         </ion-select>
       </ion-item>
     </ion-item-group>

@@ -9,10 +9,10 @@
   </ion-toolbar>
 
   <!-- search component -->
-  <app-course-search
+  <app-course-search-container
     [defaultCategory]="categoryName"
     [allowCourseSelect]="true"
     (selectedCourseEmitter)="selectCourse($event)">
-  </app-course-search>
+  </app-course-search-container>
 
 </ion-content>

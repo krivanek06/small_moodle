@@ -4,11 +4,11 @@ import {CoursePublic} from "../../model/courses-firebase.interface";
 import {coursePublic} from "../../model/course.random.data";
 
 @Component({
-  selector: 'app-course-search',
-  templateUrl: './course-search.component.html',
-  styleUrls: ['./course-search.component.scss'],
+  selector: 'app-course-search-container',
+  templateUrl: './course-search-container.component.html',
+  styleUrls: ['./course-search-container.component.scss'],
 })
-export class CourseSearchComponent implements OnInit {
+export class CourseSearchContainerComponent implements OnInit {
   @Output() selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() allowCourseSelect = false;

@@ -1,21 +1,6 @@
-<ion-list>
-  <ion-item button (click)="clickedCourse('FMFI')">
-    <ion-label>FMFI</ion-label>
-    <ion-label>20</ion-label>
-  </ion-item>
-
-  <ion-item button (click)="clickedCourse('INF')">
-    <ion-label>INF</ion-label>
-    <ion-label>32</ion-label>
-  </ion-item>
-
-  <ion-item button (click)="clickedCourse('CHEM')">
-    <ion-label>CHEM</ion-label>
-    <ion-label>12</ion-label>
-  </ion-item>
-
-  <ion-item button (click)="clickedCourse('FIFUK')">
-    <ion-label>FIFUK</ion-label>
-    <ion-label>123</ion-label>
+<ion-list *ngIf="categories && categories.data[0] as data">
+  <ion-item *ngFor="let category of data.categories"  button (click)="clickedCourse(category.name)">
+    <ion-label>{{ category.name }}</ion-label>
+    <ion-label>{{ category.courses }}</ion-label>
   </ion-item>
 </ion-list>

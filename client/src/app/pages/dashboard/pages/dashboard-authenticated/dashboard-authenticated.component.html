@@ -70,6 +70,7 @@
         <ion-col size="12">
           <app-generic-card [title]="'Course categories'">
             <app-course-categories
+              [categories]="categories$ | async"
               (categoryClickedEmitter)="searchCoursesByCategory($event)">
             </app-course-categories>
           </app-generic-card>

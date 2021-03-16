@@ -1,14 +1,10 @@
 import {StUserMain} from "../../authentication-feature/models/user.interface";
-import {
-  CourseTest,
-  CourseTestPublic,
-  CourseTestReceivedPoints
-} from "../../course-test-feature/model/course-test-firebase.model";
+import {CourseTestPublic, CourseTestReceivedPoints} from "../../course-test-feature/model/course-test-firebase.model";
 import {COURSE_ROLES_ENUM} from "./course.enum";
 
 
 export interface CoursePublic {
-  Id: string;
+  courseId: string;
   year: number;
   isOpen: boolean;
   category: string;
@@ -41,7 +37,7 @@ export interface CourseGrading {
 }
 
 // statistics at the end of course - how many students got what grade
-export interface CourseGradingResults extends CourseGrading{
+export interface CourseGradingResults extends CourseGrading {
   numberOfStudents: number;
 }
 
@@ -62,4 +58,19 @@ export interface CourseInvitation {
   course: CoursePublic;
   invitedAs: COURSE_ROLES_ENUM;
   invitationCreatedDate: string;
+}
+
+export interface CourseCategory {
+  data: CourseCategoryData[],
+  years: number[]
+}
+
+export interface CourseCategoryData {
+  year: number;
+  categories: CourseCategoryDataCategories[];
+}
+
+export interface CourseCategoryDataCategories {
+  courses: number;
+  name: string;
 }

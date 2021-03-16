@@ -5,7 +5,7 @@ import {CoursePublic} from "../../course-feature/model/courses-firebase.interfac
 import {courseGradingResults, courseGradings} from "../../course-feature/model/course.random.data";
 
 const coursePublic: CoursePublic = {
-  Id: 'course123',
+  courseId: 'course123',
   year: 2020,
   isOpen: true,
   category: 'FMFI',

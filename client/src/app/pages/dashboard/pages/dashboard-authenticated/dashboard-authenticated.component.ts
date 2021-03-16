@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CourseInvitation, CoursePublic} from "../../../../features/course-feature/model/courses-firebase.interface";
-import {StUserPublic} from "../../../../features/authentication-feature/models/user.interface";
-import {stUser, userMain} from "../../../../features/authentication-feature/models/user.random.data";
+import {StUser, StUserPublic} from "../../../../features/authentication-feature/models/user.interface";
 import {DashboardAuthenticatedFacadeService} from "../../services/dashboard-authenticated-facade.service";
 import {Router} from "@angular/router";
 
@@ -12,9 +11,7 @@ import {Router} from "@angular/router";
 })
 export class DashboardAuthenticatedComponent implements OnInit {
 
-  // TODO delete later
-  userMain = userMain;
-  user = stUser;
+  @Input() user: StUser;
 
   constructor(private dashboardAuthenticatedFacadeService: DashboardAuthenticatedFacadeService,
               private router: Router) {

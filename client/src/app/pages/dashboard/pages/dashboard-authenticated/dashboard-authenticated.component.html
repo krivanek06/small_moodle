@@ -8,7 +8,7 @@
           <app-generic-card [title]="'Manage courses'">
             <app-courses-manage-table
               (clickedCourseEmitter)="redirectToCourse($event)"
-              [authenticatedUser]="userMain"
+              [authenticatedUser]="user"
               [userCourses]="user.courses | courseFilterManaged">
             </app-courses-manage-table>
             <ion-buttons class="ion-justify-content-end st-small-padding">
@@ -23,7 +23,7 @@
         <ion-col size="12">
           <app-generic-card [title]="'Active courses'">
             <app-courses-active-table
-              [authenticatedUser]="userMain"
+              [authenticatedUser]="user"
               [courses]="user.courses | courseFilterActive">
             </app-courses-active-table>
           </app-generic-card>
@@ -33,7 +33,7 @@
         <ion-col size="12">
           <app-generic-card [title]="'Completed courses'">
             <app-courses-completed-table
-              [authenticatedUser]="userMain"
+              [authenticatedUser]="user"
               [courses]="user.courses | courseFilterCompleted">
             </app-courses-completed-table>
           </app-generic-card>

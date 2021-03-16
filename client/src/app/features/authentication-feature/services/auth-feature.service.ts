@@ -11,6 +11,7 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {map, takeUntil} from "rxjs/operators";
 import UserCredential = firebase.auth.UserCredential;
 import {userMain} from "../models/user.random.data";
+import {StorageService} from "../../../core/services/storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,13 @@ export class AuthFeatureService {
   private user$: BehaviorSubject<StUser> = new BehaviorSubject<StUser>(null);
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
+  private AUTH_KEY = 'AUTH_KEY';
+
   constructor(private afAuth: AngularFireAuth,
               private firestore: AngularFirestore,
+              private storageService: StorageService,
               private router: Router) {
+    this.checkSavedUID();
   }
 
   get user(): StUser {
@@ -33,22 +38,17 @@ export class AuthFeatureService {
   }
 
   get userMain(): StUserMain {
-    /*const user = this.user;
+    const user = this.user;
     return {
       uid: user.uid,
       displayName: user.displayName,
       photoURL: user.photoURL,
       accountCreatedDate: user.accountCreatedDate
-    }*/
-    return userMain;
+    }
   }
 
   getUser(): Observable<StUser> {
     return this.user$.asObservable();
-  }
-
-  isUserLoggedIn(): Observable<boolean> {
-    return this.user$.pipe(map(x => !!x));
   }
 
   async googleSignIn(): Promise<void> {
@@ -71,32 +71,39 @@ export class AuthFeatureService {
     await this.afAuth.signOut();
     this.destroy$.next(true)
     this.user$.next(null);
+    this.storageService.removeData(this.AUTH_KEY);
     await this.router.navigate(['/menu']);
   }
 
   private async signInUser(credential: UserCredential): Promise<void> {
     if (credential.additionalUserInfo.isNewUser) {
-      const user = await this.registerUser(credential)
+      const user = await this.registerUser(credential);
       this.user$.next(user);
     } else {
-      this.loadUser(credential).pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(res => {
-        this.user$.next({...res.uPublic, ...res.uPrivate})
-      })
+      this.storageService.saveData(this.AUTH_KEY, credential.user.uid);
+      this.loadUser(credential.user.uid);
     }
   }
 
-  private loadUser(credential: UserCredential): Observable<StUserLogin> {
-    const uid = credential.user.uid;
+  private checkSavedUID(){
+    const uid = this.storageService.getData(this.AUTH_KEY) as string;
+    if(uid){
+      this.loadUser(uid);
+    }
+  }
+
+  private loadUser(uid: string) {
     return combineLatest([
       this.firestore.doc(`users/${uid}`).valueChanges(),
       this.firestore.doc(`users/${uid}/private_data/user_private`).valueChanges()
     ]).pipe(
       map(([uPublic, uPrivate]) => {
         return {uPublic, uPrivate} as StUserLogin
-      })
-    )
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(res => {
+      this.user$.next({...res.uPublic, ...res.uPrivate});
+    })
   }
 
   private async registerUser(credential: UserCredential): Promise<StUser> {

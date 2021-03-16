@@ -6,6 +6,7 @@ import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {Observable, of} from "rxjs";
 import {AuthFeatureService} from "../../authentication-feature/services/auth-feature.service";
 import {CourseTestFormStateEnum} from "../model/course-test.enums";
+import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +31,31 @@ export class CourseTestStudentService {
     return of(null);
   }
 
-  assignMarkerOnCourseTest(takenTest: CourseTestTaken, market: StUserMain,) {
+  assignMarkerOnCourseTest(takenTest: CourseTestTaken, market: StUserMain) {
 
   }
 
-  gradeCourseTest(oldTest: CourseTestTaken, graded: CourseTest) {
+  async submitCompletedCourseTest(oldTest: CourseTestTaken, {questions}: CourseTest) {
+    if (!await this.presentDialog('submit', oldTest)) {
+      return
+    }
     const courseTest: CourseTestTaken = {
       ...oldTest,
-      questions: graded.questions,
+      questions,
+      timeEnded: getCurrentIOSDate(),
+      timeAwayOfTest: 540 // TODO implement
+    }
+    console.log('courseTest', courseTest);
+    // TODO save into firestore
+    this.presentToaster('submitted', courseTest)
+  }
+
+  gradeCourseTest(oldTest: CourseTestTaken, {questions}: CourseTest) {
+    const courseTest: CourseTestTaken = {
+      ...oldTest,
+      questions,
       marker: this.authService.userMain,
-      receivedPoints: graded.questions.map(x => x.receivedPoints).reduce((a, b) => a + b, 0),
+      receivedPoints: questions.map(x => x.receivedPoints).reduce((a, b) => a + b, 0),
       testFormState: CourseTestFormStateEnum.GRADED
     };
     console.log('courseTest', courseTest);

@@ -1,4 +1,12 @@
 <ion-grid>
+  <!-- test info -->
+  <app-grid-page-content>
+    <app-course-test-info
+      [loggedInUser]="user"
+      [courseTestTaken]="courseTakenTestCompleted">
+    </app-course-test-info>
+  </app-grid-page-content>
+
   <!-- test questions -->
   <app-grid-page-content>
     <app-course-test-form

@@ -1,3 +1,34 @@
-<p>
-  course-test-submit works!
-</p>
+<ion-grid>
+
+  <!-- back button + test started info -->
+  <app-grid-page-content>
+    <ion-row>
+      <ion-col size="12" size-sm="6">
+        <app-course-test-back-button
+          [courseId]="'course123'"
+          [courseName]="'Tvorba Internetovych applikacii'">
+        </app-course-test-back-button>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item lines="none">
+          <ion-label class="ion-text-end">Remaining time HH:mm</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </app-grid-page-content>
+
+
+  <!-- test questions -->
+  <app-grid-page-content>
+    <app-course-test-form
+      [state]="CourseTestFormStateEnum.TAKE"
+      [courseTest]="courseTakenTest">
+    </app-course-test-form>
+
+    <ion-buttons class="ion-justify-content-end">
+      <ion-button color="primary" (click)="submitTest()" fill="outline">Grade</ion-button>
+    </ion-buttons>
+  </app-grid-page-content>
+
+</ion-grid>
+

@@ -10,6 +10,7 @@ import {buildUserPrivate, buildUserPublic} from "../utils/user.builder";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map, takeUntil} from "rxjs/operators";
 import UserCredential = firebase.auth.UserCredential;
+import {userMain} from "../models/user.random.data";
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +33,14 @@ export class AuthFeatureService {
   }
 
   get userMain(): StUserMain {
-    const user = this.user;
+    /*const user = this.user;
     return {
       uid: user.uid,
       displayName: user.displayName,
       photoURL: user.photoURL,
       accountCreatedDate: user.accountCreatedDate
-    }
+    }*/
+    return userMain;
   }
 
   getUser(): Observable<StUser> {

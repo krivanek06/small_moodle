@@ -3,11 +3,11 @@ import {StUserCourse, StUserMain} from "../../../../authentication-feature/model
 import {CoursePublic} from "../../../model/courses-firebase.interface";
 
 @Component({
-  selector: 'app-courses-manage',
-  templateUrl: './courses-manage.component.html',
-  styleUrls: ['./courses-manage.component.scss'],
+  selector: 'app-courses-manage-table',
+  templateUrl: './courses-manage-table.component.html',
+  styleUrls: ['./courses-manage-table.component.scss'],
 })
-export class CoursesManageComponent implements OnInit {
+export class CoursesManageTableComponent implements OnInit {
   @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() userCourses: StUserCourse[] = [];

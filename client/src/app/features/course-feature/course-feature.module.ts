@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {CoursesActiveComponent} from "./components/lists/courses-active/courses-active.component";
-import {CoursesCompletedComponent} from "./components/lists/courses-completed/courses-completed.component";
-import {CoursesManageComponent} from "./components/lists/courses-manage/courses-manage.component";
+import {CoursesActiveTableComponent} from "./components/lists/courses-active-table/courses-active-table.component";
+import {CoursesCompletedTableComponent} from "./components/lists/courses-completed-table/courses-completed-table.component";
+import {CoursesManageTableComponent} from "./components/lists/courses-manage-table/courses-manage-table.component";
 import {SharedModule} from "../../shared/shared.module";
 import {CourseInvitationsComponent} from "./components/lists/course-invitations/course-invitations.component";
 import {CourseCategoriesComponent} from "./components/lists/course-categories/course-categories.component";
@@ -18,7 +18,7 @@ import {CourseFilterCompletedPipe} from './pipes/course-filter-completed.pipe';
 import {CourseFilterManagedOpenPipe} from './pipes/course-filter-managed-open.pipe';
 import {CourseInvitationConfirmationPopOverComponent} from "./entry-points/course-invitation-confirmation-pop-over/course-invitation-confirmation-pop-over.component";
 import {CoursesUserAccountInfoModalComponent} from "./entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component";
-import {CourseGradesComponent} from "./components/lists/course-grades/course-grades.component";
+import {CourseGradesTableComponent} from "./components/lists/course-grades-table/course-grades-table.component";
 import {CourseMemberTypeRadioComponent} from "./components/switch/course-member-type-radio/course-member-type-radio.component";
 import {CourseCreateFormComponent} from "./containers/course-create-form/course-create-form.component";
 import {CourseCreateEntryPointComponent} from "./entry-points/course-create-entry-point/course-create-entry-point.component";
@@ -27,9 +27,9 @@ import {AccountFeatureModule} from "../account-feature/account-feature.module";
 
 @NgModule({
   declarations: [
-    CoursesActiveComponent,
-    CoursesCompletedComponent,
-    CoursesManageComponent,
+    CoursesActiveTableComponent,
+    CoursesCompletedTableComponent,
+    CoursesManageTableComponent,
     CourseInvitationsComponent,
     CourseCategoriesComponent,
     CourseSearchComponent,
@@ -45,15 +45,15 @@ import {AccountFeatureModule} from "../account-feature/account-feature.module";
     CourseFilterManagedOpenPipe,
     CourseInvitationConfirmationPopOverComponent,
     CoursesUserAccountInfoModalComponent,
-    CourseGradesComponent,
+    CourseGradesTableComponent,
     CourseMemberTypeRadioComponent,
     CourseCreateFormComponent,
     CourseCreateEntryPointComponent
   ],
   exports: [
-    CoursesActiveComponent,
-    CoursesCompletedComponent,
-    CoursesManageComponent,
+    CoursesActiveTableComponent,
+    CoursesCompletedTableComponent,
+    CoursesManageTableComponent,
     CourseInvitationsComponent,
     CourseCategoriesComponent,
     CourseSearchComponent,
@@ -68,7 +68,7 @@ import {AccountFeatureModule} from "../account-feature/account-feature.module";
     CourseFilterActivePipe,
     CourseInvitationConfirmationPopOverComponent,
     CoursesUserAccountInfoModalComponent,
-    CourseGradesComponent,
+    CourseGradesTableComponent,
     CourseMemberTypeRadioComponent,
     CourseCreateEntryPointComponent
   ],

@@ -6,11 +6,11 @@
         <!-- courses manage -->
         <ion-col size="12">
           <app-generic-card [title]="'Manage courses'">
-            <app-courses-manage
+            <app-courses-manage-table
               (clickedCourseEmitter)="redirectToCourse($event)"
               [authenticatedUser]="userMain"
               [userCourses]="user.courses | courseFilterManaged">
-            </app-courses-manage>
+            </app-courses-manage-table>
             <ion-buttons class="ion-justify-content-end st-small-padding">
               <ion-button color="primary" class="st-small-padding" (click)="createCourse()">
                 Create course
@@ -22,20 +22,20 @@
         <!-- courses active -->
         <ion-col size="12">
           <app-generic-card [title]="'Active courses'">
-            <app-courses-active
+            <app-courses-active-table
               [authenticatedUser]="userMain"
               [courses]="user.courses | courseFilterActive">
-            </app-courses-active>
+            </app-courses-active-table>
           </app-generic-card>
         </ion-col>
 
         <!-- courses completed -->
         <ion-col size="12">
           <app-generic-card [title]="'Completed courses'">
-            <app-courses-completed
+            <app-courses-completed-table
               [authenticatedUser]="userMain"
               [courses]="user.courses | courseFilterCompleted">
-            </app-courses-completed>
+            </app-courses-completed-table>
           </app-generic-card>
         </ion-col>
 

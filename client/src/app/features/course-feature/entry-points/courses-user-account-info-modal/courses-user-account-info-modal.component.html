@@ -31,10 +31,10 @@
     <ion-row>
       <ion-col size="12">
         <ion-title>Manage courses</ion-title>
-        <app-courses-manage
+        <app-courses-manage-table
           [enableClick]="false"
           [userCourses]="userPublic.courses | courseFilterManaged">
-        </app-courses-manage>
+        </app-courses-manage-table>
       </ion-col>
     </ion-row>
 
@@ -42,10 +42,10 @@
     <ion-row>
       <ion-col size="12">
         <ion-title>Active courses</ion-title>
-        <app-courses-active
+        <app-courses-active-table
           [enableClick]="false"
           [courses]="userPublic.courses | courseFilterActive">
-        </app-courses-active>
+        </app-courses-active-table>
       </ion-col>
     </ion-row>
 
@@ -53,10 +53,10 @@
     <ion-row>
       <ion-col size="12">
         <ion-title>Completed courses</ion-title>
-        <app-courses-completed
+        <app-courses-completed-table
           [enableClick]="false"
           [courses]="userPublic.courses | courseFilterCompleted">
-        </app-courses-completed>
+        </app-courses-completed-table>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -3,11 +3,11 @@ import {Course, CoursePublic} from "../../../model/courses-firebase.interface";
 import {StUserMain} from "../../../../authentication-feature/models/user.interface";
 
 @Component({
-  selector: 'app-courses-completed',
-  templateUrl: './courses-completed.component.html',
-  styleUrls: ['./courses-completed.component.scss'],
+  selector: 'app-courses-completed-table',
+  templateUrl: './courses-completed-table.component.html',
+  styleUrls: ['./courses-completed-table.component.scss'],
 })
-export class CoursesCompletedComponent implements OnInit {
+export class CoursesCompletedTableComponent implements OnInit {
   @Input() courses: CoursePublic[] | Course[] = [];
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;

@@ -31,8 +31,7 @@ export interface StUserPrivate {
   roles: string[];
   logs: UserLogs[];
   activeTest: CourseTestPublic;
-  coursesInvitationSend: CourseInvitation[];
-  coursesInvitationReceived: CourseInvitation[];
+  courseInvitations: CourseInvitation[];
 }
 
 export interface UserLogs {

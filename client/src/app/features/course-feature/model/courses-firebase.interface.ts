@@ -1,6 +1,6 @@
 import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {CourseTestPublic, CourseTestReceivedPoints} from "../../course-test-feature/model/course-test-firebase.model";
-import {COURSE_ROLES_ENUM} from "./course.enum";
+import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from "./course.enum";
 
 
 export interface CoursePublic {
@@ -23,7 +23,10 @@ export interface CoursePrivate {
   confirmedTests?: CourseTestPublic[];
   numberOfUncorrectedTests: number;
   markers: StUserMain[];
-  students: StUserCourseStudent[];
+  students: StCourseStudent[];
+  invitedMarkers: StUserMain[];
+  invitedStudents: StCourseStudent[];
+  receivedStudentsInvitations: StCourseStudent[];
 }
 
 export interface Course extends CoursePublic, CoursePrivate {
@@ -41,7 +44,7 @@ export interface CourseGradingResults extends CourseGrading {
   numberOfStudents: number;
 }
 
-export interface StUserCourseStudent extends StUserMain {
+export interface StCourseStudent extends StUserMain {
   receivedGrade?: String;
   receivedPoints?: CourseTestReceivedPoints[];
   gradeChangeHistory?: CourseGradeChangeHistory[];
@@ -58,6 +61,7 @@ export interface CourseInvitation {
   course: CoursePublic;
   invitedAs: COURSE_ROLES_ENUM;
   invitationCreatedDate: string;
+  invitationType: COURSE_INVITATION_TYPE;
 }
 
 export interface CourseCategory {

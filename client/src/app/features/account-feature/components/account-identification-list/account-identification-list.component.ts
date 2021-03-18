@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StUserCourseStudent} from "../../../course-feature/model/courses-firebase.interface";
+import {StCourseStudent} from "../../../course-feature/model/courses-firebase.interface";
 import {StUserMain} from "../../../authentication-feature/models/user.interface";
 
 @Component({
@@ -12,7 +12,7 @@ export class AccountIdentificationListComponent implements OnInit {
 
   @Input() enableClick = false;
   @Input() title: string;
-  @Input() members: StUserMain[] | StUserCourseStudent[] = [];
+  @Input() members: StUserMain[] | StCourseStudent[] = [];
 
   constructor() {
   }

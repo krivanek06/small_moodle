@@ -4,7 +4,7 @@ import {PopoverController} from "@ionic/angular";
 import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {CoursePublic} from "../model/courses-firebase.interface";
 import {CourseInvitationConfirmationPopOverComponent} from "../entry-points/course-invitation-confirmation-pop-over/course-invitation-confirmation-pop-over.component";
-import {COURSE_ROLES_ENUM} from "../model/course.enum";
+import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from "../model/course.enum";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseCreate, CourseInviteMemberConfirm} from "../model/course-module.interface";
 import {InlineInputPopUpComponent} from "../../../shared/entry-points/inline-input-pop-up/inline-input-pop-up.component";
@@ -82,7 +82,6 @@ export class CourseFeatureFacadeService {
     const resultPromise = await modal.onDidDismiss();
     const name = resultPromise.data?.inputData;
     if (name) {
-      console.log('name', name)
       await this.courseFeatureDatabaseService.addCourseCategory(name);
       IonicDialogService.presentToast(`Category ${name} has been created`);
     }
@@ -93,11 +92,11 @@ export class CourseFeatureFacadeService {
     this.courseFeatureDatabaseService.saveCourse(courseCreate);
 
     // invite people
-    const studentInvitation = createCourseInvitation(courseCreate.coursePublic, COURSE_ROLES_ENUM.STUDENT);
-    const markerInvitation = createCourseInvitation(courseCreate.coursePublic, COURSE_ROLES_ENUM.MARKER);
+    const studentInvitation = createCourseInvitation(courseCreate.coursePublic, COURSE_ROLES_ENUM.STUDENT, COURSE_INVITATION_TYPE.RECEIVED);
+    const markerInvitation = createCourseInvitation(courseCreate.coursePublic, COURSE_ROLES_ENUM.MARKER, COURSE_INVITATION_TYPE.RECEIVED);
 
-    courseCreate.coursePrivate.markers.forEach(m => this.accountFeatureDatabaseService.invitePersonIntoCourse(m, markerInvitation));
-    courseCreate.coursePrivate.students.forEach(m => this.accountFeatureDatabaseService.invitePersonIntoCourse(m, studentInvitation));
+    courseCreate.coursePrivate.invitedStudents.forEach(m => this.accountFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(m, studentInvitation, true));
+    courseCreate.coursePrivate.invitedMarkers.forEach(m => this.accountFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(m, markerInvitation, true));
 
     // update my data -> course manage
     this.accountFeatureDatabaseService.saveCourseForUser(courseCreate.coursePublic.creator, courseCreate.coursePublic, COURSE_ROLES_ENUM.TEACHER);

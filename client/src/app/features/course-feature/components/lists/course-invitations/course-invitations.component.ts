@@ -16,11 +16,6 @@ export class CourseInvitationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO DELETE LATER
-    this.courseInvitations = [
-      {...courseInvitation},
-      {...courseInvitation}
-    ]
   }
 
   clickedCourse(course: CourseInvitation) {

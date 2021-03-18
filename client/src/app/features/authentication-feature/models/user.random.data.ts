@@ -152,8 +152,7 @@ export const userPrivate: StUserPrivate = {
   roles: ['STUDENT'],
   logs: [],
   activeTest: null,
-  coursesInvitationSend: [],
-  coursesInvitationReceived: []
+  courseInvitations: []
 }
 
 export const stUser: StUser = {

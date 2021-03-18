@@ -3,7 +3,7 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@a
 import {CourseCreate} from "../../model/course-module.interface";
 import {CourseFeatureFacadeService} from "../../services/course-feature-facade.service";
 import {StUserMain} from "../../../authentication-feature/models/user.interface";
-import {CourseCategory, CoursePrivate, CoursePublic} from "../../model/courses-firebase.interface";
+import {CourseCategory, CoursePrivate, CoursePublic, StCourseStudent} from "../../model/courses-firebase.interface";
 import {AuthFeatureService} from "../../../authentication-feature/services/auth-feature.service";
 import {v4 as uuid} from 'uuid';
 import {CourseFeatureDatabaseService} from "../../services/course-feature-database.service";
@@ -88,8 +88,11 @@ export class CourseCreateFormContainerComponent implements OnInit {
       creator: this.authService.userMain
     };
     const coursePrivate: CoursePrivate = {
-      students: this.students.value,
-      markers: this.markers.value,
+      invitedStudents: this.students.value,
+      invitedMarkers: this.markers.value,
+      markers: [],
+      students: [],
+      receivedStudentsInvitations: [],
       numberOfUncorrectedTests: 0,
       confirmedTests: []
     };
@@ -114,7 +117,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
   }
 
   addStudent(userMain: StUserMain) {
-    const students = this.students.value as StUserMain[];
+    const students = this.students.value as StCourseStudent[];
     if (students.map(x => x.uid).includes(userMain.uid)) {
       return
     }

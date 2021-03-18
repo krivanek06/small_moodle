@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Course, StUserCourseStudent} from "../model/courses-firebase.interface";
+import {Course, StCourseStudent} from "../model/courses-firebase.interface";
 
 @Pipe({
   name: 'courseReceivedPoints'
@@ -12,7 +12,7 @@ export class CourseReceivedPointsPipe implements PipeTransform {
    * @param courseStudents - students participated in course
    * @param userId - id of logged in student
    */
-  transform(courseStudents: StUserCourseStudent[], userId: string): string {
+  transform(courseStudents: StCourseStudent[], userId: string): string {
     console.log(courseStudents, userId)
     return 'TODO implement';
   }

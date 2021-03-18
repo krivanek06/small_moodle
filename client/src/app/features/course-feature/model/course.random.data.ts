@@ -5,9 +5,9 @@ import {
   CourseInvitation,
   CoursePrivate,
   CoursePublic,
-  StUserCourseStudent
+  StCourseStudent
 } from "./courses-firebase.interface";
-import {COURSE_ROLES_ENUM} from "./course.enum";
+import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from "./course.enum";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 import {CourseTestStateEnum} from "../../course-test-feature/model/course-test.enums";
 
@@ -96,7 +96,7 @@ export const coursePublic: CoursePublic = {
 }
 
 
-export const userCourseStudent: StUserCourseStudent = {
+export const userCourseStudent: StCourseStudent = {
   uid: '123465',
   accountCreatedDate: getCurrentIOSDate(),
   displayName: 'Meno Priezvisko',
@@ -130,6 +130,9 @@ export const userCourseStudent: StUserCourseStudent = {
 }
 
 export const coursePrivate: CoursePrivate = {
+  receivedStudentsInvitations: [],
+  invitedMarkers: [],
+  invitedStudents: [],
   markers: [
     {
       uid: '123465',
@@ -142,7 +145,7 @@ export const coursePrivate: CoursePrivate = {
     {
       uid: '123465',
       firstName: 'Janko',
-      lastName: 'Maly',
+      lastName: 'Maly False 22',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -150,7 +153,7 @@ export const coursePrivate: CoursePrivate = {
     {
       uid: '123465',
       firstName: 'Janko',
-      lastName: 'Maly',
+      lastName: 'Maly False',
       accountCreatedDate: getCurrentIOSDate(),
       displayName: 'Meno Priezvisko',
       photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
@@ -197,6 +200,7 @@ export const course: Course = {
 
 
 export const courseInvitation: CourseInvitation = {
+  invitationType: COURSE_INVITATION_TYPE.SEND,
   course: {
     courseId: 'AD123-45',
     year: 2020,

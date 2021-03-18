@@ -8,26 +8,35 @@ import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseFeatureFacadeService} from "../../../features/course-feature/services/course-feature-facade.service";
 import {CourseCreateEntryPointComponent} from "../../../features/course-feature/entry-points/course-create-entry-point/course-create-entry-point.component";
 import {CourseCreate} from "../../../features/course-feature/model/course-module.interface";
+import {AuthUserFeatureService} from "../../../features/authentication-feature/services/auth-user-feature.service";
+import {AccountFeatureDatabaseService} from "../../../features/account-feature/services/account-feature-database.service";
+import {CourseFeatureDatabaseService} from "../../../features/course-feature/services/course-feature-database.service";
 
 @Injectable()
 export class DashboardAuthenticatedFacadeService {
 
   constructor(private modalController: ModalController,
               private popoverController: PopoverController,
-              private courseFeatureFacadeService: CourseFeatureFacadeService) {
+              private courseFeatureFacadeService: CourseFeatureFacadeService,
+              private authService: AuthUserFeatureService,
+              private accountService: AccountFeatureDatabaseService,
+              private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
   }
 
   async showCourseInvitation(invitation: CourseInvitation) {
     const longName = invitation.course.longName;
     const message = `Accept invitation into course ${longName}`;
-    console.log('invitation', invitation)
     const result = await this.courseFeatureFacadeService.inviteMemberIntoCourseConfirm(message, invitation.course, invitation.invitedAs, true)
 
     if (result?.confirm) {
-      console.log('accepted course invitation') // TODO call service
+      await this.accountService.addOrRemoveCourseInvitationForPerson(this.authService.user, invitation, false);
+      await this.accountService.saveCourseForUser(this.authService.user, invitation.course, invitation.invitedAs);
+      await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.user, invitation.invitedAs);
+      await this.courseFeatureDatabaseService.addPersonIntoCourse(invitation.course, this.authService.user, invitation.invitedAs);
       IonicDialogService.presentToast(`Course ${longName} invitation has been accepted`);
     } else if (result?.confirm === false) {
-      console.log('declined course invitation') // TODO call service
+      await this.accountService.addOrRemoveCourseInvitationForPerson(this.authService.user, invitation, false);
+      await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.user, invitation.invitedAs);
       IonicDialogService.presentToast(`Course ${longName} invitation has been declined`);
     }
   }
@@ -59,9 +68,7 @@ export class DashboardAuthenticatedFacadeService {
     const resultPromise = await modal.onDidDismiss();
     const courseCreate = resultPromise.data?.courseCreate as CourseCreate;
     if (courseCreate) {
-      // TODO save into firestore
-      console.log('courseCreate', courseCreate)
-      this.courseFeatureFacadeService.addNewCourse(courseCreate)
+      this.courseFeatureFacadeService.addNewCourse(courseCreate);
       IonicDialogService.presentToast(`Course ${courseCreate.coursePublic.longName} been created`);
     }
   }

@@ -22,25 +22,21 @@ export class AccountFeatureDatabaseService {
     ).valueChanges();
   }
 
-  invitePersonIntoCourse(person: StUserMain, invitation: CourseInvitation) {
-    this.firestore.collection('users')
-      .doc(person.uid)
-      .collection('private_data')
-      .doc('user_private')
+  addOrRemoveCourseInvitationForPerson({uid}: StUserMain, invitation: CourseInvitation, add: boolean) {
+    const field = firebase.firestore.FieldValue;
+    this.firestore.collection('users').doc(uid).collection('private_data').doc('user_private')
       .set({
-        coursesInvitationReceived: firebase.firestore.FieldValue.arrayUnion(invitation)
+        courseInvitations: add ? field.arrayUnion(invitation) : field.arrayRemove(invitation)
       }, {merge: true})
   }
 
+
   saveCourseForUser({uid}: StUserMain, course: CoursePublic, role: COURSE_ROLES_ENUM) {
-    const stUserCourse: StUserCourse = {
-      role,
-      course
-    };
-    this.firestore.collection('users')
-      .doc(uid)
-      .set({
-        courses: firebase.firestore.FieldValue.arrayUnion(stUserCourse)
+    this.firestore.collection('users').doc(uid).set({
+        courses: firebase.firestore.FieldValue.arrayUnion({
+          role,
+          course
+        } as StUserCourse)
       }, {merge: true})
   }
 

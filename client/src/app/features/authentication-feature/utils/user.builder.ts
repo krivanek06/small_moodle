@@ -5,8 +5,7 @@ import firebase from "firebase";
 export const buildUserPrivate = (email: string, locale: string): StUserPrivate => {
   const userPrivate: StUserPrivate = {
     activeTest: null,
-    coursesInvitationReceived: [],
-    coursesInvitationSend: [],
+    courseInvitations: [],
     email: email,
     locale: locale || null,
     logs: [],

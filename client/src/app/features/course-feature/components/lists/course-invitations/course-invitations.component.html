@@ -1,6 +1,5 @@
 <ion-list>
   <ion-item button *ngFor="let invitation of courseInvitations" (click)="clickedCourse(invitation)">
-    <ion-label class="st-fit-content ion-margin-end">{{ invitation.course.courseId }}.</ion-label>
-    <ion-label>{{ invitation.course.longName }}</ion-label>
+    <ion-label>[{{ invitation.course.shortName }}] {{ invitation.course.longName }}</ion-label>
   </ion-item>
 </ion-list>

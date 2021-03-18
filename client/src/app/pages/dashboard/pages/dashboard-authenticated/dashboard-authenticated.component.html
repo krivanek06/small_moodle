@@ -54,7 +54,10 @@
         <!-- course invitations -->
         <ion-col size="12">
           <app-generic-card [title]="'Course invitations'">
-            <app-course-invitations (clickedInvitationEmitter)="showCourseInvitation($event)"></app-course-invitations>
+            <app-course-invitations
+              [courseInvitations]="user.courseInvitations"
+              (clickedInvitationEmitter)="showCourseInvitation($event)">
+            </app-course-invitations>
           </app-generic-card>
         </ion-col>
 

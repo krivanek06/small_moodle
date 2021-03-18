@@ -3,3 +3,8 @@ export enum COURSE_ROLES_ENUM {
   MARKER = 'Marker',
   STUDENT = 'Student'
 }
+
+export enum COURSE_INVITATION_TYPE {
+  SEND = 'SEND',
+  RECEIVED = 'RECEIVED'
+}

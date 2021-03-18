@@ -1,29 +1,23 @@
-<ion-row class="ion-justify-content-center">
-  <ion-col size="12" size-lg="10" size-xl="9">
-    <!-- back button -->
-    <app-course-test-back-button
-      [courseName]="'Tvorba Internetovych aplikacii'"
-      [courseId]="'Course123'">
-    </app-course-test-back-button>
+<ng-container *ngIf="courseTest$ | async as courseTest">
+  <!-- buttons to save / delete / accept test -->
+  <app-course-test-form-buttons
+    [loggedInUser]="userMain$ | async"
+    [courseTestPublic]="courseTest"
+    (sendTestToApprovalEmitter)="sendTestToApproval()"
+    (saveTestEmitter)="saveTest()"
+    (deleteTestEmitter)="deleteTest(courseTest)"
+    (approveTestEmitter)="approveTest($event, courseTest)">
+  </app-course-test-form-buttons>
 
-    <!-- buttons to save / delete / accept test -->
-    <app-course-test-form-buttons
-      [loggedInUser]="stUserMain"
-      [courseTestPublic]="courseTestWaitingApproval"
-      (sendTestToApprovalEmitter)="sendTestToApproval()"
-      (saveTestEmitter)="saveTest()"
-      (deleteTestEmitter)="deleteTest()"
-      (approveTestEmitter)="approveTest($event)">
-    </app-course-test-form-buttons>
+  <!-- error message -->
+  <ion-toolbar class="st-error ion-text-center ion-padding" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </ion-toolbar>
 
-    <ion-text class="st-error st-flex ion-justify-content-center ion-padding">{{ errorMessage }}</ion-text>
-  </ion-col>
-</ion-row>
-
-
-<!-- test form -->
-<app-course-test-form
-  [state]="CourseTestFormStateEnum.CREATE"
-  [user]="stUserMain"
-  [courseTest]="courseTestWaitingApproval">
-</app-course-test-form>
+  <!-- test form -->
+  <app-course-test-form
+    [state]="CourseTestFormStateEnum.CREATE"
+    [user]="userMain$ | async"
+    [courseTest]="courseTest">
+  </app-course-test-form>
+</ng-container>

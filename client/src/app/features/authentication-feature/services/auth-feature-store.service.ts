@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {StUser, StUserLogin, StUserMain} from "../models/user.interface";
 import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
-import {map, takeUntil} from "rxjs/operators";
+import {filter, map, takeUntil} from "rxjs/operators";
 import {USER_ROLES_ENUM} from "../models/user.enums";
 import {StorageService} from "../../../core/services/storage.service";
 import {AngularFirestore} from "@angular/fire/firestore";
@@ -32,7 +32,10 @@ export class AuthFeatureStoreService {
   }
 
   getUserMain(): Observable<StUserMain> {
-    return this.user$.asObservable().pipe(map(user => convertStUserIntoStUserMain(user)));
+    return this.user$.asObservable().pipe(
+      filter(u => !!u),
+      map(user => convertStUserIntoStUserMain(user))
+    );
   }
 
   getUser(): Observable<StUser> {

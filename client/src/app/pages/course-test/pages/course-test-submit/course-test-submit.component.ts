@@ -4,7 +4,7 @@ import {CourseTestFormComponent} from "../../../../features/course-test-feature/
 import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
 import {courseTakenTest} from "../../../../features/course-test-feature/model/course-test.random.data";
 import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
-import {CourseTestFacadeService} from "../../../../features/course-test-feature/services/course-test-facade.service";
+import {CourseTestFeatureFacadeService} from "../../../../features/course-test-feature/services/course-test-feature-facade.service";
 
 @Component({
   selector: 'app-course-test-submit',
@@ -18,7 +18,7 @@ export class CourseTestSubmitComponent implements OnInit {
 
   courseTakenTest = courseTakenTest;
 
-  constructor(private courseTestFacadeService: CourseTestFacadeService,
+  constructor(private courseTestFacadeService: CourseTestFeatureFacadeService,
               private authFeatureStoreService: AuthFeatureStoreService) {
   }
 

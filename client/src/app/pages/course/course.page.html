@@ -14,7 +14,7 @@
         <app-generic-card [title]="'Course tests'">
           <app-course-test-public-table
             (clickedEmitter)="redirectToCourseTest($event)"
-            [courseTests]="[]">
+            [courseTests]="courseTests$ | async">
           </app-course-test-public-table>
           <ion-buttons class="ion-justify-content-end st-small-padding">
             <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">

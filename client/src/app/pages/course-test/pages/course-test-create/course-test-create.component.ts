@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CourseTestFacadeService} from "../../../../features/course-test-feature/services/course-test-facade.service";
+import {CourseTestFeatureFacadeService} from "../../../../features/course-test-feature/services/course-test-feature-facade.service";
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
 import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
 import {CourseFeatureFacadeService} from "../../../../features/course-feature/services/course-feature-facade.service";
@@ -22,7 +22,7 @@ export class CourseTestCreateComponent implements OnInit {
   errorMessage: string;
   user$: Observable<StUserMain>;
 
-  constructor(private courseTestService: CourseTestFacadeService,
+  constructor(private courseTestService: CourseTestFeatureFacadeService,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
               private courseFeatureStoreService: CourseFeatureStoreService,
               private authFeatureStoreService: AuthFeatureStoreService) {

@@ -10,18 +10,29 @@
       <ng-template #buttons>
         <ion-label>
           <ion-buttons class="ion-justify-content-end">
-            <!-- creator's buttons -->
-            <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid">
-              <ion-button color="primary" (click)="saveTest()">Save</ion-button>
-              <ion-button color="success" (click)="sendToApproval()">Send to approve</ion-button>
-              <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
-            </ng-container>
 
-            <!-- teachers's buttons -->
-            <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid">
+            <!-- I am creator and teacher -->
+            <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid &&
+                                  loggedInUser.uid === courseTestPublic.course.creator.uid; else decide">
+              <ion-button color="primary" (click)="saveTest()">Save</ion-button>
               <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
               <ion-button color="danger" (click)="approveTest(false)">Delete</ion-button>
             </ng-container>
+
+            <ng-template #decide>
+              <!-- creator's buttons -->
+              <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid">
+                <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+                <ion-button color="success" (click)="sendToApproval()">Send to approve</ion-button>
+                <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+              </ng-container>
+
+              <!-- teachers's buttons -->
+              <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid">
+                <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
+                <ion-button color="danger" (click)="approveTest(false)">Delete</ion-button>
+              </ng-container>
+            </ng-template>
           </ion-buttons>
         </ion-label>
       </ng-template>

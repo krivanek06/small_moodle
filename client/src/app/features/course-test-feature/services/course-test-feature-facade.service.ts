@@ -3,30 +3,47 @@ import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseTest, CourseTestPublic, CourseTestTaken} from "../model/course-test-firebase.model";
 import {CourseTestFormStateEnum, CourseTestStateEnum} from "../model/course-test.enums";
 import {StUserMain} from "../../authentication-feature/models/user.interface";
-import {convertCourseTestIntoCourseTestTaken} from "../utils/course-test.convertor";
-import {Observable, of} from "rxjs";
+import {
+  convertCourseTestIntoCourseTestPublic,
+  convertCourseTestIntoCourseTestTaken
+} from "../utils/course-test.convertor";
+import {combineLatest, Observable, of} from "rxjs";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 import {AuthFeatureStoreService} from "../../authentication-feature/services/auth-feature-store.service";
-import {CourseTestDatabaseService} from "./course-test-database.service";
+import {CourseTestFeatureDatabaseService} from "./course-test-feature-database.service";
+import {filter, first, map, switchMap, tap} from "rxjs/operators";
+import {CourseFeatureStoreService} from "../../course-feature/services/course-feature-store.service";
+import {ActivatedRoute} from "@angular/router";
+import {CourseFeatureDatabaseService} from "../../course-feature/services/course-feature-database.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CourseTestFacadeService {
+export class CourseTestFeatureFacadeService {
 
   constructor(private authFeatureStoreService: AuthFeatureStoreService,
-              private courseTestDatabaseService: CourseTestDatabaseService) {
+              private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+              private courseFeatureStoreService: CourseFeatureStoreService,
+              private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
   }
 
-  // make course test public
-  async approveCourseTest(approve: boolean, courseTest: CourseTestPublic) {
+  getCourseTest(testId: string): Observable<CourseTest> {
+    return this.courseFeatureStoreService.getCourse().pipe(map(c => c.courseId)).pipe(
+      first(),
+      switchMap(courseId => this.courseTestDatabaseService.getCourseTest(courseId, testId))
+    )
+  }
+
+
+  async approveCourseTest(approve: boolean, courseTest: CourseTest) {
     const action = approve ? 'approved' : 'deleted';
     if (await this.presentDialog(action, courseTest)) {
       courseTest.testState = approve ? CourseTestStateEnum.APPROVED : CourseTestStateEnum.IN_PROGRESS;
       if (approve) {
-        // TODO save test into public for students
+        const courseTestPublic = convertCourseTestIntoCourseTestPublic(courseTest);
+        this.courseFeatureDatabaseService.addCourseTestIntoPublic(courseTestPublic);
       }
-      // TODO send data to firebase
+      this.courseTestDatabaseService.saveCourseTest(courseTest);
       this.presentToaster(action, courseTest);
     }
   }

@@ -1,7 +1,6 @@
 <ion-list>
   <!-- table header -->
   <ion-item class="st-font-1-bold">
-    <ion-label>ID</ion-label>
     <ion-label>Name</ion-label>
     <ion-label>Creator</ion-label>
     <ion-label>Available from</ion-label>
@@ -13,7 +12,6 @@
 
   <!-- table body -->
   <ion-item button *ngFor="let test of courseTests" (click)="clickedTest(test)">
-    <ion-label>{{ test.testId }}</ion-label>
     <ion-label>{{ test.testName }}</ion-label>
     <ion-label>{{ test.createdBy.displayName }}</ion-label>
     <ion-label>{{ test.availableFrom | date: 'HH:MM dd.MM.YYYY' }}</ion-label>

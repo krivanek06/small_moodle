@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, combineLatest, Observable} from "rxjs";
 import {Course} from "../model/courses-firebase.interface";
-import {first, map} from "rxjs/operators";
+import {filter, first, map} from "rxjs/operators";
 import {CourseCreate} from "../model/course-module.interface";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {StorageService} from "../../../core/services/storage.service";
@@ -28,7 +28,7 @@ export class CourseFeatureStoreService {
   }
 
   getCourse(): Observable<Course> {
-    return this.course$.asObservable();
+    return this.course$.asObservable().pipe(filter(x => !!x));
   }
 
   setCourse(courseId): void {

@@ -4,7 +4,7 @@ import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
 import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
 import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
-import {CourseTestFacadeService} from "../../../../features/course-test-feature/services/course-test-facade.service";
+import {CourseTestFeatureFacadeService} from "../../../../features/course-test-feature/services/course-test-feature-facade.service";
 
 @Component({
   selector: 'app-course-test-grade',
@@ -20,7 +20,7 @@ export class CourseTestGradeComponent implements OnInit {
 
   courseTakenTestCompleted = courseTakenTestCompleted;
 
-  constructor(private courseTestFacadeService: CourseTestFacadeService,
+  constructor(private courseTestFacadeService: CourseTestFeatureFacadeService,
               private authFeatureStoreService: AuthFeatureStoreService) {
   }
 

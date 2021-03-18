@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, Observable} from "rxjs";
-import {Course, CourseCategory, CoursePrivate, CoursePublic} from "../model/courses-firebase.interface";
+import {Observable} from "rxjs";
+import {CourseCategory, CoursePrivate, CoursePublic} from "../model/courses-firebase.interface";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map, shareReplay} from "rxjs/operators";
 import {CourseCreate} from "../model/course-module.interface";
 import {COURSE_ROLES_ENUM} from "../model/course.enum";
 import {StUserMain} from "../../authentication-feature/models/user.interface";
 import firebase from "firebase";
+import {CourseTestPublic} from "../../course-test-feature/model/course-test-firebase.model";
 
 @Injectable({
   providedIn: 'root'
@@ -99,6 +100,13 @@ export class CourseFeatureDatabaseService {
         markers: firebase.firestore.FieldValue.arrayUnion(userMain)
       }, {merge: true})
     }
+  }
+
+  addCourseTestIntoPublic(courseTestPublic: CourseTestPublic) {
+    this.firestore.collection(this.COURSE).doc(courseTestPublic.course.courseId)
+      .collection(this.PRIVATE).doc(this.PRIVATE).set({
+      confirmedTests: firebase.firestore.FieldValue.arrayUnion(courseTestPublic)
+    }, {merge: true})
   }
 
 }

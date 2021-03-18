@@ -4,10 +4,10 @@ import {CourseCreate} from "../../model/course-module.interface";
 import {CourseFeatureFacadeService} from "../../services/course-feature-facade.service";
 import {StUserMain} from "../../../authentication-feature/models/user.interface";
 import {CourseCategory, CoursePrivate, CoursePublic, StCourseStudent} from "../../model/courses-firebase.interface";
-import {AuthFeatureService} from "../../../authentication-feature/services/auth-feature.service";
 import {v4 as uuid} from 'uuid';
 import {CourseFeatureDatabaseService} from "../../services/course-feature-database.service";
 import {Observable} from "rxjs";
+import {AuthFeatureStoreService} from "../../../authentication-feature/services/auth-feature-store.service";
 
 @Component({
   selector: 'app-course-create-form-container',
@@ -22,7 +22,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService,
-              private authService: AuthFeatureService) {
+              private authFeatureStoreService: AuthFeatureStoreService) {
   }
 
   get gradings(): FormArray {
@@ -85,7 +85,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       gradings: this.gradings.value,
       numberOfTests: 0,
       courseGradingResults: [],
-      creator: this.authService.userMain
+      creator: this.authFeatureStoreService.userMain
     };
     const coursePrivate: CoursePrivate = {
       invitedStudents: this.students.value,

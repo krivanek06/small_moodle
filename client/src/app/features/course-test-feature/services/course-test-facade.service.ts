@@ -1,19 +1,63 @@
 import {Injectable} from '@angular/core';
-import {CourseTest, CourseTestPublic, CourseTestTaken} from "../model/course-test-firebase.model";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
-import {convertCourseTestIntoCourseTestTaken} from "../utils/course-test.convertor";
+import {CourseTest, CourseTestPublic, CourseTestTaken} from "../model/course-test-firebase.model";
+import {CourseTestFormStateEnum, CourseTestStateEnum} from "../model/course-test.enums";
 import {StUserMain} from "../../authentication-feature/models/user.interface";
+import {convertCourseTestIntoCourseTestTaken} from "../utils/course-test.convertor";
 import {Observable, of} from "rxjs";
-import {AuthFeatureService} from "../../authentication-feature/services/auth-feature.service";
-import {CourseTestFormStateEnum} from "../model/course-test.enums";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
+import {AuthFeatureStoreService} from "../../authentication-feature/services/auth-feature-store.service";
+import {CourseTestDatabaseService} from "./course-test-database.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CourseTestStudentService {
+export class CourseTestFacadeService {
 
-  constructor(private authService: AuthFeatureService) {
+  constructor(private authFeatureStoreService: AuthFeatureStoreService,
+              private courseTestDatabaseService: CourseTestDatabaseService) {
+  }
+
+  // make course test public
+  async approveCourseTest(approve: boolean, courseTest: CourseTestPublic) {
+    const action = approve ? 'approved' : 'deleted';
+    if (await this.presentDialog(action, courseTest)) {
+      courseTest.testState = approve ? CourseTestStateEnum.APPROVED : CourseTestStateEnum.IN_PROGRESS;
+      if (approve) {
+        // TODO save test into public for students
+      }
+      // TODO send data to firebase
+      this.presentToaster(action, courseTest);
+    }
+  }
+
+  async saveCourseTest(courseTest: CourseTest): Promise<boolean> {
+    console.log('courseTest', courseTest)
+    if (await this.presentDialog('save', courseTest)) {
+      courseTest.testState = CourseTestStateEnum.IN_PROGRESS;
+      this.courseTestDatabaseService.saveCourseTest(courseTest);
+      this.presentToaster('saved', courseTest);
+      return true;
+    }
+    return false;
+  }
+
+  async sendTestToApproval(courseTest: CourseTest) {
+    if (!courseTest) {
+      return;
+    }
+    if (await this.presentDialog('submit for approval test:', courseTest)) {
+      courseTest.testState = CourseTestStateEnum.WAITING_FOR_APPROVAL;
+      this.courseTestDatabaseService.saveCourseTest(courseTest);
+      this.presentToaster('sent for approval', courseTest);
+    }
+  }
+
+  async deleteCourseTest(courseTest: CourseTest) {
+    if (await this.presentDialog('delete', courseTest)) {
+      this.courseTestDatabaseService.deleteCourseTest(courseTest);
+      this.presentToaster('deleted', courseTest);
+    }
   }
 
   async startCourseTest(courseTest: CourseTest, user: StUserMain) {
@@ -54,7 +98,7 @@ export class CourseTestStudentService {
     const courseTest: CourseTestTaken = {
       ...oldTest,
       questions,
-      marker: this.authService.userMain,
+      marker: this.authFeatureStoreService.userMain,
       receivedPoints: questions.map(x => x.receivedPoints).reduce((a, b) => a + b, 0),
       testFormState: CourseTestFormStateEnum.GRADED
     };

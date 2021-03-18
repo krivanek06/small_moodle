@@ -8,7 +8,7 @@ import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseFeatureFacadeService} from "../../../features/course-feature/services/course-feature-facade.service";
 import {CourseCreateEntryPointComponent} from "../../../features/course-feature/entry-points/course-create-entry-point/course-create-entry-point.component";
 import {CourseCreate} from "../../../features/course-feature/model/course-module.interface";
-import {AuthUserFeatureService} from "../../../features/authentication-feature/services/auth-user-feature.service";
+import {AuthFeatureStoreService} from "../../../features/authentication-feature/services/auth-feature-store.service";
 import {AccountFeatureDatabaseService} from "../../../features/account-feature/services/account-feature-database.service";
 import {CourseFeatureDatabaseService} from "../../../features/course-feature/services/course-feature-database.service";
 
@@ -18,7 +18,7 @@ export class DashboardAuthenticatedFacadeService {
   constructor(private modalController: ModalController,
               private popoverController: PopoverController,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
-              private authService: AuthUserFeatureService,
+              private authService: AuthFeatureStoreService,
               private accountService: AccountFeatureDatabaseService,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
   }

@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {StUser} from "../../../features/authentication-feature/models/user.interface";
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {Router} from "@angular/router";
+import {AuthFeatureStoreService} from "../../../features/authentication-feature/services/auth-feature-store.service";
 
 @Component({
   selector: 'app-header',
@@ -16,12 +17,13 @@ export class HeaderComponent implements OnInit {
   user$: Observable<StUser>;
 
   constructor(private popoverController: PopoverController,
-              private authService: AuthFeatureService,
+              private authFeatureStoreService: AuthFeatureStoreService,
+              private authFeatureService: AuthFeatureService,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.user$ = this.authService.getUser();
+    this.user$ = this.authFeatureStoreService.getUser();
     this.user$.subscribe(console.log)
   }
 
@@ -38,7 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   async logout() {
-    await this.authService.logout();
+    await this.authFeatureService.logout();
     IonicDialogService.presentToast('Your have been successfully logged out');
   }
 

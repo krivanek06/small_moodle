@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CourseTest, CourseTestQuestion} from "../../model/course-test-firebase.model";
-import {CoursePublic} from "../../../course-feature/model/courses-firebase.interface";
 import {v4 as uuid} from 'uuid';
 import {CourseTestFormStateEnum, CourseTestStateEnum} from "../../model/course-test.enums";
 import {StUserMain} from "../../../authentication-feature/models/user.interface";
@@ -16,9 +15,7 @@ import {getCurrentIOSDate} from "../../../../core/utils/date-formatter.functions
 export class CourseTestFormComponent implements OnInit {
   @Input() state: CourseTestFormStateEnum;
 
-
   // only if CourseTestFormEnum.CREATE;
-  @Input() course: CoursePublic;
   @Input() user: StUserMain;
 
   // these are provided only if test exists
@@ -72,10 +69,10 @@ export class CourseTestFormComponent implements OnInit {
     this.form.markAllAsTouched();
     if (!this.form.invalid) {
       return {
-        course: this.course,
-        testId: uuid(),
+        course: this.courseTest?.course || null,
+        testId: this.courseTest?.testId || uuid(),
         testState: CourseTestStateEnum.WAITING_FOR_APPROVAL,
-        createdBy: this.user,
+        createdBy: this.courseTest?.createdBy || this.user,
         testName: this.testName.value,
         availableFrom: this.availableFrom.value,
         availableTo: this.availableTo.value,

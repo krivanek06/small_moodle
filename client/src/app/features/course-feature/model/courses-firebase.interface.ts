@@ -2,15 +2,17 @@ import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {CourseTestPublic, CourseTestReceivedPoints} from "../../course-test-feature/model/course-test-firebase.model";
 import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from "./course.enum";
 
-
-export interface CoursePublic {
+export interface CoursePublicMain {
   courseId: string;
   year: number;
-  isOpen: boolean;
   category: string;
   creator: StUserMain;
   shortName: string;
   longName: string;
+}
+
+export interface CoursePublic extends CoursePublicMain{
+  isOpen: boolean;
   durationFrom: string;
   durationTo: string;
   numberOfStudents: number;

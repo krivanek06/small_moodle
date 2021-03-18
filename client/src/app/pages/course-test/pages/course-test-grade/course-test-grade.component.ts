@@ -2,10 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {courseTakenTestCompleted} from "../../../../features/course-test-feature/model/course-test.random.data";
 import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
-import {CourseTestStudentService} from "../../../../features/course-test-feature/services/course-test-student.service";
-import {AuthFeatureService} from "../../../../features/authentication-feature/services/auth-feature.service";
 import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
-import {userMain} from "../../../../features/authentication-feature/models/user.random.data";
+import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
+import {CourseTestFacadeService} from "../../../../features/course-test-feature/services/course-test-facade.service";
 
 @Component({
   selector: 'app-course-test-grade',
@@ -21,15 +20,15 @@ export class CourseTestGradeComponent implements OnInit {
 
   courseTakenTestCompleted = courseTakenTestCompleted;
 
-  constructor(private courseTestStudentService: CourseTestStudentService,
-              private authService: AuthFeatureService) {
+  constructor(private courseTestFacadeService: CourseTestFacadeService,
+              private authFeatureStoreService: AuthFeatureStoreService) {
   }
 
   ngOnInit() {
-    this.user = this.authService.userMain;
+    this.user = this.authFeatureStoreService.userMain;
   }
 
   gradeTest() {
-    this.courseTestStudentService.gradeCourseTest(this.courseTakenTestCompleted, this.courseTestForm.submitForm());
+    this.courseTestFacadeService.gradeCourseTest(this.courseTakenTestCompleted, this.courseTestForm.submitForm());
   }
 }

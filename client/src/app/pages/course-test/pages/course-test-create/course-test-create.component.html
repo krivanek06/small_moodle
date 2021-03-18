@@ -1,24 +1,16 @@
-<ion-grid>
-  <app-grid-page-content>
-    <!-- back button -->
-    <app-course-test-back-button
-      [courseName]="'Tvorba Internetovych aplikacii'"
-      [courseId]="'Course123'">
-    </app-course-test-back-button>
+<!-- buttons to save -->
+<app-course-test-form-buttons
+  (saveTestEmitter)="saveTest()">
+</app-course-test-form-buttons>
 
-    <!-- buttons to save / delete / accept test -->
-    <app-course-test-form-buttons
-      (saveTestEmitter)="saveTest()"
-      (deleteTestEmitter)="deleteTest()">
-    </app-course-test-form-buttons>
+<!-- error message -->
+<ion-toolbar class="st-error ion-text-center ion-padding" *ngIf="errorMessage">
+  {{ errorMessage }}
+</ion-toolbar>
 
-    <ion-text class="st-error st-flex ion-justify-content-center ion-padding">
-      {{ errorMessage }}
-    </ion-text>
-  </app-grid-page-content>
+<!-- test form -->
+<app-course-test-form
+  [user]="user$ | async"
+  [state]="CourseTestFormStateEnum.CREATE">
+</app-course-test-form>
 
-  <!-- test form -->
-  <app-grid-page-content>
-    <app-course-test-form [state]="CourseTestFormStateEnum.CREATE"></app-course-test-form>
-  </app-grid-page-content>
-</ion-grid>

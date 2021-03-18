@@ -1,9 +1,9 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" *ngIf="course$ | async as course">
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-lg="10" size-xl="9">
         <ion-title class="st-title">
-          Course: XYZ
+          Course: [{{ course.shortName }}] {{ course.longName }}
         </ion-title>
       </ion-col>
     </ion-row>
@@ -14,7 +14,7 @@
         <app-generic-card [title]="'Course tests'">
           <app-course-test-public-table
             (clickedEmitter)="redirectToCourseTest($event)"
-            [courseTests]="[courseTestApproved, courseTestApproved, courseTestWaitingApproval]">
+            [courseTests]="[]">
           </app-course-test-public-table>
           <ion-buttons class="ion-justify-content-end st-small-padding">
             <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">
@@ -31,7 +31,7 @@
         <app-generic-card [title]="'Upcoming tests'">
           <app-course-test-public-table
             (clickedEmitter)="startTest($event)"
-            [courseTests]="[courseTestApproved, courseTestApproved]">
+            [courseTests]="[]">
           </app-course-test-public-table>
         </app-generic-card>
       </ion-col>
@@ -42,7 +42,7 @@
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Completed tests'">
           <app-course-test-student-completed-table
-            [courseTakenTests]="[courseTakenTest, courseTakenTest, courseTakenTest]">
+            [courseTakenTests]="[]">
           </app-course-test-student-completed-table>
         </app-generic-card>
       </ion-col>
@@ -54,18 +54,17 @@
           <!-- course members-->
           <ion-col size="12" size-lg="8">
             <app-generic-card [title]="'Course members'">
+              <!-- markers -->
               <app-account-identification-list
                 [title]="'Evaluators'"
-                [members]="[userMain, userMain, userMain, userMain]">
+                [members]="course.markers">
               </app-account-identification-list>
+
+              <!-- students -->
               <app-account-identification-list
                 [title]="'Students'"
                 [enableClick]="true"
-                [members]="[userCourseStudent, userCourseStudent, userCourseStudent, userCourseStudent, userCourseStudent,
-                userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
-                userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
-                userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,userCourseStudent,
-                userCourseStudent]">
+                [members]="course.students">
               </app-account-identification-list>
             </app-generic-card>
           </ion-col>
@@ -86,7 +85,7 @@
             <ion-row>
               <ion-col size="12">
                 <app-generic-card [title]="'Invite member'">
-                  <app-account-search (clickedUserEmitter)="inviteUser($event)"></app-account-search>
+                  <app-account-search (clickedUserEmitter)="inviteUser($event, course)"></app-account-search>
                 </app-generic-card>
               </ion-col>
             </ion-row>

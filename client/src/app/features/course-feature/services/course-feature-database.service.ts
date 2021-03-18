@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {CourseCategory, CoursePrivate, CoursePublic} from "../model/courses-firebase.interface";
+import {combineLatest, Observable} from "rxjs";
+import {Course, CourseCategory, CoursePrivate, CoursePublic} from "../model/courses-firebase.interface";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map, shareReplay} from "rxjs/operators";
 import {CourseCreate} from "../model/course-module.interface";
@@ -12,14 +12,14 @@ import firebase from "firebase";
   providedIn: 'root'
 })
 export class CourseFeatureDatabaseService {
-  private readonly COLLECTION_COURSES = 'courses';
-  private readonly COLLECTION_COURSES_PRIVATE = 'private';
+  private readonly COURSE = 'courses';
+  private readonly PRIVATE = 'private';
 
   constructor(private firestore: AngularFirestore) {
   }
 
   getCourseCategories(): Observable<CourseCategory> {
-    return this.firestore.collection<CourseCategory>(this.COLLECTION_COURSES)
+    return this.firestore.collection<CourseCategory>(this.COURSE)
       .doc('categories')
       .valueChanges()
       .pipe(
@@ -28,7 +28,7 @@ export class CourseFeatureDatabaseService {
   }
 
   async addCourseCategory(name) {
-    const categories = await this.firestore.collection<CourseCategory>(this.COLLECTION_COURSES)
+    const categories = await this.firestore.collection<CourseCategory>(this.COURSE)
       .doc('categories')
       .get().pipe(
         map(x => x.data())
@@ -38,26 +38,40 @@ export class CourseFeatureDatabaseService {
       name,
       courses: 0
     });
-    await this.firestore.collection(this.COLLECTION_COURSES).doc('categories').set(categories);
+    await this.firestore.collection(this.COURSE).doc('categories').set(categories);
   }
 
-  saveCourse(courseCreate: CourseCreate) {
+  async saveCourse(courseCreate: CourseCreate) {
     // save public
-    this.firestore.collection(this.COLLECTION_COURSES)
+    this.firestore.collection(this.COURSE)
       .doc(courseCreate.coursePublic.courseId)
       .set(courseCreate.coursePublic);
 
     // save private
-    this.firestore.collection(this.COLLECTION_COURSES)
+    this.firestore.collection(this.COURSE)
       .doc(courseCreate.coursePublic.courseId)
-      .collection(this.COLLECTION_COURSES_PRIVATE)
-      .doc(this.COLLECTION_COURSES_PRIVATE)
-      .set(courseCreate.coursePrivate)
+      .collection(this.PRIVATE)
+      .doc(this.PRIVATE)
+      .set(courseCreate.coursePrivate);
+
+
+    // increase course category
+    const categories = await this.firestore.collection<CourseCategory>(this.COURSE)
+      .doc('categories')
+      .get().pipe(
+        map(x => x.data())
+      ).toPromise();
+
+    const existing = categories.data[0].categories.find(c => c.name === courseCreate.coursePublic.category);
+    const rest = categories.data[0].categories.filter(c => c.name !== courseCreate.coursePublic.category);
+    categories.data[0].categories = [...rest, {name: existing.name, courses: existing.courses + 1}];
+
+    await this.firestore.collection(this.COURSE).doc('categories').set(categories);
   }
 
   async removePersonInvitationFromCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
-    const ref = this.firestore.collection(this.COLLECTION_COURSES)
-      .doc(courseId).collection(this.COLLECTION_COURSES_PRIVATE).doc(this.COLLECTION_COURSES_PRIVATE).ref;
+    const ref = this.firestore.collection(this.COURSE)
+      .doc(courseId).collection(this.PRIVATE).doc(this.PRIVATE).ref;
 
     const coursePrivate = (await ref.get()).data() as CoursePrivate;
 
@@ -73,8 +87,8 @@ export class CourseFeatureDatabaseService {
   }
 
   async addPersonIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
-    const ref = this.firestore.collection(this.COLLECTION_COURSES)
-      .doc(courseId).collection(this.COLLECTION_COURSES_PRIVATE).doc(this.COLLECTION_COURSES_PRIVATE).ref;
+    const ref = this.firestore.collection(this.COURSE)
+      .doc(courseId).collection(this.PRIVATE).doc(this.PRIVATE).ref;
 
     if (type === COURSE_ROLES_ENUM.STUDENT) {
       ref.set({

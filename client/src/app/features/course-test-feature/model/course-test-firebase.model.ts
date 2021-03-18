@@ -1,6 +1,6 @@
 import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {CourseTestFormStateEnum, CourseTestStateEnum} from "./course-test.enums";
-import {CoursePublic} from "../../course-feature/model/courses-firebase.interface";
+import {CoursePublic, CoursePublicMain} from "../../course-feature/model/courses-firebase.interface";
 
 export interface CourseTestReceivedPoints {
   testId: string;
@@ -11,7 +11,7 @@ export interface CourseTestReceivedPoints {
 
 export interface CourseTestPublic {
   testId: string;
-  course: CoursePublic;
+  course: CoursePublicMain;
   testName: string;
   createdBy: StUserMain;
   lastEdited: string;
@@ -21,6 +21,8 @@ export interface CourseTestPublic {
   testPoints: number;
   testState: CourseTestStateEnum;
 }
+
+
 
 export interface CourseTest extends CourseTestPublic {
   testResults?: CourseTestResult[];

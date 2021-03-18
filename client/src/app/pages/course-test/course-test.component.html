@@ -1,3 +1,21 @@
 <ion-content class="ion-padding">
-  <router-outlet></router-outlet>
+  <ion-grid>
+    <!-- course back button -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
+        <app-course-test-back-button
+          *ngIf="course$ | async as course"
+          [courseId]="course.courseId"
+          [courseName]="course.longName">
+        </app-course-test-back-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- router -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" size-xl="9">
+        <router-outlet></router-outlet>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -11,6 +11,8 @@ import {InlineInputPopUpComponent} from "../../../shared/entry-points/inline-inp
 import {CourseFeatureDatabaseService} from "./course-feature-database.service";
 import {AccountFeatureDatabaseService} from "../../account-feature/services/account-feature-database.service";
 import {createCourseInvitation} from "../utils/course.convertor";
+import {Router} from "@angular/router";
+import {CourseFeatureStoreService} from "./course-feature-store.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,13 @@ export class CourseFeatureFacadeService {
 
   constructor(private popoverController: PopoverController,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService,
-              private accountFeatureDatabaseService: AccountFeatureDatabaseService) {
+              private accountFeatureDatabaseService: AccountFeatureDatabaseService,
+              private courseFeatureStoreService: CourseFeatureStoreService,
+              private router: Router) {
+  }
+
+  navigateToCoursePage() {
+    this.router.navigate(['menu', 'course', this.courseFeatureStoreService.course.courseId]);
   }
 
   async inviteMemberIntoCourse(userMain: StUserMain): Promise<void> {

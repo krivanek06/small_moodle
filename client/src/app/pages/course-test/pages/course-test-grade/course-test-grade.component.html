@@ -1,21 +1,17 @@
-<ion-grid>
-  <!-- test info -->
-  <app-grid-page-content>
-    <app-course-test-info
-      [loggedInUser]="user"
-      [courseTestTaken]="courseTakenTestCompleted">
-    </app-course-test-info>
-  </app-grid-page-content>
+<!-- test info -->
 
-  <!-- test questions -->
-  <app-grid-page-content>
-    <app-course-test-form
-      [state]="CourseTestFormStateEnum.GRADE"
-      [courseTest]="courseTakenTestCompleted">
-    </app-course-test-form>
+<app-course-test-info
+  [loggedInUser]="user"
+  [courseTestTaken]="courseTakenTestCompleted">
+</app-course-test-info>
 
-    <ion-buttons class="ion-justify-content-end">
-      <ion-button color="primary" (click)="gradeTest()" fill="outline">Grade</ion-button>
-    </ion-buttons>
-  </app-grid-page-content>
-</ion-grid>
+
+<!-- test questions -->
+<app-course-test-form
+  [state]="CourseTestFormStateEnum.GRADE"
+  [courseTest]="courseTakenTestCompleted">
+</app-course-test-form>
+
+<ion-buttons class="ion-justify-content-end">
+  <ion-button color="primary" (click)="gradeTest()" fill="outline">Grade</ion-button>
+</ion-buttons>

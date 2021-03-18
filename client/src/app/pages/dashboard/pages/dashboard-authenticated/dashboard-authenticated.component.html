@@ -9,7 +9,7 @@
             <app-courses-manage-table
               (clickedCourseEmitter)="redirectToCourse($event)"
               [authenticatedUser]="user"
-              [userCourses]="user.courses | courseFilterManaged">
+              [userCourses]="user.courses | courseFilterManagedOpen">
             </app-courses-manage-table>
             <ion-buttons class="ion-justify-content-end st-small-padding">
               <ion-button color="primary" class="st-small-padding" (click)="createCourse()">

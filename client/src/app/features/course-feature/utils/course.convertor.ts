@@ -1,4 +1,4 @@
-import {CourseInvitation, CoursePublic} from "../model/courses-firebase.interface";
+import {Course, CourseInvitation, CoursePublic, CoursePublicMain} from "../model/courses-firebase.interface";
 import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from "../model/course.enum";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 
@@ -12,4 +12,15 @@ export const createCourseInvitation = (coursePublic: CoursePublic,
     invitedBy: coursePublic.creator,
     invitationType: invitationType
   };
+}
+
+export const convertCourseIntoCourseMain = (course: Course): CoursePublicMain => {
+  return {
+    longName: course.longName,
+    category: course.category,
+    courseId: course.courseId,
+    creator: course.creator,
+    shortName: course.shortName,
+    year: course.year
+  }
 }

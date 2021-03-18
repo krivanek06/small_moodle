@@ -1,57 +1,26 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
 
 import auth from 'firebase';
 import firebase from 'firebase';
 import {Router} from "@angular/router";
-import {LoginIUser, RegisterIUser, StUser, StUserLogin, StUserMain} from "../models/user.interface";
+import {LoginIUser, RegisterIUser, StUser} from "../models/user.interface";
 import {buildUserPrivate, buildUserPublic} from "../utils/user.builder";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {map, takeUntil} from "rxjs/operators";
+import {AuthFeatureStoreService} from "./auth-feature-store.service";
 import UserCredential = firebase.auth.UserCredential;
-import {userMain} from "../models/user.random.data";
-import {StorageService} from "../../../core/services/storage.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthFeatureService {
-  private user$: BehaviorSubject<StUser> = new BehaviorSubject<StUser>(null);
-  private destroy$: Subject<boolean> = new Subject<boolean>();
-
-  private AUTH_KEY = 'AUTH_KEY';
 
   constructor(private afAuth: AngularFireAuth,
               private firestore: AngularFirestore,
-              private storageService: StorageService,
+              private authFeatureStoreService: AuthFeatureStoreService,
               private router: Router) {
-    this.checkSavedUID();
   }
 
-  get user(): StUser {
-    if (!this.user$.getValue()) {
-      throw new Error('trying to access StUserPublicData, but does not exists');
-    }
-
-    return this.user$.getValue();
-  }
-
-  get userMain(): StUserMain {
-    const user = this.user;
-    return {
-      uid: user.uid,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      accountCreatedDate: user.accountCreatedDate,
-      lastName: user.lastName,
-      firstName: user.firstName
-    }
-  }
-
-  getUser(): Observable<StUser> {
-    return this.user$.asObservable();
-  }
 
   async googleSignIn(): Promise<void> {
     const provider = new auth.auth.GoogleAuthProvider();
@@ -71,42 +40,19 @@ export class AuthFeatureService {
 
   async logout() {
     await this.afAuth.signOut();
-    this.destroy$.next(true)
-    this.user$.next(null);
-    this.storageService.removeData(this.AUTH_KEY);
+    this.authFeatureStoreService.logoutUser();
     await this.router.navigate(['/menu']);
   }
 
   private async signInUser(credential: UserCredential, registerIUser?: RegisterIUser): Promise<void> {
     if (credential.additionalUserInfo.isNewUser) {
       const user = await this.registerUser(credential, registerIUser);
-      this.user$.next(user);
+      this.authFeatureStoreService.setUser(user.uid);
     } else {
-      this.storageService.saveData(this.AUTH_KEY, credential.user.uid);
-      this.loadUser(credential.user.uid);
+      this.authFeatureStoreService.setUser(credential.user.uid);
     }
   }
 
-  private checkSavedUID(){
-    const uid = this.storageService.getData(this.AUTH_KEY) as string;
-    if(uid){
-      this.loadUser(uid);
-    }
-  }
-
-  private loadUser(uid: string) {
-    return combineLatest([
-      this.firestore.doc(`users/${uid}`).valueChanges(),
-      this.firestore.doc(`users/${uid}/private_data/user_private`).valueChanges()
-    ]).pipe(
-      map(([uPublic, uPrivate]) => {
-        return {uPublic, uPrivate} as StUserLogin
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe(res => {
-      this.user$.next({...res.uPublic, ...res.uPrivate});
-    })
-  }
 
   private async registerUser(credential: UserCredential, registerIUser?: RegisterIUser): Promise<StUser> {
     const profile = credential.additionalUserInfo.profile as any;

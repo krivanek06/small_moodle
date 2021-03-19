@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {
   courseTakenTest,
-  courseTakenTestCompleted,
-  courseTestApproved
+  courseTakenTestCompleted
 } from "../../../../features/course-test-feature/model/course-test.random.data";
 import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
-import {CourseTestTaken} from "../../../../features/course-test-feature/model/course-test-firebase.model";
-import {Router} from "@angular/router";
+import {CourseTest, CourseTestTaken} from "../../../../features/course-test-feature/model/course-test-firebase.model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-course-test-preview',
@@ -16,14 +17,16 @@ import {Router} from "@angular/router";
 export class CourseTestPreviewComponent implements OnInit {
   courseTakenTestCompleted = courseTakenTestCompleted;
   courseTakenTest = courseTakenTest;
-  courseTestApproved = courseTestApproved;
 
+  courseTest$: Observable<CourseTest>;
   CourseTestFormStateEnum = CourseTestFormStateEnum;
 
-  constructor(private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
+    this.courseTest$ = this.route.data.pipe(map(x => x[0]));
   }
 
   redirectToCourseTestGrade(courseTestTaken: CourseTestTaken) {

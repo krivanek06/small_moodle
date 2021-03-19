@@ -31,7 +31,7 @@
         <app-generic-card [title]="'Upcoming tests'">
           <app-course-test-public-table
             (clickedEmitter)="startTest($event)"
-            [courseTests]="[]">
+            [courseTests]="course.confirmedTests">
           </app-course-test-public-table>
         </app-generic-card>
       </ion-col>
@@ -42,7 +42,7 @@
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Completed tests'">
           <app-course-test-student-completed-table
-            [courseTakenTests]="[]">
+            [courseTakenTests]="studentTests$ | async">
           </app-course-test-student-completed-table>
         </app-generic-card>
       </ion-col>

@@ -2,12 +2,19 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {StUserPublic} from "../../features/authentication-feature/models/user.interface";
 import {CourseFeatureFacadeService} from "../../features/course-feature/services/course-feature-facade.service";
-import {CourseTest} from "../../features/course-test-feature/model/course-test-firebase.model";
-import {Observable} from "rxjs";
+import {
+  CourseTest,
+  CourseTestPublic,
+  CourseTestTaken
+} from "../../features/course-test-feature/model/course-test-firebase.model";
+import {combineLatest, Observable} from "rxjs";
 import {Course} from "../../features/course-feature/model/courses-firebase.interface";
 import {COURSE_ROLES_ENUM} from "../../features/course-feature/model/course.enum";
 import {CourseFeatureStoreService} from "../../features/course-feature/services/course-feature-store.service";
 import {CourseTestFeatureStoreService} from "../../features/course-test-feature/services/course-test-feature-store.service";
+import {CourseTestFeatureFacadeService} from "../../features/course-test-feature/services/course-test-feature-facade.service";
+import {first} from "rxjs/operators";
+import {AuthFeatureStoreService} from "../../features/authentication-feature/services/auth-feature-store.service";
 
 @Component({
   selector: 'app-course',
@@ -24,26 +31,24 @@ export class CoursePage implements OnInit {
   userMain = userMain;*/
   course$: Observable<Course>;
   courseTests$: Observable<CourseTest[]>;
+  studentTests$: Observable<CourseTestTaken[]>;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
+
               private courseFeatureStoreService: CourseFeatureStoreService,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
-              private courseTestFeatureStoreService: CourseTestFeatureStoreService) {
+              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
+              private courseTestFeatureFacadeService: CourseTestFeatureFacadeService) {
   }
 
   ngOnInit() {
     // load course public + private data
     // load all tests if marker or teacher
-    // load completed tests if student
-    this.route.params.subscribe(res => {
-      this.courseFeatureStoreService.setCourse(res['id']);
-      this.courseTestFeatureStoreService.setAllCourseTests(res['id']);
-    });
-
     this.course$ = this.courseFeatureStoreService.getCourse();
     this.courseTests$ = this.courseTestFeatureStoreService.getAllCourseTests();
-    this.course$.subscribe(res => console.log('couse', res))
+    this.studentTests$ = this.courseTestFeatureStoreService.getAllStudentCourseTests()
+
   }
 
   async inviteUser(userPublic: StUserPublic, course: Course) {
@@ -61,7 +66,9 @@ export class CoursePage implements OnInit {
     this.router.navigate([`menu/course-test/edit/${courseTest.testId}`]);
   }
 
-  startTest(courseTest: CourseTest) {
-
+  async startTest(courseTest: CourseTestPublic) {
+    if (await this.courseTestFeatureFacadeService.startCourseTest(courseTest)) {
+      this.router.navigate([`menu/course-test/submit/${courseTest.testId}`])
+    }
   }
 }

@@ -8,6 +8,7 @@ import {CourseTestEditComponent} from "./pages/course-test-edit/course-test-edit
 import {CourseTestPreviewComponent} from "./pages/course-test-preview/course-test-preview.component";
 import {CourseTestSubmitComponent} from "./pages/course-test-submit/course-test-submit.component";
 import {CourseTestGradeComponent} from "./pages/course-test-grade/course-test-grade.component";
+import {CourseTestPreloadGuard} from "./guards/course-test-preload.guard";
 
 
 const routes: Routes = [
@@ -24,10 +25,12 @@ const routes: Routes = [
         component: CourseTestCreateComponent
       }, {
         path: 'preview/:testId',
-        component: CourseTestPreviewComponent
+        component: CourseTestPreviewComponent,
+        resolve: [CourseTestPreloadGuard]
       }, {
         path: 'edit/:testId',
-        component: CourseTestEditComponent
+        component: CourseTestEditComponent,
+        resolve: [CourseTestPreloadGuard]
       }, {
         path: 'submit/:testId',
         component: CourseTestSubmitComponent

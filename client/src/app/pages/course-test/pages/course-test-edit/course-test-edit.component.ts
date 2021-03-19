@@ -5,7 +5,7 @@ import {CourseTest} from "../../../../features/course-test-feature/model/course-
 import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
 import {CourseTestFeatureDatabaseService} from "../../../../features/course-test-feature/services/course-test-feature-database.service";
 import {ActivatedRoute} from "@angular/router";
-import {filter, switchMap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
 import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
@@ -32,10 +32,7 @@ export class CourseTestEditComponent implements OnInit {
 
   ngOnInit() {
     this.userMain$ = this.authFeatureStoreService.getUserMain();
-    this.courseTest$ = this.route.params.pipe(
-      filter(params => !!params['testId']),
-      switchMap(params => this.courseTestFeatureFacadeService.getCourseTest(params['testId']))
-    );
+    this.courseTest$ = this.route.data.pipe(map(x => x[0]));
 
   }
 

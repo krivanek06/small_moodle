@@ -11,25 +11,17 @@
   </ion-col>
 </ion-row>
 
-
 <!-- table test results -->
-<ion-row>
-  <ion-col size="12">
-    <app-generic-card [title]="'Test results'">
-      <app-course-test-taken-table
-        (clickedEmitter)="redirectToCourseTestGrade($event)"
-        [courseTakenTests]="[courseTakenTest, courseTakenTestCompleted, courseTakenTest, courseTakenTestCompleted]">
-      </app-course-test-taken-table>
-    </app-generic-card>
-  </ion-col>
-</ion-row>
+<div style="margin-bottom: 20px">
+  <app-generic-card [title]="'Test results'">
+    <app-course-test-taken-table
+      (clickedEmitter)="redirectToCourseTestGrade($event)"
+      [courseTakenTests]="[courseTakenTest, courseTakenTestCompleted, courseTakenTest, courseTakenTestCompleted]">
+    </app-course-test-taken-table>
+  </app-generic-card>
+</div>
 
 <!-- test questions -->
-<ion-row>
-  <ion-col size="12">
-    <app-course-test-form
-      [state]="CourseTestFormStateEnum.PREVIEW"
-      [courseTest]="courseTestApproved">
-    </app-course-test-form>
-  </ion-col>
-</ion-row>
+<app-course-test-form
+  [courseTest]="courseTest$ | async">
+</app-course-test-form>

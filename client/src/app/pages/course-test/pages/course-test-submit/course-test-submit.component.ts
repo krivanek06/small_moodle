@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
 import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
 import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
-import {courseTakenTest} from "../../../../features/course-test-feature/model/course-test.random.data";
-import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
 import {CourseTestFeatureFacadeService} from "../../../../features/course-test-feature/services/course-test-feature-facade.service";
+import {Observable} from "rxjs";
+import {CourseTestTaken} from "../../../../features/course-test-feature/model/course-test-firebase.model";
+import {CourseTestFeatureStoreService} from "../../../../features/course-test-feature/services/course-test-feature-store.service";
+import {CourseFeatureFacadeService} from "../../../../features/course-feature/services/course-feature-facade.service";
 
 @Component({
   selector: 'app-course-test-submit',
@@ -12,20 +13,25 @@ import {CourseTestFeatureFacadeService} from "../../../../features/course-test-f
   styleUrls: ['./course-test-submit.component.scss'],
 })
 export class CourseTestSubmitComponent implements OnInit {
-  @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
-  CourseTestFormStateEnum = CourseTestFormStateEnum;
-  user: StUserMain;
 
-  courseTakenTest = courseTakenTest;
+  @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
+
+  CourseTestFormStateEnum = CourseTestFormStateEnum;
+
+  courseTakenTest$: Observable<CourseTestTaken>;
 
   constructor(private courseTestFacadeService: CourseTestFeatureFacadeService,
-              private authFeatureStoreService: AuthFeatureStoreService) {
+              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
+              private courseFeatureFacadeService: CourseFeatureFacadeService) {
   }
 
   ngOnInit() {
+    this.courseTakenTest$ = this.courseTestFeatureStoreService.getStudentCourseTest();
   }
 
-  submitTest() {
-    this.courseTestFacadeService.submitCompletedCourseTest(this.courseTakenTest, this.courseTestForm.submitForm())
+  async submitTest() {
+    if (await this.courseTestFacadeService.submitCompletedCourseTest(this.courseTestForm.submitForm())) {
+      this.courseFeatureFacadeService.navigateToCoursePage();
+    }
   }
 }

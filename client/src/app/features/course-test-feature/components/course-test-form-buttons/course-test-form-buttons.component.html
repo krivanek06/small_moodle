@@ -9,7 +9,7 @@
 
       <ng-template #buttons>
         <ion-label>
-          <ion-buttons class="ion-justify-content-end">
+          <ion-buttons class="ion-justify-content-end" *ngIf="loggedInUser">
 
             <!-- I am creator and teacher -->
             <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid &&

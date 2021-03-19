@@ -7,14 +7,13 @@ import {
   convertCourseTestIntoCourseTestPublic,
   convertCourseTestIntoCourseTestTaken
 } from "../utils/course-test.convertor";
-import {combineLatest, Observable, of} from "rxjs";
 import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
 import {AuthFeatureStoreService} from "../../authentication-feature/services/auth-feature-store.service";
 import {CourseTestFeatureDatabaseService} from "./course-test-feature-database.service";
-import {filter, first, map, switchMap, tap} from "rxjs/operators";
 import {CourseFeatureStoreService} from "../../course-feature/services/course-feature-store.service";
-import {ActivatedRoute} from "@angular/router";
 import {CourseFeatureDatabaseService} from "../../course-feature/services/course-feature-database.service";
+import {first} from "rxjs/operators";
+import {CourseTestFeatureStoreService} from "./course-test-feature-store.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,16 +23,9 @@ export class CourseTestFeatureFacadeService {
   constructor(private authFeatureStoreService: AuthFeatureStoreService,
               private courseTestDatabaseService: CourseTestFeatureDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
+              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
   }
-
-  getCourseTest(testId: string): Observable<CourseTest> {
-    return this.courseFeatureStoreService.getCourse().pipe(map(c => c.courseId)).pipe(
-      first(),
-      switchMap(courseId => this.courseTestDatabaseService.getCourseTest(courseId, testId))
-    )
-  }
-
 
   async approveCourseTest(approve: boolean, courseTest: CourseTest) {
     const action = approve ? 'approved' : 'deleted';
@@ -49,7 +41,6 @@ export class CourseTestFeatureFacadeService {
   }
 
   async saveCourseTest(courseTest: CourseTest): Promise<boolean> {
-    console.log('courseTest', courseTest)
     if (await this.presentDialog('save', courseTest)) {
       courseTest.testState = CourseTestStateEnum.IN_PROGRESS;
       this.courseTestDatabaseService.saveCourseTest(courseTest);
@@ -70,45 +61,66 @@ export class CourseTestFeatureFacadeService {
     }
   }
 
+  // TODO does not work
   async deleteCourseTest(courseTest: CourseTest) {
     if (await this.presentDialog('delete', courseTest)) {
-      this.courseTestDatabaseService.deleteCourseTest(courseTest);
+      await this.courseTestDatabaseService.deleteCourseTest(courseTest);
       this.presentToaster('deleted', courseTest);
     }
   }
 
-  async startCourseTest(courseTest: CourseTest, user: StUserMain) {
-    if (await this.presentDialog('start', courseTest)) {
-      const takenTest = convertCourseTestIntoCourseTestTaken(courseTest, user);
-      console.log('takenTest', takenTest)
-      // TODO save into firestore new collection
-      // TODO save takenTestfor user active test
-      this.presentToaster('started', courseTest);
-    }
-  }
+  // TODO pozri zaciatok casu ci mozem zacat / pokracovat test
+  async startCourseTest(courseTest: CourseTestPublic): Promise<boolean> {
+    const courseId = courseTest.course.courseId;
+    const testId = courseTest.testId;
+    const user = this.authFeatureStoreService.user;
 
-  loadCourseTest(courseTestPublic: CourseTestPublic, user: StUserMain): Observable<CourseTestTaken> {
-    // TODO get courseTest from firestore
-    return of(null);
+    const studentTest = await this.courseTestDatabaseService.getStudentCourseTest(courseId, testId, user.uid).pipe(first()).toPromise();
+
+    // student already started test
+    if (studentTest) {
+      if (await this.presentDialog('continues', courseTest)) {
+        this.courseTestFeatureStoreService.setStudentCourseTest(studentTest);
+        IonicDialogService.presentToast(`You are continuing ${studentTest.testName}`);
+        return true
+      }
+      return false;
+    }
+
+    // student start test first time
+    if (await this.presentDialog('start', courseTest)) {
+      // load course test
+      const test = await this.courseTestDatabaseService.getCourseTest(courseId, testId).pipe(first()).toPromise();
+      const takenTest = convertCourseTestIntoCourseTestTaken(test, user);
+
+      // save for student
+      this.courseTestDatabaseService.saveStudentCourseTest(takenTest);
+      this.courseTestFeatureStoreService.setStudentCourseTest(takenTest);
+      this.presentToaster('started', courseTest);
+      return true;
+    }
+    return false;
   }
 
   assignMarkerOnCourseTest(takenTest: CourseTestTaken, market: StUserMain) {
 
   }
 
-  async submitCompletedCourseTest(oldTest: CourseTestTaken, {questions}: CourseTest) {
-    if (!await this.presentDialog('submit', oldTest)) {
-      return
+  async submitCompletedCourseTest({questions}: CourseTest): Promise<boolean> {
+    const takenTest = this.courseTestFeatureStoreService.studentCourseTest;
+    if (!await this.presentDialog('submit', takenTest)) {
+      return false;
     }
-    const courseTest: CourseTestTaken = {
-      ...oldTest,
+    const courseTestTaken: CourseTestTaken = {
+      ...takenTest,
       questions,
       timeEnded: getCurrentIOSDate(),
+      testFormState: CourseTestFormStateEnum.GRADE,
       timeAwayOfTest: 540 // TODO implement
-    }
-    console.log('courseTest', courseTest);
-    // TODO save into firestore
-    this.presentToaster('submitted', courseTest)
+    };
+    this.courseTestDatabaseService.saveStudentCourseTest(courseTestTaken);
+    this.presentToaster('submitted', courseTestTaken);
+    return true;
   }
 
   gradeCourseTest(oldTest: CourseTestTaken, {questions}: CourseTest) {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CourseTest, CourseTestQuestion} from "../../model/course-test-firebase.model";
 import {v4 as uuid} from 'uuid';
@@ -12,7 +12,7 @@ import {getCurrentIOSDate} from "../../../../core/utils/date-formatter.functions
   templateUrl: './course-test-form.component.html',
   styleUrls: ['./course-test-form.component.scss'],
 })
-export class CourseTestFormComponent implements OnInit {
+export class CourseTestFormComponent implements OnInit, OnChanges {
   @Input() state: CourseTestFormStateEnum;
 
   // only if CourseTestFormEnum.CREATE;
@@ -54,15 +54,12 @@ export class CourseTestFormComponent implements OnInit {
     return this.form.get('testPoints');
   }
 
-  ngOnInit() {
-    this.isCreatingState = this.state === CourseTestFormStateEnum.CREATE && (!this.courseTest || this.courseTest.createdBy.uid === this.user.uid);
+  ngOnChanges(changes: SimpleChanges): void {
+    this.initComponent();
+  }
 
-    if (this.courseTest) {
-      this.initFormWithQuestions();
-    } else {
-      this.initFormEmpty();
-      this.addQuestion();
-    }
+  ngOnInit() {
+
   }
 
   public submitForm(): CourseTest {
@@ -115,6 +112,21 @@ export class CourseTestFormComponent implements OnInit {
 
   deleteQuestion(i: number) {
     this.questions.removeAt(i);
+  }
+
+  private initComponent() {
+    // not test or I created it and it is int progress
+    this.isCreatingState = !this.courseTest || (
+      !!this.courseTest && !!this.user &&
+      this.courseTest.createdBy.uid === this.user.uid &&
+      this.courseTest.testState === CourseTestStateEnum.IN_PROGRESS);
+
+    if (this.courseTest) {
+      this.initFormWithQuestions();
+    } else {
+      this.initFormEmpty();
+      this.addQuestion();
+    }
   }
 
   private initFormWithQuestions() {

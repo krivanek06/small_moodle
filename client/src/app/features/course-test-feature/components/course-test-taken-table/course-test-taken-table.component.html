@@ -16,6 +16,10 @@
     <ion-label>{{ test.timeEnded | date: 'HH:mm dd.MM.YYYY' }}</ion-label>
     <ion-label>{{ test.timeAwayOfTest | date: 'mm:ss' }}</ion-label>
     <ion-label>{{ test.marker?.displayName }}</ion-label>
-    <ion-label>{{ test.receivedPoints }} ({{ 1 / test.testPoints  * test.receivedPoints | percent }})</ion-label>
+    <ion-label>
+      <ng-container *ngIf="test.receivedPoints">
+        {{ test.receivedPoints }} ({{ 1 / test.testPoints * test.receivedPoints | percent }})
+      </ng-container>
+    </ion-label>
   </ion-item>
 </ion-list>

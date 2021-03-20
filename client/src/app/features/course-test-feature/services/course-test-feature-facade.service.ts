@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {IonicDialogService} from "../../../core/services/ionic-dialog.service";
 import {CourseTest, CourseTestPublic, CourseTestTaken} from "../model/course-test-firebase.model";
 import {CourseTestFormStateEnum, CourseTestStateEnum} from "../model/course-test.enums";
-import {StUserMain} from "../../authentication-feature/models/user.interface";
 import {
   convertCourseTestIntoCourseTestPublic,
   convertCourseTestIntoCourseTestTaken
@@ -12,8 +11,9 @@ import {AuthFeatureStoreService} from "../../authentication-feature/services/aut
 import {CourseTestFeatureDatabaseService} from "./course-test-feature-database.service";
 import {CourseFeatureStoreService} from "../../course-feature/services/course-feature-store.service";
 import {CourseFeatureDatabaseService} from "../../course-feature/services/course-feature-database.service";
-import {first} from "rxjs/operators";
+import {first, switchMap} from "rxjs/operators";
 import {CourseTestFeatureStoreService} from "./course-test-feature-store.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,12 @@ export class CourseTestFeatureFacadeService {
               private courseFeatureStoreService: CourseFeatureStoreService,
               private courseTestFeatureStoreService: CourseTestFeatureStoreService,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
+  }
+
+  getAllStudentsResultsForCourseTests(testId: string): Observable<CourseTestTaken[]> {
+    return this.courseFeatureStoreService.getCourse().pipe(
+      switchMap(course => this.courseTestDatabaseService.getAllStudentsResultsForCourseTests(course.courseId, testId))
+    );
   }
 
   async approveCourseTest(approve: boolean, courseTest: CourseTest) {
@@ -102,8 +108,18 @@ export class CourseTestFeatureFacadeService {
     return false;
   }
 
-  assignMarkerOnCourseTest(takenTest: CourseTestTaken, market: StUserMain) {
-
+  async assignMarkerOnCourseTest(takenTest: CourseTestTaken) {
+    const user = this.authFeatureStoreService.userMain;
+    const message = `Do you want to evaluate test ${takenTest.testName} for user ${takenTest.student.displayName} ?`;
+    if (!await IonicDialogService.presentAlertConfirm(message)) {
+      return false;
+    }
+    const courseTestTaken: CourseTestTaken = {
+      ...takenTest,
+      marker: user
+    };
+    this.courseTestDatabaseService.saveStudentCourseTest(courseTestTaken);
+    IonicDialogService.presentToast(`Marker ${user.displayName} has been assign on test ${courseTestTaken.testName}`);
   }
 
   async submitCompletedCourseTest({questions}: CourseTest): Promise<boolean> {
@@ -123,17 +139,33 @@ export class CourseTestFeatureFacadeService {
     return true;
   }
 
-  gradeCourseTest(oldTest: CourseTestTaken, {questions}: CourseTest) {
+  async gradeCourseTest(oldTest: CourseTestTaken, modifiedTest: CourseTest) {
+    if (!modifiedTest || !await this.presentDialog('grade', modifiedTest)) {
+      return;
+    }
     const courseTest: CourseTestTaken = {
       ...oldTest,
-      questions,
+      questions: modifiedTest.questions,
       marker: this.authFeatureStoreService.userMain,
-      receivedPoints: questions.map(x => x.receivedPoints).reduce((a, b) => a + b, 0),
+      receivedPoints: modifiedTest.questions.map(x => x.receivedPoints).reduce((a, b) => a + b, 0),
       testFormState: CourseTestFormStateEnum.GRADED
     };
-    console.log('courseTest', courseTest);
-    // TODO save into firestore
+
+    this.courseTestDatabaseService.saveStudentCourseTest(courseTest);
     this.presentToaster('graded', courseTest);
+  }
+
+  async reopenTest(courseTakenTest: CourseTestTaken){
+    const message = `Do you really want to reopen test ${courseTakenTest.testName} for student ${courseTakenTest.student.displayName} ? `;
+    if(!await IonicDialogService.presentAlertConfirm(message)){
+      return
+    }
+    const courseTest: CourseTestTaken = {
+      ...courseTakenTest,
+      testFormState: CourseTestFormStateEnum.GRADE
+    };
+    this.courseTestDatabaseService.saveStudentCourseTest(courseTest);
+    this.presentToaster('reopened', courseTest);
   }
 
   private async presentDialog(action: string, {testName, course}: CourseTestPublic) {

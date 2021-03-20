@@ -15,7 +15,12 @@ export class CourseTestFeatureDatabaseService {
   constructor(private firestore: AngularFirestore) {
   }
 
-  async getAllStudentCourseTests(courseId: string, userId: string): Promise<CourseTestTaken[]> {
+  getAllStudentsResultsForCourseTests(courseId: string, testId: string): Observable<CourseTestTaken[]> {
+    return this.firestore.collection(this.COURSE).doc(courseId).collection<CourseTest>(this.TESTS)
+      .doc(testId).collection<CourseTestTaken>(this.TEST_TAKEN).valueChanges();
+  }
+
+  async getOneStudentAllCourseTests(courseId: string, userId: string): Promise<CourseTestTaken[]> {
     const tests = await this.getAllCourseTests(courseId).pipe(first()).toPromise();
     let studentTests: CourseTestTaken[] = [];
     for (const test of tests) {

@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CourseTestTaken} from "../../model/course-test-firebase.model";
 import {CourseTestFormStateEnum} from "../../model/course-test.enums";
-import {StUserMain} from "../../../authentication-feature/models/user.interface";
 
 
 @Component({
@@ -10,11 +9,11 @@ import {StUserMain} from "../../../authentication-feature/models/user.interface"
   styleUrls: ['./course-test-info.component.scss'],
 })
 export class CourseTestInfoComponent implements OnInit {
+  @Output() setAsMarkerEmitter: EventEmitter<any> = new EventEmitter<any>();
+
   @Input() courseTestTaken: CourseTestTaken;
-  @Input() loggedInUser: StUserMain;
 
   CourseTestFormEnum = CourseTestFormStateEnum;
-
 
   constructor() {
   }
@@ -22,5 +21,7 @@ export class CourseTestInfoComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  setAsMarker() {
+    this.setAsMarkerEmitter.emit();
+  }
 }

@@ -19,7 +19,7 @@ export class CourseTestFeatureStoreService {
   /**
    * All test student has completed
    */
-  private allStudentCourseTests$: BehaviorSubject<CourseTestTaken[]> = new BehaviorSubject<CourseTestTaken[]>([]);
+  private oneStudentAllCourseTests$: BehaviorSubject<CourseTestTaken[]> = new BehaviorSubject<CourseTestTaken[]>([]);
 
   /**
    * This is only filled when marker or teacher is logged in, who can see all test for course
@@ -58,13 +58,15 @@ export class CourseTestFeatureStoreService {
     })
   }
 
-  getAllStudentCourseTests(): Observable<CourseTestTaken[]> {
-    return this.allStudentCourseTests$.asObservable();
+
+
+  getOneStudentAllCourseTests(): Observable<CourseTestTaken[]> {
+    return this.oneStudentAllCourseTests$.asObservable();
   }
 
-  async setAllStudentCourseTests(courseId: string, userId: string) {
-    const studentTests = await this.courseTestDatabaseService.getAllStudentCourseTests(courseId, userId);
-    this.allStudentCourseTests$.next(studentTests);
+  async setOneStudentAllCourseTests(courseId: string, userId: string) {
+    const studentTests = await this.courseTestDatabaseService.getOneStudentAllCourseTests(courseId, userId);
+    this.oneStudentAllCourseTests$.next(studentTests);
   }
 
   getAllCourseTests(): Observable<CourseTest[]> {

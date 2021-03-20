@@ -15,13 +15,59 @@
 <div style="margin-bottom: 20px">
   <app-generic-card [title]="'Test results'">
     <app-course-test-taken-table
-      (clickedEmitter)="redirectToCourseTestGrade($event)"
-      [courseTakenTests]="[courseTakenTest, courseTakenTestCompleted, courseTakenTest, courseTakenTestCompleted]">
+      (clickedEmitter)="getStudentTest($event)"
+      [courseTakenTests]="allStudentsResults$ | async">
     </app-course-test-taken-table>
   </app-generic-card>
 </div>
 
+
+<!-- student answers -->
+<ng-container *ngIf="selectedStudentTakenTest$ | async as selectedStudentTakenTest; else testPreview">
+  <ng-container *ngIf="user$ | async as user">
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)="cancelSelectedTest()">
+          Cancel
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <!-- test info -->
+    <app-course-test-info
+      (setAsMarkerEmitter)="setAsMarker(selectedStudentTakenTest)"
+      [courseTestTaken]="selectedStudentTakenTest">
+    </app-course-test-info>
+
+    <!-- test questions -->
+    <app-course-test-form
+      [user]="user"
+      [state]="selectedStudentTakenTest.testFormState"
+      [courseTest]="selectedStudentTakenTest">
+    </app-course-test-form>
+
+    <ion-buttons class="ion-justify-content-end">
+      <ion-button *ngIf="selectedStudentTakenTest.testFormState === CourseTestFormStateEnum.GRADE &&
+                          selectedStudentTakenTest.marker?.uid === user.uid"
+                  color="primary"
+                  (click)="gradeTest(selectedStudentTakenTest)"
+                  fill="outline">
+        Grade
+      </ion-button>
+      <ion-button *ngIf="selectedStudentTakenTest.testFormState === CourseTestFormStateEnum.GRADED"
+                  color="warning"
+                  (click)="reopenTest(selectedStudentTakenTest)"
+                  fill="outline">
+        Reopen test
+      </ion-button>
+    </ion-buttons>
+  </ng-container>
+</ng-container>
+
+
 <!-- test questions -->
-<app-course-test-form
-  [courseTest]="courseTest$ | async">
-</app-course-test-form>
+<ng-template #testPreview>
+  <app-course-test-form
+    [state]="CourseTestFormStateEnum.PREVIEW"
+    [courseTest]="courseTest$ | async">
+  </app-course-test-form>
+</ng-template>

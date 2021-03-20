@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CourseTest, CourseTestQuestion} from "../../model/course-test-firebase.model";
+import {CourseTest, CourseTestQuestion, CourseTestTaken} from "../../model/course-test-firebase.model";
 import {v4 as uuid} from 'uuid';
 import {CourseTestFormStateEnum, CourseTestStateEnum} from "../../model/course-test.enums";
 import {StUserMain} from "../../../authentication-feature/models/user.interface";
@@ -19,7 +19,7 @@ export class CourseTestFormComponent implements OnInit, OnChanges {
   @Input() user: StUserMain;
 
   // these are provided only if test exists
-  @Input() courseTest: CourseTest;
+  @Input() courseTest: CourseTestTaken;
 
   CourseTestFormStateEnum = CourseTestFormStateEnum;
 
@@ -84,6 +84,8 @@ export class CourseTestFormComponent implements OnInit, OnChanges {
   }
 
   addQuestion(question?: CourseTestQuestion) {
+    const isGrading = this.state === CourseTestFormStateEnum.GRADE && this.user?.uid && this.courseTest?.marker?.uid === this.user?.uid;
+
     const formGroup = this.fb.group({
       question: [{
         value: question?.question ?? '',
@@ -98,13 +100,13 @@ export class CourseTestFormComponent implements OnInit, OnChanges {
         disabled: this.state !== CourseTestFormStateEnum.TAKE
       }],
       markerComment: [{
-        value: question?.markerComment,
-        disabled: this.state !== CourseTestFormStateEnum.GRADE
+        value: question?.markerComment || null,
+        disabled: !isGrading
       }],
       receivedPoints: [{
         value: question?.receivedPoints,
-        disabled: this.state !== CourseTestFormStateEnum.GRADE
-      }],
+        disabled: !isGrading
+      }, isGrading ? [Validators.required] : []],
       answerTime: [question?.answerTime]
     });
     this.questions.push(formGroup);

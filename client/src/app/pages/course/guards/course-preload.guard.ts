@@ -21,7 +21,7 @@ export class CoursePreloadGuard implements Resolve<any> {
     this.courseTestFeatureStoreService.setAllCourseTests(courseId);
 
     this.authFeatureStoreService.getUserMain().pipe(first()).subscribe(user => {
-      this.courseTestFeatureStoreService.setAllStudentCourseTests(courseId, user.uid)
+      this.courseTestFeatureStoreService.setOneStudentAllCourseTests(courseId, user.uid)
     })
   }
 

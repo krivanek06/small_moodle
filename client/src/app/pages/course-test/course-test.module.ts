@@ -7,7 +7,6 @@ import {CourseTestFeatureModule} from "../../features/course-test-feature/course
 import {CourseTestEditComponent} from "./pages/course-test-edit/course-test-edit.component";
 import {CourseTestPreviewComponent} from "./pages/course-test-preview/course-test-preview.component";
 import {CourseTestSubmitComponent} from "./pages/course-test-submit/course-test-submit.component";
-import {CourseTestGradeComponent} from "./pages/course-test-grade/course-test-grade.component";
 import {CourseTestPreloadGuard} from "./guards/course-test-preload.guard";
 
 
@@ -34,9 +33,6 @@ const routes: Routes = [
       }, {
         path: 'submit/:testId',
         component: CourseTestSubmitComponent
-      }, {
-        path: 'grade/:testId',
-        component: CourseTestGradeComponent
       }
     ]
   }
@@ -48,8 +44,7 @@ const routes: Routes = [
     CourseTestCreateComponent,
     CourseTestEditComponent,
     CourseTestPreviewComponent,
-    CourseTestSubmitComponent,
-    CourseTestGradeComponent
+    CourseTestSubmitComponent
   ],
   imports: [
     SharedModule,

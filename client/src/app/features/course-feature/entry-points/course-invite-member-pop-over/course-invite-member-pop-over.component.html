@@ -28,17 +28,26 @@
     </ion-item>
 
     <!-- table body -->
-    <ng-container *ngFor="let course of stUser.courses | courseFilterManagedOpen">
-      <ion-item button
-                *ngIf="!courseName || (courseName && course.course.longName.startsWith(courseName))"
-                (click)="sendInvitationToCourse(course.course)">
+    <ng-container
+      *ngFor="let course of stUser.courses | courseFilterManagedOpen"
+    >
+      <ion-item
+        button
+        *ngIf="
+          !courseName ||
+          (courseName && course.course.longName.startsWith(courseName))
+        "
+        (click)="sendInvitationToCourse(course.course)"
+      >
         <ion-label>{{ course.course.Id }}</ion-label>
-        <ion-label class="c-course-name">{{ course.course.longName }}</ion-label>
-        <ion-label>{{ course.course.durationFrom | date: 'dd.MM.YYYY' }}
-          - {{ course.course.durationTo | date: 'dd.MM.YYYY' }}</ion-label>
-
+        <ion-label class="c-course-name">{{
+          course.course.longName
+        }}</ion-label>
+        <ion-label
+          >{{ course.course.durationFrom | date: "dd.MM.YYYY" }} -
+          {{ course.course.durationTo | date: "dd.MM.YYYY" }}</ion-label
+        >
       </ion-item>
     </ng-container>
   </ion-list>
-
 </ion-content>

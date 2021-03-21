@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseTestTaken} from "../../model/course-test-firebase.model";
-import {CourseTestFormStateEnum} from "../../model/course-test.enums";
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CourseTestTaken } from '@app/features/course-test-feature';
+import { CourseTestFormStateEnum } from '../../model/course-test.enums';
 
 @Component({
   selector: 'app-course-test-info',
@@ -15,11 +14,9 @@ export class CourseTestInfoComponent implements OnInit {
 
   CourseTestFormEnum = CourseTestFormStateEnum;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setAsMarker() {
     this.setAsMarkerEmitter.emit();

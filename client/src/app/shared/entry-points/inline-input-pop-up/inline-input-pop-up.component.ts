@@ -1,19 +1,26 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {NavParams, PopoverController} from '@ionic/angular';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { NavParams, PopoverController } from '@ionic/angular';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-inline-input-pop-up',
   templateUrl: './inline-input-pop-up.component.html',
   styleUrls: ['./inline-input-pop-up.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InlineInputPopUpComponent implements OnInit {
   inputLabel: string;
   form: FormGroup;
 
-  constructor(private popoverController: PopoverController,
-              private navParams: NavParams) {
+  constructor(
+    private popoverController: PopoverController,
+    private navParams: NavParams
+  ) {
     this.inputLabel = this.navParams.get('inputLabel');
   }
 
@@ -26,7 +33,7 @@ export class InlineInputPopUpComponent implements OnInit {
   }
 
   submit() {
-    this.popoverController.dismiss({inputData: this.inputData.value});
+    this.popoverController.dismiss({ inputData: this.inputData.value });
   }
 
   dismiss() {
@@ -35,10 +42,10 @@ export class InlineInputPopUpComponent implements OnInit {
 
   private initForm() {
     this.form = new FormGroup({
-      inputData: new FormControl(null,
-        [Validators.required, Validators.maxLength(150)])
+      inputData: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(150),
+      ]),
     });
   }
-
-
 }

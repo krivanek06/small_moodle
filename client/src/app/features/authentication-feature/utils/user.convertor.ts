@@ -1,4 +1,4 @@
-import {StUser, StUserMain} from "../models/user.interface";
+import { StUser, StUserMain } from '../models/user.interface';
 
 export const convertStUserIntoStUserMain = (user: StUser): StUserMain => {
   return {
@@ -7,6 +7,6 @@ export const convertStUserIntoStUserMain = (user: StUser): StUserMain => {
     photoURL: user.photoURL,
     accountCreatedDate: user.accountCreatedDate,
     lastName: user.lastName,
-    firstName: user.firstName
-  }
-}
+    firstName: user.firstName,
+  };
+};

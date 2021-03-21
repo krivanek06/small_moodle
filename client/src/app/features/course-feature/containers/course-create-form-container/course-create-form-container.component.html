@@ -1,15 +1,20 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
   <ion-list class="ion-margin">
-
     <!-- course long + short name -->
     <ion-item-group class="st-flex-space-between">
       <ion-item class="st-width-49">
         <ion-label position="floating">Course long name</ion-label>
-        <ion-input placeholder="Set course long name" formControlName="longName"></ion-input>
+        <ion-input
+          placeholder="Set course long name"
+          formControlName="longName"
+        ></ion-input>
       </ion-item>
       <ion-item class="st-width-49">
         <ion-label position="floating">Course short name</ion-label>
-        <ion-input placeholder="Set course short name" formControlName="shortName"></ion-input>
+        <ion-input
+          placeholder="Set course short name"
+          formControlName="shortName"
+        ></ion-input>
       </ion-item>
     </ion-item-group>
 
@@ -17,12 +22,22 @@
     <ion-item-group class="st-flex-space-between" style="position: relative">
       <ion-item class="st-width-49">
         <ion-label position="floating">Year</ion-label>
-        <ion-input placeholder="Set test name" formControlName="year"></ion-input>
+        <ion-input
+          placeholder="Set test name"
+          formControlName="year"
+        ></ion-input>
       </ion-item>
       <ion-item class="st-width-49">
         <ion-label position="floating">Category</ion-label>
-        <ion-select interface="popover" formControlName="category" *ngIf="categories$ | async as categories">
-          <ion-select-option *ngFor="let c of categories.data[0].categories" [value]="c.name">
+        <ion-select
+          interface="popover"
+          formControlName="category"
+          *ngIf="categories$ | async as categories"
+        >
+          <ion-select-option
+            *ngFor="let c of categories.data[0].categories"
+            [value]="c.name"
+          >
             {{ c.name }}
           </ion-select-option>
         </ion-select>
@@ -34,7 +49,12 @@
       <ion-item class="st-width-49" lines="none"></ion-item>
       <ion-item class="st-width-49" lines="none">
         <ion-label class="ion-justify-content-center" style="display: flex">
-          <ion-button type="submit" color="primary" fill="clear" (click)="addCategory()">
+          <ion-button
+            type="submit"
+            color="primary"
+            fill="clear"
+            (click)="addCategory()"
+          >
             Add new category
           </ion-button>
         </ion-label>
@@ -45,16 +65,20 @@
     <ion-item-group class="st-flex-space-between">
       <ion-item class="st-width-49">
         <ion-label position="floating">Course start</ion-label>
-        <ion-datetime display-format="DD.MM.YYYY"
-                      picker-format="DD-MMM-YY"
-                      formControlName="durationFrom">
+        <ion-datetime
+          display-format="DD.MM.YYYY"
+          picker-format="DD-MMM-YY"
+          formControlName="durationFrom"
+        >
         </ion-datetime>
       </ion-item>
       <ion-item class="st-width-49">
         <ion-label position="floating">Course end</ion-label>
-        <ion-datetime display-format="DD.MM.YYYY"
-                      picker-format="DD-MMM-YY"
-                      formControlName="durationTo">
+        <ion-datetime
+          display-format="DD.MM.YYYY"
+          picker-format="DD-MMM-YY"
+          formControlName="durationTo"
+        >
         </ion-datetime>
       </ion-item>
     </ion-item-group>
@@ -69,15 +93,28 @@
         <ion-item-group [formGroupName]="i" class="st-flex-space-between">
           <ion-item class="st-width-32">
             <ion-label position="floating">Mark</ion-label>
-            <ion-input placeholder="Set mark" formControlName="mark"></ion-input>
+            <ion-input
+              placeholder="Set mark"
+              formControlName="mark"
+            ></ion-input>
           </ion-item>
           <ion-item class="st-width-32">
             <ion-label position="floating">Min points</ion-label>
-            <ion-input placeholder="Set min points" formControlName="pointsMin" type="number" min="0"></ion-input>
+            <ion-input
+              placeholder="Set min points"
+              formControlName="pointsMin"
+              type="number"
+              min="0"
+            ></ion-input>
           </ion-item>
           <ion-item class="st-width-32">
             <ion-label position="floating">Max points</ion-label>
-            <ion-input placeholder="Set max points" formControlName="pointsMax" type="number" min="0"></ion-input>
+            <ion-input
+              placeholder="Set max points"
+              formControlName="pointsMax"
+              type="number"
+              min="0"
+            ></ion-input>
           </ion-item>
         </ion-item-group>
         <!-- remove -->
@@ -90,31 +127,39 @@
     </ng-container>
 
     <ion-buttons class="ion-justify-content-center">
-      <ion-button type="button" color="primary" (click)="addGrading()">Add grade</ion-button>
+      <ion-button type="button" color="primary" (click)="addGrading()"
+        >Add grade</ion-button
+      >
     </ion-buttons>
   </ion-list>
 
   <!-- markers -->
   <div class="ion-margin">
     <ion-title class="st-title">Add Evaluators</ion-title>
-    <app-account-search (clickedUserEmitter)="addMarker($event)"></app-account-search>
+    <app-account-search
+      (clickedUserEmitter)="addMarker($event)"
+    ></app-account-search>
     <app-account-identification-list
       (clickedItemEmitter)="removeMarker($event)"
       [title]="'Evaluators'"
       [enableClick]="true"
-      [members]="markers.value">
+      [members]="markers.value"
+    >
     </app-account-identification-list>
   </div>
 
   <!-- students -->
   <div class="ion-margin">
     <ion-title class="st-title">Add Students</ion-title>
-    <app-account-search (clickedUserEmitter)="addStudent($event)"></app-account-search>
+    <app-account-search
+      (clickedUserEmitter)="addStudent($event)"
+    ></app-account-search>
     <app-account-identification-list
       (clickedItemEmitter)="removeStudent($event)"
       [title]="'Students'"
       [enableClick]="true"
-      [members]="students.value">
+      [members]="students.value"
+    >
     </app-account-identification-list>
   </div>
 
@@ -122,5 +167,4 @@
   <ion-buttons class="ion-justify-content-center">
     <ion-button type="submit" fill="clear" color="primary">Create</ion-button>
   </ion-buttons>
-
 </form>

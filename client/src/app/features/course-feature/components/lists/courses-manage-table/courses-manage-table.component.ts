@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StUserCourse, StUserMain} from "../../../../authentication-feature/models/user.interface";
-import {CoursePublic} from "../../../model/courses-firebase.interface";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {CoursePublic} from "@app/features/course-feature";
+import {StUserCourse, StUserMain} from "@app/features/authentication-feature";
 
 @Component({
   selector: 'app-courses-manage-table',
@@ -8,22 +8,21 @@ import {CoursePublic} from "../../../model/courses-firebase.interface";
   styleUrls: ['./courses-manage-table.component.scss'],
 })
 export class CoursesManageTableComponent implements OnInit {
-  @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
+  @Output()
+  clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() userCourses: StUserCourse[] = [];
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   clickedCourse(userCourse: StUserCourse) {
-    if(!this.enableClick){
+    if (!this.enableClick) {
       return;
     }
-    this.clickedCourseEmitter.emit(userCourse.course)
+    this.clickedCourseEmitter.emit(userCourse.course);
   }
 }

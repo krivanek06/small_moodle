@@ -11,10 +11,16 @@
 
   <ion-item [button]="enableClick" *ngFor="let course of courses">
     <ion-label>{{ course.longName }}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{ course.students | courseReceivedPoints: authenticatedUser.uid }}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{ course.students | courseStudentPosition: authenticatedUser.uid }}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{ course.confirmedTests | courseNearestTest }}</ion-label>
-    <ion-label>{{ course.durationFrom | date: 'dd.MM.YYYY' }}</ion-label>
-    <ion-label>{{ course.durationTo | date: 'dd.MM.YYYY' }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{
+      course.students | courseReceivedPoints: authenticatedUser.uid
+    }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{
+      course.students | courseStudentPosition: authenticatedUser.uid
+    }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{
+      course.confirmedTests | courseNearestTest
+    }}</ion-label>
+    <ion-label>{{ course.durationFrom | date: "dd.MM.YYYY" }}</ion-label>
+    <ion-label>{{ course.durationTo | date: "dd.MM.YYYY" }}</ion-label>
   </ion-item>
 </ion-list>

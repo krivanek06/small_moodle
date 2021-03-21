@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseTestStateEnum} from "../../model/course-test.enums";
-import {CourseTestPublic} from "../../model/course-test-firebase.model";
-import {StUserMain} from "../../../authentication-feature/models/user.interface";
+import {CourseTestStateEnum} from '../../model/course-test.enums';
+import {CourseTestPublic} from '@app/features/course-test-feature';
+import {StUserMain} from '@app/features/authentication-feature';
 
 @Component({
   selector: 'app-course-test-form-buttons',
@@ -9,8 +9,10 @@ import {StUserMain} from "../../../authentication-feature/models/user.interface"
   styleUrls: ['./course-test-form-buttons.component.scss'],
 })
 export class CourseTestFormButtonsComponent implements OnInit {
-  @Output() approveTestEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() sendTestToApprovalEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  approveTestEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  sendTestToApprovalEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() saveTestEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteTestEmitter: EventEmitter<any> = new EventEmitter<any>();
 
@@ -26,7 +28,7 @@ export class CourseTestFormButtonsComponent implements OnInit {
   }
 
   approveTest(approve: boolean) {
-    this.approveTestEmitter.emit(approve)
+    this.approveTestEmitter.emit(approve);
   }
 
   saveTest() {

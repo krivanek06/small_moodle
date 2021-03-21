@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseTestTaken} from "../../model/course-test-firebase.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CourseTestTaken } from '@app/features/course-test-feature';
 
 @Component({
   selector: 'app-course-test-student-completed-table',
@@ -7,15 +7,14 @@ import {CourseTestTaken} from "../../model/course-test-firebase.model";
   styleUrls: ['./course-test-student-completed-table.component.scss'],
 })
 export class CourseTestStudentCompletedTableComponent implements OnInit {
-  @Output() clickedEmitter: EventEmitter<CourseTestTaken> = new EventEmitter<CourseTestTaken>();
+  @Output()
+  clickedEmitter: EventEmitter<CourseTestTaken> = new EventEmitter<CourseTestTaken>();
 
   @Input() courseTakenTests: CourseTestTaken[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   clickedTest(courseTest: CourseTestTaken) {
     this.clickedEmitter.emit(courseTest);

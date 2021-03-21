@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {CourseFeatureStoreService} from "../../../features/course-feature/services/course-feature-store.service";
-import {CourseTestFeatureStoreService} from "../../../features/course-test-feature/services/course-test-feature-store.service";
-import {AuthFeatureStoreService} from "../../../features/authentication-feature/services/auth-feature-store.service";
-import {first} from "rxjs/operators";
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot,} from '@angular/router';
+import {CourseFeatureStoreService} from '@app/features/course-feature';
+import {CourseTestFeatureStoreService} from '@app/features/course-test-feature';
+import {AuthFeatureStoreService} from '@app/features/authentication-feature';
+import {first} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CoursePreloadGuard implements Resolve<any> {
-  constructor(private courseFeatureStoreService: CourseFeatureStoreService,
-              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private authFeatureStoreService: AuthFeatureStoreService,) {
+  constructor(
+    private courseFeatureStoreService: CourseFeatureStoreService,
+    private courseTestFeatureStoreService: CourseTestFeatureStoreService,
+    private authFeatureStoreService: AuthFeatureStoreService
+  ) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
@@ -20,9 +22,14 @@ export class CoursePreloadGuard implements Resolve<any> {
     this.courseFeatureStoreService.setCourse(courseId);
     this.courseTestFeatureStoreService.setAllCourseTests(courseId);
 
-    this.authFeatureStoreService.getUserMain().pipe(first()).subscribe(user => {
-      this.courseTestFeatureStoreService.setOneStudentAllCourseTests(courseId, user.uid)
-    })
+    this.authFeatureStoreService
+      .getUserMain()
+      .pipe(first())
+      .subscribe((user) => {
+        this.courseTestFeatureStoreService.setOneStudentAllCourseTests(
+          courseId,
+          user.uid
+        );
+      });
   }
-
 }

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {CourseTest, CourseTestTaken} from "../model/course-test-firebase.model";
-import {StorageService} from "../../../core/services/storage.service";
-import {first} from "rxjs/operators";
-import {CourseTestFeatureDatabaseService} from "./course-test-feature-database.service";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {CourseTest, CourseTestTaken,} from '../model/course-test-firebase.model';
+import {StorageService} from '@app/core';
+import {first} from 'rxjs/operators';
+import {CourseTestFeatureDatabaseService} from '@app/features/course-test-feature';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseTestFeatureStoreService {
   private COURSE_TEST_ACTIVE_KEY = 'COURSE_TEST_ACTIVE_KEY';
@@ -14,7 +14,9 @@ export class CourseTestFeatureStoreService {
   /**
    * Add here data if student is taking test or marker is evaluating student's test
    */
-  private studentCourseTest$: BehaviorSubject<CourseTestTaken> = new BehaviorSubject<CourseTestTaken>(null);
+  private studentCourseTest$: BehaviorSubject<CourseTestTaken> = new BehaviorSubject<CourseTestTaken>(
+    null
+  );
 
   /**
    * All test student has completed
@@ -26,15 +28,18 @@ export class CourseTestFeatureStoreService {
    */
   private allCourseTests$: BehaviorSubject<CourseTest[]> = new BehaviorSubject<CourseTest[]>([]);
 
-
-  constructor(private courseTestDatabaseService: CourseTestFeatureDatabaseService,
-              private storageService: StorageService) {
+  constructor(
+    private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+    private storageService: StorageService
+  ) {
     this.checkSavedStudentTestId();
   }
 
   get studentCourseTest(): CourseTestTaken {
     if (!this.studentCourseTest$.getValue()) {
-      throw new Error('trying to access CourseTestTaken for student, but does not exists');
+      throw new Error(
+        'trying to access CourseTestTaken for student, but does not exists'
+      );
     }
     return this.studentCourseTest$.getValue();
   }
@@ -44,28 +49,37 @@ export class CourseTestFeatureStoreService {
   }
 
   setStudentCourseTest(courseTestTaken: CourseTestTaken) {
-    if (this.studentCourseTest$.getValue() && this.studentCourseTest$.getValue().testId === courseTestTaken.testId) {
+    if (
+      this.studentCourseTest$.getValue() &&
+      this.studentCourseTest$.getValue().testId === courseTestTaken.testId
+    ) {
       return;
     }
-    this.courseTestDatabaseService.getStudentCourseTest(
-      courseTestTaken.course.courseId,
-      courseTestTaken.testId,
-      courseTestTaken.student.uid).pipe(
-      first()
-    ).subscribe(res => {
-      this.storageService.saveData(this.COURSE_TEST_ACTIVE_KEY, JSON.stringify(res));
-      this.studentCourseTest$.next(res)
-    })
+    this.courseTestDatabaseService
+      .getStudentCourseTest(
+        courseTestTaken.course.courseId,
+        courseTestTaken.testId,
+        courseTestTaken.student.uid
+      )
+      .pipe(first())
+      .subscribe((res) => {
+        this.storageService.saveData(
+          this.COURSE_TEST_ACTIVE_KEY,
+          JSON.stringify(res)
+        );
+        this.studentCourseTest$.next(res);
+      });
   }
-
-
 
   getOneStudentAllCourseTests(): Observable<CourseTestTaken[]> {
     return this.oneStudentAllCourseTests$.asObservable();
   }
 
   async setOneStudentAllCourseTests(courseId: string, userId: string) {
-    const studentTests = await this.courseTestDatabaseService.getOneStudentAllCourseTests(courseId, userId);
+    const studentTests = await this.courseTestDatabaseService.getOneStudentAllCourseTests(
+      courseId,
+      userId
+    );
     this.oneStudentAllCourseTests$.next(studentTests);
   }
 
@@ -74,20 +88,26 @@ export class CourseTestFeatureStoreService {
   }
 
   setAllCourseTests(courseId: string) {
-    if (this.allCourseTests$.getValue().length > 0 && this.allCourseTests$.getValue()[0].course.courseId === courseId) {
+    if (
+      this.allCourseTests$.getValue().length > 0 &&
+      this.allCourseTests$.getValue()[0].course.courseId === courseId
+    ) {
       return;
     }
-    this.courseTestDatabaseService.getAllCourseTests(courseId).subscribe(tests => {
-      console.log('tests arrived', tests);
-      this.allCourseTests$.next(tests);
-    })
+    this.courseTestDatabaseService
+      .getAllCourseTests(courseId)
+      .subscribe((tests) => {
+        console.log('tests arrived', tests);
+        this.allCourseTests$.next(tests);
+      });
   }
 
   private checkSavedStudentTestId() {
-    const takenTest = JSON.parse(this.storageService.getData(this.COURSE_TEST_ACTIVE_KEY) as string) as CourseTestTaken;
+    const takenTest = JSON.parse(
+      this.storageService.getData(this.COURSE_TEST_ACTIVE_KEY) as string
+    ) as CourseTestTaken;
     if (takenTest) {
       this.setStudentCourseTest(takenTest);
     }
   }
-
 }

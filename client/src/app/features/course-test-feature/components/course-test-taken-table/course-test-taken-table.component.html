@@ -10,15 +10,21 @@
   </ion-item>
 
   <!-- table body -->
-  <ion-item button *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
+  <ion-item
+    button
+    *ngFor="let test of courseTakenTests"
+    (click)="clickedTest(test)"
+  >
     <ion-label>{{ test.student?.displayName }}</ion-label>
-    <ion-label>{{ test.timeStarted | date: 'HH:mm dd.MM.YYYY' }}</ion-label>
-    <ion-label>{{ test.timeEnded | date: 'HH:mm dd.MM.YYYY' }}</ion-label>
-    <ion-label>{{ test.timeAwayOfTest | date: 'mm:ss' }}</ion-label>
+    <ion-label>{{ test.timeStarted | date: "HH:mm dd.MM.YYYY" }}</ion-label>
+    <ion-label>{{ test.timeEnded | date: "HH:mm dd.MM.YYYY" }}</ion-label>
+    <ion-label>{{ test.timeAwayOfTest | date: "mm:ss" }}</ion-label>
     <ion-label>{{ test.marker?.displayName }}</ion-label>
     <ion-label>
       <ng-container *ngIf="test.receivedPoints">
-        {{ test.receivedPoints }} ({{ 1 / test.testPoints * test.receivedPoints | percent }})
+        {{ test.receivedPoints }} ({{
+          (1 / test.testPoints) * test.receivedPoints | percent
+        }})
       </ng-container>
     </ion-label>
   </ion-item>

@@ -13,7 +13,8 @@
     <ion-label class="st-display-flex-center">
       <app-account-identification-item
         [userMain]="userPublic"
-        [isOnline]="userPublic.isOnline">
+        [isOnline]="userPublic.isOnline"
+      >
       </app-account-identification-item>
     </ion-label>
 
@@ -26,14 +27,14 @@
 
   <!-- selected user's courses -->
   <ion-grid class="ion-padding-horizontal">
-
     <!-- courses manage -->
     <ion-row>
       <ion-col size="12">
         <ion-title>Manage courses</ion-title>
         <app-courses-manage-table
           [enableClick]="false"
-          [userCourses]="userPublic.courses | courseFilterManaged">
+          [userCourses]="userPublic.courses | courseFilterManaged"
+        >
         </app-courses-manage-table>
       </ion-col>
     </ion-row>
@@ -44,7 +45,8 @@
         <ion-title>Active courses</ion-title>
         <app-courses-active-table
           [enableClick]="false"
-          [courses]="userPublic.courses | courseFilterActive">
+          [courses]="userPublic.courses | courseFilterActive"
+        >
         </app-courses-active-table>
       </ion-col>
     </ion-row>
@@ -55,7 +57,8 @@
         <ion-title>Completed courses</ion-title>
         <app-courses-completed-table
           [enableClick]="false"
-          [courses]="userPublic.courses | courseFilterCompleted">
+          [courses]="userPublic.courses | courseFilterCompleted"
+        >
         </app-courses-completed-table>
       </ion-col>
     </ion-row>

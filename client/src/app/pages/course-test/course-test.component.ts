@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CourseFeatureStoreService} from "../../features/course-feature/services/course-feature-store.service";
-import {Observable} from "rxjs";
-import {Course} from "../../features/course-feature/model/courses-firebase.interface";
+import {Course, CourseFeatureStoreService} from '@app/features/course-feature';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-course-test',
@@ -17,5 +16,4 @@ export class CourseTestComponent implements OnInit {
   ngOnInit() {
     this.course$ = this.courseFeatureStoreService.getCourse();
   }
-
 }

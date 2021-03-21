@@ -1,25 +1,25 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 // import { DatePipe } from '@angular/common';
 
-
 @Pipe({
-    name: 'relativeTime'
+  name: 'relativeTime',
 })
 export class RelativeTimePipe implements PipeTransform {
+  // constructor(public datepipe: DatePipe){
 
-    // constructor(public datepipe: DatePipe){
+  // }
 
-    // }
-
-    transform(value: any): any {
-        if (value) {
-            const differenceInSeconds = Math.floor((+new Date() - +new Date(value)) / 1000);
-            // less than 30 seconds ago will show as 'Just now'
-            if (differenceInSeconds < 30) {
-                return 'Just now';
-            }
-            /*
+  transform(value: any): any {
+    if (value) {
+      const differenceInSeconds = Math.floor(
+        (+new Date() - +new Date(value)) / 1000
+      );
+      // less than 30 seconds ago will show as 'Just now'
+      if (differenceInSeconds < 30) {
+        return 'Just now';
+      }
+      /*
             If you want to show a relative date up to months only
             like '2 months ago', '11 months ago', etc
             and don't need relative dates such as 'one year ago' or 'six years ago', then
@@ -31,39 +31,35 @@ export class RelativeTimePipe implements PipeTransform {
             See other formating from DatePipe here - https://angular.io/api/common/DatePipe#pre-defined-format-options
 
             */
-            // const upperLimit = 31536000;
-            // if(differenceInSeconds > upperLimit){
-            //   return this.datepipe.transform(new Date(value), 'MMM d, y');
-            // }
+      // const upperLimit = 31536000;
+      // if(differenceInSeconds > upperLimit){
+      //   return this.datepipe.transform(new Date(value), 'MMM d, y');
+      // }
 
-
-            // All values are in seconds
-            const timeIntervals = {
-                year: 31536000,
-                month: 2592000,
-                week: 604800,
-                day: 86400,
-                hour: 3600,
-                minute: 60,
-                second: 1,
-            };
-            let counter;
-            for (const i in timeIntervals) {
-                counter = Math.floor(differenceInSeconds / timeIntervals[i]);
-                if (counter > 0) {
-                    if (counter === 1) {
-                        // singular (1 day ago)
-                        return counter + ' ' + i + ' ago';
-                    } else {
-                        // plural (2 days ago)
-                        return counter + ' ' + i + 's ago';
-                    }
-                }
-
-            }
-
+      // All values are in seconds
+      const timeIntervals = {
+        year: 31536000,
+        month: 2592000,
+        week: 604800,
+        day: 86400,
+        hour: 3600,
+        minute: 60,
+        second: 1,
+      };
+      let counter;
+      for (const i in timeIntervals) {
+        counter = Math.floor(differenceInSeconds / timeIntervals[i]);
+        if (counter > 0) {
+          if (counter === 1) {
+            // singular (1 day ago)
+            return counter + ' ' + i + ' ago';
+          } else {
+            // plural (2 days ago)
+            return counter + ' ' + i + 's ago';
+          }
         }
-        return value;
+      }
     }
-
+    return value;
+  }
 }

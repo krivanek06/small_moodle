@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {CalendarComponent} from "ionic2-calendar";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CalendarComponent } from 'ionic2-calendar';
 
 @Component({
   selector: 'app-custom-calendar',
@@ -16,10 +16,10 @@ export class CustomCalendarComponent implements OnInit {
   };
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.createRandomEvents()
+    this.createRandomEvents();
   }
 
   next() {
@@ -35,12 +35,12 @@ export class CustomCalendarComponent implements OnInit {
   }
 
   createRandomEvents() {
-    var events = [];
-    for (var i = 0; i < 50; i += 1) {
-      var date = new Date();
-      var eventType = Math.floor(Math.random() * 2);
-      var startDay = Math.floor(Math.random() * 90) - 45;
-      var endDay = Math.floor(Math.random() * 2) + startDay;
+    const events = [];
+    for (let i = 0; i < 50; i += 1) {
+      const date = new Date();
+      const eventType = Math.floor(Math.random() * 2);
+      const startDay = Math.floor(Math.random() * 90) - 45;
+      let endDay = Math.floor(Math.random() * 2) + startDay;
       var startTime;
       var endTime;
       if (eventType === 0) {
@@ -63,13 +63,13 @@ export class CustomCalendarComponent implements OnInit {
         );
         events.push({
           title: 'All Day - ' + i,
-          startTime: startTime,
-          endTime: endTime,
+          startTime,
+          endTime,
           allDay: true,
         });
       } else {
-        var startMinute = Math.floor(Math.random() * 24 * 60);
-        var endMinute = Math.floor(Math.random() * 180) + startMinute;
+        const startMinute = Math.floor(Math.random() * 24 * 60);
+        const endMinute = Math.floor(Math.random() * 180) + startMinute;
         startTime = new Date(
           date.getFullYear(),
           date.getMonth(),
@@ -86,13 +86,12 @@ export class CustomCalendarComponent implements OnInit {
         );
         events.push({
           title: 'Event - ' + i,
-          startTime: startTime,
-          endTime: endTime,
+          startTime,
+          endTime,
           allDay: false,
         });
       }
     }
     this.eventSource = events;
   }
-
 }

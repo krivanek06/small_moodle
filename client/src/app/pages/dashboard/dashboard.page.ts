@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthFeatureService} from "../../features/authentication-feature/services/auth-feature.service";
-import {Observable} from "rxjs";
-import {StUser} from "../../features/authentication-feature/models/user.interface";
-import {AuthFeatureStoreService} from "../../features/authentication-feature/services/auth-feature-store.service";
+import {Observable} from 'rxjs';
+import {AuthFeatureStoreService, StUser} from '@app/features/authentication-feature';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +8,7 @@ import {AuthFeatureStoreService} from "../../features/authentication-feature/ser
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-  user$: Observable<StUser>
+  user$: Observable<StUser>;
 
   constructor(private authFeatureStoreService: AuthFeatureStoreService) {
   }
@@ -18,5 +16,4 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.user$ = this.authFeatureStoreService.getUser();
   }
-
 }

@@ -1,22 +1,25 @@
-<ion-item (click)="clickedItem()"
-          [button]="enableClick"
-          [ngClass]="{'c-item-hide-border': !showItemBorder}"
-          class="c-small-space">
+<ion-item
+  (click)="clickedItem()"
+  [button]="enableClick"
+  [ngClass]="{ 'c-item-hide-border': !showItemBorder }"
+  class="c-small-space"
+>
   <ion-avatar slot="start" class="ion-margin-end">
-    <img [src]="userMain.photoURL" alt="user image">
+    <img [src]="userMain.photoURL" alt="user image" />
   </ion-avatar>
 
   <ion-label>
-    <p> {{ userMain.displayName }}</p>
+    <p>{{ userMain.displayName }}</p>
     <!-- user online status -->
     <div class="st-display-flex-center" *ngIf="isOnline">
-      <div class="st-dot"
-           [ngClass]="{
-              'st-b-green': isOnline,
-              'st-b-red': !isOnline
-           }">
-      </div>
-      <ion-text>{{ isOnline ? 'Online' : 'Offline' }}</ion-text>
+      <div
+        class="st-dot"
+        [ngClass]="{
+          'st-b-green': isOnline,
+          'st-b-red': !isOnline
+        }"
+      ></div>
+      <ion-text>{{ isOnline ? "Online" : "Offline" }}</ion-text>
     </div>
   </ion-label>
 </ion-item>

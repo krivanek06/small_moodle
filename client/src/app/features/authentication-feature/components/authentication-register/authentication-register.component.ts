@@ -1,7 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {RegisterIUser} from "../../models/user.interface";
-import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RegisterIUser } from '../../models/user.interface';
+import { IonicDialogService } from '../../../../core/services/ionic-dialog.service';
 
 @Component({
   selector: 'app-authentication-register',
@@ -9,13 +15,11 @@ import {IonicDialogService} from "../../../../core/services/ionic-dialog.service
   styleUrls: ['./authentication-register.component.scss'],
 })
 export class AuthenticationRegisterComponent implements OnInit {
-
-  @Output() registrationEmitter: EventEmitter<RegisterIUser> = new EventEmitter<RegisterIUser>();
+  @Output()
+  registrationEmitter: EventEmitter<RegisterIUser> = new EventEmitter<RegisterIUser>();
   registrationForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
-
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.registrationForm = this.formBuilder.group({
@@ -23,14 +27,15 @@ export class AuthenticationRegisterComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: [null],
       password1: ['', Validators.required],
-      password2: ['', Validators.required]
+      password2: ['', Validators.required],
     });
   }
 
-
   register() {
     if (this.registrationForm.invalid) {
-      IonicDialogService.presentToast('Form is invalid, please fill all fields');
+      IonicDialogService.presentToast(
+        'Form is invalid, please fill all fields'
+      );
       return;
     }
     if (this.password1.value !== this.password2.value) {
@@ -47,7 +52,7 @@ export class AuthenticationRegisterComponent implements OnInit {
       password1: this.password1.value,
       password2: this.password2.value,
       firstName: this.firstName.value,
-      lastName: this.lastName.value
+      lastName: this.lastName.value,
     });
   }
 
@@ -70,5 +75,4 @@ export class AuthenticationRegisterComponent implements OnInit {
   get lastName() {
     return this.registrationForm.get('lastName');
   }
-
 }

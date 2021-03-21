@@ -1,21 +1,23 @@
-import {Injectable} from '@angular/core';
-import {AlertController, ToastController} from '@ionic/angular';
-
+import { Injectable } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Injectable()
 export class IonicDialogService {
-
   private static alertController: AlertController | undefined;
   private static toastController: ToastController | undefined;
 
-  public constructor(alertController: AlertController,
-                     toastController: ToastController) {
+  public constructor(
+    alertController: AlertController,
+    toastController: ToastController
+  ) {
     IonicDialogService.alertController = alertController;
     IonicDialogService.toastController = toastController;
   }
 
-
-  static async presentAlertConfirm(message: string, cancelButton = 'Cancel'): Promise<boolean> {
+  static async presentAlertConfirm(
+    message: string,
+    cancelButton = 'Cancel'
+  ): Promise<boolean> {
     if (!IonicDialogService.alertController) {
       throw new Error('IonicDialogService.alertController not initialized');
     }
@@ -29,7 +31,7 @@ export class IonicDialogService {
             text: 'Yes',
             handler: () => {
               resolve(true);
-            }
+            },
           },
           {
             text: cancelButton,
@@ -37,17 +39,16 @@ export class IonicDialogService {
             cssClass: 'secondary',
             handler: (blah) => {
               resolve(false);
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
       await alert.present();
     });
   }
 
-
   static async presentToast(message) {
-    if(!IonicDialogService.toastController) {
+    if (!IonicDialogService.toastController) {
       throw new Error('IonicDialogService.toastController not initialized');
     }
 
@@ -59,6 +60,4 @@ export class IonicDialogService {
     });
     toast.present();
   }
-
-
 }

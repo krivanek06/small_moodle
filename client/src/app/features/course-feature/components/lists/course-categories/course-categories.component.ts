@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseCategory} from "../../../model/courses-firebase.interface";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CourseCategory } from '@app/features/course-feature';
 
 @Component({
   selector: 'app-course-categories',
@@ -7,18 +7,16 @@ import {CourseCategory} from "../../../model/courses-firebase.interface";
   styleUrls: ['./course-categories.component.scss'],
 })
 export class CourseCategoriesComponent implements OnInit {
-  @Output() categoryClickedEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  categoryClickedEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() categories: CourseCategory;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   clickedCourse(name: string) {
-    this.categoryClickedEmitter.emit(name)
+    this.categoryClickedEmitter.emit(name);
   }
-
 }

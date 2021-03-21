@@ -1,14 +1,16 @@
 <!-- select form -->
 <ion-list class="ion-padding">
-  <ion-text class="st-title">
-    Search course
-  </ion-text>
+  <ion-text class="st-title"> Search course </ion-text>
 
   <form [formGroup]="form" style="margin-bottom: 40px">
     <ion-item-group class="st-flex ion-justify-content-between">
       <ion-item class="st-width-100 ion-margin-horizontal">
         <ion-label position="floating">Course category</ion-label>
-        <ion-select [value]="defaultCategory" interface="popover" formControlName="category">
+        <ion-select
+          [value]="defaultCategory"
+          interface="popover"
+          formControlName="category"
+        >
           <ion-select-option value="FMFI">FMFI</ion-select-option>
           <ion-select-option value="INF">INF</ion-select-option>
           <ion-select-option value="CHEM">CHEM</ion-select-option>
@@ -66,7 +68,6 @@
     <ion-label>12.05.2021</ion-label>
   </ion-item>
 </ion-list>
-
 
 <!--
 <ion-footer class="ion-padding">

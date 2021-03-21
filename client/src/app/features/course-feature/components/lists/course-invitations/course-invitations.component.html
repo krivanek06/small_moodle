@@ -1,5 +1,12 @@
 <ion-list>
-  <ion-item button *ngFor="let invitation of courseInvitations" (click)="clickedCourse(invitation)">
-    <ion-label>[{{ invitation.course.shortName }}] {{ invitation.course.longName }}</ion-label>
+  <ion-item
+    button
+    *ngFor="let invitation of courseInvitations"
+    (click)="clickedCourse(invitation)"
+  >
+    <ion-label
+      >[{{ invitation.course.shortName }}]
+      {{ invitation.course.longName }}</ion-label
+    >
   </ion-item>
 </ion-list>

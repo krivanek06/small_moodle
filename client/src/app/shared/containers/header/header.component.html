@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar class="ion-padding-horizontal">
-    <ion-button fill="clear" class="st-title" (click)="redirectToDashboard()">menu</ion-button>
-
+    <ion-button fill="clear" class="st-title" (click)="redirectToDashboard()"
+      >menu</ion-button
+    >
 
     <ion-buttons slot="end">
       <!-- user is logged in -->
@@ -12,7 +13,6 @@
           </ion-avatar>
           <ion-label>{{ user.displayName }}</ion-label>
         </ion-chip>
-
 
         <ion-button color="danger" fill="clear" (click)="logout()">
           Logout
@@ -25,7 +25,6 @@
           LogIn
         </ion-button>
       </ng-template>
-
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

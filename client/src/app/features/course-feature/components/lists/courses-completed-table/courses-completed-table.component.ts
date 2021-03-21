@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Course, CoursePublic} from "../../../model/courses-firebase.interface";
-import {StUserMain} from "../../../../authentication-feature/models/user.interface";
+import { Component, Input, OnInit } from '@angular/core';
+import { StUserMain } from '@app/features/authentication-feature';
+import {Course, CoursePublic} from "@app/features/course-feature";
 
 @Component({
   selector: 'app-courses-completed-table',
@@ -12,10 +12,7 @@ export class CoursesCompletedTableComponent implements OnInit {
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -1,21 +1,29 @@
-<ion-radio-group [value]="value"
-                 class="st-flex-space-between"
-                 (ionChange)="setValue($event)">
+<ion-radio-group
+  [value]="value"
+  class="st-flex-space-between"
+  (ionChange)="setValue($event)"
+>
   <!-- student -->
   <ion-item class="st-width-100" lines="none">
     <ion-label>{{ COURSE_ROLES_ENUM.STUDENT }}</ion-label>
-    <ion-radio slot="start" color="tertiary"
-               [disabled]="disabled"
-               [value]="COURSE_ROLES_ENUM.STUDENT"
-               class="ion-margin-end"></ion-radio>
+    <ion-radio
+      slot="start"
+      color="tertiary"
+      [disabled]="disabled"
+      [value]="COURSE_ROLES_ENUM.STUDENT"
+      class="ion-margin-end"
+    ></ion-radio>
   </ion-item>
 
   <!-- marker -->
   <ion-item class="st-width-100" lines="none">
     <ion-label>{{ COURSE_ROLES_ENUM.MARKER }}</ion-label>
-    <ion-radio slot="start" color="tertiary"
-               [disabled]="disabled"
-               [value]="COURSE_ROLES_ENUM.MARKER"
-               class="ion-margin-end"></ion-radio>
+    <ion-radio
+      slot="start"
+      color="tertiary"
+      [disabled]="disabled"
+      [value]="COURSE_ROLES_ENUM.MARKER"
+      class="ion-margin-end"
+    ></ion-radio>
   </ion-item>
 </ion-radio-group>

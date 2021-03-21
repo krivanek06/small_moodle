@@ -1,22 +1,24 @@
-import {Injectable} from '@angular/core';
-import {StUser, StUserLogin, StUserMain} from "../models/user.interface";
-import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
-import {filter, map, takeUntil} from "rxjs/operators";
-import {USER_ROLES_ENUM} from "../models/user.enums";
-import {StorageService} from "../../../core/services/storage.service";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {convertStUserIntoStUserMain} from "../utils/user.convertor";
+import { Injectable } from '@angular/core';
+import { StUser, StUserLogin, StUserMain } from '../models/user.interface';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { USER_ROLES_ENUM } from '../models/user.enums';
+import { StorageService } from '../../../core/services/storage.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { convertStUserIntoStUserMain } from '../utils/user.convertor';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthFeatureStoreService {
   private AUTH_KEY = 'AUTH_KEY';
   private destroy$: Subject<boolean> = new Subject<boolean>();
   private user$: BehaviorSubject<StUser> = new BehaviorSubject<StUser>(null);
 
-  constructor(private storageService: StorageService,
-              private firestore: AngularFirestore) {
+  constructor(
+    private storageService: StorageService,
+    private firestore: AngularFirestore
+  ) {
     this.checkSavedUID();
   }
 
@@ -33,8 +35,8 @@ export class AuthFeatureStoreService {
 
   getUserMain(): Observable<StUserMain> {
     return this.user$.asObservable().pipe(
-      filter(u => !!u),
-      map(user => convertStUserIntoStUserMain(user))
+      filter((u) => !!u),
+      map((user) => convertStUserIntoStUserMain(user))
     );
   }
 
@@ -46,11 +48,12 @@ export class AuthFeatureStoreService {
     if (this.user$.getValue() && this.user$.getValue().uid === userId) {
       return;
     }
-    this.loadUser(userId).pipe(takeUntil(this.destroy$)).subscribe(stUser => {
-      this.storageService.saveData(this.AUTH_KEY, userId);
-      this.user$.next(stUser);
-    })
-
+    this.loadUser(userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((stUser) => {
+        this.storageService.saveData(this.AUTH_KEY, userId);
+        this.user$.next(stUser);
+      });
   }
 
   getSavedUID(): string {
@@ -63,13 +66,14 @@ export class AuthFeatureStoreService {
     this.storageService.removeData(this.AUTH_KEY);
   }
 
-
   isUserTeacher(): Boolean {
     return this.user.roles.includes(USER_ROLES_ENUM.TEACHER);
   }
 
   isUserTeacherObs(): Observable<Boolean> {
-    return this.getUser().pipe(map(user => user.roles.includes(USER_ROLES_ENUM.TEACHER)));
+    return this.getUser().pipe(
+      map((user) => user.roles.includes(USER_ROLES_ENUM.TEACHER))
+    );
   }
 
   isUserAdmin(): Boolean {
@@ -77,7 +81,9 @@ export class AuthFeatureStoreService {
   }
 
   isUserAdminObs(): Observable<Boolean> {
-    return this.getUser().pipe(map(user => user.roles.includes(USER_ROLES_ENUM.ADMIN)));
+    return this.getUser().pipe(
+      map((user) => user.roles.includes(USER_ROLES_ENUM.ADMIN))
+    );
   }
 
   private checkSavedUID() {
@@ -90,13 +96,15 @@ export class AuthFeatureStoreService {
   private loadUser(uid: string): Observable<StUser> {
     return combineLatest([
       this.firestore.doc(`users/${uid}`).valueChanges(),
-      this.firestore.doc(`users/${uid}/private_data/user_private`).valueChanges()
+      this.firestore
+        .doc(`users/${uid}/private_data/user_private`)
+        .valueChanges(),
     ]).pipe(
       map(([uPublic, uPrivate]) => {
-        return {uPublic, uPrivate} as StUserLogin
+        return { uPublic, uPrivate } as StUserLogin;
       }),
-      map(userLogin => {
-        return {...userLogin.uPublic, ...userLogin.uPrivate} as StUser
+      map((userLogin) => {
+        return { ...userLogin.uPublic, ...userLogin.uPrivate } as StUser;
       })
     );
 
@@ -123,5 +131,4 @@ export class AuthFeatureStoreService {
        res.subscribe(x => console.log('x', x))
     })*/
   }
-
 }

@@ -1,7 +1,7 @@
 <!-- header -->
 <ion-list-header *ngIf="title">
   <ion-label class="st-flex-col st-font-size-18 st-font-4 c-margin-top">
-    {{ title}}
+    {{ title }}
   </ion-label>
 </ion-list-header>
 
@@ -14,6 +14,8 @@
   </ion-card-header>
   <ion-card-content>
     <ng-content></ng-content>
-    <div *ngIf="showNoData" style="margin-top: 16px">No data has been found...</div>
+    <div *ngIf="showNoData" style="margin-top: 16px">
+      No data has been found...
+    </div>
   </ion-card-content>
 </ion-card>

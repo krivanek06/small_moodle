@@ -1,14 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CourseTestFeatureFacadeService} from "../../../../features/course-test-feature/services/course-test-feature-facade.service";
-import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
-import {CourseTest} from "../../../../features/course-test-feature/model/course-test-firebase.model";
-import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
-import {CourseTestFeatureDatabaseService} from "../../../../features/course-test-feature/services/course-test-feature-database.service";
-import {ActivatedRoute} from "@angular/router";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
-import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
-import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
+import {
+  CourseTest,
+  CourseTestFeatureDatabaseService,
+  CourseTestFeatureFacadeService,
+  CourseTestFormComponent,
+  CourseTestFormStateEnum
+} from '@app/features/course-test-feature';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
 
 @Component({
   selector: 'app-course-test-edit',
@@ -16,7 +17,6 @@ import {AuthFeatureStoreService} from "../../../../features/authentication-featu
   styleUrls: ['./course-test-edit.component.scss'],
 })
 export class CourseTestEditComponent implements OnInit {
-
   @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
   courseTest$: Observable<CourseTest>;
   userMain$: Observable<StUserMain>;
@@ -24,16 +24,17 @@ export class CourseTestEditComponent implements OnInit {
   CourseTestFormStateEnum = CourseTestFormStateEnum;
   errorMessage: string;
 
-  constructor(private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
-              private courseTestDatabaseService: CourseTestFeatureDatabaseService,
-              private authFeatureStoreService: AuthFeatureStoreService,
-              private route: ActivatedRoute) {
+  constructor(
+    private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
+    private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+    private authFeatureStoreService: AuthFeatureStoreService,
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit() {
     this.userMain$ = this.authFeatureStoreService.getUserMain();
-    this.courseTest$ = this.route.data.pipe(map(x => x[0]));
-
+    this.courseTest$ = this.route.data.pipe(map((x) => x[0]));
   }
 
   approveTest(approval: boolean, courseTest: CourseTest) {
@@ -49,7 +50,7 @@ export class CourseTestEditComponent implements OnInit {
   }
 
   sendTestToApproval() {
-    this.courseTestFeatureFacadeService.sendTestToApproval(this.checkForm())
+    this.courseTestFeatureFacadeService.sendTestToApproval(this.checkForm());
   }
 
   private checkForm(): CourseTest {

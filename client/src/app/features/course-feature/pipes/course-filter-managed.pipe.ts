@@ -1,15 +1,14 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {StUserCourse} from "../../authentication-feature/models/user.interface";
-import {COURSE_ROLES_ENUM} from "../model/course.enum";
+import { Pipe, PipeTransform } from '@angular/core';
+import { StUserCourse } from '../../authentication-feature/models/user.interface';
+import { COURSE_ROLES_ENUM } from '../model/course.enum';
 
 @Pipe({
-  name: 'courseFilterManaged'
+  name: 'courseFilterManaged',
 })
 export class CourseFilterManagedPipe implements PipeTransform {
-
-
   transform(userCourses: StUserCourse[]): StUserCourse[] {
-    return userCourses.filter(c => !c.course.isOpen && c.role !== COURSE_ROLES_ENUM.STUDENT);
+    return userCourses.filter(
+      (c) => !c.course.isOpen && c.role !== COURSE_ROLES_ENUM.STUDENT
+    );
   }
-
 }

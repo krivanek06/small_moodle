@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseInvitation} from "../../../model/courses-firebase.interface";
-import {courseInvitation} from "../../../model/course.random.data";
+import {CourseInvitation} from '@app/features/course-feature';
 
 @Component({
   selector: 'app-course-invitations',
@@ -8,7 +7,8 @@ import {courseInvitation} from "../../../model/course.random.data";
   styleUrls: ['./course-invitations.component.scss'],
 })
 export class CourseInvitationsComponent implements OnInit {
-  @Output() clickedInvitationEmitter: EventEmitter<CourseInvitation> = new EventEmitter<CourseInvitation>();
+  @Output()
+  clickedInvitationEmitter: EventEmitter<CourseInvitation> = new EventEmitter<CourseInvitation>();
 
   @Input() courseInvitations: CourseInvitation[] = [];
 
@@ -21,5 +21,4 @@ export class CourseInvitationsComponent implements OnInit {
   clickedCourse(course: CourseInvitation) {
     this.clickedInvitationEmitter.emit(course);
   }
-
 }

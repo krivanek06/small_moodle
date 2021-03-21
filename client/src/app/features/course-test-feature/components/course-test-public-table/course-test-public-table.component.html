@@ -14,11 +14,10 @@
   <ion-item button *ngFor="let test of courseTests" (click)="clickedTest(test)">
     <ion-label>{{ test.testName }}</ion-label>
     <ion-label>{{ test.createdBy.displayName }}</ion-label>
-    <ion-label>{{ test.availableFrom | date: 'HH:MM dd.MM.YYYY' }}</ion-label>
-    <ion-label>{{ test.availableTo | date: 'HH:MM dd.MM.YYYY' }}</ion-label>
+    <ion-label>{{ test.availableFrom | date: "HH:MM dd.MM.YYYY" }}</ion-label>
+    <ion-label>{{ test.availableTo | date: "HH:MM dd.MM.YYYY" }}</ion-label>
     <ion-label>{{ test.duration }}</ion-label>
     <ion-label>{{ test.testPoints }}</ion-label>
     <ion-label>{{ test.testState }}</ion-label>
   </ion-item>
-
 </ion-list>

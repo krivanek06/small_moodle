@@ -1,5 +1,9 @@
 <ion-list *ngIf="categories && categories.data[0] as data">
-  <ion-item *ngFor="let category of data.categories"  button (click)="clickedCourse(category.name)">
+  <ion-item
+    *ngFor="let category of data.categories"
+    button
+    (click)="clickedCourse(category.name)"
+  >
     <ion-label>{{ category.name }}</ion-label>
     <ion-label>{{ category.courses }}</ion-label>
   </ion-item>

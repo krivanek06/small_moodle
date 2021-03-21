@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, NavParams} from "@ionic/angular";
-import {StUserPublic} from "../../../authentication-feature/models/user.interface";
-import {CourseFeatureFacadeService} from "../../services/course-feature-facade.service";
-import {convertStUserPublicToMain} from "../../../account-feature/utils/convertor.util";
-import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
+import {ModalController, NavParams} from '@ionic/angular';
+import {StUserPublic} from '@app/features/authentication-feature';
+import {CourseFeatureFacadeService} from '@app/features/course-feature';
+import {convertStUserPublicToMain} from '@app/features/account-feature';
 
 @Component({
   selector: 'app-courses-user-account-info-modal',
@@ -13,9 +12,11 @@ import {IonicDialogService} from "../../../../core/services/ionic-dialog.service
 export class CoursesUserAccountInfoModalComponent implements OnInit {
   userPublic: StUserPublic;
 
-  constructor(private modalController: ModalController,
-              private navParams: NavParams,
-              private courseFeatureServiceService: CourseFeatureFacadeService) {
+  constructor(
+    private modalController: ModalController,
+    private navParams: NavParams,
+    private courseFeatureServiceService: CourseFeatureFacadeService
+  ) {
   }
 
   ngOnInit() {
@@ -31,4 +32,3 @@ export class CoursesUserAccountInfoModalComponent implements OnInit {
     this.courseFeatureServiceService.inviteMemberIntoCourse(userMain);
   }
 }
-

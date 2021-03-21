@@ -1,14 +1,12 @@
-import {AfterViewInit, Directive, ElementRef, Input} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appDefaultImg]'
+  selector: '[appDefaultImg]',
 })
 export class DefaultImgDirective implements AfterViewInit {
-
   @Input() src;
 
-  constructor(private imageRef: ElementRef) {
-  }
+  constructor(private imageRef: ElementRef) {}
 
   ngAfterViewInit(): void {
     const img = new Image();
@@ -27,5 +25,4 @@ export class DefaultImgDirective implements AfterViewInit {
   private setImage(src: string) {
     this.imageRef.nativeElement.setAttribute('src', src);
   }
-
 }

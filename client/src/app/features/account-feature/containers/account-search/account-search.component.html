@@ -1,7 +1,10 @@
 <form [formGroup]="form">
   <ion-item>
     <ion-label position="floating">Search user by name</ion-label>
-    <ion-input placeholder="Enter name" formControlName="displayName"></ion-input>
+    <ion-input
+      placeholder="Enter name"
+      formControlName="displayName"
+    ></ion-input>
   </ion-item>
 </form>
 
@@ -13,6 +16,7 @@
     [showItemBorder]="true"
     [userMain]="user"
     [isOnline]="user.isOnline"
-    [enableClick]="true">
+    [enableClick]="true"
+  >
   </app-account-identification-item>
 </ion-list>

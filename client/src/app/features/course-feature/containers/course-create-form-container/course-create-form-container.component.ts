@@ -1,13 +1,17 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CourseCreate} from "../../model/course-module.interface";
-import {CourseFeatureFacadeService} from "../../services/course-feature-facade.service";
-import {StUserMain} from "../../../authentication-feature/models/user.interface";
-import {CourseCategory, CoursePrivate, CoursePublic, StCourseStudent} from "../../model/courses-firebase.interface";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {
+  CourseCategory,
+  CourseCreate,
+  CourseFeatureDatabaseService,
+  CourseFeatureFacadeService,
+  CoursePrivate,
+  CoursePublic,
+  StCourseStudent
+} from '@app/features/course-feature';
+import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
 import {v4 as uuid} from 'uuid';
-import {CourseFeatureDatabaseService} from "../../services/course-feature-database.service";
-import {Observable} from "rxjs";
-import {AuthFeatureStoreService} from "../../../authentication-feature/services/auth-feature-store.service";
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-course-create-form-container',
@@ -15,50 +19,53 @@ import {AuthFeatureStoreService} from "../../../authentication-feature/services/
   styleUrls: ['./course-create-form-container.component.scss'],
 })
 export class CourseCreateFormContainerComponent implements OnInit {
-  @Output() formSubmitEmitter: EventEmitter<CourseCreate> = new EventEmitter<CourseCreate>();
+  @Output()
+  formSubmitEmitter: EventEmitter<CourseCreate> = new EventEmitter<CourseCreate>();
   categories$: Observable<CourseCategory>;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder,
-              private courseFeatureFacadeService: CourseFeatureFacadeService,
-              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
-              private authFeatureStoreService: AuthFeatureStoreService) {
+  constructor(
+    private fb: FormBuilder,
+    private courseFeatureFacadeService: CourseFeatureFacadeService,
+    private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+    private authFeatureStoreService: AuthFeatureStoreService
+  ) {
   }
 
   get gradings(): FormArray {
-    return this.form.get('gradings') as FormArray
+    return this.form.get('gradings') as FormArray;
   }
 
   get markers(): FormArray {
-    return this.form.get('markers') as FormArray
+    return this.form.get('markers') as FormArray;
   }
 
   get students(): FormArray {
-    return this.form.get('students') as FormArray
+    return this.form.get('students') as FormArray;
   }
 
   get year(): AbstractControl {
-    return this.form.get('year')
+    return this.form.get('year');
   }
 
   get category(): AbstractControl {
-    return this.form.get('category')
+    return this.form.get('category');
   }
 
   get shortName(): AbstractControl {
-    return this.form.get('shortName')
+    return this.form.get('shortName');
   }
 
   get longName(): AbstractControl {
-    return this.form.get('longName')
+    return this.form.get('longName');
   }
 
   get durationFrom(): AbstractControl {
-    return this.form.get('durationFrom')
+    return this.form.get('durationFrom');
   }
 
   get durationTo(): AbstractControl {
-    return this.form.get('durationTo')
+    return this.form.get('durationTo');
   }
 
   ngOnInit() {
@@ -85,7 +92,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       gradings: this.gradings.value,
       numberOfTests: 0,
       courseGradingResults: [],
-      creator: this.authFeatureStoreService.userMain
+      creator: this.authFeatureStoreService.userMain,
     };
     const coursePrivate: CoursePrivate = {
       invitedStudents: this.students.value,
@@ -94,7 +101,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       students: [],
       receivedStudentsInvitations: [],
       numberOfUncorrectedTests: 0,
-      confirmedTests: []
+      confirmedTests: [],
     };
     this.formSubmitEmitter.emit({coursePublic, coursePrivate});
   }
@@ -103,7 +110,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
     const formGroup = this.fb.group({
       mark: [null, [Validators.required]],
       pointsMin: [null, [Validators.required]],
-      pointsMax: [null, [Validators.required]]
+      pointsMax: [null, [Validators.required]],
     });
     this.gradings.push(formGroup);
   }
@@ -118,41 +125,45 @@ export class CourseCreateFormContainerComponent implements OnInit {
 
   addStudent(userMain: StUserMain) {
     const students = this.students.value as StCourseStudent[];
-    if (students.map(x => x.uid).includes(userMain.uid)) {
-      return
+    if (students.map((x) => x.uid).includes(userMain.uid)) {
+      return;
     }
-    this.students.push(this.fb.group({
-      uid: [userMain.uid],
-      displayName: [userMain.displayName],
-      photoURL: [userMain.photoURL],
-      accountCreatedDate: [userMain.accountCreatedDate],
-      receivedGrade: [null],
-      receivedPoints: [[]],
-      gradeChangeHistory: [[]]
-    }));
+    this.students.push(
+      this.fb.group({
+        uid: [userMain.uid],
+        displayName: [userMain.displayName],
+        photoURL: [userMain.photoURL],
+        accountCreatedDate: [userMain.accountCreatedDate],
+        receivedGrade: [null],
+        receivedPoints: [[]],
+        gradeChangeHistory: [[]],
+      })
+    );
   }
 
   addMarker(userMain: StUserMain) {
     const markers = this.students.value as StUserMain[];
-    if (markers.map(x => x.uid).includes(userMain.uid)) {
-      return
+    if (markers.map((x) => x.uid).includes(userMain.uid)) {
+      return;
     }
-    this.markers.push(this.fb.group({
-      uid: [userMain.uid],
-      displayName: [userMain.displayName],
-      photoURL: [userMain.photoURL],
-      accountCreatedDate: [userMain.accountCreatedDate]
-    }));
+    this.markers.push(
+      this.fb.group({
+        uid: [userMain.uid],
+        displayName: [userMain.displayName],
+        photoURL: [userMain.photoURL],
+        accountCreatedDate: [userMain.accountCreatedDate],
+      })
+    );
   }
 
   removeMarker(userMain: StUserMain) {
     const markers = this.markers.value as StUserMain[];
-    this.markers.removeAt(markers.indexOf(userMain))
+    this.markers.removeAt(markers.indexOf(userMain));
   }
 
   removeStudent(userMain: StUserMain) {
     const students = this.students.value as StUserMain[];
-    this.students.removeAt(students.indexOf(userMain))
+    this.students.removeAt(students.indexOf(userMain));
   }
 
   private initForm() {
@@ -165,7 +176,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       durationTo: [null, [Validators.required]],
       gradings: this.fb.array([]),
       markers: this.fb.array([]),
-      students: this.fb.array([])
-    })
+      students: this.fb.array([]),
+    });
   }
 }

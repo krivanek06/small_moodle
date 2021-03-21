@@ -4,5 +4,5 @@ export enum USER_ROLES_ENUM {
 }
 
 export enum USER_LOG_TYPE_ENUM {
-  TYPE_TEST = 'TYPE_TEST'
+  TYPE_TEST = 'TYPE_TEST',
 }

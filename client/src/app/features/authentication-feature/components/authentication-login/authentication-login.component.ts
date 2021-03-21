@@ -1,6 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginIUser} from "../../models/user.interface";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginIUser } from '../../models/user.interface';
 
 @Component({
   selector: 'app-authentication-login',
@@ -8,14 +8,12 @@ import {LoginIUser} from "../../models/user.interface";
   styleUrls: ['./authentication-login.component.scss'],
 })
 export class AuthenticationLoginComponent implements OnInit {
-
-  @Output() loginEmitter: EventEmitter<LoginIUser> = new EventEmitter<LoginIUser>();
+  @Output()
+  loginEmitter: EventEmitter<LoginIUser> = new EventEmitter<LoginIUser>();
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
-
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   get email() {
     return this.loginForm.get('email');
@@ -28,7 +26,7 @@ export class AuthenticationLoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
@@ -36,7 +34,9 @@ export class AuthenticationLoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.loginEmitter.emit({email: this.email.value, password: this.password.value});
+    this.loginEmitter.emit({
+      email: this.email.value,
+      password: this.password.value,
+    });
   }
-
 }

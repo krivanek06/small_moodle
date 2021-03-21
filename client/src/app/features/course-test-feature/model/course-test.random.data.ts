@@ -1,8 +1,19 @@
-import {CourseTest, CourseTestPublic, CourseTestResult, CourseTestTaken} from "./course-test-firebase.model";
-import {getCurrentIOSDate} from "../../../core/utils/date-formatter.functions";
-import {CourseTestFormStateEnum, CourseTestStateEnum} from "./course-test.enums";
-import {CoursePublic} from "../../course-feature/model/courses-firebase.interface";
-import {courseGradingResults, courseGradings} from "../../course-feature/model/course.random.data";
+import {
+  CourseTest,
+  CourseTestPublic,
+  CourseTestResult,
+  CourseTestTaken,
+} from './course-test-firebase.model';
+import { getCurrentIOSDate } from '../../../core/utils/date-formatter.functions';
+import {
+  CourseTestFormStateEnum,
+  CourseTestStateEnum,
+} from './course-test.enums';
+import { CoursePublic } from '../../course-feature/model/courses-firebase.interface';
+import {
+  courseGradingResults,
+  courseGradings,
+} from '../../course-feature/model/course.random.data';
 
 const coursePublic: CoursePublic = {
   courseId: 'course123',
@@ -15,7 +26,8 @@ const coursePublic: CoursePublic = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   shortName: 'TIA',
   longName: 'Tvorba Internatovych aplikacii',
@@ -23,14 +35,14 @@ const coursePublic: CoursePublic = {
   durationTo: getCurrentIOSDate(),
   numberOfStudents: 21,
   numberOfTests: 3,
-  courseGradingResults: courseGradingResults,
-  gradings: courseGradings
-}
+  courseGradingResults,
+  gradings: courseGradings,
+};
 
 export const testPublic: CourseTestPublic = {
   testId: 'T-Tet1234',
   course: {
-    ...coursePublic
+    ...coursePublic,
   },
   testState: CourseTestStateEnum.WAITING_FOR_APPROVAL,
   testName: 'TIA - Test1',
@@ -40,14 +52,15 @@ export const testPublic: CourseTestPublic = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko 22',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   lastEdited: getCurrentIOSDate(),
   duration: 90,
   availableFrom: getCurrentIOSDate(),
   availableTo: getCurrentIOSDate(),
   testPoints: 100,
-}
+};
 
 export const courseTestResult: CourseTestResult = {
   receivedPoints: 15,
@@ -57,7 +70,8 @@ export const courseTestResult: CourseTestResult = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   student: {
     uid: '123465',
@@ -65,33 +79,35 @@ export const courseTestResult: CourseTestResult = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   takenTestId: 'test123',
   timeAwayOfTest: 90,
   timeStarted: getCurrentIOSDate(),
   timeEnded: getCurrentIOSDate(),
-  testFormState: CourseTestFormStateEnum.GRADED
-}
+  testFormState: CourseTestFormStateEnum.GRADED,
+};
 
 export const courseTestApproved: CourseTest = {
   ...testPublic,
   testState: CourseTestStateEnum.APPROVED,
-  questions: [{
-    answer: null,
-    answerTime: null,
-    markerComment: null,
-    points: 2,
-    question: 'Question 1 something is yellow?',
-    receivedPoints: null
-  },
+  questions: [
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 2,
+      question: 'Question 1 something is yellow?',
+      receivedPoints: null,
+    },
     {
       answer: null,
       answerTime: null,
       markerComment: null,
       points: 4,
       question: 'Question 2 something is yellow?',
-      receivedPoints: null
+      receivedPoints: null,
     },
     {
       answer: null,
@@ -99,7 +115,7 @@ export const courseTestApproved: CourseTest = {
       markerComment: null,
       points: 2,
       question: 'Question 3 something is yellow?',
-      receivedPoints: null
+      receivedPoints: null,
     },
     {
       answer: null,
@@ -107,37 +123,43 @@ export const courseTestApproved: CourseTest = {
       markerComment: null,
       points: 1,
       question: 'Something is yellow?',
-      receivedPoints: null
-    }],
-  testResults: [{...courseTestResult}, {
-    receivedPoints: 22,
-    marker: {
-      uid: '123465',
-      firstName: 'Janko',
-      lastName: 'Maly',
-      accountCreatedDate: getCurrentIOSDate(),
-      displayName: 'Meno Priezvisko',
-      photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+      receivedPoints: null,
     },
-    student: {
-      uid: '123465',
-      firstName: 'Janko',
-      lastName: 'Maly',
-      accountCreatedDate: getCurrentIOSDate(),
-      displayName: 'Meno Priezvisko',
-      photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+  ],
+  testResults: [
+    { ...courseTestResult },
+    {
+      receivedPoints: 22,
+      marker: {
+        uid: '123465',
+        firstName: 'Janko',
+        lastName: 'Maly',
+        accountCreatedDate: getCurrentIOSDate(),
+        displayName: 'Meno Priezvisko',
+        photoURL:
+          'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+      },
+      student: {
+        uid: '123465',
+        firstName: 'Janko',
+        lastName: 'Maly',
+        accountCreatedDate: getCurrentIOSDate(),
+        displayName: 'Meno Priezvisko',
+        photoURL:
+          'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+      },
+      takenTestId: 'test123',
+      timeAwayOfTest: 90,
+      timeStarted: getCurrentIOSDate(),
+      testFormState: CourseTestFormStateEnum.TAKE,
     },
-    takenTestId: 'test123',
-    timeAwayOfTest: 90,
-    timeStarted: getCurrentIOSDate(),
-    testFormState: CourseTestFormStateEnum.TAKE
-  }]
-}
+  ],
+};
 
 export const courseTestWaitingApproval: CourseTest = {
   testId: 'T-Tet1234',
   course: {
-    ...coursePublic
+    ...coursePublic,
   },
   testName: 'TIA - Test1',
   createdBy: {
@@ -146,28 +168,30 @@ export const courseTestWaitingApproval: CourseTest = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   lastEdited: getCurrentIOSDate(),
   duration: 90,
   availableFrom: getCurrentIOSDate(),
   availableTo: getCurrentIOSDate(),
   testState: CourseTestStateEnum.WAITING_FOR_APPROVAL,
-  questions: [{
-    answer: null,
-    answerTime: null,
-    markerComment: null,
-    points: 2,
-    question: 'Question 1 something is yellow?',
-    receivedPoints: null
-  },
+  questions: [
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 2,
+      question: 'Question 1 something is yellow?',
+      receivedPoints: null,
+    },
     {
       answer: null,
       answerTime: null,
       markerComment: null,
       points: 4,
       question: 'Question 2 something is yellow?',
-      receivedPoints: null
+      receivedPoints: null,
     },
     {
       answer: null,
@@ -175,7 +199,7 @@ export const courseTestWaitingApproval: CourseTest = {
       markerComment: null,
       points: 2,
       question: 'Question 3 something is yellow?',
-      receivedPoints: null
+      receivedPoints: null,
     },
     {
       answer: null,
@@ -183,11 +207,12 @@ export const courseTestWaitingApproval: CourseTest = {
       markerComment: null,
       points: 1,
       question: 'Something is yellow?',
-      receivedPoints: null
-    }],
+      receivedPoints: null,
+    },
+  ],
   testResults: [],
-  testPoints: 80
-}
+  testPoints: 80,
+};
 
 export const courseTakenTest: CourseTestTaken = {
   ...testPublic,
@@ -198,7 +223,8 @@ export const courseTakenTest: CourseTestTaken = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   student: {
     uid: '123465',
@@ -206,7 +232,8 @@ export const courseTakenTest: CourseTestTaken = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   takenTestId: 'test123',
   timeAwayOfTest: 90,
@@ -220,31 +247,34 @@ export const courseTakenTest: CourseTestTaken = {
       markerComment: null,
       points: 4,
       question: 'Question 2 something is yellow?',
-      receivedPoints: null
-    }, {
-      answer: null,
-      answerTime: null,
-      markerComment: null,
-      points: 4,
-      question: 'Question 2 something is yellow?',
-      receivedPoints: null
-    }, {
-      answer: null,
-      answerTime: null,
-      markerComment: null,
-      points: 4,
-      question: 'Question 2 something is yellow?',
-      receivedPoints: null
-    }, {
-      answer: null,
-      answerTime: null,
-      markerComment: null,
-      points: 4,
-      question: 'Question 2 something is yellow?',
-      receivedPoints: null
+      receivedPoints: null,
     },
-  ]
-}
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null,
+    },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null,
+    },
+    {
+      answer: null,
+      answerTime: null,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null,
+    },
+  ],
+};
 
 export const courseTakenTestCompleted: CourseTestTaken = {
   ...testPublic,
@@ -255,7 +285,8 @@ export const courseTakenTestCompleted: CourseTestTaken = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   student: {
     uid: '123465',
@@ -263,7 +294,8 @@ export const courseTakenTestCompleted: CourseTestTaken = {
     lastName: 'Maly',
     accountCreatedDate: getCurrentIOSDate(),
     displayName: 'Meno Priezvisko',
-    photoURL: 'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8'
+    photoURL:
+      'https://firebasestorage.googleapis.com/v0/b/small-moodle.appspot.com/o/default%2Fdefault_user.png?alt=media&token=b3e5257d-2fb2-4459-9807-98986f4befe8',
   },
   takenTestId: 'test123',
   timeAwayOfTest: 90,
@@ -277,28 +309,31 @@ export const courseTakenTestCompleted: CourseTestTaken = {
       markerComment: null,
       points: 4,
       question: 'Question 2 something is yellow?',
-      receivedPoints: null
-    }, {
-      answer: 'This was an answer',
-      answerTime: 3.156,
-      markerComment: null,
-      points: 4,
-      question: 'Question 2 something is yellow?',
-      receivedPoints: null
-    }, {
-      answer: 'This was an answer',
-      answerTime: 3.156,
-      markerComment: null,
-      points: 4,
-      question: 'Question 2 something is yellow?',
-      receivedPoints: null
-    }, {
-      answer: 'This was an answer',
-      answerTime: 3.156,
-      markerComment: null,
-      points: 4,
-      question: 'Question 2 something is yellow?',
-      receivedPoints: null
+      receivedPoints: null,
     },
-  ]
-}
+    {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null,
+    },
+    {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null,
+    },
+    {
+      answer: 'This was an answer',
+      answerTime: 3.156,
+      markerComment: null,
+      points: 4,
+      question: 'Question 2 something is yellow?',
+      receivedPoints: null,
+    },
+  ],
+};

@@ -1,6 +1,9 @@
-import {StUserMain} from "../../authentication-feature/models/user.interface";
-import {CourseTestPublic, CourseTestReceivedPoints} from "../../course-test-feature/model/course-test-firebase.model";
-import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from "./course.enum";
+import { StUserMain } from '../../authentication-feature/models/user.interface';
+import {
+  CourseTestPublic,
+  CourseTestReceivedPoints,
+} from '../../course-test-feature/model/course-test-firebase.model';
+import { COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM } from './course.enum';
 
 export interface CoursePublicMain {
   courseId: string;
@@ -11,7 +14,7 @@ export interface CoursePublicMain {
   longName: string;
 }
 
-export interface CoursePublic extends CoursePublicMain{
+export interface CoursePublic extends CoursePublicMain {
   isOpen: boolean;
   durationFrom: string;
   durationTo: string;
@@ -31,9 +34,7 @@ export interface CoursePrivate {
   receivedStudentsInvitations: StCourseStudent[];
 }
 
-export interface Course extends CoursePublic, CoursePrivate {
-
-}
+export interface Course extends CoursePublic, CoursePrivate {}
 
 export interface CourseGrading {
   mark: string;
@@ -67,8 +68,8 @@ export interface CourseInvitation {
 }
 
 export interface CourseCategory {
-  data: CourseCategoryData[],
-  years: number[]
+  data: CourseCategoryData[];
+  years: number[];
 }
 
 export interface CourseCategoryData {

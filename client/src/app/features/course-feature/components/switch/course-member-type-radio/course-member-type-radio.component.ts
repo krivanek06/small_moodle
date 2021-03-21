@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {COURSE_ROLES_ENUM} from "../../../model/course.enum";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { COURSE_ROLES_ENUM } from '../../../model/course.enum';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-course-member-type-radio',
@@ -10,11 +10,12 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: CourseMemberTypeRadioComponent,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class CourseMemberTypeRadioComponent implements OnInit, ControlValueAccessor {
+export class CourseMemberTypeRadioComponent
+  implements OnInit, ControlValueAccessor {
   @Input() value: COURSE_ROLES_ENUM = COURSE_ROLES_ENUM.STUDENT;
   @Input() disabled = false;
 
@@ -23,11 +24,9 @@ export class CourseMemberTypeRadioComponent implements OnInit, ControlValueAcces
 
   COURSE_ROLES_ENUM = COURSE_ROLES_ENUM;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -45,18 +44,14 @@ export class CourseMemberTypeRadioComponent implements OnInit, ControlValueAcces
     this.value = obj;
   }
 
-
   setValue(event: CustomEvent) {
     if (this.disabled) {
-      return
+      return;
     }
     this.value = event.detail.value;
     try {
       this.onChange(this.value);
       this.onTouched();
-    } catch (e) {
-
-    }
-
+    } catch (e) {}
   }
 }

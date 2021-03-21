@@ -9,24 +9,29 @@
     </ion-segment-button>
   </ion-segment>
 
+  <app-authentication-login
+    #loginComp
+    *ngIf="segmentValue === 'login'"
+    (loginEmitter)="normalLogin($event)"
+  >
+  </app-authentication-login>
+  <app-authentication-register
+    #registrationComp
+    *ngIf="segmentValue === 'registration'"
+    (registrationEmitter)="registration($event)"
+  >
+  </app-authentication-register>
 
-    <app-authentication-login #loginComp
-                              *ngIf="segmentValue === 'login'"
-                              (loginEmitter)="normalLogin($event)">
-    </app-authentication-login>
-    <app-authentication-register #registrationComp
-                                 *ngIf="segmentValue === 'registration'"
-                                 (registrationEmitter)="registration($event)">
-    </app-authentication-register>
-
-    <!-- social media buttons -->
-    <div class="ion-padding social-media-container">
-      <ion-button expand="full" color="danger" class="ion-margin-bottom" (click)="signInWithGoogle()">
-        <ion-icon name="logo-google" class="ion-margin-end"></ion-icon>
-        Sign in with Google
-      </ion-button>
-    </div>
-
+  <!-- social media buttons -->
+  <div class="ion-padding social-media-container">
+    <ion-button
+      expand="full"
+      color="danger"
+      class="ion-margin-bottom"
+      (click)="signInWithGoogle()"
+    >
+      <ion-icon name="logo-google" class="ion-margin-end"></ion-icon>
+      Sign in with Google
+    </ion-button>
+  </div>
 </ion-content>
-
-

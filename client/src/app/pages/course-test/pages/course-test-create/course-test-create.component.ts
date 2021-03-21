@@ -1,13 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CourseTestFeatureFacadeService} from "../../../../features/course-test-feature/services/course-test-feature-facade.service";
-import {CourseTestFormComponent} from "../../../../features/course-test-feature/components/course-test-form/course-test-form.component";
-import {CourseTestFormStateEnum} from "../../../../features/course-test-feature/model/course-test.enums";
-import {CourseFeatureFacadeService} from "../../../../features/course-feature/services/course-feature-facade.service";
-import {convertCourseIntoCourseMain} from "../../../../features/course-feature/utils/course.convertor";
-import {CourseFeatureStoreService} from "../../../../features/course-feature/services/course-feature-store.service";
-import {AuthFeatureStoreService} from "../../../../features/authentication-feature/services/auth-feature-store.service";
-import {StUserMain} from "../../../../features/authentication-feature/models/user.interface";
-import {Observable} from "rxjs";
+import {
+  CourseTestFeatureFacadeService,
+  CourseTestFormComponent,
+  CourseTestFormStateEnum
+} from '@app/features/course-test-feature';
+import {
+  convertCourseIntoCourseMain,
+  CourseFeatureFacadeService,
+  CourseFeatureStoreService
+} from '@app/features/course-feature';
+import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-course-test-create',
@@ -15,17 +18,18 @@ import {Observable} from "rxjs";
   styleUrls: ['./course-test-create.component.scss'],
 })
 export class CourseTestCreateComponent implements OnInit {
-
   @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
 
   CourseTestFormStateEnum = CourseTestFormStateEnum;
   errorMessage: string;
   user$: Observable<StUserMain>;
 
-  constructor(private courseTestService: CourseTestFeatureFacadeService,
-              private courseFeatureFacadeService: CourseFeatureFacadeService,
-              private courseFeatureStoreService: CourseFeatureStoreService,
-              private authFeatureStoreService: AuthFeatureStoreService) {
+  constructor(
+    private courseTestService: CourseTestFeatureFacadeService,
+    private courseFeatureFacadeService: CourseFeatureFacadeService,
+    private courseFeatureStoreService: CourseFeatureStoreService,
+    private authFeatureStoreService: AuthFeatureStoreService
+  ) {
   }
 
   ngOnInit() {
@@ -35,7 +39,9 @@ export class CourseTestCreateComponent implements OnInit {
   async saveTest() {
     const courseTest = this.courseTestForm.submitForm();
     if (courseTest) {
-      courseTest.course = convertCourseIntoCourseMain(this.courseFeatureStoreService.course);
+      courseTest.course = convertCourseIntoCourseMain(
+        this.courseFeatureStoreService.course
+      );
       if (await this.courseTestService.saveCourseTest(courseTest)) {
         this.courseFeatureFacadeService.navigateToCoursePage();
       }

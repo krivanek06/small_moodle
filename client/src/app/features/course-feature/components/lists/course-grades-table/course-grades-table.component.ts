@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CourseGrading} from "../../../model/courses-firebase.interface";
+import { Component, Input, OnInit } from '@angular/core';
+import { CourseGrading } from '@app/features/course-feature';
 
 @Component({
   selector: 'app-course-grades-table',
@@ -9,10 +9,7 @@ import {CourseGrading} from "../../../model/courses-firebase.interface";
 export class CourseGradesTableComponent implements OnInit {
   @Input() grades: CourseGrading[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

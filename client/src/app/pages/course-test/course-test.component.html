@@ -6,7 +6,8 @@
         <app-course-test-back-button
           *ngIf="course$ | async as course"
           [courseId]="course.courseId"
-          [courseName]="course.longName">
+          [courseName]="course.longName"
+        >
         </app-course-test-back-button>
       </ion-col>
     </ion-row>

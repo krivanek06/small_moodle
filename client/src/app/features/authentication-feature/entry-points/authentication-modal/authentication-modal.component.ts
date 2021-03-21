@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthFeatureService} from '../../services/auth-feature.service';
-import {AuthenticationLoginComponent} from "../../components/authentication-login/authentication-login.component";
-import {AuthenticationRegisterComponent} from "../../components/authentication-register/authentication-register.component";
-import {IonicDialogService} from "../../../../core/services/ionic-dialog.service";
-import {LoginIUser, RegisterIUser} from "../../models/user.interface";
-import {PopoverController} from "@ionic/angular";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthFeatureService } from '../../services/auth-feature.service';
+import { AuthenticationLoginComponent } from '../../components/authentication-login/authentication-login.component';
+import { AuthenticationRegisterComponent } from '../../components/authentication-register/authentication-register.component';
+import { IonicDialogService } from '../../../../core/services/ionic-dialog.service';
+import { LoginIUser, RegisterIUser } from '../../models/user.interface';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-authentication-modal',
@@ -13,16 +13,17 @@ import {PopoverController} from "@ionic/angular";
 })
 export class AuthenticationModalComponent implements OnInit {
   @ViewChild('loginComp') loginComp: AuthenticationLoginComponent;
-  @ViewChild('registrationComp') registrationComp: AuthenticationRegisterComponent;
+  @ViewChild('registrationComp')
+  registrationComp: AuthenticationRegisterComponent;
 
   segmentValue = 'login';
 
-  constructor(private authFeatureService: AuthFeatureService,
-              private popoverController: PopoverController) {
-  }
+  constructor(
+    private authFeatureService: AuthFeatureService,
+    private popoverController: PopoverController
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   segmentChanged(event: CustomEvent) {
     this.segmentValue = event.detail.value;
@@ -43,7 +44,9 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.normalRegistration(registerIUser);
       await this.popoverController.dismiss();
-      IonicDialogService.presentToast('Your items has been successfully created');
+      IonicDialogService.presentToast(
+        'Your items has been successfully created'
+      );
     } catch (e) {
       this.registrationComp.registrationForm.reset();
       IonicDialogService.presentToast(e.message);
@@ -54,12 +57,12 @@ export class AuthenticationModalComponent implements OnInit {
     try {
       await this.authFeatureService.googleSignIn();
       await this.popoverController.dismiss();
-      IonicDialogService.presentToast('Your items has been successfully created');
+      IonicDialogService.presentToast(
+        'Your items has been successfully created'
+      );
     } catch (e) {
       this.registrationComp.registrationForm.reset();
       IonicDialogService.presentToast(e.message);
     }
   }
-
-
 }

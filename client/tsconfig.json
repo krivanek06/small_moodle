@@ -17,6 +17,32 @@
       "dom",
       "esnext.asynciterable"
     ],
+    "paths": {
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@environment/*": [
+        "src/environments/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@course-feature/*": [
+        "src/app/features/course-feature/*"
+      ],
+      "@course-test-feature/*": [
+        "src/app/features/course-test-feature/*"
+      ],
+      "@account-feature/*": [
+        "src/app/features/account-feature/*"
+      ],
+      "@authentications-feature/*": [
+        "src/app/features/authentications-feature/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ]
+    },
     "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {

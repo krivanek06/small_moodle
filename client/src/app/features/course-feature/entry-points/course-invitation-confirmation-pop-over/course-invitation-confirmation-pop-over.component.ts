@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {NavParams, PopoverController} from "@ionic/angular";
-import {CoursePublic} from "../../model/courses-firebase.interface";
-import {AbstractControl, FormControl, FormGroup} from "@angular/forms";
-import {COURSE_ROLES_ENUM} from "../../model/course.enum";
+import { Component, OnInit } from '@angular/core';
+import { NavParams, PopoverController } from '@ionic/angular';
+import {COURSE_ROLES_ENUM, CoursePublic} from '@app/features/course-feature';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-course-invitation-confirmation-pop-over',
@@ -18,8 +17,10 @@ export class CourseInvitationConfirmationPopOverComponent implements OnInit {
   confirmCheckbox = false;
   form: FormGroup;
 
-  constructor(private navParams: NavParams,
-              private popoverController: PopoverController) {
+  constructor(
+    private navParams: NavParams,
+    private popoverController: PopoverController
+  ) {
     this.message = this.navParams.get('message');
     this.coursePublic = this.navParams.get('coursePublic');
     this.selectedCourseRole = this.navParams.get('selectedCourseRole');
@@ -31,11 +32,14 @@ export class CourseInvitationConfirmationPopOverComponent implements OnInit {
   }
 
   confirm() {
-    this.popoverController.dismiss({accept: true, courseRole: this.courseRole.value});
+    this.popoverController.dismiss({
+      accept: true,
+      courseRole: this.courseRole.value,
+    });
   }
 
   reject() {
-    this.popoverController.dismiss({accept: false});
+    this.popoverController.dismiss({ accept: false });
   }
 
   get courseRole(): AbstractControl {
@@ -44,7 +48,10 @@ export class CourseInvitationConfirmationPopOverComponent implements OnInit {
 
   private initForm() {
     this.form = new FormGroup({
-      courseRole: new FormControl({value: this.selectedCourseRole, disabled: this.disabled})
-    })
+      courseRole: new FormControl({
+        value: this.selectedCourseRole,
+        disabled: this.disabled,
+      }),
+    });
   }
 }

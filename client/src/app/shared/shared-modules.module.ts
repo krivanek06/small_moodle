@@ -1,15 +1,14 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RouterModule} from "@angular/router";
-import {AngularFirestoreModule} from "@angular/fire/firestore";
-import {AngularFireAuthModule} from "@angular/fire/auth";
-import {AngularFireStorageModule} from "@angular/fire/storage";
-import {IonicModule} from "@ionic/angular";
-import {HttpClientModule} from "@angular/common/http";
-import {NgCalendarModule} from "ionic2-calendar";
-import {IonicDialogService} from "../core/services/ionic-dialog.service";
-
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { IonicModule } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
+import { NgCalendarModule } from 'ionic2-calendar';
+import { IonicDialogService } from '../core/services/ionic-dialog.service';
 
 @NgModule({
   imports: [
@@ -22,7 +21,7 @@ import {IonicDialogService} from "../core/services/ionic-dialog.service";
     AngularFireAuthModule,
     AngularFireStorageModule,
     IonicModule,
-    NgCalendarModule
+    NgCalendarModule,
   ],
   exports: [
     CommonModule,
@@ -34,11 +33,9 @@ import {IonicDialogService} from "../core/services/ionic-dialog.service";
     AngularFireAuthModule,
     AngularFireStorageModule,
     IonicModule,
-    NgCalendarModule
+    NgCalendarModule,
   ],
-  providers: [
-    IonicDialogService
-  ]
+  providers: [IonicDialogService],
 })
 export class SharedModulesModule {
   public constructor(ionicDialogService: IonicDialogService) {

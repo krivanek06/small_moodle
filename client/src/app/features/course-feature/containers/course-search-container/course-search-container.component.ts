@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {CoursePublic, coursePublic} from '@app/features/course-feature';
+import {CoursePublic} from '@app/features/course-feature';
 
 @Component({
   selector: 'app-course-search-container',
@@ -8,8 +8,7 @@ import {CoursePublic, coursePublic} from '@app/features/course-feature';
   styleUrls: ['./course-search-container.component.scss'],
 })
 export class CourseSearchContainerComponent implements OnInit {
-  @Output()
-  selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
+  @Output() selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() allowCourseSelect = false;
   @Input() defaultCategory: string;
@@ -34,7 +33,7 @@ export class CourseSearchContainerComponent implements OnInit {
 
   selectCourse() {
     if (this.allowCourseSelect) {
-      this.selectedCourseEmitter.emit(coursePublic); // TODO change later
+      // this.selectedCourseEmitter.emit(coursePublic); // TODO change later
     }
   }
 

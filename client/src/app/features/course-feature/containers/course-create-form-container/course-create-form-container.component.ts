@@ -19,8 +19,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./course-create-form-container.component.scss'],
 })
 export class CourseCreateFormContainerComponent implements OnInit {
-  @Output()
-  formSubmitEmitter: EventEmitter<CourseCreate> = new EventEmitter<CourseCreate>();
+  @Output() formSubmitEmitter: EventEmitter<CourseCreate> = new EventEmitter<CourseCreate>();
   categories$: Observable<CourseCategory>;
   form: FormGroup;
 
@@ -36,11 +35,11 @@ export class CourseCreateFormContainerComponent implements OnInit {
     return this.form.get('gradings') as FormArray;
   }
 
-  get markers(): FormArray {
+  get invitedMarkers(): FormArray {
     return this.form.get('markers') as FormArray;
   }
 
-  get students(): FormArray {
+  get invitedStudents(): FormArray {
     return this.form.get('students') as FormArray;
   }
 
@@ -87,7 +86,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       durationTo: this.durationTo.value,
       durationFrom: this.durationFrom.value,
       year: this.year.value,
-      numberOfStudents: this.students.length,
+      numberOfStudents: this.invitedStudents.length,
       isOpen: true,
       gradings: this.gradings.value,
       numberOfTests: 0,
@@ -95,8 +94,8 @@ export class CourseCreateFormContainerComponent implements OnInit {
       creator: this.authFeatureStoreService.userMain,
     };
     const coursePrivate: CoursePrivate = {
-      invitedStudents: this.students.value,
-      invitedMarkers: this.markers.value,
+      invitedStudents: this.invitedStudents.value,
+      invitedMarkers: this.invitedMarkers.value,
       markers: [],
       students: [],
       receivedStudentsInvitations: [],
@@ -124,29 +123,26 @@ export class CourseCreateFormContainerComponent implements OnInit {
   }
 
   addStudent(userMain: StUserMain) {
-    const students = this.students.value as StCourseStudent[];
+    const students = this.invitedStudents.value as StUserMain[];
     if (students.map((x) => x.uid).includes(userMain.uid)) {
       return;
     }
-    this.students.push(
+    this.invitedStudents.push(
       this.fb.group({
         uid: [userMain.uid],
         displayName: [userMain.displayName],
         photoURL: [userMain.photoURL],
-        accountCreatedDate: [userMain.accountCreatedDate],
-        receivedGrade: [null],
-        receivedPoints: [[]],
-        gradeChangeHistory: [[]],
+        accountCreatedDate: [userMain.accountCreatedDate]
       })
     );
   }
 
   addMarker(userMain: StUserMain) {
-    const markers = this.students.value as StUserMain[];
+    const markers = this.invitedStudents.value as StUserMain[];
     if (markers.map((x) => x.uid).includes(userMain.uid)) {
       return;
     }
-    this.markers.push(
+    this.invitedMarkers.push(
       this.fb.group({
         uid: [userMain.uid],
         displayName: [userMain.displayName],
@@ -157,13 +153,13 @@ export class CourseCreateFormContainerComponent implements OnInit {
   }
 
   removeMarker(userMain: StUserMain) {
-    const markers = this.markers.value as StUserMain[];
-    this.markers.removeAt(markers.indexOf(userMain));
+    const markers = this.invitedMarkers.value as StUserMain[];
+    this.invitedMarkers.removeAt(markers.indexOf(userMain));
   }
 
   removeStudent(userMain: StUserMain) {
-    const students = this.students.value as StUserMain[];
-    this.students.removeAt(students.indexOf(userMain));
+    const students = this.invitedStudents.value as StUserMain[];
+    this.invitedStudents.removeAt(students.indexOf(userMain));
   }
 
   private initForm() {

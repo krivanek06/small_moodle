@@ -10,8 +10,6 @@ export * from './services/auth-feature.service';
 // models
 export * from './models/user.enums';
 export * from './models/user.interface';
-export * from './models/user.random.data';
-
 // guards
 export * from './guards/auth.guard';
 

@@ -24,7 +24,6 @@ export * from './utils/course.convertor';
 // models
 export * from './model/course-module.interface';
 export * from './model/course.enum';
-export * from './model/course.random.data';
 export * from './model/courses-firebase.interface';
 
 // pipes

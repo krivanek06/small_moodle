@@ -15,7 +15,6 @@ export * from './services/course-test-feature-store.service';
 // models
 export * from './model/course-test-firebase.model';
 export * from './model/course-test.enums';
-export * from './model/course-test.random.data';
 
 // utils
 export * from './utils/course-test.convertor';

@@ -10,6 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
+import {CourseFeatureFacadeService} from "@app/features/course-feature";
 
 @Component({
   selector: 'app-course-test-edit',
@@ -24,12 +25,11 @@ export class CourseTestEditComponent implements OnInit {
   CourseTestFormStateEnum = CourseTestFormStateEnum;
   errorMessage: string;
 
-  constructor(
-    private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
-    private courseTestDatabaseService: CourseTestFeatureDatabaseService,
-    private authFeatureStoreService: AuthFeatureStoreService,
-    private route: ActivatedRoute
-  ) {
+  constructor(private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
+              private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+              private authFeatureStoreService: AuthFeatureStoreService,
+              private courseFeatureFacadeService: CourseFeatureFacadeService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -37,8 +37,9 @@ export class CourseTestEditComponent implements OnInit {
     this.courseTest$ = this.route.data.pipe(map((x) => x[0]));
   }
 
-  approveTest(approval: boolean, courseTest: CourseTest) {
-    this.courseTestFeatureFacadeService.approveCourseTest(approval, courseTest);
+  async approveTest(approval: boolean, courseTest: CourseTest) {
+    await this.courseTestFeatureFacadeService.approveCourseTest(approval, courseTest);
+    this.courseFeatureFacadeService.navigateToCoursePage()
   }
 
   saveTest() {
@@ -47,6 +48,7 @@ export class CourseTestEditComponent implements OnInit {
 
   deleteTest(courseTest: CourseTest) {
     this.courseTestFeatureFacadeService.deleteCourseTest(courseTest);
+    this.courseFeatureFacadeService.navigateToCoursePage()
   }
 
   sendTestToApproval() {

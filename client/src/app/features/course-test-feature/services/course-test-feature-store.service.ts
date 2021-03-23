@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {CourseTest, CourseTestTaken,} from '../model/course-test-firebase.model';
 import {StorageService} from '@app/core';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import {CourseTestFeatureDatabaseService} from '@app/features/course-test-feature';
 
 @Injectable({
@@ -14,9 +14,8 @@ export class CourseTestFeatureStoreService {
   /**
    * Add here data if student is taking test or marker is evaluating student's test
    */
-  private studentCourseTest$: BehaviorSubject<CourseTestTaken> = new BehaviorSubject<CourseTestTaken>(
-    null
-  );
+  private studentCourseTest$: BehaviorSubject<CourseTestTaken> = new BehaviorSubject<CourseTestTaken>(null);
+  private studentCourseTestSubject$: Subject<boolean> = new Subject<boolean>();
 
   /**
    * All test student has completed
@@ -37,9 +36,7 @@ export class CourseTestFeatureStoreService {
 
   get studentCourseTest(): CourseTestTaken {
     if (!this.studentCourseTest$.getValue()) {
-      throw new Error(
-        'trying to access CourseTestTaken for student, but does not exists'
-      );
+      throw new Error('trying to access CourseTestTaken for student, but does not exists');
     }
     return this.studentCourseTest$.getValue();
   }
@@ -49,24 +46,17 @@ export class CourseTestFeatureStoreService {
   }
 
   setStudentCourseTest(courseTestTaken: CourseTestTaken) {
-    if (
-      this.studentCourseTest$.getValue() &&
-      this.studentCourseTest$.getValue().testId === courseTestTaken.testId
-    ) {
+    if (this.studentCourseTest$.getValue() && this.studentCourseTest$.getValue().testId === courseTestTaken.testId) {
       return;
     }
-    this.courseTestDatabaseService
-      .getStudentCourseTest(
-        courseTestTaken.course.courseId,
-        courseTestTaken.testId,
-        courseTestTaken.student.uid
-      )
-      .pipe(first())
+
+    this.studentCourseTestSubject$.next(true);
+    this.courseTestDatabaseService.getStudentCourseTest(
+      courseTestTaken.course.courseId,
+      courseTestTaken.testId,
+      courseTestTaken.student.uid).pipe(takeUntil(this.studentCourseTestSubject$))
       .subscribe((res) => {
-        this.storageService.saveData(
-          this.COURSE_TEST_ACTIVE_KEY,
-          JSON.stringify(res)
-        );
+        this.storageService.saveData(this.COURSE_TEST_ACTIVE_KEY, JSON.stringify(res));
         this.studentCourseTest$.next(res);
       });
   }
@@ -88,14 +78,10 @@ export class CourseTestFeatureStoreService {
   }
 
   setAllCourseTests(courseId: string) {
-    if (
-      this.allCourseTests$.getValue().length > 0 &&
-      this.allCourseTests$.getValue()[0].course.courseId === courseId
-    ) {
+    if (this.allCourseTests$.getValue().length > 0 && this.allCourseTests$.getValue()[0].course.courseId === courseId) {
       return;
     }
-    this.courseTestDatabaseService
-      .getAllCourseTests(courseId)
+    this.courseTestDatabaseService.getAllCourseTests(courseId)
       .subscribe((tests) => {
         console.log('tests arrived', tests);
         this.allCourseTests$.next(tests);
@@ -103,11 +89,12 @@ export class CourseTestFeatureStoreService {
   }
 
   private checkSavedStudentTestId() {
-    const takenTest = JSON.parse(
+    // TODO save only active test ID ??? Should I save it ?
+    /*const takenTest = JSON.parse(
       this.storageService.getData(this.COURSE_TEST_ACTIVE_KEY) as string
     ) as CourseTestTaken;
     if (takenTest) {
       this.setStudentCourseTest(takenTest);
-    }
+    }*/
   }
 }

@@ -1,76 +1,35 @@
-<ion-list>
-  <ion-item lines="none">
-    <ng-container *ngIf="courseTestPublic; else createCourse">
-      <!-- test is approved -->
-      <ion-label
-        *ngIf="
-          courseTestPublic.testState === CourseTestStateEnum.APPROVED;
-          else buttons
-        "
-      >
-        Test is approved
-      </ion-label>
+<ion-toolbar *ngIf="showSomething">
+  <ng-container *ngIf="courseTestPublic; else createCourse">
+    <ion-buttons class="ion-justify-content-end" *ngIf="loggedInUser">
+      <!-- I am creator and teacher -->
+      <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid &&
+                  loggedInUser.uid === courseTestPublic.course.creator.uid;  else decide ">
+        <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+        <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
+        <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+      </ng-container>
 
-      <ng-template #buttons>
-        <ion-label>
-          <ion-buttons class="ion-justify-content-end" *ngIf="loggedInUser">
-            <!-- I am creator and teacher -->
-            <ng-container
-              *ngIf="
-                loggedInUser.uid === courseTestPublic.createdBy.uid &&
-                  loggedInUser.uid === courseTestPublic.course.creator.uid;
-                else decide
-              "
-            >
-              <ion-button color="primary" (click)="saveTest()">Save</ion-button>
-              <ion-button color="success" (click)="approveTest(true)"
-                >Approve</ion-button
-              >
-              <ion-button color="danger" (click)="approveTest(false)"
-                >Delete</ion-button
-              >
-            </ng-container>
-
-            <ng-template #decide>
-              <!-- creator's buttons -->
-              <ng-container
-                *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid"
-              >
-                <ion-button color="primary" (click)="saveTest()"
-                  >Save</ion-button
-                >
-                <ion-button color="success" (click)="sendToApproval()"
-                  >Send to approve</ion-button
-                >
-                <ion-button color="danger" (click)="deleteTest()"
-                  >Delete</ion-button
-                >
-              </ng-container>
-
-              <!-- teachers's buttons -->
-              <ng-container
-                *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid"
-              >
-                <ion-button color="success" (click)="approveTest(true)"
-                  >Approve</ion-button
-                >
-                <ion-button color="danger" (click)="approveTest(false)"
-                  >Delete</ion-button
-                >
-              </ng-container>
-            </ng-template>
-          </ion-buttons>
-        </ion-label>
-      </ng-template>
-    </ng-container>
-
-    <!-- save / delete -->
-    <ng-template #createCourse>
-      <ion-label>
-        <ion-buttons class="ion-justify-content-end">
+      <ng-template #decide>
+        <!-- creator's buttons -->
+        <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid">
           <ion-button color="primary" (click)="saveTest()">Save</ion-button>
-        </ion-buttons>
-      </ion-label>
-    </ng-template>
-  </ion-item>
-</ion-list>
+          <ion-button color="success" (click)="sendToApproval()">Send to approve</ion-button>
+          <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+        </ng-container>
+
+        <!-- teachers's buttons -->
+        <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid">
+          <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
+          <ion-button color="danger" (click)="approveTest(false)">Disapprove</ion-button>
+        </ng-container>
+      </ng-template>
+    </ion-buttons>
+  </ng-container>
+
+  <!-- save / delete -->
+  <ng-template #createCourse>
+    <ion-buttons class="ion-justify-content-end">
+      <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+    </ion-buttons>
+  </ng-template>
+</ion-toolbar>

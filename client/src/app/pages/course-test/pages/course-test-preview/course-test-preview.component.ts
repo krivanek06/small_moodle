@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {map, switchMap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 import {
   CourseTest,
   CourseTestFeatureDatabaseService,
@@ -10,10 +10,7 @@ import {
   CourseTestFormStateEnum,
   CourseTestTaken,
 } from '@app/features/course-test-feature';
-import {
-  AuthFeatureStoreService,
-  StUserMain,
-} from '@app/features/authentication-feature';
+import {AuthFeatureStoreService, StUserMain,} from '@app/features/authentication-feature';
 
 @Component({
   selector: 'app-course-test-preview',
@@ -35,7 +32,8 @@ export class CourseTestPreviewComponent implements OnInit {
     private courseTestFacadeService: CourseTestFeatureFacadeService,
     private courseTestFeatureDatabaseService: CourseTestFeatureDatabaseService,
     private authFeatureStoreService: AuthFeatureStoreService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.courseTest$ = this.route.data.pipe(map((x) => x[0]));
@@ -58,10 +56,7 @@ export class CourseTestPreviewComponent implements OnInit {
   }
 
   gradeTest(test: CourseTestTaken) {
-    this.courseTestFacadeService.gradeCourseTest(
-      test,
-      this.courseTestForm.submitForm()
-    );
+    this.courseTestFacadeService.gradeCourseTest(test, this.courseTestForm.submitForm());
   }
 
   cancelSelectedTest() {
@@ -69,9 +64,7 @@ export class CourseTestPreviewComponent implements OnInit {
   }
 
   setAsMarker(selectedStudentTakenTest: CourseTestTaken) {
-    this.courseTestFacadeService.assignMarkerOnCourseTest(
-      selectedStudentTakenTest
-    );
+    this.courseTestFacadeService.assignMarkerOnCourseTest(selectedStudentTakenTest);
   }
 
   reopenTest(selectedStudentTakenTest: CourseTestTaken) {

@@ -3,7 +3,7 @@ import { StUser, StUserLogin, StUserMain } from '../models/user.interface';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { USER_ROLES_ENUM } from '../models/user.enums';
-import { StorageService } from '../../../core/services/storage.service';
+import { StorageService } from '@app/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { convertStUserIntoStUserMain } from '../utils/user.convertor';
 

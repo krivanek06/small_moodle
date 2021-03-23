@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { Course } from '../model/courses-firebase.interface';
-import { filter, first, map } from 'rxjs/operators';
-import { CourseCreate } from '../model/course-module.interface';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { StorageService } from '../../../core/services/storage.service';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
+import {Course, CourseCreate} from '@app/features/course-feature';
+import {filter, map, takeUntil} from 'rxjs/operators';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {StorageService} from '@app/core';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +12,7 @@ export class CourseFeatureStoreService {
   private COURSE_KEY = 'COURSE_KEY';
 
   private course$: BehaviorSubject<Course> = new BehaviorSubject<Course>(null);
+  private subject$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private firestore: AngularFirestore,
@@ -23,9 +23,7 @@ export class CourseFeatureStoreService {
 
   get course(): Course {
     if (!this.course$.getValue()) {
-      throw new Error(
-        'trying to access course in CourseFeatureStoreService, but does not exists'
-      );
+      throw new Error('trying to access course in CourseFeatureStoreService, but does not exists');
     }
 
     return this.course$.getValue();
@@ -36,14 +34,12 @@ export class CourseFeatureStoreService {
   }
 
   setCourse(courseId): void {
-    if (
-      this.course$.getValue() &&
-      this.course$.getValue().courseId === courseId
-    ) {
+    if (this.course$.getValue() && this.course$.getValue().courseId === courseId) {
       return;
     }
+    this.subject$.next(true);
     this.getCourseFromFirestore(courseId)
-      .pipe(first())
+      .pipe(takeUntil(this.subject$))
       .subscribe((res) => {
         this.storageService.saveData(this.COURSE_KEY, res.courseId);
         this.course$.next(res);
@@ -60,18 +56,13 @@ export class CourseFeatureStoreService {
   private getCourseFromFirestore(courseId: string): Observable<Course> {
     return combineLatest([
       this.firestore.collection('courses').doc(courseId).valueChanges(),
-      this.firestore
-        .collection('courses')
-        .doc(courseId)
-        .collection('private')
-        .doc('private')
-        .valueChanges(),
+      this.firestore.collection('courses').doc(courseId).collection('private').doc('private').valueChanges(),
     ]).pipe(
       map(([coursePublic, coursePrivate]) => {
-        return { coursePublic, coursePrivate } as CourseCreate;
+        return {coursePublic, coursePrivate} as CourseCreate;
       }),
       map((res: CourseCreate) => {
-        return { ...res.coursePublic, ...res.coursePrivate } as Course;
+        return {...res.coursePublic, ...res.coursePrivate} as Course;
       })
     );
   }

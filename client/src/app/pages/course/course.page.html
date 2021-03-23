@@ -42,6 +42,7 @@
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Completed tests'">
           <app-course-test-student-completed-table
+            (clickedEmitter)="navigateToCourseTest($event)"
             [courseTakenTests]="studentTests$ | async">
           </app-course-test-student-completed-table>
         </app-generic-card>

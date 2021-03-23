@@ -1,29 +1,19 @@
-import {
-  CourseTest,
-  CourseTestPublic,
-  CourseTestTaken,
-} from '../model/course-test-firebase.model';
-import { StUserMain } from '../../authentication-feature/models/user.interface';
-import { CourseTestFormStateEnum } from '../model/course-test.enums';
-import { getCurrentIOSDate } from '../../../core/utils/date-formatter.functions';
+import {CourseTest, CourseTestPublic, CourseTestTaken,} from '../model/course-test-firebase.model';
+import {StUserMain} from '@app/features/authentication-feature';
+import {CourseTestFormStateEnum} from '../model/course-test.enums';
+import {getCurrentIOSDate} from '@app/core';
 
-export const convertCourseTestIntoCourseTestTaken = (
-  courseTest: CourseTest,
-  student: StUserMain
-): CourseTestTaken => {
-  const takenTest: CourseTestTaken = {
+export const convertCourseTestIntoCourseTestTaken = (courseTest: CourseTest, student: StUserMain): CourseTestTaken => {
+  return {
     ...courseTest,
     takenTestId: student.uid,
     student,
     testFormState: CourseTestFormStateEnum.TAKE,
     timeStarted: getCurrentIOSDate(),
   };
-  return takenTest;
 };
 
-export const convertCourseTestIntoCourseTestPublic = (
-  courseTest: CourseTest
-): CourseTestPublic => {
+export const convertCourseTestIntoCourseTestPublic = (courseTest: CourseTest): CourseTestPublic => {
   return {
     testId: courseTest.testId,
     course: courseTest.course,

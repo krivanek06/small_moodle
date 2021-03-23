@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { StCourseStudent } from '../../../course-feature/model/courses-firebase.interface';
-import { StUserMain } from '../../../authentication-feature/models/user.interface';
+import { StCourseStudent } from '@app/features/course-feature';
+import { StUserMain } from '@app/features/authentication-feature';
 
 @Component({
   selector: 'app-account-identification-list',

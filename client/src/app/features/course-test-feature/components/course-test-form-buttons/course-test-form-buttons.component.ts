@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseTestStateEnum} from '../../model/course-test.enums';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {CourseTestPublic} from '@app/features/course-test-feature';
 import {StUserMain} from '@app/features/authentication-feature';
 
@@ -8,23 +7,29 @@ import {StUserMain} from '@app/features/authentication-feature';
   templateUrl: './course-test-form-buttons.component.html',
   styleUrls: ['./course-test-form-buttons.component.scss'],
 })
-export class CourseTestFormButtonsComponent implements OnInit {
-  @Output()
-  approveTestEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output()
-  sendTestToApprovalEmitter: EventEmitter<any> = new EventEmitter<any>();
+export class CourseTestFormButtonsComponent implements OnInit, OnChanges {
+  @Output() approveTestEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() sendTestToApprovalEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() saveTestEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteTestEmitter: EventEmitter<any> = new EventEmitter<any>();
-
-  CourseTestStateEnum = CourseTestStateEnum;
 
   @Input() courseTestPublic: CourseTestPublic;
   @Input() loggedInUser: StUserMain;
 
+  showSomething = false;
+
   constructor() {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.showSomething =
+      !this.courseTestPublic ||
+      this.loggedInUser?.uid === this.courseTestPublic.createdBy.uid ||
+      this.loggedInUser?.uid === this.courseTestPublic.course.creator.uid;
+  }
+
   ngOnInit() {
+
   }
 
   approveTest(approve: boolean) {

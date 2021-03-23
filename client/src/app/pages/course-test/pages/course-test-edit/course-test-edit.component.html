@@ -6,15 +6,11 @@
     (sendTestToApprovalEmitter)="sendTestToApproval()"
     (saveTestEmitter)="saveTest()"
     (deleteTestEmitter)="deleteTest(courseTest)"
-    (approveTestEmitter)="approveTest($event, courseTest)"
-  >
+    (approveTestEmitter)="approveTest($event, courseTest)">
   </app-course-test-form-buttons>
 
   <!-- error message -->
-  <ion-toolbar
-    class="st-error ion-text-center ion-padding"
-    *ngIf="errorMessage"
-  >
+  <ion-toolbar class="st-error ion-text-center ion-padding" *ngIf="errorMessage">
     {{ errorMessage }}
   </ion-toolbar>
 
@@ -22,7 +18,6 @@
   <app-course-test-form
     [state]="CourseTestFormStateEnum.CREATE"
     [user]="userMain$ | async"
-    [courseTest]="courseTest"
-  >
+    [courseTest]="courseTest">
   </app-course-test-form>
 </ng-container>

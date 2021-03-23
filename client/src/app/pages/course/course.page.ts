@@ -5,18 +5,16 @@ import {
   Course,
   COURSE_ROLES_ENUM,
   CourseFeatureFacadeService,
-  CourseFeatureStoreService
+  CourseFeatureStoreService,
 } from '@app/features/course-feature';
-import {
-  CourseTest,
-  CourseTestPublic,
-  CourseTestTaken,
-} from '../../features/course-test-feature/model/course-test-firebase.model';
 import {Observable} from 'rxjs';
 import {
+  CourseTest,
   CourseTestFeatureFacadeService,
   CourseTestFeatureStoreService,
-  CourseTestStateEnum
+  CourseTestPublic,
+  CourseTestStateEnum,
+  CourseTestTaken
 } from '@app/features/course-test-feature';
 
 @Component({
@@ -25,13 +23,6 @@ import {
   styleUrls: ['./course.page.scss'],
 })
 export class CoursePage implements OnInit {
-  /*course = course;
-  courseTakenTest = courseTakenTest;
-  courseTestApproved = courseTestApproved;
-  courseTestWaitingApproval = courseTestWaitingApproval;
-
-  userCourseStudent = userCourseStudent;
-  userMain = userMain;*/
   course$: Observable<Course>;
   courseTests$: Observable<CourseTest[]>;
   studentTests$: Observable<CourseTestTaken[]>;
@@ -47,11 +38,11 @@ export class CoursePage implements OnInit {
   }
 
   ngOnInit() {
-    // load course public + private data
-    // load all tests if marker or teacher
     this.course$ = this.courseFeatureStoreService.getCourse();
     this.courseTests$ = this.courseTestFeatureStoreService.getAllCourseTests();
     this.studentTests$ = this.courseTestFeatureStoreService.getOneStudentAllCourseTests();
+
+    this.course$.subscribe(console.log)
   }
 
   async inviteUser(userPublic: StUserPublic, course: Course) {
@@ -70,10 +61,7 @@ export class CoursePage implements OnInit {
   }
 
   redirectToCourseTest(courseTest: CourseTestPublic) {
-    const path =
-      courseTest.testState === CourseTestStateEnum.APPROVED
-        ? 'preview'
-        : 'edit';
+    const path = courseTest.testState === CourseTestStateEnum.APPROVED ? 'preview' : 'edit';
     this.router.navigate([`menu/course-test/${path}/${courseTest.testId}`]);
   }
 
@@ -81,5 +69,10 @@ export class CoursePage implements OnInit {
     if (await this.courseTestFeatureFacadeService.startCourseTest(courseTest)) {
       this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
     }
+  }
+
+  navigateToCourseTest(courseTestTaken: CourseTestTaken) {
+    this.courseTestFeatureStoreService.setStudentCourseTest(courseTestTaken);
+    this.router.navigate([`menu/course-test/submit/${courseTestTaken.testId}`]);
   }
 }

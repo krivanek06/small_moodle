@@ -1,9 +1,6 @@
-import { StUserMain } from '../../authentication-feature/models/user.interface';
-import {
-  CourseTestPublic,
-  CourseTestReceivedPoints,
-} from '../../course-test-feature/model/course-test-firebase.model';
-import { COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM } from './course.enum';
+import {StUserMain} from '@app/features/authentication-feature';
+import {CourseTestPublic, CourseTestReceivedPoints,} from '../../course-test-feature/model/course-test-firebase.model';
+import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM} from './course.enum';
 
 export interface CoursePublicMain {
   courseId: string;
@@ -20,7 +17,7 @@ export interface CoursePublic extends CoursePublicMain {
   durationTo: string;
   numberOfStudents: number;
   numberOfTests: number;
-  courseGradingResults?: CourseGradingResults[];
+  courseGradingResults?: CourseGradingResults[];  // filled only when course is closed
   gradings: CourseGrading[];
 }
 
@@ -30,11 +27,12 @@ export interface CoursePrivate {
   markers: StUserMain[];
   students: StCourseStudent[];
   invitedMarkers: StUserMain[];
-  invitedStudents: StCourseStudent[];
+  invitedStudents: StUserMain[];
   receivedStudentsInvitations: StCourseStudent[];
 }
 
-export interface Course extends CoursePublic, CoursePrivate {}
+export interface Course extends CoursePublic, CoursePrivate {
+}
 
 export interface CourseGrading {
   mark: string;

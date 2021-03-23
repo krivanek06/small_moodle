@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { StUserMain } from '@app/features/authentication-feature';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {StUserMain} from '@app/features/authentication-feature';
 import {Course, CoursePublic} from "@app/features/course-feature";
 
 @Component({
@@ -8,11 +8,22 @@ import {Course, CoursePublic} from "@app/features/course-feature";
   styleUrls: ['./courses-completed-table.component.scss'],
 })
 export class CoursesCompletedTableComponent implements OnInit {
+  @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
+
   @Input() courses: CoursePublic[] | Course[] = [];
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  clickedCourse(coursePublic: CoursePublic) {
+    if (!this.enableClick) {
+      return;
+    }
+    this.clickedCourseEmitter.emit(coursePublic);
+  }
 }

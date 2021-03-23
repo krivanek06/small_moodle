@@ -10,24 +10,12 @@
   </ion-item>
 
   <!-- table body -->
-  <ion-item
-    [button]="enableClick"
-    *ngFor="let userCourse of userCourses"
-    (click)="clickedCourse(userCourse)"
-  >
+  <ion-item [button]="enableClick" *ngFor="let userCourse of userCourses" (click)="clickedCourse(userCourse)">
     <ion-label>{{ userCourse.course.longName }}</ion-label>
     <ion-label>{{ userCourse.role }}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{
-      userCourse.course.numberOfTests
-    }}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{
-      userCourse.course.confirmedTests | courseNearestTest
-    }}</ion-label>
-    <ion-label>{{
-      userCourse.course.durationFrom | date: "dd.MM.YYYY"
-    }}</ion-label>
-    <ion-label>{{
-      userCourse.course.durationTo | date: "dd.MM.YYYY"
-    }}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{userCourse.course.numberOfTests}}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{userCourse.course.confirmedTests | courseNearestTest}}</ion-label>
+    <ion-label></ion-label>
+    <ion-label>{{userCourse.course.durationTo | date: "dd.MM.YYYY"}}</ion-label>
   </ion-item>
 </ion-list>

@@ -1,18 +1,17 @@
-<!--  test started info -->
-<ion-toolbar class="ion-text-end">
-  TODO Implement remaining time HH:mm
-</ion-toolbar>
+<ng-container *ngIf="courseTakenTest$ | async as courseTakenTest">
+  <!--  test started info -->
+  <ion-toolbar *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE" class="ion-text-end">
+    TODO Implement remaining time HH:mm
+  </ion-toolbar>
 
-<!-- test questions -->
-<app-course-test-form
-  [state]="CourseTestFormStateEnum.TAKE"
-  [courseTest]="courseTakenTest$ | async"
->
-</app-course-test-form>
+  <!-- test questions -->
+  <app-course-test-form
+    [state]="courseTakenTest.testFormState"
+    [courseTest]="courseTakenTest$ | async">
+  </app-course-test-form>
 
-<!-- submit button -->
-<ion-buttons class="ion-justify-content-end">
-  <ion-button color="primary" (click)="submitTest()" fill="outline"
-    >Submit</ion-button
-  >
-</ion-buttons>
+  <!-- submit button -->
+  <ion-buttons *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE" class="ion-justify-content-end">
+    <ion-button color="primary" (click)="submitTest()" fill="outline">Submit</ion-button>
+  </ion-buttons>
+</ng-container>

@@ -1,38 +1,25 @@
 <form [formGroup]="form">
-  <div class="c-question-wrapper">
+  <div class="c-question-wrapper" *ngIf="this.state !== CourseTestFormStateEnum.TAKE">
     <ion-title class="st-title">Test info</ion-title>
   </div>
-  <ion-card>
+  <ion-card *ngIf="this.state !== CourseTestFormStateEnum.TAKE">
     <ion-list style="padding: 16px">
       <ion-list-header *ngIf="courseTest" class="st-title">
         {{ courseTest.testName }}
       </ion-list-header>
       <!-- test name + duration -->
       <ion-item-group class="st-flex-space-between" style="margin-bottom: 16px">
-        <ion-item class="st-width-32">
+        <ion-item [ngClass]="{'st-width-32': !isCreatingState, 'st-width-49': isCreatingState}">
           <ion-label position="floating">Test name</ion-label>
-          <ion-input
-            placeholder="Set test name"
-            formControlName="testName"
-          ></ion-input>
+          <ion-input placeholder="Set test name" formControlName="testName"></ion-input>
         </ion-item>
-        <ion-item class="st-width-32">
+        <ion-item [ngClass]="{'st-width-32': !isCreatingState, 'st-width-49': isCreatingState}">
           <ion-label position="floating">Test duration (min)</ion-label>
-          <ion-input
-            placeholder="Set test duration"
-            formControlName="duration"
-            type="number"
-            min="0"
-          ></ion-input>
+          <ion-input placeholder="Set test duration" formControlName="duration" type="number" min="0"></ion-input>
         </ion-item>
-        <ion-item class="st-width-32">
+        <ion-item class="st-width-32" *ngIf="!isCreatingState">
           <ion-label position="floating">Test points</ion-label>
-          <ion-input
-            placeholder="Set test duration"
-            formControlName="testPoints"
-            type="number"
-            min="0"
-          ></ion-input>
+          <ion-input placeholder="Set test duration" formControlName="testPoints" type="number" min="0"></ion-input>
         </ion-item>
       </ion-item-group>
 
@@ -40,20 +27,13 @@
       <ion-item-group class="st-flex-space-between">
         <ion-item class="st-width-49">
           <ion-label>Start Time</ion-label>
-          <ion-datetime
-            display-format="HH:mm DD.MM.YYYY"
-            picker-format="DD-MMM-YY HH:mm"
-            formControlName="availableFrom"
-          >
+          <ion-datetime display-format="HH:mm DD.MM.YYYY" picker-format="DD-MMM-YY HH:mm"
+                        formControlName="availableFrom">
           </ion-datetime>
         </ion-item>
         <ion-item class="st-width-49">
           <ion-label>End Time</ion-label>
-          <ion-datetime
-            display-format="HH:mm DD.MM.YYYY"
-            picker-format="DD-MMM-YY HH:mm"
-            formControlName="availableTo"
-          >
+          <ion-datetime display-format="HH:mm DD.MM.YYYY" picker-format="DD-MMM-YY HH:mm" formControlName="availableTo">
           </ion-datetime>
         </ion-item>
       </ion-item-group>
@@ -65,79 +45,41 @@
   </div>
 
   <ng-container formArrayName="questions">
-    <ion-card
-      *ngFor="let control of questions.controls; let i = index"
-      style="margin-top: 16px; margin-bottom: 16px"
-    >
+    <ion-card *ngFor="let control of questions.controls; let i = index" style="margin-top: 16px; margin-bottom: 16px">
       <ion-list style="padding: 16px">
         <ng-container [formGroupName]="i">
           <div class="c-question-points-wrapper">
             <ion-text>Question #{{ i + 1 }}</ion-text>
 
             <ion-item-group class="st-flex-end">
-              <ion-item
-                style="margin-right: 16px"
-                *ngIf="
-                  this.state === CourseTestFormStateEnum.GRADED ||
-                  this.state === CourseTestFormStateEnum.GRADE
-                "
-              >
+              <ion-item style="margin-right: 16px" *ngIf="
+                  this.state === CourseTestFormStateEnum.GRADED ||  this.state === CourseTestFormStateEnum.GRADE ">
                 <ion-label position="floating">Received points</ion-label>
-                <ion-input
-                  formControlName="receivedPoints"
-                  type="number"
-                  min="0"
-                ></ion-input>
+                <ion-input formControlName="receivedPoints" type="number" min="0"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Points</ion-label>
-                <ion-input
-                  formControlName="points"
-                  type="number"
-                  min="1"
-                ></ion-input>
+                <ion-input formControlName="points" type="number" min="1"></ion-input>
               </ion-item>
             </ion-item-group>
           </div>
 
           <ion-item>
             <ion-label position="floating">Question</ion-label>
-            <ion-textarea
-              autoGrow="true"
-              placeholder="Add question"
-              formControlName="question"
-            ></ion-textarea>
+            <ion-textarea autoGrow="true" placeholder="Add question" formControlName="question"></ion-textarea>
           </ion-item>
 
           <ion-item
-            *ngIf="
-              this.state !== CourseTestFormStateEnum.CREATE &&
-              this.state !== CourseTestFormStateEnum.PREVIEW
-            "
-          >
+            *ngIf=" this.state !== CourseTestFormStateEnum.CREATE &&  this.state !== CourseTestFormStateEnum.PREVIEW  ">
             <ion-label position="floating">Answer</ion-label>
-            <ion-textarea
-              autoGrow="true"
-              placeholder="Add Answer"
-              formControlName="answer"
-            ></ion-textarea>
+            <ion-textarea autoGrow="true" placeholder="Add Answer" formControlName="answer"></ion-textarea>
           </ion-item>
 
-          <ion-item-group
-            class="st-flex-end"
-            *ngIf="
-              state === CourseTestFormStateEnum.GRADE ||
-              (!!control.get('markerComment').value &&
-                state === CourseTestFormStateEnum.GRADED)
-            "
-          >
+          <ion-item-group class="st-flex-end" *ngIf=" state === CourseTestFormStateEnum.GRADE ||
+              (!!control.get('markerComment').value &&  state === CourseTestFormStateEnum.GRADED) ">
             <ion-item class="c-comment-item">
               <ion-label position="floating">Comment</ion-label>
-              <ion-textarea
-                autoGrow="true"
-                placeholder="Add Comment"
-                formControlName="markerComment"
-              ></ion-textarea>
+              <ion-textarea autoGrow="true" placeholder="Add Comment" formControlName="markerComment"></ion-textarea>
             </ion-item>
           </ion-item-group>
 
@@ -153,7 +95,5 @@
 </form>
 
 <ion-buttons class="ion-justify-content-center" *ngIf="isCreatingState">
-  <ion-button type="button" fill="clear" color="primary" (click)="addQuestion()"
-    >Add question</ion-button
-  >
+  <ion-button type="button" fill="clear" color="primary" (click)="addQuestion()">Add question</ion-button>
 </ion-buttons>

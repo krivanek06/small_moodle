@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CourseFeatureFacadeService } from '@app/features/course-feature';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Observable} from 'rxjs';
+import {CourseFeatureFacadeService} from '@app/features/course-feature';
 import {
   CourseTestFeatureFacadeService,
   CourseTestFeatureStoreService,
@@ -21,22 +21,17 @@ export class CourseTestSubmitComponent implements OnInit {
 
   courseTakenTest$: Observable<CourseTestTaken>;
 
-  constructor(
-    private courseTestFacadeService: CourseTestFeatureFacadeService,
-    private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-    private courseFeatureFacadeService: CourseFeatureFacadeService
-  ) {}
+  constructor(private courseTestFacadeService: CourseTestFeatureFacadeService,
+              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
+              private courseFeatureFacadeService: CourseFeatureFacadeService) {
+  }
 
   ngOnInit() {
     this.courseTakenTest$ = this.courseTestFeatureStoreService.getStudentCourseTest();
   }
 
   async submitTest() {
-    if (
-      await this.courseTestFacadeService.submitCompletedCourseTest(
-        this.courseTestForm.submitForm()
-      )
-    ) {
+    if (await this.courseTestFacadeService.submitCompletedCourseTest(this.courseTestForm.submitForm())) {
       this.courseFeatureFacadeService.navigateToCoursePage();
     }
   }

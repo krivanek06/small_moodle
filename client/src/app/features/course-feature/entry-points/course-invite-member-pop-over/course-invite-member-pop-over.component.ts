@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { NavParams, PopoverController } from '@ionic/angular';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import {stUser, StUserMain} from "@app/features/authentication-feature";
+import {Component, OnInit} from '@angular/core';
+import {NavParams, PopoverController} from '@ionic/angular';
+import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
+import {AuthFeatureService, AuthFeatureStoreService, StUser, StUserMain} from "@app/features/authentication-feature";
 import {COURSE_ROLES_ENUM, CoursePublic} from "@app/features/course-feature";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-course-invite-member-pop-over',
@@ -10,17 +11,15 @@ import {COURSE_ROLES_ENUM, CoursePublic} from "@app/features/course-feature";
   styleUrls: ['./course-invite-member-pop-over.component.scss'],
 })
 export class CourseInviteMemberPopOverComponent implements OnInit {
+  user$: Observable<StUser>;
+
   userMain: StUserMain; // User which I want to invite
-  stUser = stUser; // TODO delete later, replace by authenticated user
-
   courseName: string;
-
   form: FormGroup;
 
-  constructor(
-    private navParams: NavParams,
-    private popoverController: PopoverController
-  ) {
+  constructor(private navParams: NavParams,
+              private popoverController: PopoverController,
+              private authFeatureStoreService: AuthFeatureStoreService) {
     this.userMain = this.navParams.get('userMain');
   }
 
@@ -29,6 +28,7 @@ export class CourseInviteMemberPopOverComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user$ = this.authFeatureStoreService.getUser();
     this.initForm();
   }
 

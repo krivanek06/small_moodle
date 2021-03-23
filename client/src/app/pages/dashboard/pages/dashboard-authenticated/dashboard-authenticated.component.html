@@ -8,15 +8,13 @@
             <app-courses-manage-table
               (clickedCourseEmitter)="redirectToCourse($event)"
               [authenticatedUser]="user"
-              [userCourses]="user.courses | courseFilterManagedOpen"
-            >
+              [userCourses]="user.courses | courseFilterManagedOpen">
             </app-courses-manage-table>
             <ion-buttons class="ion-justify-content-end st-small-padding">
               <ion-button
                 color="primary"
                 class="st-small-padding"
-                (click)="createCourse()"
-              >
+                (click)="createCourse()">
                 Create course
               </ion-button>
             </ion-buttons>
@@ -27,9 +25,9 @@
         <ion-col size="12">
           <app-generic-card [title]="'Active courses'">
             <app-courses-active-table
+              (clickedCourseEmitter)="redirectToCourse($event)"
               [authenticatedUser]="user"
-              [courses]="user.courses | courseFilterActive"
-            >
+              [courses]="user.courses | courseFilterActive">
             </app-courses-active-table>
           </app-generic-card>
         </ion-col>
@@ -38,9 +36,9 @@
         <ion-col size="12">
           <app-generic-card [title]="'Completed courses'">
             <app-courses-completed-table
+              (clickedCourseEmitter)="redirectToCourse($event)"
               [authenticatedUser]="user"
-              [courses]="user.courses | courseFilterCompleted"
-            >
+              [courses]="user.courses | courseFilterCompleted">
             </app-courses-completed-table>
           </app-generic-card>
         </ion-col>
@@ -62,8 +60,7 @@
           <app-generic-card [title]="'Course invitations'">
             <app-course-invitations
               [courseInvitations]="user.courseInvitations"
-              (clickedInvitationEmitter)="showCourseInvitation($event)"
-            >
+              (clickedInvitationEmitter)="showCourseInvitation($event)">
             </app-course-invitations>
           </app-generic-card>
         </ion-col>
@@ -80,8 +77,7 @@
           <app-generic-card [title]="'Course categories'">
             <app-course-categories
               [categories]="categories$ | async"
-              (categoryClickedEmitter)="searchCoursesByCategory($event)"
-            >
+              (categoryClickedEmitter)="searchCoursesByCategory($event)">
             </app-course-categories>
           </app-generic-card>
         </ion-col>
@@ -90,8 +86,8 @@
         <ion-col size="12">
           <app-generic-card [title]="'Search users'">
             <app-account-search
-              (clickedUserEmitter)="showUserInformation($event)"
-            ></app-account-search>
+              (clickedUserEmitter)="showUserInformation($event)">
+            </app-account-search>
           </app-generic-card>
         </ion-col>
       </ion-row>

@@ -8,8 +8,7 @@ import {StUserCourse, StUserMain} from "@app/features/authentication-feature";
   styleUrls: ['./courses-manage-table.component.scss'],
 })
 export class CoursesManageTableComponent implements OnInit {
-  @Output()
-  clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
+  @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() userCourses: StUserCourse[] = [];
   @Input() enableClick = true;

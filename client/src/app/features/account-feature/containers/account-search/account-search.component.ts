@@ -1,14 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { StUserPublic } from '../../../authentication-feature/models/user.interface';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { AccountFeatureDatabaseService } from '../../services/account-feature-database.service';
-import { Observable, of } from 'rxjs';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {StUserPublic} from '@app/features/authentication-feature';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {AccountFeatureDatabaseService} from '@app/features/account-feature';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-account-search',
@@ -16,16 +11,14 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./account-search.component.scss'],
 })
 export class AccountSearchComponent implements OnInit {
-  @Output()
-  clickedUserEmitter: EventEmitter<StUserPublic> = new EventEmitter<StUserPublic>();
+  @Output() clickedUserEmitter: EventEmitter<StUserPublic> = new EventEmitter<StUserPublic>();
 
   searchedUsers$: Observable<StUserPublic[]>;
   form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private accountFeatureService: AccountFeatureDatabaseService
-  ) {}
+  constructor(private fb: FormBuilder,
+              private accountFeatureService: AccountFeatureDatabaseService) {
+  }
 
   get displayName(): AbstractControl {
     return this.form.get('displayName');
@@ -37,6 +30,7 @@ export class AccountSearchComponent implements OnInit {
   }
 
   clickedUser(user: StUserPublic) {
+    this.displayName.patchValue(null);
     this.clickedUserEmitter.emit(user);
   }
 
@@ -51,9 +45,7 @@ export class AccountSearchComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((prefix) => {
-        return prefix
-          ? this.accountFeatureService.searchUser(prefix)
-          : of(null);
+        return prefix ? this.accountFeatureService.searchUser(prefix) : of(null);
       })
     );
   }

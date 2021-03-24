@@ -2,7 +2,8 @@
 
 :host {
   ion-chip {
-    width: 175px;
+    min-width: 175px;
+    width: auto;
     padding-left: 10px;
     opacity: 1;
     ion-avatar {

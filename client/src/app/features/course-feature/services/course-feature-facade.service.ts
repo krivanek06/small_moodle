@@ -31,7 +31,8 @@ export class CourseFeatureFacadeService {
     this.router.navigate(['menu', 'course', this.courseFeatureStoreService.course.courseId]);
   }
 
-  async inviteMemberIntoCourse(userMain: StUserMain): Promise<void> {
+  // need to select course on which I want to invite the user
+  async inviteMember(userMain: StUserMain): Promise<void> {
     // present created courses by me
     const modal = await this.popoverController.create({
       component: CourseInviteMemberPopOverComponent,
@@ -47,20 +48,29 @@ export class CourseFeatureFacadeService {
     const selectedCourseRole: COURSE_ROLES_ENUM = coursePromise.data?.selectedCourseRole;
 
     if (coursePublic) {
-      const message = `Invite ${userMain.displayName} into course ${coursePublic.longName}`;
-      const invitation = await this.inviteMemberIntoCourseConfirm(message, coursePublic, selectedCourseRole, false);
-      if (invitation.confirm) {
-        const mess = `${userMain.displayName} has been invited into ${coursePublic.longName} as ${invitation.role}`;
-        IonicDialogService.presentToast(mess);
-      }
+      await this.inviteMemberIntoCourse(userMain, coursePublic, selectedCourseRole);
     }
   }
 
-  async inviteMemberIntoCourseConfirm(message: string,
-                                      coursePublic: CoursePublic,
-                                      selectedCourseRole: COURSE_ROLES_ENUM,
-                                      disabled: boolean): Promise<CourseInviteMemberConfirm> {
-    // confirmation message with selected course info
+  // show pop up to send invitation, and persist data for user and course
+  async inviteMemberIntoCourse(userMain: StUserMain, coursePublic: CoursePublic, selectedCourseRole: COURSE_ROLES_ENUM) {
+    const message = `Invite ${userMain.displayName} into course ${coursePublic.longName}`;
+    const invitation = await this.courseMemberInvitationConfirmation(message, coursePublic, selectedCourseRole, true);
+
+    if (invitation.confirm) {
+      // invitation to student / marker
+      await this.sendCourseInvitation(userMain, coursePublic, selectedCourseRole);
+      // persist course with new invitation
+      await this.courseFeatureDatabaseService.addPersonInvitationIntoCourse(coursePublic, userMain, selectedCourseRole);
+      const mess = `${userMain.displayName} has been invited into ${coursePublic.longName} as ${invitation.role}`;
+      IonicDialogService.presentToast(mess);
+    }
+  }
+
+  async courseMemberInvitationConfirmation(message: string,
+                                           coursePublic: CoursePublic,
+                                           selectedCourseRole: COURSE_ROLES_ENUM,
+                                           disabled: boolean): Promise<CourseInviteMemberConfirm> {
     const modal = await this.popoverController.create({
       component: CourseInvitationConfirmationPopOverComponent,
       cssClass: 'custom-popover',
@@ -101,22 +111,11 @@ export class CourseFeatureFacadeService {
     await this.courseFeatureDatabaseService.createNewCourse(courseCreate);
 
     // invite people
-    const studentInvitation = createCourseInvitation(
-      courseCreate.coursePublic,
-      COURSE_ROLES_ENUM.STUDENT,
-      COURSE_INVITATION_TYPE.RECEIVED
-    );
-    const markerInvitation = createCourseInvitation(courseCreate.coursePublic,
-      COURSE_ROLES_ENUM.MARKER,
-      COURSE_INVITATION_TYPE.RECEIVED
-    );
-
     courseCreate.coursePrivate.invitedStudents.forEach((m) =>
-      this.accountFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(m, studentInvitation, true)
-    );
+      this.sendCourseInvitation(m, courseCreate.coursePublic, COURSE_ROLES_ENUM.STUDENT));
+
     courseCreate.coursePrivate.invitedMarkers.forEach((m) =>
-      this.accountFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(m, markerInvitation, true)
-    );
+      this.sendCourseInvitation(m, courseCreate.coursePublic, COURSE_ROLES_ENUM.MARKER));
 
     // update my data -> course manage
     this.accountFeatureDatabaseService.saveCourseForUser(
@@ -124,5 +123,14 @@ export class CourseFeatureFacadeService {
       courseCreate.coursePublic,
       COURSE_ROLES_ENUM.TEACHER
     );
+  }
+
+  private async sendCourseInvitation(student: StUserMain, coursePublic: CoursePublic, role: COURSE_ROLES_ENUM): Promise<void> {
+    const studentInvitation = createCourseInvitation(
+      coursePublic,
+      role,
+      COURSE_INVITATION_TYPE.RECEIVED
+    );
+    await this.accountFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(student, studentInvitation, true)
   }
 }

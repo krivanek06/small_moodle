@@ -12,6 +12,7 @@ export * from './entry-points/course-invitation-confirmation-pop-over/course-inv
 export * from './entry-points/course-invite-member-pop-over/course-invite-member-pop-over.component';
 export * from './entry-points/course-search-modal/course-search-modal.component';
 export * from './entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component';
+export * from './components/course-student/course-student.component';
 
 // services
 export * from './services/course-feature-database.service';
@@ -33,5 +34,4 @@ export * from './pipes/course-filter-managed-open.pipe';
 export * from './pipes/course-filter-managed.pipe';
 export * from './pipes/course-nearest-test.pipe';
 export * from './pipes/course-received-points.pipe';
-export * from './pipes/course-student-grade.pipe';
 export * from './pipes/course-student-position.pipe';

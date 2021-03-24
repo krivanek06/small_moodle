@@ -29,6 +29,6 @@ export class CoursesUserAccountInfoModalComponent implements OnInit {
 
   inviteMemberIntoCourse() {
     const userMain = convertStUserPublicToMain(this.userPublic);
-    this.courseFeatureServiceService.inviteMemberIntoCourse(userMain);
+    this.courseFeatureServiceService.inviteMember(userMain);
   }
 }

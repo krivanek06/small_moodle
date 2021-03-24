@@ -2,7 +2,7 @@
   (click)="clickedItem()"
   [button]="enableClick"
   [ngClass]="{ 'c-item-hide-border': !showItemBorder }"
-  class="c-small-space"
+  class="st-small-padding"
 >
   <ion-avatar slot="start" class="ion-margin-end">
     <img [src]="userMain.photoURL" alt="user image" />
@@ -12,13 +12,7 @@
     <p>{{ userMain.displayName }}</p>
     <!-- user online status -->
     <div class="st-display-flex-center" *ngIf="isOnline">
-      <div
-        class="st-dot"
-        [ngClass]="{
-          'st-b-green': isOnline,
-          'st-b-red': !isOnline
-        }"
-      ></div>
+      <div class="st-dot" [ngClass]="{'st-b-green': isOnline,'st-b-red': !isOnline }"></div>
       <ion-text>{{ isOnline ? "Online" : "Offline" }}</ion-text>
     </div>
   </ion-label>

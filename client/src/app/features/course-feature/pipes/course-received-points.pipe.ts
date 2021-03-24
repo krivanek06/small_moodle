@@ -1,19 +1,19 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Course, StCourseStudent } from '../model/courses-firebase.interface';
+import {Pipe, PipeTransform} from '@angular/core';
+import {CourseTestReceivedPoints} from "@app/features/course-test-feature";
 
 @Pipe({
   name: 'courseReceivedPoints',
 })
 export class CourseReceivedPointsPipe implements PipeTransform {
-  /**
-   * Pipe evaluates how many points logged in student got from maximum points.
-   * Return number of points and percentage of completion ex:  98 (91.45%)
-   *
-   * @param courseStudents - students participated in course
-   * @param userId - id of logged in student
-   */
-  transform(courseStudents: StCourseStudent[], userId: string): string {
-    console.log(courseStudents, userId);
-    return 'TODO implement';
+
+
+  transform(points: CourseTestReceivedPoints[]): string {
+    const studentPoints = points.map(s => s.receivedPoints).reduce((a, b) => a + b, 0);
+    if(!studentPoints){
+      return '0';
+    }
+    const maxPoints = points.map(s => s.totalPoints).reduce((a, b) => a + b, 0);
+    const diff = Math.round(100 / maxPoints  * studentPoints * 100) / 100;
+    return `${studentPoints} (${diff}%)`;
   }
 }

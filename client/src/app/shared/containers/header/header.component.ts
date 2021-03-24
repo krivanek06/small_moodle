@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
-import { AuthenticationModalComponent } from '../../../features/authentication-feature/entry-points/authentication-modal/authentication-modal.component';
-import { AuthFeatureService } from '../../../features/authentication-feature/services/auth-feature.service';
-import { Observable } from 'rxjs';
-import { StUser } from '../../../features/authentication-feature/models/user.interface';
-import { IonicDialogService } from '../../../core/services/ionic-dialog.service';
-import { Router } from '@angular/router';
-import { AuthFeatureStoreService } from '../../../features/authentication-feature/services/auth-feature-store.service';
+import {Component, OnInit} from '@angular/core';
+import {PopoverController} from '@ionic/angular';
+import {
+  AuthenticationModalComponent,
+  AuthFeatureService,
+  AuthFeatureStoreService,
+  StUser
+} from '@app/features/authentication-feature';
+import {Observable} from 'rxjs';
+import {IonicDialogService} from '@app/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +23,8 @@ export class HeaderComponent implements OnInit {
     private authFeatureStoreService: AuthFeatureStoreService,
     private authFeatureService: AuthFeatureService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.user$ = this.authFeatureStoreService.getUser();

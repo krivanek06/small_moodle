@@ -1,0 +1,11 @@
+<ion-item (click)="clickedItem()" [button]="enableClick" lines="none" class="st-small-padding">
+  <ion-avatar slot="start" class="ion-margin-end">
+    <img [src]="courseStudent.photoURL" alt="user image" />
+  </ion-avatar>
+
+  <ion-label>
+    <p>{{ courseStudent.displayName }}</p>
+    <p *ngIf="courseStudent.receivedPoints">Points: {{ courseStudent.receivedPoints | courseReceivedPoints }}</p>
+    <p *ngIf="courseStudent.receivedGrade">Grade: {{ courseStudent.receivedGrade }}</p>
+  </ion-label>
+</ion-item>

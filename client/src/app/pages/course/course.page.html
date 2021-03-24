@@ -62,10 +62,33 @@
               </app-account-identification-list>
 
               <!-- students -->
+              <ion-list>
+                <ion-list-header>
+                  <ion-label>Students</ion-label>
+                </ion-list-header>
+                <ion-row>
+                  <ion-col *ngFor="let marker of course.students" size="12" size-sm="6" size-md="4">
+                    <app-course-student
+                      (clickedItemEmitter)="clickedStudent($event)"
+                      [courseStudent]="marker"
+                      [enableClick]="true">
+                    </app-course-student>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+
+              <!-- invited students -->
               <app-account-identification-list
-                [title]="'Students'"
-                [enableClick]="true"
-                [members]="course.students">
+                *ngIf="course.invitedStudents.length > 0"
+                [title]="'Invited students'"
+                [members]="course.invitedStudents">
+              </app-account-identification-list>
+
+              <!-- invited markers -->
+              <app-account-identification-list
+                *ngIf="course.invitedMarkers.length > 0"
+                [title]="'Invited markers'"
+                [members]="course.invitedMarkers">
               </app-account-identification-list>
             </app-generic-card>
           </ion-col>
@@ -77,9 +100,10 @@
                 <app-generic-card [title]="'Course grading'">
                   <app-course-grades-table [grades]="course.gradings">
                   </app-course-grades-table>
-                  <ion-buttons class="ion-justify-content-end c-small-padding">
+                  <!-- changin grades ??? -->
+                  <!--<ion-buttons class="ion-justify-content-end c-small-padding">
                     <ion-button color="warning" class="c-small-padding">Edit</ion-button>
-                  </ion-buttons>
+                  </ion-buttons> -->
                 </app-generic-card>
               </ion-col>
             </ion-row>

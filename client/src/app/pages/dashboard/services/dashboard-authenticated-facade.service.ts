@@ -27,16 +27,16 @@ export class DashboardAuthenticatedFacadeService {
   async showCourseInvitation(invitation: CourseInvitation) {
     const longName = invitation.course.longName;
     const message = `Accept invitation into course ${longName}`;
-    const result = await this.courseFeatureFacadeService.inviteMemberIntoCourseConfirm(message, invitation.course, invitation.invitedAs, true);
+    const result = await this.courseFeatureFacadeService.courseMemberInvitationConfirmation(message, invitation.course, invitation.invitedAs, true);
 
     if (result?.confirm) {
-      await this.accountService.addOrRemoveCourseInvitationForPerson(this.authService.user, invitation, false);
+      await this.accountService.addOrRemoveCourseInvitationForPerson(this.authService.userMain, invitation, false);
       await this.accountService.saveCourseForUser(this.authService.user, invitation.course, invitation.invitedAs);
-      await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.user, invitation.invitedAs);
+      await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       IonicDialogService.presentToast(`Course ${longName} invitation has been accepted`);
     } else if (result?.confirm === false) {
-      await this.accountService.addOrRemoveCourseInvitationForPerson(this.authService.user, invitation, false);
+      await this.accountService.addOrRemoveCourseInvitationForPerson(this.authService.userMain, invitation, false);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       IonicDialogService.presentToast(`Course ${longName} invitation has been declined`);
     }

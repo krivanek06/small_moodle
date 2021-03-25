@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {StUserPublic} from '@app/features/authentication-feature';
+import {AuthFeatureStoreService, StUser, StUserPublic} from '@app/features/authentication-feature';
 import {
   Course,
   COURSE_ROLES_ENUM,
@@ -17,6 +17,7 @@ import {
   CourseTestStateEnum,
   CourseTestTaken
 } from '@app/features/course-test-feature';
+import {map, withLatestFrom} from "rxjs/operators";
 
 @Component({
   selector: 'app-course',
@@ -24,6 +25,7 @@ import {
   styleUrls: ['./course.page.scss'],
 })
 export class CoursePage implements OnInit {
+  user$: Observable<StUser>;
   course$: Observable<Course>;
   courseTests$: Observable<CourseTest[]>;
   studentTests$: Observable<CourseTestTaken[]>;
@@ -32,15 +34,26 @@ export class CoursePage implements OnInit {
               private courseFeatureStoreService: CourseFeatureStoreService,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
               private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private courseTestFeatureFacadeService: CourseTestFeatureFacadeService) {
+              private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
+              private authFeatureStoreService: AuthFeatureStoreService) {
+  }
+
+  get isCourseTeacherOrMarker$(): Observable<boolean> {
+    return this.course$.pipe(
+      withLatestFrom(this.user$),
+      map(([course, user]) => course.creator.uid === user.uid || course.markers.map(m => m.uid).includes(user.uid)),
+    )
   }
 
   ngOnInit() {
     this.course$ = this.courseFeatureStoreService.getCourse();
     this.courseTests$ = this.courseTestFeatureStoreService.getAllCourseTests();
     this.studentTests$ = this.courseTestFeatureStoreService.getOneStudentAllCourseTests();
+    this.user$ = this.authFeatureStoreService.getUser();
 
     this.course$.subscribe(console.log)
+
+
   }
 
   async inviteUser(userPublic: StUserPublic, course: Course) {

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
+  COURSE_ROLES_ENUM,
   CourseFeatureDatabaseService,
   CourseFeatureStoreService,
   CourseInvitationConfirmationPopOverComponent,
@@ -8,7 +9,7 @@ import {
 } from '@app/features/course-feature';
 import {PopoverController} from '@ionic/angular';
 import {StUserMain} from '@app/features/authentication-feature';
-import {COURSE_INVITATION_TYPE, COURSE_ROLES_ENUM,} from '../model/course.enum';
+import {COURSE_INVITATION_TYPE} from '../model/course.enum';
 import {IonicDialogService} from '@app/core';
 import {CourseCreate, CourseInviteMemberConfirm,} from '../model/course-module.interface';
 import {InlineInputPopUpComponent} from '@shared/entry-points/inline-input-pop-up/inline-input-pop-up.component';
@@ -45,23 +46,25 @@ export class CourseFeatureFacadeService {
 
     const coursePromise = await modal.onDidDismiss();
     const coursePublic: CoursePublic = coursePromise.data?.coursePublic;
-    const selectedCourseRole: COURSE_ROLES_ENUM = coursePromise.data?.selectedCourseRole;
 
     if (coursePublic) {
-      await this.inviteMemberIntoCourse(userMain, coursePublic, selectedCourseRole);
+      await this.inviteMemberIntoCourse(userMain, coursePublic, COURSE_ROLES_ENUM.STUDENT, false);
     }
   }
 
   // show pop up to send invitation, and persist data for user and course
-  async inviteMemberIntoCourse(userMain: StUserMain, coursePublic: CoursePublic, selectedCourseRole: COURSE_ROLES_ENUM) {
+  async inviteMemberIntoCourse(userMain: StUserMain,
+                               coursePublic: CoursePublic,
+                               selectedCourseRole: COURSE_ROLES_ENUM = COURSE_ROLES_ENUM.STUDENT,
+                               disabled = true) {
     const message = `Invite ${userMain.displayName} into course ${coursePublic.longName}`;
-    const invitation = await this.courseMemberInvitationConfirmation(message, coursePublic, selectedCourseRole, true);
+    const invitation = await this.courseMemberInvitationConfirmation(message, coursePublic, selectedCourseRole, disabled);
 
     if (invitation.confirm) {
       // invitation to student / marker
-      await this.sendCourseInvitation(userMain, coursePublic, selectedCourseRole);
+      await this.sendCourseInvitation(userMain, coursePublic, invitation.role);
       // persist course with new invitation
-      await this.courseFeatureDatabaseService.addPersonInvitationIntoCourse(coursePublic, userMain, selectedCourseRole);
+      await this.courseFeatureDatabaseService.addPersonInvitationIntoCourse(coursePublic, userMain, invitation.role);
       const mess = `${userMain.displayName} has been invited into ${coursePublic.longName} as ${invitation.role}`;
       IonicDialogService.presentToast(mess);
     }

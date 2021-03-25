@@ -4,7 +4,7 @@ import {
   AuthenticationModalComponent,
   AuthFeatureService,
   AuthFeatureStoreService,
-  StUser
+  StUser, StUserMain
 } from '@app/features/authentication-feature';
 import {Observable} from 'rxjs';
 import {IonicDialogService} from '@app/core';
@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  user$: Observable<StUser>;
+  user$: Observable<StUserMain>;
 
   constructor(
     private popoverController: PopoverController,
@@ -27,8 +27,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user$ = this.authFeatureStoreService.getUser();
-    this.user$.subscribe(console.log);
+    this.user$ = this.authFeatureStoreService.getUserMain();
+    this.user$.subscribe(x => console.log(x.photoURL));
   }
 
   redirectToDashboard() {

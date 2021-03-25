@@ -9,7 +9,7 @@
       <ng-container *ngIf="user$ | async as user; else logInSection">
         <ion-chip [disabled]="true" class="ion-margin-end">
           <ion-avatar>
-            <ion-img [src]="user.photoURL"></ion-img>
+            <img [src]="user.photoURL" alt="user image">
           </ion-avatar>
           <ion-label style="padding-right: 16px">{{ user.displayName }}</ion-label>
         </ion-chip>

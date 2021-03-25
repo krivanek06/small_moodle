@@ -9,7 +9,7 @@
     </ion-row>
 
     <!-- all course tests - view for teacher and markers -->
-    <ion-row class="ion-justify-content-center">
+    <ion-row class="ion-justify-content-center" *ngIf="isCourseTeacherOrMarker$ | async">
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Course tests'">
           <app-course-test-public-table
@@ -71,25 +71,27 @@
                     <app-course-student
                       (clickedItemEmitter)="clickedStudent($event)"
                       [courseStudent]="marker"
-                      [enableClick]="true">
+                      [enableClick]="isCourseTeacherOrMarker$ | async">
                     </app-course-student>
                   </ion-col>
                 </ion-row>
               </ion-list>
 
-              <!-- invited students -->
-              <app-account-identification-list
-                *ngIf="course.invitedStudents.length > 0"
-                [title]="'Invited students'"
-                [members]="course.invitedStudents">
-              </app-account-identification-list>
+              <ng-container *ngIf="isCourseTeacherOrMarker$ | async">
+                <!-- invited students -->
+                <app-account-identification-list
+                  *ngIf="course.invitedStudents.length > 0"
+                  [title]="'Invited students'"
+                  [members]="course.invitedStudents">
+                </app-account-identification-list>
 
-              <!-- invited markers -->
-              <app-account-identification-list
-                *ngIf="course.invitedMarkers.length > 0"
-                [title]="'Invited markers'"
-                [members]="course.invitedMarkers">
-              </app-account-identification-list>
+                <!-- invited markers -->
+                <app-account-identification-list
+                  *ngIf="course.invitedMarkers.length > 0"
+                  [title]="'Invited markers'"
+                  [members]="course.invitedMarkers">
+                </app-account-identification-list>
+              </ng-container>
             </app-generic-card>
           </ion-col>
 
@@ -107,7 +109,7 @@
                 </app-generic-card>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="isCourseTeacherOrMarker$ | async">
               <ion-col size="12">
                 <app-generic-card [title]="'Invite member'">
                   <app-account-search (clickedUserEmitter)="inviteUser($event, course)"></app-account-search>

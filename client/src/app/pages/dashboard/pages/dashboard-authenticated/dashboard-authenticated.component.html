@@ -3,7 +3,7 @@
     <ion-col size="12" size-lg="9">
       <ion-row>
         <!-- courses manage -->
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="user.isTeacher()">
           <app-generic-card [title]="'Manage courses'">
             <app-courses-manage-table
               (clickedCourseEmitter)="redirectToCourse($event)"

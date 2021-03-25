@@ -8,12 +8,15 @@ export class CourseReceivedPointsPipe implements PipeTransform {
 
 
   transform(points: CourseTestReceivedPoints[]): string {
+    if (!points) {
+      return
+    }
     const studentPoints = points.map(s => s.receivedPoints).reduce((a, b) => a + b, 0);
-    if(!studentPoints){
+    if (!studentPoints) {
       return '0';
     }
     const maxPoints = points.map(s => s.totalPoints).reduce((a, b) => a + b, 0);
-    const diff = Math.round(100 / maxPoints  * studentPoints * 100) / 100;
+    const diff = Math.round(100 / maxPoints * studentPoints * 100) / 100;
     return `${studentPoints} (${diff}%)`;
   }
 }

@@ -1,16 +1,12 @@
-import {
-  Course,
-  CourseInvitation,
-  CoursePublic,
-} from '../../course-feature/model/courses-firebase.interface';
-import { USER_LOG_TYPE_ENUM } from './user.enums';
-import { CourseTestPublic } from '../../course-test-feature/model/course-test-firebase.model';
-import { COURSE_ROLES_ENUM } from '../../course-feature/model/course.enum';
+import {Course, CourseInvitation, CoursePublic,} from '../../course-feature/model/courses-firebase.interface';
+import {USER_LOG_TYPE_ENUM, USER_ROLES_ENUM} from './user.enums';
+import {CourseTestPublic} from '@app/features/course-test-feature';
+import {COURSE_ROLES_ENUM} from '@app/features/course-feature';
 
 export interface StUserMain {
   uid: string;
   displayName: string;
-  photoURL?: string;
+  photoURL: string;
   accountCreatedDate: string;
   firstName: string;
   lastName: string;
@@ -47,7 +43,11 @@ export interface StUserLogin {
   uPrivate: StUserPrivate;
 }
 
-export interface StUser extends StUserPublic, StUserPrivate {}
+export interface StUser extends StUserPublic, StUserPrivate {
+  isTeacher(): boolean;
+
+  isAdmin(): boolean;
+}
 
 export interface LoginIUser {
   email: string;
@@ -60,4 +60,78 @@ export interface RegisterIUser {
   password2: string;
   firstName: string;
   lastName?: string;
+}
+
+export class StUserClass implements StUser {
+
+  constructor(private publicData: StUserPublic, private privateData: StUserPrivate) {
+  }
+
+  get accountCreatedDate(): string {
+    return this.publicData.accountCreatedDate;
+  }
+
+  get activeTest(): CourseTestPublic {
+    return this.privateData.activeTest;
+  }
+
+  get courseInvitations(): CourseInvitation[] {
+    return this.privateData.courseInvitations;
+  }
+
+  get courses(): StUserCourse[] {
+    return this.publicData.courses;
+  }
+
+  get displayName(): string {
+    return this.publicData.displayName;
+  }
+
+  get email(): string {
+    return this.privateData.email;
+  }
+
+  get firstName(): string {
+    return this.publicData.firstName;
+  }
+
+  get isOnline(): boolean {
+    return this.publicData.isOnline;
+  }
+
+  get lastLogin(): string {
+    return this.publicData.lastLogin;
+  }
+
+  get lastName(): string {
+    return this.publicData.lastName;
+  }
+
+  get locale(): string {
+    return this.privateData.locale;
+  }
+
+  get logs(): UserLogs[] {
+    return this.privateData.logs;
+  }
+
+  get roles(): string[] {
+    return this.privateData.roles;
+  }
+
+  get uid(): string {
+    return this.publicData.uid;
+  }
+
+  get photoURL(): string {
+    return this.publicData.photoURL;
+  }
+
+  isTeacher(): boolean {
+    return this.roles.includes(USER_ROLES_ENUM.TEACHER)
+  }
+
+  isAdmin(): boolean {
+    return this.roles.includes(USER_ROLES_ENUM.ADMIN)
+  }
 }

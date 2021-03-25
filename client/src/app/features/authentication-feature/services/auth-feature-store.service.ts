@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StUser, StUserLogin, StUserMain } from '../models/user.interface';
+import {StUser, StUserClass, StUserLogin, StUserMain} from '../models/user.interface';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { USER_ROLES_ENUM } from '../models/user.enums';
@@ -48,9 +48,7 @@ export class AuthFeatureStoreService {
     if (this.user$.getValue() && this.user$.getValue().uid === userId) {
       return;
     }
-    this.loadUser(userId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((stUser) => {
+    this.loadUser(userId).pipe(takeUntil(this.destroy$)).subscribe((stUser) => {
         this.storageService.saveData(this.AUTH_KEY, userId);
         this.user$.next(stUser);
       });
@@ -66,7 +64,7 @@ export class AuthFeatureStoreService {
     this.storageService.removeData(this.AUTH_KEY);
   }
 
-  isUserTeacher(): Boolean {
+  /*isUserTeacher(): Boolean {
     return this.user.roles.includes(USER_ROLES_ENUM.TEACHER);
   }
 
@@ -84,7 +82,7 @@ export class AuthFeatureStoreService {
     return this.getUser().pipe(
       map((user) => user.roles.includes(USER_ROLES_ENUM.ADMIN))
     );
-  }
+  }*/
 
   private checkSavedUID() {
     const uid = this.getSavedUID();
@@ -96,15 +94,14 @@ export class AuthFeatureStoreService {
   private loadUser(uid: string): Observable<StUser> {
     return combineLatest([
       this.firestore.doc(`users/${uid}`).valueChanges(),
-      this.firestore
-        .doc(`users/${uid}/private_data/user_private`)
-        .valueChanges(),
+      this.firestore.doc(`users/${uid}/private_data/user_private`).valueChanges(),
     ]).pipe(
       map(([uPublic, uPrivate]) => {
         return { uPublic, uPrivate } as StUserLogin;
       }),
       map((userLogin) => {
-        return { ...userLogin.uPublic, ...userLogin.uPrivate } as StUser;
+        return new StUserClass(userLogin.uPublic, userLogin.uPrivate);
+        //return { ...userLogin.uPublic, ...userLogin.uPrivate } as StUser;
       })
     );
 

@@ -18,7 +18,7 @@
       </app-account-identification-item>
     </ion-label>
 
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="authenticatedUser.isTeacher()">
       <ion-button color="primary" (click)="inviteMemberIntoCourse()">
         Invite into course
       </ion-button>

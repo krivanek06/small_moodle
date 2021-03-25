@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from '@ionic/angular';
-import {StUserPublic} from '@app/features/authentication-feature';
+import {AuthFeatureStoreService, StUser, StUserPublic} from '@app/features/authentication-feature';
 import {CourseFeatureFacadeService} from '@app/features/course-feature';
 import {convertStUserPublicToMain} from '@app/features/account-feature';
 
@@ -11,16 +11,19 @@ import {convertStUserPublicToMain} from '@app/features/account-feature';
 })
 export class CoursesUserAccountInfoModalComponent implements OnInit {
   userPublic: StUserPublic;
+  authenticatedUser: StUser;
 
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private courseFeatureServiceService: CourseFeatureFacadeService
+    private courseFeatureServiceService: CourseFeatureFacadeService,
+    private authFeatureStoreService: AuthFeatureStoreService
   ) {
   }
 
   ngOnInit() {
     this.userPublic = this.navParams.get('userPublic');
+    this.authenticatedUser = this.authFeatureStoreService.user;
   }
 
   dismissModal() {

@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import auth from 'firebase';
 import firebase from 'firebase';
 import { Router } from '@angular/router';
-import { LoginIUser, RegisterIUser, StUser } from '../models/user.interface';
+import {LoginIUser, RegisterIUser, StUser, StUserClass} from '../models/user.interface';
 import { buildUserPrivate, buildUserPublic } from '../utils/user.builder';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthFeatureStoreService } from './auth-feature-store.service';
@@ -49,10 +49,7 @@ export class AuthFeatureService {
     await this.router.navigate(['/menu']);
   }
 
-  private async signInUser(
-    credential: UserCredential,
-    registerIUser?: RegisterIUser
-  ): Promise<void> {
+  private async signInUser(credential: UserCredential, registerIUser?: RegisterIUser): Promise<void> {
     if (credential.additionalUserInfo.isNewUser) {
       const user = await this.registerUser(credential, registerIUser);
       this.authFeatureStoreService.setUser(user.uid);
@@ -61,27 +58,19 @@ export class AuthFeatureService {
     }
   }
 
-  private async registerUser(
-    credential: UserCredential,
-    registerIUser?: RegisterIUser
-  ): Promise<StUser> {
+  private async registerUser(credential: UserCredential, registerIUser?: RegisterIUser): Promise<StUser> {
     const profile = credential.additionalUserInfo.profile as any;
     const user = credential.user;
 
     const userPublic = buildUserPublic(user, registerIUser);
-    const userPrivate = buildUserPrivate(
-      credential.user.email,
-      profile?.locale
-    );
+    const userPrivate = buildUserPrivate(credential.user.email, profile?.locale);
 
     this.firestore.doc(`users/${user.uid}`).set(userPublic);
-    this.firestore
-      .doc(`users/${user.uid}/private_data/user_private`)
-      .set(userPrivate);
-
-    return {
+    this.firestore.doc(`users/${user.uid}/private_data/user_private`).set(userPrivate);
+    return new StUserClass(userPublic, userPrivate);
+    /*return {
       ...userPublic,
       ...userPrivate,
-    };
+    };*/
   }
 }

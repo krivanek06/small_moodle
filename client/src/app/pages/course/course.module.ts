@@ -6,6 +6,7 @@ import {CourseTestFeatureModule} from '@course-test-feature/course-test-feature.
 import {CourseFeatureModule} from '@course-feature/course-feature.module';
 import {AccountFeatureModule} from '@account-feature/account-feature.module';
 import {CoursePreloadGuard} from './guards/course-preload.guard';
+import {CourseMemberInformationModalComponent} from "@app/pages/course/entry-points/course-member-information-modal/course-member-information-modal.component";
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     CourseFeatureModule,
     AccountFeatureModule,
   ],
-  declarations: [CoursePage],
+  declarations: [CoursePage, CourseMemberInformationModalComponent],
 })
 export class CoursePageModule {
 }

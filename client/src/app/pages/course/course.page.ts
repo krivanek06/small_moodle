@@ -52,8 +52,6 @@ export class CoursePage implements OnInit {
     this.user$ = this.authFeatureStoreService.getUser();
 
     this.course$.subscribe(console.log)
-
-
   }
 
   async inviteUser(userPublic: StUserPublic, course: Course) {
@@ -81,6 +79,6 @@ export class CoursePage implements OnInit {
   }
 
   clickedStudent(courseStudent: StCourseStudent) {
-    console.log('clicked student', courseStudent)
+    this.courseFeatureFacadeService.showCourseStudent(courseStudent);
   }
 }

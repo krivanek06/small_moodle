@@ -73,7 +73,6 @@ export class CourseTestFeatureFacadeService {
     }
   }
 
-  // TODO does not work
   async deleteCourseTest(courseTest: CourseTest) {
     if (await this.presentDialog('delete', courseTest)) {
       await this.courseTestDatabaseService.deleteCourseTest(courseTest);
@@ -165,9 +164,10 @@ export class CourseTestFeatureFacadeService {
       testFormState: CourseTestFormStateEnum.GRADED,
     };
 
-    // update student points in course
+    // update student points
     await this.updateStudentTotalPoints(courseTest);
 
+    // save student's taken test
     this.courseTestDatabaseService.saveStudentCourseTest(courseTest);
     this.presentToaster('graded', courseTest);
   }
@@ -188,6 +188,7 @@ export class CourseTestFeatureFacadeService {
   private async updateStudentTotalPoints(courseTest: CourseTestTaken): Promise<void> {
     const course = this.courseFeatureStoreService.course;
     const studentIndex = course.students.findIndex(s => s.uid === courseTest.student.uid);
+    const courseStudent = course.students[studentIndex];
 
     // check if grading first time or not
     const testGrading: CourseTestReceivedPoints = {
@@ -197,13 +198,14 @@ export class CourseTestFeatureFacadeService {
       testName: courseTest.testName
     };
 
-    const testIndex = course.students[studentIndex].receivedPoints.findIndex(p => p.testId === courseTest.testId);
+    const testIndex = courseStudent.receivedPoints.findIndex(p => p.testId === courseTest.testId);
     if (testIndex > 0) {
-      course.students[studentIndex].receivedPoints[testIndex] = testGrading;
+      courseStudent.receivedPoints[testIndex] = testGrading;  // test is edited
     } else {
-      course.students[studentIndex].receivedPoints.push(testGrading);
+      courseStudent.receivedPoints.push(testGrading); // graded first time
     }
     await this.courseFeatureDatabaseService.updateCoursePrivateData(course.courseId, convertCourseIntoCoursePrivate(course));
+    await this.courseFeatureDatabaseService.updateCourseStudentData(course.courseId, courseStudent);
   }
 
   private async presentDialog(action: string, {testName, course}: CourseTestPublic) {

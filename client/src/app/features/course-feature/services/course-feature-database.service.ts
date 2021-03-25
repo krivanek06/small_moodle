@@ -1,15 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {CourseCategory, CoursePrivate, CoursePublic, StCourseStudent,} from '../model/courses-firebase.interface';
+import {
+  Course,
+  CourseCategory,
+  CourseGrading,
+  CourseInvitation,
+  CoursePrivate,
+  CoursePublic,
+  StCourseStudent,
+} from '../model/courses-firebase.interface';
 import {first, map} from 'rxjs/operators';
 import {CourseCreate} from '@app/features/course-feature';
 import {COURSE_ROLES_ENUM} from '../model/course.enum';
-import {StUserMain} from '@app/features/authentication-feature';
+import {StUserMain, StUserPublic} from '@app/features/authentication-feature';
 import firebase from 'firebase';
 import {CourseTestPublic} from '@app/features/course-test-feature';
+import {AngularFirestore} from "@angular/fire/firestore";
+import {createUserCourse} from "@course-feature/utils/course.builder";
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentData = firebase.firestore.DocumentData;
-import {AngularFirestore} from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +53,17 @@ export class CourseFeatureDatabaseService {
 
   }
 
+  async updateCourseStudentData(courseId: string, courseStudent: StCourseStudent) {
+    const user = await this.firestore.collection('users').doc(courseStudent.uid)
+      .valueChanges().pipe(first()).toPromise() as StUserPublic;
+
+    // update course student
+    const index = user.courses.findIndex(c => c.course.courseId === courseId);
+    user.courses[index].courseStudent = courseStudent;
+
+    this.firestore.collection('users').doc(courseStudent.uid).set(user, {merge: true});
+  }
+
   async updateCoursePublicData(coursePublic: CoursePublic): Promise<void> {
     this.firestore.collection(this.COURSE).doc(coursePublic.courseId).set(coursePublic, {merge: true});
   }
@@ -71,14 +91,35 @@ export class CourseFeatureDatabaseService {
     const coursePrivate = (await ref.get()).data() as CoursePrivate;
 
     if (type === COURSE_ROLES_ENUM.STUDENT) {
-      ref.set({
+      await ref.set({
         invitedStudents: coursePrivate.invitedStudents.filter((s) => s.uid !== userMain.uid),
       }, {merge: true});
     } else if (type === COURSE_ROLES_ENUM.MARKER) {
-      ref.set({
+      await ref.set({
         invitedMarkers: coursePrivate.invitedMarkers.filter((s) => s.uid !== userMain.uid)
       }, {merge: true});
     }
+  }
+
+  async removeStudentFromCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
+    const ref = this.getCoursePrivateRef(courseId);
+
+    if (type === COURSE_ROLES_ENUM.STUDENT) {
+      await ref.set({students: firebase.firestore.FieldValue.arrayRemove(userMain),}, {merge: true});
+    } else if (type === COURSE_ROLES_ENUM.MARKER) {
+      await ref.set({markers: firebase.firestore.FieldValue.arrayRemove(userMain),}, {merge: true});
+    }
+  }
+
+  async gradeStudent(course: Course, courseStudent: StCourseStudent, grade: CourseGrading) {
+    const ref = this.getCoursePrivateRef(course.courseId);
+
+    // update students grade
+    const index = course.students.findIndex(s => s.uid === courseStudent.uid);
+    course.students[index].receivedGrade = grade.mark;
+
+    await ref.set({students: course.students}, {merge: true});
+
   }
 
   async addPersonIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
@@ -102,7 +143,7 @@ export class CourseFeatureDatabaseService {
     }
   }
 
-  async addPersonInvitationIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM){
+  async addPersonInvitationIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
     const ref = this.getCoursePrivateRef(courseId);
 
     if (type === COURSE_ROLES_ENUM.STUDENT) {
@@ -116,15 +157,30 @@ export class CourseFeatureDatabaseService {
     }
   }
 
-  addCourseTestIntoPublic(courseTestPublic: CourseTestPublic) {
-    this.firestore.collection(this.COURSE).doc(courseTestPublic.course.courseId)
-      .collection(this.PRIVATE).doc(this.PRIVATE).set({
-        confirmedTests: firebase.firestore.FieldValue.arrayUnion(courseTestPublic),
+  async addOrRemoveCourseInvitationForPerson({uid}: StUserMain, invitation: CourseInvitation, add: boolean) {
+    const field = firebase.firestore.FieldValue;
+    this.firestore.collection('users').doc(uid)
+      .collection('private_data').doc('user_private')
+      .set({
+        courseInvitations: add ? field.arrayUnion(invitation) : field.arrayRemove(invitation),
       }, {merge: true});
   }
 
-  private getCoursePrivateRef(courseId: string): DocumentReference<DocumentData>{
-    return this.firestore.collection(this.COURSE).doc(courseId)
-      .collection(this.PRIVATE).doc(this.PRIVATE).ref
+  saveCourseForUser(userMain: StUserMain, course: CoursePublic, role: COURSE_ROLES_ENUM) {
+    const userCourse = createUserCourse(userMain, course, role);
+    this.firestore.collection('users').doc(userMain.uid).set({
+      courses: firebase.firestore.FieldValue.arrayUnion(userCourse),
+    }, {merge: true});
+  }
+
+  addCourseTestIntoPublic(courseTestPublic: CourseTestPublic) {
+    this.firestore.collection(this.COURSE).doc(courseTestPublic.course.courseId)
+      .collection(this.PRIVATE).doc(this.PRIVATE).set({
+      confirmedTests: firebase.firestore.FieldValue.arrayUnion(courseTestPublic),
+    }, {merge: true});
+  }
+
+  private getCoursePrivateRef(courseId: string): DocumentReference<DocumentData> {
+    return this.firestore.collection(this.COURSE).doc(courseId).collection(this.PRIVATE).doc(this.PRIVATE).ref
   }
 }

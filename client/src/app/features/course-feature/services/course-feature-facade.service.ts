@@ -3,9 +3,11 @@ import {
   COURSE_ROLES_ENUM,
   CourseFeatureDatabaseService,
   CourseFeatureStoreService,
+  CourseGrading,
   CourseInvitationConfirmationPopOverComponent,
   CourseInviteMemberPopOverComponent,
-  CoursePublic
+  CoursePublic,
+  StCourseStudent
 } from '@app/features/course-feature';
 import {PopoverController} from '@ionic/angular';
 import {StUserMain} from '@app/features/authentication-feature';
@@ -13,9 +15,9 @@ import {COURSE_INVITATION_TYPE} from '../model/course.enum';
 import {IonicDialogService} from '@app/core';
 import {CourseCreate, CourseInviteMemberConfirm,} from '../model/course-module.interface';
 import {InlineInputPopUpComponent} from '@shared/entry-points/inline-input-pop-up/inline-input-pop-up.component';
-import {AccountFeatureDatabaseService} from '@app/features/account-feature';
-import {createCourseInvitation} from '../utils/course.convertor';
 import {Router} from '@angular/router';
+import {createCourseInvitation} from "@course-feature/utils/course.builder";
+import {CourseMemberInformationModalComponent} from "@app/pages/course/entry-points/course-member-information-modal/course-member-information-modal.component";
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,6 @@ import {Router} from '@angular/router';
 export class CourseFeatureFacadeService {
   constructor(private popoverController: PopoverController,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService,
-              private accountFeatureDatabaseService: AccountFeatureDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
               private router: Router) {
   }
@@ -92,6 +93,36 @@ export class CourseFeatureFacadeService {
     return {confirm, role};
   }
 
+  async showCourseStudent(courseStudent: StCourseStudent) {
+    const modal = await this.popoverController.create({
+      component: CourseMemberInformationModalComponent,
+      cssClass: 'custom-popover',
+      componentProps: {
+        courseStudent
+      },
+    });
+    await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+    if (resultPromise.data) {
+      const course = this.courseFeatureStoreService.course;
+
+      if (resultPromise.data.removeUser) {
+        // removing from course
+        if (await IonicDialogService.presentAlertConfirm(`Confirm removing ${courseStudent.displayName} from course ${course.longName}`)) {
+          await this.courseFeatureDatabaseService.removeStudentFromCourse(course, courseStudent, COURSE_ROLES_ENUM.STUDENT);
+          IonicDialogService.presentToast(`Studnet ${courseStudent.displayName} has been removed from course`);
+        }
+      } else if (resultPromise.data.grade) {
+        // adding grade to student
+        const grade = resultPromise.data.grade as CourseGrading;
+        if (await IonicDialogService.presentAlertConfirm(`Confirm grading ${courseStudent.displayName} with grade: ${grade.mark}`)) {
+          await this.courseFeatureDatabaseService.gradeStudent(course, courseStudent, grade)
+          IonicDialogService.presentToast(`Studnet ${courseStudent.displayName} has been graded with ${grade.mark}`);
+        }
+      }
+    }
+  }
+
   async addNewCourseCategory() {
     const modal = await this.popoverController.create({
       component: InlineInputPopUpComponent,
@@ -121,7 +152,7 @@ export class CourseFeatureFacadeService {
       this.sendCourseInvitation(m, courseCreate.coursePublic, COURSE_ROLES_ENUM.MARKER));
 
     // update my data -> course manage
-    this.accountFeatureDatabaseService.saveCourseForUser(
+    this.courseFeatureDatabaseService.saveCourseForUser(
       courseCreate.coursePublic.creator,
       courseCreate.coursePublic,
       COURSE_ROLES_ENUM.TEACHER
@@ -134,6 +165,6 @@ export class CourseFeatureFacadeService {
       role,
       COURSE_INVITATION_TYPE.RECEIVED
     );
-    await this.accountFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(student, studentInvitation, true)
+    await this.courseFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(student, studentInvitation, true)
   }
 }

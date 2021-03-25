@@ -1,0 +1,54 @@
+<ion-content class="ion-padding">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar class="ion-text-center st-title">
+    {{ courseStudent.displayName }}
+  </ion-toolbar>
+
+  <!-- user info -->
+  <ion-list *ngIf="studentsTests$ | async as studentTests" class="ion-padding-horizontal">
+    <!-- user test info -->
+    <ion-item *ngFor="let studentTest of studentTests">
+      <ion-label>{{ studentTest.testName }}</ion-label>
+      <ion-label>{{ studentTest.receivedPoints }}
+        ({{ 1 / studentTest.testPoints * studentTest.receivedPoints | percent: '1.2' }})
+      </ion-label>
+    </ion-item>
+    <!-- user points + grade info -->
+    <ion-item lines="none"></ion-item>
+    <ion-item>
+      <ion-label>Points</ion-label>
+      <ion-label> {{ courseStudent.receivedPoints | courseReceivedPoints }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Grade</ion-label>
+      <ion-label>{{ courseStudent.receivedGrade }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- grading buttons -->
+  <ion-list class="ion-margin-bottom">
+    <ion-list-header class="ion-justify-content-center">
+      <ion-label class="ion-text-center">Add grade</ion-label>
+    </ion-list-header>
+    <ion-buttons class="st-flex ion-justify-content-center">
+      <ion-button *ngFor="let grade of course.gradings" (click)="addGrade(grade)" fill="outline" style="width: 100px">
+        {{ grade.mark }}
+      </ion-button>
+    </ion-buttons>
+  </ion-list>
+
+  <!-- remove buttons -->
+  <ion-list class="st-flex ion-justify-content-center ion-margin-top">
+    <ion-button color="danger" (click)="removeUser()">
+      Remove from course
+    </ion-button>
+  </ion-list>
+</ion-content>

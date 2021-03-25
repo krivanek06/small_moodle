@@ -1,4 +1,9 @@
-import {Course, CourseInvitation, CoursePublic,} from '../../course-feature/model/courses-firebase.interface';
+import {
+  Course,
+  CourseInvitation,
+  CoursePublic,
+  StCourseStudent,
+} from '../../course-feature/model/courses-firebase.interface';
 import {USER_LOG_TYPE_ENUM, USER_ROLES_ENUM} from './user.enums';
 import {CourseTestPublic} from '@app/features/course-test-feature';
 import {COURSE_ROLES_ENUM} from '@app/features/course-feature';
@@ -20,7 +25,8 @@ export interface StUserPublic extends StUserMain {
 
 export interface StUserCourse {
   role: COURSE_ROLES_ENUM;
-  course: CoursePublic | Course; // CoursePublic is when student is searching else it is Course
+  course: CoursePublic; // CoursePublic is when student is searching else it is Course
+  courseStudent?: StCourseStudent;
 }
 
 export interface StUserPrivate {

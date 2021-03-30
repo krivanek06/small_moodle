@@ -9,7 +9,7 @@
     </ion-row>
 
     <!-- all course tests - view for teacher and markers -->
-    <ion-row class="ion-justify-content-center" *ngIf="isCourseTeacherOrMarker$ | async">
+    <ion-row class="ion-justify-content-center" *ngIf="isCourseTeacherOrMarker$ | async; else studentView">
       <ion-col size="12" size-lg="10" size-xl="9">
         <app-generic-card [title]="'Course tests'">
           <app-course-test-public-table
@@ -26,28 +26,31 @@
     </ion-row>
 
     <!-- upcoming tests - view for students -->
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-lg="10" size-xl="9">
-        <app-generic-card [title]="'Upcoming tests'">
-          <app-course-test-public-table
-            (clickedEmitter)="startTest($event)"
-            [courseTests]="course.confirmedTests">
-          </app-course-test-public-table>
-        </app-generic-card>
-      </ion-col>
-    </ion-row>
+    <ng-template #studentView>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-lg="10" size-xl="9">
+          <app-generic-card [title]="'Upcoming tests'">
+            <app-course-test-public-table
+              (clickedEmitter)="startTest($event)"
+              [courseTests]="course.confirmedTests | filterCompletedTestFromUpcomingTests: (studentTests$ | async)">
+            </app-course-test-public-table>
+          </app-generic-card>
+        </ion-col>
+      </ion-row>
 
-    <!-- completed tests - view for students -->
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-lg="10" size-xl="9">
-        <app-generic-card [title]="'Completed tests'">
-          <app-course-test-student-completed-table
-            (clickedEmitter)="navigateToCourseTest($event)"
-            [courseTakenTests]="studentTests$ | async">
-          </app-course-test-student-completed-table>
-        </app-generic-card>
-      </ion-col>
-    </ion-row>
+
+      <!-- completed tests - view for students -->
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-lg="10" size-xl="9">
+          <app-generic-card [title]="'Completed tests'">
+            <app-course-test-student-completed-table
+              (clickedEmitter)="navigateToCourseTest($event)"
+              [courseTakenTests]="studentTests$ | async">
+            </app-course-test-student-completed-table>
+          </app-generic-card>
+        </ion-col>
+      </ion-row>
+    </ng-template>
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-lg="10" size-xl="9">

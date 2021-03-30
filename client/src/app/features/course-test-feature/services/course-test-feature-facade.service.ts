@@ -84,19 +84,18 @@ export class CourseTestFeatureFacadeService {
   async startCourseTest(courseTest: CourseTestPublic): Promise<boolean> {
     const courseId = courseTest.course.courseId;
     const testId = courseTest.testId;
-    const user = this.authFeatureStoreService.user;
-
-    const studentTest = await this.courseTestDatabaseService.getStudentCourseTest(courseId, testId, user.uid).pipe(first()).toPromise();
+    const user = this.authFeatureStoreService.userMain;
+    //const studentTest = await this.courseTestDatabaseService.getStudentCourseTest(courseId, testId, user.uid).pipe(first()).toPromise();
 
     // student already started test
-    if (studentTest) {
+   /* if (studentTest) {
       if (await this.presentDialog('continues', courseTest)) {
         this.courseTestFeatureStoreService.setStudentCourseTest(studentTest);
         IonicDialogService.presentToast(`You are continuing ${studentTest.testName}`);
         return true;
       }
       return false;
-    }
+    }*/
 
     // student start test first time
     if (await this.presentDialog('start', courseTest)) {
@@ -128,9 +127,8 @@ export class CourseTestFeatureFacadeService {
   }
 
   async submitCompletedCourseTest({questions}: CourseTest): Promise<boolean> {
-    console.log('questions', questions)
     const takenTest = this.courseTestFeatureStoreService.studentCourseTest;
-    console.log('takenTest', takenTest)
+
     if (!(await this.presentDialog('submit', takenTest))) {
       return false;
     }

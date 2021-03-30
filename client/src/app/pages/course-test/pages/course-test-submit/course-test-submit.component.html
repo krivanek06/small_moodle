@@ -1,7 +1,17 @@
 <ng-container *ngIf="courseTakenTest$ | async as courseTakenTest">
   <!--  test started info -->
-  <ion-toolbar *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE" class="ion-text-end">
-    TODO Implement remaining time HH:mm
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-label>
+        <div>Test name: {{ courseTakenTest.testName }}</div>
+        <div>Points: {{ courseTakenTest.testPoints }}</div>
+        <div>Duration: {{ courseTakenTest.duration }}</div>
+        <div>Time started: {{ courseTakenTest.timeStarted | date: 'HH:MM:ss dd.MM.YYYY' }}</div>
+      </ion-label>
+      <ion-label class="ion-text-end" *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE">
+        Remaining time {{ remainingMinutesCountDown$ | async }} minutes {{ oneMinuteCountdown$ | async }} seconds
+      </ion-label>
+    </ion-item>
   </ion-toolbar>
 
   <!-- test questions -->

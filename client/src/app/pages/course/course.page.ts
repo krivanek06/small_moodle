@@ -17,7 +17,8 @@ import {
   CourseTestStateEnum,
   CourseTestTaken
 } from '@app/features/course-test-feature';
-import {map, withLatestFrom} from "rxjs/operators";
+import {first, map, withLatestFrom} from "rxjs/operators";
+import {IonicDialogService} from "@app/core";
 
 @Component({
   selector: 'app-course',
@@ -68,6 +69,11 @@ export class CoursePage implements OnInit {
   }
 
   async startTest(courseTest: CourseTestPublic) {
+    const completedTests = await this.studentTests$.pipe(first()).toPromise();
+    if (completedTests.map(t => t.testId).includes(courseTest.testId)) {
+      IonicDialogService.presentToast(`You have already start or finished ${courseTest.testName}`);
+      return
+    }
     if (await this.courseTestFeatureFacadeService.startCourseTest(courseTest)) {
       this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
     }

@@ -103,12 +103,19 @@ export class CourseFeatureDatabaseService {
 
   async removeStudentFromCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
     const ref = this.getCoursePrivateRef(courseId);
+    const userRef = this.firestore.collection('users').doc(userMain.uid).ref;
 
+    // remove user from course collection
     if (type === COURSE_ROLES_ENUM.STUDENT) {
       await ref.set({students: firebase.firestore.FieldValue.arrayRemove(userMain),}, {merge: true});
     } else if (type === COURSE_ROLES_ENUM.MARKER) {
       await ref.set({markers: firebase.firestore.FieldValue.arrayRemove(userMain),}, {merge: true});
     }
+    
+    // filter out course from user who is kicked out
+    const filteredCourses = ((await userRef.get()).data() as StUserPublic).courses
+      .filter(c => c.course.courseId !== courseId);
+    await userRef.set({courses: filteredCourses}, {merge: true})
   }
 
   async gradeStudent(course: Course, courseStudent: StCourseStudent, grade: CourseGrading) {
@@ -145,7 +152,6 @@ export class CourseFeatureDatabaseService {
 
   async addPersonInvitationIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
     const ref = this.getCoursePrivateRef(courseId);
-
     if (type === COURSE_ROLES_ENUM.STUDENT) {
       ref.set({
         invitedStudents: firebase.firestore.FieldValue.arrayUnion(userMain),

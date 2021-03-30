@@ -7,7 +7,6 @@ import {
 import {StUser, StUserPublic,} from '@app/features/authentication-feature/models/user.interface';
 import {DashboardAuthenticatedFacadeService} from '../../services/dashboard-authenticated-facade.service';
 import {Router} from '@angular/router';
-import {CourseFeatureDatabaseService} from '@app/features/course-feature';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -20,15 +19,12 @@ export class DashboardAuthenticatedComponent implements OnInit {
 
   categories$: Observable<CourseCategory>;
 
-  constructor(
-    private dashboardAuthenticatedFacadeService: DashboardAuthenticatedFacadeService,
-    private courseFeatureDatabaseService: CourseFeatureDatabaseService,
-    private router: Router
-  ) {
+  constructor(private dashboardAuthenticatedFacadeService: DashboardAuthenticatedFacadeService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.categories$ = this.courseFeatureDatabaseService.getCourseCategories();
+    this.categories$ = this.dashboardAuthenticatedFacadeService.getCourseCategories();
   }
 
   redirectToCourse(coursePublic: CoursePublic) {
@@ -36,9 +32,7 @@ export class DashboardAuthenticatedComponent implements OnInit {
   }
 
   searchCoursesByCategory(categoryName: string) {
-    this.dashboardAuthenticatedFacadeService.searchCoursesByCategory(
-      categoryName
-    );
+    this.dashboardAuthenticatedFacadeService.searchCoursesByCategory(categoryName);
   }
 
   showCourseInvitation(invitation: CourseInvitation) {

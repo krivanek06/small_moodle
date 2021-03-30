@@ -33,6 +33,7 @@ export class CourseFeatureFacadeService {
     this.router.navigate(['menu', 'course', this.courseFeatureStoreService.course.courseId]);
   }
 
+
   // need to select course on which I want to invite the user
   async inviteMember(userMain: StUserMain): Promise<void> {
     // present created courses by me
@@ -110,6 +111,7 @@ export class CourseFeatureFacadeService {
         // removing from course
         if (await IonicDialogService.presentAlertConfirm(`Confirm removing ${courseStudent.displayName} from course ${course.longName}`)) {
           await this.courseFeatureDatabaseService.removeStudentFromCourse(course, courseStudent, COURSE_ROLES_ENUM.STUDENT);
+          // TODO
           IonicDialogService.presentToast(`Studnet ${courseStudent.displayName} has been removed from course`);
         }
       } else if (resultPromise.data.grade) {

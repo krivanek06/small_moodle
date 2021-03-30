@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthFeatureStoreService, StUserPublic} from '@app/features/authentication-feature';
 import {
+  CourseCategory,
   CourseCreate,
   CourseCreateEntryPointComponent,
   CourseFeatureDatabaseService,
@@ -11,6 +12,7 @@ import {
 } from '@app/features/course-feature';
 import {ModalController, PopoverController} from '@ionic/angular';
 import {IonicDialogService} from '@app/core';
+import {Observable} from "rxjs";
 
 @Injectable()
 export class DashboardAuthenticatedFacadeService {
@@ -21,6 +23,10 @@ export class DashboardAuthenticatedFacadeService {
     private authService: AuthFeatureStoreService,
     private courseFeatureDatabaseService: CourseFeatureDatabaseService
   ) {
+  }
+
+  getCourseCategories(): Observable<CourseCategory> {
+    return this.courseFeatureDatabaseService.getCourseCategories();
   }
 
   async showCourseInvitation(invitation: CourseInvitation) {

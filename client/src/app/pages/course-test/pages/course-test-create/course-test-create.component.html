@@ -1,6 +1,9 @@
 <!-- buttons to save -->
-<app-course-test-form-buttons (saveTestEmitter)="saveTest()">
-</app-course-test-form-buttons>
+<ion-toolbar>
+  <ion-buttons class="ion-justify-content-end">
+    <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+  </ion-buttons>
+</ion-toolbar>
 
 <!-- error message -->
 <ion-toolbar class="st-error ion-text-center ion-padding" *ngIf="errorMessage">

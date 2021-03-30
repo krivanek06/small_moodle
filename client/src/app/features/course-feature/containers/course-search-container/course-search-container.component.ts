@@ -8,6 +8,7 @@ import {CoursePublic} from '@app/features/course-feature';
   styleUrls: ['./course-search-container.component.scss'],
 })
 export class CourseSearchContainerComponent implements OnInit {
+  // TODO TODO TODO
   @Output() selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() allowCourseSelect = false;

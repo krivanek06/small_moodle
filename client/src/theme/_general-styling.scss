@@ -92,9 +92,11 @@ ion-spinner {
   border-radius: 50%;
   margin-right: 6px;
 }
+
 .st-b-red {
   background-color: red;
 }
+
 .st-b-green {
   background-color: green;
 }
@@ -223,7 +225,6 @@ ion-spinner {
 }
 
 
-
 // ----------------------------------------------------
 // ----------------------------------------------------
 // ----------------------------------------------------
@@ -243,7 +244,7 @@ ion-spinner {
   width: 49%;
 }
 
-.st-width-32{
+.st-width-32 {
   width: 32%;
 }
 
@@ -259,9 +260,19 @@ ion-spinner {
   }
 }
 
-.st-error{
-  color: red;
-  font-size: 20px;
+.st-error {
+  /*color: red;
+  font-size: 20px;*/
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  margin: auto;
+  background-color: #521a1a;
+  border-radius: 12px;
+  color: #ff0000;
+  width: 60%;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .st-display-flex-center {
@@ -315,47 +326,67 @@ ion-spinner {
 /* Custom Skeleton Line Height and Margin */
 ion-skeleton-text {
   line-height: 16px;
-  --background-rgb: 200,200,255;
+  --background-rgb: 200, 200, 255;
 }
-
 
 
 // MODEL / POP-UP / ALERT
 
 // class to add for each entry-components
 .custom-modal .modal-wrapper {
-  background: #fefefe;
+  background: #cccdce;
   width: 85% !important;
   height: 750px !important;
   @media (max-width: #{$st-var-md-split}) {
     width: 100% !important;
     height: 100% !important;
   }
+
+  ion-content {
+    --background: #cccdce;
+  }
 }
 
 
 // class to add for each popover
 .custom-popover .popover-wrapper {
-  background: #fefefe;
+  background: #ffffff;
   --width: 600px;
 
   @media (max-width: #{$st-var-sm-split}) {
     --width: 92%;
   }
+
+  ion-content {
+    --background: #ffffff;
+  }
 }
 
 // toasters use it
 .my-custom-alert-class .alert-wrapper {
-  background: #fefefe;
+  background: #ffffff;
   min-width: 550px;
 
   .alert-message {
-    color: #dadada;
+    color: #0c1348;
   }
 
   @media (max-width: #{$st-var-sm-split}) {
     min-width: auto;
   }
+
+  ion-content {
+    --background: #ffffff;
+  }
+}
+
+
+.st-item-form {
+  --background: #f3f3f3;
+  border: 1px solid #8e8e8e;
+  margin: 5px;
+  border-radius: 14px;
+  background: #f3f3f3;
 }
 
 

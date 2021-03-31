@@ -38,17 +38,19 @@ export class CourseTestEditComponent implements OnInit {
   }
 
   async approveTest(approval: boolean, courseTest: CourseTest) {
-    await this.courseTestFeatureFacadeService.approveCourseTest(approval, courseTest);
-    this.courseFeatureFacadeService.navigateToCoursePage()
+    if (await this.courseTestFeatureFacadeService.approveCourseTest(approval, courseTest)) {
+      this.courseFeatureFacadeService.navigateToCoursePage();
+    }
   }
 
   saveTest() {
     this.courseTestFeatureFacadeService.saveCourseTest(this.checkForm());
   }
 
-  deleteTest(courseTest: CourseTest) {
-    this.courseTestFeatureFacadeService.deleteCourseTest(courseTest);
-    this.courseFeatureFacadeService.navigateToCoursePage()
+  async deleteTest(courseTest: CourseTest) {
+    if (await this.courseTestFeatureFacadeService.deleteCourseTest(courseTest)) {
+      this.courseFeatureFacadeService.navigateToCoursePage();
+    }
   }
 
   sendTestToApproval() {

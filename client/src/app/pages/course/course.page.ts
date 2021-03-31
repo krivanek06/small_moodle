@@ -87,4 +87,8 @@ export class CoursePage implements OnInit {
   clickedStudent(courseStudent: StCourseStudent) {
     this.courseFeatureFacadeService.showCourseStudent(courseStudent);
   }
+
+  backToDashboard() {
+    this.router.navigate(['menu', 'dashboard']);
+  }
 }

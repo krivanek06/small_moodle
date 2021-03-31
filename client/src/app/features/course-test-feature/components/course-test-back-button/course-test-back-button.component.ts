@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-course-test-back-button',
@@ -10,11 +9,10 @@ export class CourseTestBackButtonComponent implements OnInit {
   @Input() courseName: string;
   @Input() courseId: string;
 
-  constructor(private router: Router) {}
-
-  ngOnInit() {}
-
-  backToCourse() {
-    this.router.navigate([`menu/course/${this.courseId}`]);
+  constructor() {
   }
+
+  ngOnInit() {
+  }
+
 }

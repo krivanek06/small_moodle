@@ -11,10 +11,7 @@
               [userCourses]="user.courses | courseFilterManagedOpen">
             </app-courses-manage-table>
             <ion-buttons class="ion-justify-content-end st-small-padding">
-              <ion-button
-                color="primary"
-                class="st-small-padding"
-                (click)="createCourse()">
+              <ion-button color="primary" class="st-small-padding" (click)="createCourse()">
                 Create course
               </ion-button>
             </ion-buttons>
@@ -65,12 +62,12 @@
           </app-generic-card>
         </ion-col>
 
-        <!-- test calendar -->
+        <!-- test calendar
         <ion-col size="12">
           <app-generic-card [title]="'Upcoming tests'">
             <app-custom-calendar></app-custom-calendar>
           </app-generic-card>
-        </ion-col>
+        </ion-col>  -->
 
         <!-- course categories -->
         <ion-col size="12">

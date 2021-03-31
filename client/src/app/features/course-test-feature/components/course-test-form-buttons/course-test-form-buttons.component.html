@@ -4,23 +4,23 @@
       <!-- I am creator and teacher -->
       <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid &&
                   loggedInUser.uid === courseTestPublic.course.creator.uid;  else decide ">
-        <ion-button color="primary" (click)="saveTest()">Save</ion-button>
-        <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
-        <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+        <ion-button shape="round" fill="solid" color="primary" (click)="saveTest()">Save</ion-button>
+        <ion-button shape="round" fill="solid" color="success" (click)="approveTest(true)">Approve</ion-button>
+        <ion-button shape="round" fill="solid" color="danger" (click)="deleteTest()">Delete</ion-button>
       </ng-container>
 
       <ng-template #decide>
         <!-- creator's buttons -->
         <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid">
-          <ion-button color="primary" (click)="saveTest()">Save</ion-button>
-          <ion-button color="success" (click)="sendToApproval()">Send to approve</ion-button>
-          <ion-button color="danger" (click)="deleteTest()">Delete</ion-button>
+          <ion-button shape="round" fill="solid" color="primary" (click)="saveTest()">Save</ion-button>
+          <ion-button shape="round" fill="solid" color="success" (click)="sendToApproval()">Send to approve</ion-button>
+          <ion-button shape="round" fill="solid" color="danger" (click)="deleteTest()">Delete</ion-button>
         </ng-container>
 
         <!-- teachers's buttons -->
         <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid">
-          <ion-button color="success" (click)="approveTest(true)">Approve</ion-button>
-          <ion-button color="danger" (click)="approveTest(false)">Disapprove</ion-button>
+          <ion-button shape="round" fill="solid" color="success" (click)="approveTest(true)">Approve</ion-button>
+          <ion-button shape="round" fill="solid" color="danger" (click)="approveTest(false)">Disapprove</ion-button>
         </ng-container>
       </ng-template>
     </ion-buttons>
@@ -29,7 +29,7 @@
   <!-- save / delete -->
   <ng-template #createCourse>
     <ion-buttons class="ion-justify-content-end">
-      <ion-button color="primary" (click)="saveTest()">Save</ion-button>
+      <ion-button shape="round" fill="solid" color="primary" (click)="saveTest()">Save</ion-button>
     </ion-buttons>
   </ng-template>
 </ion-toolbar>

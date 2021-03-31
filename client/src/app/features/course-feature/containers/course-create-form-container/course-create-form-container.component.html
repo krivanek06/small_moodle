@@ -2,11 +2,11 @@
   <ion-list class="ion-margin">
     <!-- course long + short name -->
     <ion-item-group class="st-flex-space-between">
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-49 st-item-form">
         <ion-label position="floating">Course long name</ion-label>
         <ion-input placeholder="Set course long name" formControlName="longName"></ion-input>
       </ion-item>
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-49 st-item-form">
         <ion-label position="floating">Course short name</ion-label>
         <ion-input placeholder="Set course short name" formControlName="shortName"></ion-input>
       </ion-item>
@@ -14,11 +14,11 @@
 
     <!-- course Year + Category -->
     <ion-item-group class="st-flex-space-between" style="position: relative">
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-49 st-item-form">
         <ion-label position="floating">Year</ion-label>
         <ion-input placeholder="Set test name" formControlName="year"></ion-input>
       </ion-item>
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-49 st-item-form">
         <ion-label position="floating">Category</ion-label>
         <ion-select interface="popover" formControlName="category" *ngIf="categories$ | async as categories">
           <ion-select-option *ngFor="let c of categories.data[0].categories" [value]="c.name">
@@ -33,7 +33,7 @@
       <ion-item class="st-width-49" lines="none"></ion-item>
       <ion-item class="st-width-49" lines="none">
         <ion-label class="ion-justify-content-center" style="display: flex">
-          <ion-button type="submit" color="primary" fill="clear" (click)="addCategory()">
+          <ion-button shape="round" fill="outline" type="button" color="primary" (click)="addCategory()">
             Add new category
           </ion-button>
         </ion-label>
@@ -42,14 +42,22 @@
 
     <!-- course start + end -->
     <ion-item-group class="st-flex-space-between">
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-49 st-item-form">
         <ion-label position="floating">Course start</ion-label>
-        <ion-datetime display-format="DD.MM.YYYY" picker-format="DD-MMM-YY" formControlName="durationFrom">
+        <ion-datetime display-format="DD.MM.YYYY"
+                      picker-format="DD-MMM-YYYY"
+                      formControlName="durationFrom"
+                      [min]="minDate"
+                      [max]="maxData">
         </ion-datetime>
       </ion-item>
-      <ion-item class="st-width-49">
+      <ion-item class="st-width-49 st-item-form">
         <ion-label position="floating">Course end</ion-label>
-        <ion-datetime display-format="DD.MM.YYYY" picker-format="DD-MMM-YY" formControlName="durationTo">
+        <ion-datetime display-format="DD.MM.YYYY"
+                      picker-format="DD-MMM-YYYY"
+                      formControlName="durationTo"
+                      [min]="minDate"
+                      [max]="maxData">
         </ion-datetime>
       </ion-item>
     </ion-item-group>
@@ -57,20 +65,20 @@
 
   <!-- gradings -->
   <ion-list class="ion-margin">
-    <ion-list-header>Gradings</ion-list-header>
+    <ion-title class="st-title ion-text-center">Gradings</ion-title>
     <ng-container formArrayName="gradings">
       <ng-container *ngFor="let _ of gradings.controls; let i = index">
         <!-- inputs -->
         <ion-item-group [formGroupName]="i" class="st-flex-space-between">
-          <ion-item class="st-width-32">
+          <ion-item class="st-width-32 st-item-form">
             <ion-label position="floating">Mark</ion-label>
             <ion-input placeholder="Set mark" formControlName="mark"></ion-input>
           </ion-item>
-          <ion-item class="st-width-32">
+          <ion-item class="st-width-32 st-item-form">
             <ion-label position="floating">Min points</ion-label>
             <ion-input placeholder="Set min points" formControlName="pointsMin" type="number" min="0"></ion-input>
           </ion-item>
-          <ion-item class="st-width-32">
+          <ion-item class="st-width-32 st-item-form">
             <ion-label position="floating">Max points</ion-label>
             <ion-input placeholder="Set max points" formControlName="pointsMax" type="number" min="0"></ion-input>
           </ion-item>
@@ -84,18 +92,23 @@
       </ng-container>
     </ng-container>
 
+    <!-- error not grade defined -->
+    <div *ngIf="gradings.controls.length === 0" class="st-error">
+      You must define course grading
+    </div>
+
     <ion-buttons class="ion-justify-content-center">
-      <ion-button type="button" color="primary" (click)="addGrading()">Add grade</ion-button>
+      <ion-button shape="round" fill="outline" type="button" color="primary" (click)="addGrading()">Add grade
+      </ion-button>
     </ion-buttons>
   </ion-list>
 
   <!-- markers -->
   <div class="ion-margin">
-    <ion-title class="st-title">Add Evaluators</ion-title>
+    <ion-title class="st-title ion-text-center">Invite evaluators</ion-title>
     <app-account-search (clickedUserEmitter)="addMarker($event)"></app-account-search>
     <app-account-identification-list
       (clickedItemEmitter)="removeMarker($event)"
-      [title]="'Evaluators'"
       [enableClick]="true"
       [members]="invitedMarkers.value">
     </app-account-identification-list>
@@ -103,18 +116,23 @@
 
   <!-- students -->
   <div class="ion-margin">
-    <ion-title class="st-title">Add Students</ion-title>
+    <ion-title class="st-title ion-text-center">Invite students</ion-title>
     <app-account-search (clickedUserEmitter)="addStudent($event)"></app-account-search>
     <app-account-identification-list
       (clickedItemEmitter)="removeStudent($event)"
-      [title]="'Students'"
       [enableClick]="true"
       [members]="invitedStudents.value">
     </app-account-identification-list>
   </div>
 
+
+  <!-- error not all necessary info filled -->
+  <div *ngIf="showUnfilledInformationError" class="st-error">
+    Please fill all necessary information to create a course
+  </div>
+
   <!-- submit -->
   <ion-buttons class="ion-justify-content-center">
-    <ion-button type="submit" fill="clear" color="primary">Create</ion-button>
+    <ion-button shape="round" fill="outline" type="submit" color="primary">Create</ion-button>
   </ion-buttons>
 </form>

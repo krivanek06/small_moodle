@@ -11,7 +11,7 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #193a75; // #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -236,9 +236,30 @@
 :root {
   ion-content {
     white-space: pre-line !important;
+    --background: #adadad;
+
+    ion-toolbar {
+      --background: 'transparent';
+    }
+
+    ion-list {
+      --background: transparent;
+      background: transparent;
+    }
   }
 
+  ion-back-button {
+    color: #ffd066;
+  }
+
+  ion-button {
+    min-width: 175px;
+  }
+
+
   ion-item {
+    --background: transparent;
+
     ion-label {
       white-space: pre-line !important;
 
@@ -255,7 +276,7 @@
     }
   }
 
-  ion-list{
+  ion-list {
     ion-list-header {
       ion-text {
         white-space: pre-line !important;

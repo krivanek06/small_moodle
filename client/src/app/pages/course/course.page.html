@@ -1,29 +1,35 @@
 <ion-content class="ion-padding" *ngIf="course$ | async as course">
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-lg="10" size-xl="9">
-        <ion-title class="st-title">
-          Course: [{{ course.shortName }}] {{ course.longName }}
-        </ion-title>
-      </ion-col>
-    </ion-row>
+    <!-- back button -->
+    <app-grid-page-content>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="menu/dashboard" text="Back to dashboard"></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </app-grid-page-content>
+
+    <!-- course info -->
+    <app-grid-page-content>
+      <ion-title style="font-size: 21px" color="primary">
+        Course: [{{ course.shortName }}] {{ course.longName }}
+      </ion-title>
+    </app-grid-page-content>
 
     <!-- all course tests - view for teacher and markers -->
-    <ion-row class="ion-justify-content-center" *ngIf="isCourseTeacherOrMarker$ | async; else studentView">
-      <ion-col size="12" size-lg="10" size-xl="9">
-        <app-generic-card [title]="'Course tests'">
-          <app-course-test-public-table
-            (clickedEmitter)="redirectToCourseTest($event)"
-            [courseTests]="courseTests$ | async">
-          </app-course-test-public-table>
-          <ion-buttons class="ion-justify-content-end st-small-padding">
-            <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">
-              Create test
-            </ion-button>
-          </ion-buttons>
-        </app-generic-card>
-      </ion-col>
-    </ion-row>
+    <app-grid-page-content *ngIf="isCourseTeacherOrMarker$ | async; else studentView">
+      <app-generic-card [title]="'Course tests'">
+        <app-course-test-public-table
+          (clickedEmitter)="redirectToCourseTest($event)"
+          [courseTests]="courseTests$ | async">
+        </app-course-test-public-table>
+        <ion-buttons class="ion-justify-content-end st-small-padding">
+          <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">
+            Create test
+          </ion-button>
+        </ion-buttons>
+      </app-generic-card>
+    </app-grid-page-content>
 
     <!-- upcoming tests - view for students -->
     <ng-template #studentView>

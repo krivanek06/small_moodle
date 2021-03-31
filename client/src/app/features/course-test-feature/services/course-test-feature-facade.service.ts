@@ -39,7 +39,7 @@ export class CourseTestFeatureFacadeService {
     );
   }
 
-  async approveCourseTest(approve: boolean, courseTest: CourseTest) {
+  async approveCourseTest(approve: boolean, courseTest: CourseTest): Promise<boolean> {
     const action = approve ? 'approved' : 'deleted';
     if (await this.presentDialog(action, courseTest)) {
       courseTest.testState = approve ? CourseTestStateEnum.APPROVED : CourseTestStateEnum.IN_PROGRESS;
@@ -49,7 +49,9 @@ export class CourseTestFeatureFacadeService {
       }
       this.courseTestDatabaseService.saveCourseTest(courseTest);
       this.presentToaster(action, courseTest);
+      return true
     }
+    return false;
   }
 
   async saveCourseTest(courseTest: CourseTest): Promise<boolean> {
@@ -73,11 +75,13 @@ export class CourseTestFeatureFacadeService {
     }
   }
 
-  async deleteCourseTest(courseTest: CourseTest) {
+  async deleteCourseTest(courseTest: CourseTest): Promise<boolean> {
     if (await this.presentDialog('delete', courseTest)) {
       await this.courseTestDatabaseService.deleteCourseTest(courseTest);
       this.presentToaster('deleted', courseTest);
+      return true;
     }
+    return false;
   }
 
   // TODO pozri zaciatok casu ci mozem zacat / pokracovat test

@@ -1,12 +1,5 @@
-<ion-item lines="none">
-  <ion-label>
-    <ion-button
-      style="font-size: 21px"
-      color="primary"
-      fill="clear"
-      (click)="backToCourse()"
-    >
-      {{ courseName }}
-    </ion-button>
-  </ion-label>
-</ion-item>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button [defaultHref]="'menu/course/' + courseId" text="Back to course"></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>

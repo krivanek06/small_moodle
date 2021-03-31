@@ -23,6 +23,11 @@ export class CourseCreateFormContainerComponent implements OnInit {
   categories$: Observable<CourseCategory>;
   form: FormGroup;
 
+  minDate: string = new Date().toISOString();
+  maxData: any = (new Date()).getFullYear() + 1;
+
+  showUnfilledInformationError = false;
+
   constructor(
     private fb: FormBuilder,
     private courseFeatureFacadeService: CourseFeatureFacadeService,
@@ -76,6 +81,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
   submitForm() {
     this.form.markAllAsTouched();
     if (this.form.invalid) {
+      this.showUnfilledInformationError = true;
       return;
     }
     const coursePublic: CoursePublic = {

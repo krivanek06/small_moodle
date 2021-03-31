@@ -1,22 +1,25 @@
 <ion-content class="ion-padding">
   <ion-grid>
     <!-- course back button -->
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-lg="10" size-xl="9">
-        <app-course-test-back-button
-          *ngIf="course$ | async as course"
-          [courseId]="course.courseId"
-          [courseName]="course.longName"
-        >
+    <ng-container *ngIf="course$ | async as course">
+      <!-- back button -->
+      <app-grid-page-content>
+        <app-course-test-back-button [courseId]="course.courseId"
+                                     [courseName]="course.longName">
         </app-course-test-back-button>
-      </ion-col>
-    </ion-row>
+      </app-grid-page-content>
+
+      <!-- course info -->
+      <app-grid-page-content>
+        <ion-title style="font-size: 21px" color="primary">
+          Course: [{{ course.shortName }}] {{ course.longName }}
+        </ion-title>
+      </app-grid-page-content>
+    </ng-container>
 
     <!-- router -->
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-lg="10" size-xl="9">
-        <router-outlet></router-outlet>
-      </ion-col>
-    </ion-row>
+    <app-grid-page-content>
+      <router-outlet></router-outlet>
+    </app-grid-page-content>
   </ion-grid>
 </ion-content>

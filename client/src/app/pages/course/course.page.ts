@@ -89,6 +89,7 @@ export class CoursePage implements OnInit {
   }
 
   backToDashboard() {
-    this.router.navigate(['menu', 'dashboard']);
+    this.courseTestFeatureStoreService.discardStudentCourseTest();
+    this.courseFeatureStoreService.discardCourse();
   }
 }

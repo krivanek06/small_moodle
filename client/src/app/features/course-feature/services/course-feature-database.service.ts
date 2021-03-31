@@ -34,6 +34,17 @@ export class CourseFeatureDatabaseService {
     return this.firestore.collection<CourseCategory>(this.COURSE).doc('categories').valueChanges();
   }
 
+  getCoursesBy(category: string, year: number): Observable<CoursePublic[]> {
+    const formDate = new Date(year, 0, 1).toISOString();
+    const toDate = new Date(year, 11, 31).toISOString();
+    console.log(year, 'formDate', formDate, toDate)
+    return this.firestore.collection<CoursePublic>(this.COURSE,
+      ref => ref.where('category', '==', category)
+        .where('durationFrom', '>', formDate)
+        .where('durationFrom', '<', toDate)
+    ).valueChanges();
+  }
+
   async addCourseCategory(name) {
     const categories = await this.firestore
       .collection<CourseCategory>(this.COURSE)
@@ -111,7 +122,7 @@ export class CourseFeatureDatabaseService {
     } else if (type === COURSE_ROLES_ENUM.MARKER) {
       await ref.set({markers: firebase.firestore.FieldValue.arrayRemove(userMain),}, {merge: true});
     }
-    
+
     // filter out course from user who is kicked out
     const filteredCourses = ((await userRef.get()).data() as StUserPublic).courses
       .filter(c => c.course.courseId !== courseId);

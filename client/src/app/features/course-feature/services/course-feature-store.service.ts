@@ -46,6 +46,11 @@ export class CourseFeatureStoreService {
       });
   }
 
+  discardCourse(){
+    this.course$.next(null);
+    this.storageService.removeData(this.COURSE_KEY);
+  }
+
   private checkSavedCourseId() {
     const courseId = this.storageService.getData(this.COURSE_KEY) as string;
     if (courseId) {

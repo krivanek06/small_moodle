@@ -4,18 +4,17 @@
     <ion-label>Name</ion-label>
     <ion-label *ngIf="authenticatedUser">Points</ion-label>
     <ion-label *ngIf="authenticatedUser">Grade</ion-label>
-    <ion-label *ngIf="authenticatedUser">Position</ion-label>
+    <!--<ion-label *ngIf="authenticatedUser">Position</ion-label>-->
     <ion-label>Course start</ion-label>
     <ion-label>Course end</ion-label>
   </ion-item>
 
-  <ion-item [button]="enableClick" *ngFor="let course of courses" (click)="clickedCourse(course)">
-    <ion-label>{{ course.courseId }}.</ion-label>
-    <ion-label>{{ course.longName }}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{course.students | courseReceivedPoints: authenticatedUser.uid}}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{course.students | courseStudentGrade: authenticatedUser.uid}}</ion-label>
-    <ion-label *ngIf="authenticatedUser">{{course.students | courseStudentPosition: authenticatedUser.uid}}</ion-label>
-    <ion-label>{{ course.durationFrom | date: "dd.MM.YYYY" }}</ion-label>
-    <ion-label>{{ course.durationTo | date: "dd.MM.YYYY" }}</ion-label>
+  <ion-item [button]="enableClick" *ngFor="let course of courses" (click)="clickedCourse(course.course)">
+    <ion-label>{{ course.course.longName }}.</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{course.courseStudent.receivedPoints | courseReceivedPoints}}</ion-label>
+    <ion-label *ngIf="authenticatedUser">{{course.courseStudent.receivedGrade}}</ion-label>
+    <!--<ion-label *ngIf="authenticatedUser">{{course.students | courseStudentPosition: authenticatedUser.uid}}</ion-label>-->
+    <ion-label>{{ course.course.durationFrom | date: "dd.MM.YYYY" }}</ion-label>
+    <ion-label>{{ course.course.durationTo | date: "dd.MM.YYYY" }}</ion-label>
   </ion-item>
 </ion-list>

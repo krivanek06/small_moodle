@@ -11,6 +11,7 @@ import {
   CourseTestTaken,
 } from '@app/features/course-test-feature';
 import {AuthFeatureStoreService, StUserMain,} from '@app/features/authentication-feature';
+import {Confirmable} from "@app/core";
 
 @Component({
   selector: 'app-course-test-preview',
@@ -26,6 +27,8 @@ export class CourseTestPreviewComponent implements OnInit {
   user$: Observable<StUserMain>;
 
   CourseTestFormStateEnum = CourseTestFormStateEnum;
+
+  gradingError = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,8 +58,14 @@ export class CourseTestPreviewComponent implements OnInit {
     );
   }
 
+  @Confirmable('Please confirm grading test')
   gradeTest(test: CourseTestTaken) {
-    this.courseTestFacadeService.gradeCourseTest(test, this.courseTestForm.submitForm());
+    const courseTest = this.courseTestForm.submitForm();
+    if (courseTest) {
+      this.courseTestFacadeService.gradeCourseTest(test, this.courseTestForm.submitForm());
+    } else {
+      this.gradingError = true
+    }
   }
 
   cancelSelectedTest() {

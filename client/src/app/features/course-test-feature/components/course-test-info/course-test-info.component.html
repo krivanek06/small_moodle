@@ -1,35 +1,31 @@
 <ion-list>
-  <ion-item
-    lines="none"
-    *ngIf="
-      courseTestTaken &&
-      courseTestTaken?.testFormState !== CourseTestFormEnum.TAKE
-    "
-  >
+  <ion-item lines="none" *ngIf=" courseTestTaken && courseTestTaken?.testFormState !== CourseTestFormEnum.TAKE ">
     <ion-label class="st-flex-col ion-align-items-center">
-      <ion-text>Created</ion-text>
-      <app-account-identification-item [userMain]="courseTestTaken.createdBy">
-      </app-account-identification-item>
+      <ion-card class="ion-text-center">
+        <ion-text class="info-title">Created</ion-text>
+        <app-account-identification-item [userMain]="courseTestTaken.createdBy">
+        </app-account-identification-item>
+      </ion-card>
     </ion-label>
 
     <ion-label class="st-flex-col ion-align-items-center">
-      <ion-text>Submitted</ion-text>
-      <app-account-identification-item [userMain]="courseTestTaken.student">
-      </app-account-identification-item>
+      <ion-card class="ion-text-center">
+        <ion-text class="info-title">Submitted</ion-text>
+        <app-account-identification-item [userMain]="courseTestTaken.student">
+        </app-account-identification-item>
+      </ion-card>
     </ion-label>
 
     <ion-label class="st-flex-col ion-align-items-center">
-      <ion-text>Rated</ion-text>
-      <app-account-identification-item
-        *ngIf="courseTestTaken.marker; else addAsMarker"
-        [userMain]="courseTestTaken.marker"
-      >
-      </app-account-identification-item>
-      <ng-template #addAsMarker>
-        <ion-button fill="clear" (click)="setAsMarker()"
-          >Set as marker</ion-button
-        >
-      </ng-template>
+      <ion-card class="ion-text-center">
+        <ion-text class="info-title">Rated</ion-text>
+        <app-account-identification-item *ngIf="courseTestTaken.marker; else addAsMarker"
+                                         [userMain]="courseTestTaken.marker">
+        </app-account-identification-item>
+        <ng-template #addAsMarker>
+          <ion-button fill="clear" (click)="setAsMarker()">Set as marker</ion-button>
+        </ng-template>
+      </ion-card>
     </ion-label>
   </ion-item>
 </ion-list>

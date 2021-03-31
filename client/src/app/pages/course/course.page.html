@@ -4,7 +4,10 @@
     <app-grid-page-content>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button defaultHref="menu/dashboard" text="Back to dashboard"></ion-back-button>
+          <ion-back-button defaultHref="menu/dashboard"
+                           (click)="backToDashboard()" 
+                           text="Back to dashboard">
+          </ion-back-button>
         </ion-buttons>
       </ion-toolbar>
     </app-grid-page-content>

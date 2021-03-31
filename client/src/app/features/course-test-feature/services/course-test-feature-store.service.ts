@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {CourseTest, CourseTestTaken,} from '../model/course-test-firebase.model';
 import {StorageService} from '@app/core';
-import {first, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {CourseTestFeatureDatabaseService} from '@app/features/course-test-feature';
 
 @Injectable({
@@ -59,6 +59,11 @@ export class CourseTestFeatureStoreService {
         this.storageService.saveData(this.COURSE_TEST_ACTIVE_KEY, JSON.stringify(res));
         this.studentCourseTest$.next(res);
       });
+  }
+
+  discardStudentCourseTest() {
+    this.studentCourseTest$.next(null);
+    this.storageService.removeData(this.COURSE_TEST_ACTIVE_KEY)
   }
 
   getOneStudentAllCourseTests(): Observable<CourseTestTaken[]> {

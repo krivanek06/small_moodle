@@ -7,9 +7,10 @@ import { COURSE_ROLES_ENUM } from '../model/course.enum';
   name: 'courseFilterActive',
 })
 export class CourseFilterActivePipe implements PipeTransform {
-  transform(userCourses: StUserCourse[]): CoursePublic[] | Course[] {
+  transform(userCourses: StUserCourse[]): CoursePublic[] {
     return userCourses
-      .filter((c) => c.course.isOpen && c.role === COURSE_ROLES_ENUM.STUDENT)
+      .filter((c) =>
+        c.course.isOpen && c.role === COURSE_ROLES_ENUM.STUDENT && !c.courseStudent.receivedGrade)
       .map((x) => x.course);
   }
 }

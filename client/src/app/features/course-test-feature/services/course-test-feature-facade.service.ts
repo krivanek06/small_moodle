@@ -143,9 +143,6 @@ export class CourseTestFeatureFacadeService {
   }
 
   async gradeCourseTest(oldTest: CourseTestTaken, modifiedTest: CourseTest): Promise<void> {
-    if (!modifiedTest || !(await this.presentDialog('grade', modifiedTest))) {
-      return;
-    }
     // calculate students received points
     const receivedPoints = modifiedTest.questions
       .map((x) => x.receivedPoints)

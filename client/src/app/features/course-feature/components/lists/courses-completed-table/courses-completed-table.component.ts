@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StUserMain} from '@app/features/authentication-feature';
-import {Course, CoursePublic} from "@app/features/course-feature";
+import {StUserCourse, StUserMain} from '@app/features/authentication-feature';
+import {CoursePublic} from "@app/features/course-feature";
 
 @Component({
   selector: 'app-courses-completed-table',
@@ -10,7 +10,7 @@ import {Course, CoursePublic} from "@app/features/course-feature";
 export class CoursesCompletedTableComponent implements OnInit {
   @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
-  @Input() courses: CoursePublic[] | Course[] = [];
+  @Input() courses: StUserCourse[] = [];
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;
 

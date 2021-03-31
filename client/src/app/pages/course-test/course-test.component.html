@@ -4,9 +4,13 @@
     <ng-container *ngIf="course$ | async as course">
       <!-- back button -->
       <app-grid-page-content>
-        <app-course-test-back-button [courseId]="course.courseId"
-                                     [courseName]="course.longName">
-        </app-course-test-back-button>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button [defaultHref]="'menu/course/' + course.courseId"
+                             (click)="backToCourse()"
+                             text="Back to course"></ion-back-button>
+          </ion-buttons>
+        </ion-toolbar>
       </app-grid-page-content>
 
       <!-- course info -->

@@ -246,6 +246,9 @@ ion-spinner {
 
 .st-width-32 {
   width: 32%;
+  @media (max-width: #{$st-var-sm-split}) {
+    width: 100% !important;
+  }
 }
 
 .st-height-100 {
@@ -334,7 +337,7 @@ ion-skeleton-text {
 
 // class to add for each entry-components
 .custom-modal .modal-wrapper {
-  background: #cccdce;
+  background: #dadada;
   width: 85% !important;
   height: 750px !important;
   @media (max-width: #{$st-var-md-split}) {
@@ -343,7 +346,7 @@ ion-skeleton-text {
   }
 
   ion-content {
-    --background: #cccdce;
+    --background: #dadada;
   }
 }
 
@@ -384,11 +387,14 @@ ion-skeleton-text {
 .st-item-form {
   --background: #f3f3f3;
   border: 1px solid #8e8e8e;
-  margin: 5px;
+  margin: 5px !important;
   border-radius: 14px;
   background: #f3f3f3;
 }
 
+.st-item-form-disabled {
+  background: #f9ebcd !important;
+}
 
 
 // -------------------------------------

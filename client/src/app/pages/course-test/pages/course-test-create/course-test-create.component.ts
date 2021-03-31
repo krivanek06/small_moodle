@@ -39,9 +39,7 @@ export class CourseTestCreateComponent implements OnInit {
   async saveTest() {
     const courseTest = this.courseTestForm.submitForm();
     if (courseTest) {
-      courseTest.course = convertCourseIntoCourseMain(
-        this.courseFeatureStoreService.course
-      );
+      courseTest.course = convertCourseIntoCourseMain(this.courseFeatureStoreService.course);
       if (await this.courseTestService.saveCourseTest(courseTest)) {
         this.courseFeatureFacadeService.navigateToCoursePage();
       }

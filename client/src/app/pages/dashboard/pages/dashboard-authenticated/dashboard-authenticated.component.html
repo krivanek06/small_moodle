@@ -1,91 +1,96 @@
 <ion-grid class="ion-padding-horizontal">
-  <ion-row>
-    <ion-col size="12" size-lg="9">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="10">
+
       <ion-row>
-        <!-- courses manage -->
-        <ion-col size="12" *ngIf="(user.courses | courseFilterManagedOpen).length > 0">
-          <app-generic-card [title]="'Manage courses'">
-            <app-courses-manage-table
-              (clickedCourseEmitter)="redirectToCourse($event)"
-              [authenticatedUser]="user"
-              [userCourses]="user.courses | courseFilterManagedOpen">
-            </app-courses-manage-table>
-            <ion-buttons class="ion-justify-content-end st-small-padding" *ngIf="user.isTeacher()">
-              <ion-button color="primary" class="st-small-padding" (click)="createCourse()">
-                Create course
-              </ion-button>
-            </ion-buttons>
-          </app-generic-card>
+        <ion-col size="12" size-xl="9">
+          <ion-row>
+            <!-- courses manage -->
+            <ion-col size="12" *ngIf="(user.courses | courseFilterManagedOpen).length > 0">
+              <app-generic-card [title]="'Manage courses'">
+                <app-courses-manage-table
+                  (clickedCourseEmitter)="redirectToCourse($event)"
+                  [authenticatedUser]="user"
+                  [userCourses]="user.courses | courseFilterManagedOpen">
+                </app-courses-manage-table>
+                <ion-buttons class="ion-justify-content-end st-small-padding" *ngIf="user.isTeacher()">
+                  <ion-button color="primary" class="st-small-padding" (click)="createCourse()">
+                    Create course
+                  </ion-button>
+                </ion-buttons>
+              </app-generic-card>
+            </ion-col>
+
+            <!-- courses active -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Active courses'">
+                <app-courses-active-table
+                  (clickedCourseEmitter)="redirectToCourse($event)"
+                  [authenticatedUser]="user"
+                  [courses]="user.courses | courseFilterActive">
+                </app-courses-active-table>
+              </app-generic-card>
+            </ion-col>
+
+            <!-- courses completed -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Completed courses'">
+                <app-courses-completed-table
+                  (clickedCourseEmitter)="redirectToCourse($event)"
+                  [authenticatedUser]="user"
+                  [courses]="user.courses | courseFilterCompleted">
+                </app-courses-completed-table>
+              </app-generic-card>
+            </ion-col>
+
+            <!-- user logs -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Latest activities'">
+                <app-account-logs></app-account-logs>
+              </app-generic-card>
+            </ion-col>
+          </ion-row>
         </ion-col>
 
-        <!-- courses active -->
-        <ion-col size="12">
-          <app-generic-card [title]="'Active courses'">
-            <app-courses-active-table
-              (clickedCourseEmitter)="redirectToCourse($event)"
-              [authenticatedUser]="user"
-              [courses]="user.courses | courseFilterActive">
-            </app-courses-active-table>
-          </app-generic-card>
-        </ion-col>
+        <!-- sidebar info -->
+        <ion-col size="12" size-xl="3">
+          <ion-row>
+            <!-- course invitations -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Course invitations'">
+                <app-course-invitations
+                  [courseInvitations]="user.courseInvitations"
+                  (clickedInvitationEmitter)="showCourseInvitation($event)">
+                </app-course-invitations>
+              </app-generic-card>
+            </ion-col>
 
-        <!-- courses completed -->
-        <ion-col size="12">
-          <app-generic-card [title]="'Completed courses'">
-            <app-courses-completed-table
-              (clickedCourseEmitter)="redirectToCourse($event)"
-              [authenticatedUser]="user"
-              [courses]="user.courses | courseFilterCompleted">
-            </app-courses-completed-table>
-          </app-generic-card>
-        </ion-col>
+            <!-- test calendar
+            <ion-col size="12">
+              <app-generic-card [title]="'Upcoming tests'">
+                <app-custom-calendar></app-custom-calendar>
+              </app-generic-card>
+            </ion-col>  -->
 
-        <!-- user logs -->
-        <ion-col size="12">
-          <app-generic-card [title]="'Latest activities'">
-            <app-account-logs></app-account-logs>
-          </app-generic-card>
-        </ion-col>
-      </ion-row>
-    </ion-col>
+            <!-- course categories -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Course categories'">
+                <app-course-categories
+                  [categories]="categories$ | async"
+                  (categoryClickedEmitter)="searchCoursesByCategory($event)">
+                </app-course-categories>
+              </app-generic-card>
+            </ion-col>
 
-    <!-- sidebar info -->
-    <ion-col size="3" class="ion-hide-lg-down">
-      <ion-row>
-        <!-- course invitations -->
-        <ion-col size="12">
-          <app-generic-card [title]="'Course invitations'">
-            <app-course-invitations
-              [courseInvitations]="user.courseInvitations"
-              (clickedInvitationEmitter)="showCourseInvitation($event)">
-            </app-course-invitations>
-          </app-generic-card>
-        </ion-col>
-
-        <!-- test calendar
-        <ion-col size="12">
-          <app-generic-card [title]="'Upcoming tests'">
-            <app-custom-calendar></app-custom-calendar>
-          </app-generic-card>
-        </ion-col>  -->
-
-        <!-- course categories -->
-        <ion-col size="12">
-          <app-generic-card [title]="'Course categories'">
-            <app-course-categories
-              [categories]="categories$ | async"
-              (categoryClickedEmitter)="searchCoursesByCategory($event)">
-            </app-course-categories>
-          </app-generic-card>
-        </ion-col>
-
-        <!-- search users -->
-        <ion-col size="12">
-          <app-generic-card [title]="'Search users'">
-            <app-account-search
-              (clickedUserEmitter)="showUserInformation($event)">
-            </app-account-search>
-          </app-generic-card>
+            <!-- search users -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Search users'">
+                <app-account-search
+                  (clickedUserEmitter)="showUserInformation($event)">
+                </app-account-search>
+              </app-generic-card>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-col>

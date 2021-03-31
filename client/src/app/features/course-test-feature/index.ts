@@ -1,5 +1,4 @@
 // components
-export * from './components/course-test-back-button/course-test-back-button.component';
 export * from './components/course-test-form/course-test-form.component';
 export * from './components/course-test-form-buttons/course-test-form-buttons.component';
 export * from './components/course-test-info/course-test-info.component';

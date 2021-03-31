@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {CoursePublic} from '@app/features/course-feature';
+import {CourseCategory, CourseFeatureDatabaseService, CoursePublic} from '@app/features/course-feature';
+import {Observable} from "rxjs";
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-course-search-container',
@@ -8,7 +10,6 @@ import {CoursePublic} from '@app/features/course-feature';
   styleUrls: ['./course-search-container.component.scss'],
 })
 export class CourseSearchContainerComponent implements OnInit {
-  // TODO TODO TODO
   @Output() selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() allowCourseSelect = false;
@@ -16,7 +17,11 @@ export class CourseSearchContainerComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  foundCourses$: Observable<CoursePublic[]>;
+  categories$: Observable<CourseCategory>;
+
+  constructor(private fb: FormBuilder,
+              private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
   }
 
   get category(): AbstractControl {
@@ -30,6 +35,11 @@ export class CourseSearchContainerComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.watchForm();
+    this.categories$ = this.courseFeatureDatabaseService.getCourseCategories();
+
+    if (!!this.defaultCategory) {
+      this.foundCourses$ = this.courseFeatureDatabaseService.getCoursesBy(this.defaultCategory, 2021);
+    }
   }
 
   selectCourse() {
@@ -39,13 +49,15 @@ export class CourseSearchContainerComponent implements OnInit {
   }
 
   private watchForm() {
-    this.form.valueChanges.subscribe(console.log); // TODO make call to firebase
+    this.foundCourses$ = this.form.valueChanges.pipe(
+      switchMap(form => this.courseFeatureDatabaseService.getCoursesBy(form.category, form.year))
+    )
   }
 
   private initForm() {
     this.form = this.fb.group({
       category: [this.defaultCategory, Validators.required],
-      year: ['2021', Validators.required],
+      year: [2021, Validators.required],
     });
   }
 }

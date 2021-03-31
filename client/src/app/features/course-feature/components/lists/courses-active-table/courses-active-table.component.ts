@@ -10,7 +10,7 @@ import {Course, CoursePublic} from "@app/features/course-feature";
 export class CoursesActiveTableComponent implements OnInit {
   @Output() clickedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
-  @Input() courses: CoursePublic[] | Course[] = [];
+  @Input() courses: CoursePublic[] = [];
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;
 

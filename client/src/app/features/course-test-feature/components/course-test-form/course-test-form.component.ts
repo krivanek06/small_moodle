@@ -126,7 +126,7 @@ export class CourseTestFormComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       testName: [{value: this.courseTest.testName, disabled: !this.isCreatingState},],
       duration: [{value: this.courseTest.duration, disabled: !this.isCreatingState},],
-      availableFrom: [{value: this.courseTest.availableFrom, disabled: !this.isCreatingState,},],
+      availableFrom: [{value: this.courseTest.availableFrom, disabled: !this.isCreatingState},],
       availableTo: [{value: this.courseTest.availableTo, disabled: !this.isCreatingState},],
       testPoints: [{value: this.courseTest.testPoints, disabled: !this.isCreatingState},],
       questions: this.fb.array([]),

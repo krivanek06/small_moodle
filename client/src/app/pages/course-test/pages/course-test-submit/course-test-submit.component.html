@@ -3,10 +3,10 @@
   <ion-toolbar>
     <ion-item lines="none">
       <ion-label>
-        <div class="st-font-size-16">Test name: {{ courseTakenTest.testName }}</div>
-        <div class="st-font-size-16">Points: {{ courseTakenTest.testPoints }}</div>
-        <div class="st-font-size-16">Duration: {{ courseTakenTest.duration }}</div>
-        <div class="st-font-size-16">Time started: {{ courseTakenTest.timeStarted | date: 'HH:MM:ss dd.MM.YYYY' }}</div>
+        <div class="st-font-size-16" style="font-weight: bolder;">Test name: {{ courseTakenTest.testName }}</div>
+        <div class="st-font-size-16" style="font-weight: bolder;">Points: {{ courseTakenTest.testPoints }}</div>
+        <div class="st-font-size-16" style="font-weight: bolder;">Duration: {{ courseTakenTest.duration }}</div>
+        <div class="st-font-size-16" style="font-weight: bolder;">Time started: {{ courseTakenTest.timeStarted | date: 'HH:MM:ss dd.MM.YYYY' }}</div>
       </ion-label>
       <ion-label class="ion-text-end st-font-size-18" *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE">
         Remaining time {{ remainingMinutesCountDown$ | async }} minutes {{ oneMinuteCountdown$ | async }} seconds

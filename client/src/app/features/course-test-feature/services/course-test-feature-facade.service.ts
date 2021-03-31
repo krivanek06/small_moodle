@@ -130,12 +130,8 @@ export class CourseTestFeatureFacadeService {
     IonicDialogService.presentToast(`Marker ${user.displayName} has been assign on test ${courseTestTaken.testName}`);
   }
 
-  async submitCompletedCourseTest({questions}: CourseTest): Promise<boolean> {
+  async submitCompletedCourseTest({questions}: CourseTest) {
     const takenTest = this.courseTestFeatureStoreService.studentCourseTest;
-
-    if (!(await this.presentDialog('submit', takenTest))) {
-      return false;
-    }
     const courseTestTaken: CourseTestTaken = {
       ...takenTest,
       questions,
@@ -144,8 +140,6 @@ export class CourseTestFeatureFacadeService {
       timeAwayOfTest: 540, // TODO implement
     };
     this.courseTestDatabaseService.saveStudentCourseTest(courseTestTaken);
-    this.presentToaster('submitted', courseTestTaken);
-    return true;
   }
 
   async gradeCourseTest(oldTest: CourseTestTaken, modifiedTest: CourseTest): Promise<void> {

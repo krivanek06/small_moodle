@@ -3,12 +3,12 @@
   <ion-toolbar>
     <ion-item lines="none">
       <ion-label>
-        <div>Test name: {{ courseTakenTest.testName }}</div>
-        <div>Points: {{ courseTakenTest.testPoints }}</div>
-        <div>Duration: {{ courseTakenTest.duration }}</div>
-        <div>Time started: {{ courseTakenTest.timeStarted | date: 'HH:MM:ss dd.MM.YYYY' }}</div>
+        <div class="st-font-size-16">Test name: {{ courseTakenTest.testName }}</div>
+        <div class="st-font-size-16">Points: {{ courseTakenTest.testPoints }}</div>
+        <div class="st-font-size-16">Duration: {{ courseTakenTest.duration }}</div>
+        <div class="st-font-size-16">Time started: {{ courseTakenTest.timeStarted | date: 'HH:MM:ss dd.MM.YYYY' }}</div>
       </ion-label>
-      <ion-label class="ion-text-end" *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE">
+      <ion-label class="ion-text-end st-font-size-18" *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE">
         Remaining time {{ remainingMinutesCountDown$ | async }} minutes {{ oneMinuteCountdown$ | async }} seconds
       </ion-label>
     </ion-item>
@@ -22,6 +22,6 @@
 
   <!-- submit button -->
   <ion-buttons *ngIf="courseTakenTest.testFormState === CourseTestFormStateEnum.TAKE" class="ion-justify-content-end">
-    <ion-button color="primary" (click)="submitTest()" fill="outline">Submit</ion-button>
+    <ion-button shape="round" fill="solid" color="primary" (click)="submitTest()">Submit</ion-button>
   </ion-buttons>
 </ng-container>

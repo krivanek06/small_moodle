@@ -3,14 +3,14 @@
     <ion-col size="12" size-lg="9">
       <ion-row>
         <!-- courses manage -->
-        <ion-col size="12" *ngIf="user.isTeacher()">
+        <ion-col size="12" *ngIf="(user.courses | courseFilterManagedOpen).length > 0">
           <app-generic-card [title]="'Manage courses'">
             <app-courses-manage-table
               (clickedCourseEmitter)="redirectToCourse($event)"
               [authenticatedUser]="user"
               [userCourses]="user.courses | courseFilterManagedOpen">
             </app-courses-manage-table>
-            <ion-buttons class="ion-justify-content-end st-small-padding">
+            <ion-buttons class="ion-justify-content-end st-small-padding" *ngIf="user.isTeacher()">
               <ion-button color="primary" class="st-small-padding" (click)="createCourse()">
                 Create course
               </ion-button>

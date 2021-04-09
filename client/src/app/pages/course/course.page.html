@@ -5,7 +5,7 @@
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-back-button defaultHref="menu/dashboard"
-                           (click)="backToDashboard()" 
+                           (click)="backToDashboard()"
                            text="Back to dashboard">
           </ion-back-button>
         </ion-buttons>
@@ -14,9 +14,14 @@
 
     <!-- course info -->
     <app-grid-page-content>
-      <ion-title style="font-size: 21px" color="primary">
-        Course: [{{ course.shortName }}] {{ course.longName }}
-      </ion-title>
+      <div class="st-flex ion-justify-content-between">
+        <ion-text style="font-size: 21px" color="primary" >
+          Course: [{{ course.shortName }}] {{ course.longName }}
+        </ion-text>
+        <ion-button shape="round" fill="solid" color="warning" (click)="editExistingCourse()">
+          Edit course
+        </ion-button>
+      </div>
     </app-grid-page-content>
 
     <!-- all course tests - view for teacher and markers -->
@@ -67,6 +72,12 @@
           <!-- course members-->
           <ion-col size="12" size-lg="8">
             <app-generic-card [title]="'Course members'">
+              <!-- teacher -->
+              <app-account-identification-list
+                [title]="'Teacher'"
+                [members]="[course.creator]">
+              </app-account-identification-list>
+
               <!-- markers -->
               <app-account-identification-list
                 [title]="'Evaluators'"
@@ -81,7 +92,7 @@
                 <ion-row>
                   <ion-col *ngFor="let marker of course.students" size="12" size-sm="6" size-md="4">
                     <app-course-student
-                      (clickedItemEmitter)="clickedStudent($event)"
+                      (clickedItemEmitter)="showCourseStudent($event)"
                       [courseStudent]="marker"
                       [enableClick]="isCourseTeacherOrMarker$ | async">
                     </app-course-student>

@@ -1,13 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthFeatureStoreService, StUser, StUserPublic} from '@app/features/authentication-feature';
-import {
-  Course,
-  COURSE_ROLES_ENUM,
-  CourseFeatureFacadeService,
-  CourseFeatureStoreService,
-  StCourseStudent,
-} from '@app/features/course-feature';
+import {StUserPublic} from '@app/features/authentication-feature';
+import {Course, StCourseStudent,} from '@app/features/course-feature';
 import {Observable} from 'rxjs';
 import {
   CourseTest,
@@ -17,8 +11,9 @@ import {
   CourseTestStateEnum,
   CourseTestTaken
 } from '@app/features/course-test-feature';
-import {first, map, withLatestFrom} from "rxjs/operators";
+import {first} from "rxjs/operators";
 import {IonicDialogService} from "@app/core";
+import {CourseFacadeService} from "@app/pages/course/services/course-facade.service";
 
 @Component({
   selector: 'app-course',
@@ -26,37 +21,30 @@ import {IonicDialogService} from "@app/core";
   styleUrls: ['./course.page.scss'],
 })
 export class CoursePage implements OnInit {
-  user$: Observable<StUser>;
   course$: Observable<Course>;
   courseTests$: Observable<CourseTest[]>;
   studentTests$: Observable<CourseTestTaken[]>;
+  isCourseTeacherOrMarker$: Observable<boolean>;
+  isCourseTeacher$: Observable<boolean>;
 
   constructor(private router: Router,
-              private courseFeatureStoreService: CourseFeatureStoreService,
-              private courseFeatureFacadeService: CourseFeatureFacadeService,
               private courseTestFeatureStoreService: CourseTestFeatureStoreService,
               private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
-              private authFeatureStoreService: AuthFeatureStoreService) {
-  }
-
-  get isCourseTeacherOrMarker$(): Observable<boolean> {
-    return this.course$.pipe(
-      withLatestFrom(this.user$),
-      map(([course, user]) => course.creator.uid === user.uid || course.markers.map(m => m.uid).includes(user.uid)),
-    )
+              private courseFacadeService: CourseFacadeService) {
   }
 
   ngOnInit() {
-    this.course$ = this.courseFeatureStoreService.getCourse();
+    this.course$ = this.courseFacadeService.getCourse();
     this.courseTests$ = this.courseTestFeatureStoreService.getAllCourseTests();
     this.studentTests$ = this.courseTestFeatureStoreService.getOneStudentAllCourseTests();
-    this.user$ = this.authFeatureStoreService.getUser();
+    this.isCourseTeacherOrMarker$ = this.courseFacadeService.isCourseTeacherOrMarker();
+    this.isCourseTeacher$ = this.courseFacadeService.isCourseTeacher();
 
     this.course$.subscribe(console.log)
   }
 
   async inviteUser(userPublic: StUserPublic, course: Course) {
-    this.courseFeatureFacadeService.inviteMemberIntoCourse(userPublic, course, COURSE_ROLES_ENUM.STUDENT);
+    this.courseFacadeService.inviteMemberIntoCourse(userPublic, course);
   }
 
   redirectToCourseTestCreate() {
@@ -84,12 +72,16 @@ export class CoursePage implements OnInit {
     this.router.navigate([`menu/course-test/submit/${courseTestTaken.testId}`]);
   }
 
-  clickedStudent(courseStudent: StCourseStudent) {
-    this.courseFeatureFacadeService.showCourseStudent(courseStudent);
+  showCourseStudent(courseStudent: StCourseStudent) {
+    this.courseFacadeService.showCourseStudent(courseStudent);
   }
 
   backToDashboard() {
     this.courseTestFeatureStoreService.discardStudentCourseTest();
-    this.courseFeatureStoreService.discardCourse();
+    this.courseFacadeService.discardCourse();
+  }
+
+  editExistingCourse() {
+    this.courseFacadeService.editExistingCourse();
   }
 }

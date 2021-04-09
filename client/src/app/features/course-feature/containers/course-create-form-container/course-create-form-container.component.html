@@ -104,7 +104,7 @@
   </ion-list>
 
   <!-- markers -->
-  <div class="ion-margin">
+  <div class="ion-margin" *ngIf="!course">
     <ion-title class="st-title ion-text-center">Invite evaluators</ion-title>
     <app-account-search (clickedUserEmitter)="addMarker($event)"></app-account-search>
     <app-account-identification-list
@@ -115,7 +115,7 @@
   </div>
 
   <!-- students -->
-  <div class="ion-margin">
+  <div class="ion-margin" *ngIf="!course">
     <ion-title class="st-title ion-text-center">Invite students</ion-title>
     <app-account-search (clickedUserEmitter)="addStudent($event)"></app-account-search>
     <app-account-identification-list
@@ -132,7 +132,9 @@
   </div>
 
   <!-- submit -->
-  <ion-buttons class="ion-justify-content-center">
-    <ion-button shape="round" fill="outline" type="submit" color="primary">Create</ion-button>
+  <ion-buttons class="ion-justify-content-center ion-margin-vertical">
+    <ion-button shape="round" fill="solid" type="submit" color="primary">
+      {{ !!course ? 'Save' : 'Create' }}
+    </ion-button>
   </ion-buttons>
 </form>

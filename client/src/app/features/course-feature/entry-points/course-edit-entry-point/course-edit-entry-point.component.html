@@ -1,7 +1,7 @@
 <ion-content class="ion-padding ion-margin">
   <ion-toolbar>
     <ion-label class="st-title" style="margin-left: 25px">
-      Create course
+      Edit course
     </ion-label>
     <ion-buttons slot="end">
       <ion-button color="danger" (click)="dismissModal()">
@@ -11,8 +11,12 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <!-- course create -->
-  <app-course-create-form-container
-    (formSubmitEmitter)="submittedForm($event)">
-  </app-course-create-form-container>
+
+  <!-- course edit -->
+  <ng-container *ngIf="course$ | async as course">
+    <app-course-create-form-container
+      [course]="course"
+      (formSubmitEmitter)="submittedForm($event)">
+    </app-course-create-form-container>
+  </ng-container>
 </ion-content>

@@ -23,6 +23,7 @@ import { CourseCreateFormContainerComponent } from './containers/course-create-f
 import { CourseCreateEntryPointComponent } from './entry-points/course-create-entry-point/course-create-entry-point.component';
 import {CourseStudentComponent} from "@course-feature/components/course-student/course-student.component";
 import {AccountFeatureModule} from "@account-feature/account-feature.module";
+import {CourseEditEntryPointComponent} from "@course-feature/entry-points/course-edit-entry-point/course-edit-entry-point.component";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {AccountFeatureModule} from "@account-feature/account-feature.module";
     CourseMemberTypeRadioComponent,
     CourseCreateFormContainerComponent,
     CourseCreateEntryPointComponent,
-    CourseStudentComponent
+    CourseStudentComponent,
+    CourseEditEntryPointComponent
   ],
   exports: [
     CoursesActiveTableComponent,
@@ -70,7 +72,8 @@ import {AccountFeatureModule} from "@account-feature/account-feature.module";
     CourseMemberTypeRadioComponent,
     CourseCreateEntryPointComponent,
     CourseFilterManagedOpenPipe,
-    CourseStudentComponent
+    CourseStudentComponent,
+    CourseEditEntryPointComponent
   ],
   imports: [SharedModule, AccountFeatureModule],
 })

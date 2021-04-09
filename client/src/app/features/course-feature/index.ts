@@ -13,6 +13,7 @@ export * from './entry-points/course-invite-member-pop-over/course-invite-member
 export * from './entry-points/course-search-modal/course-search-modal.component';
 export * from './entry-points/courses-user-account-info-modal/courses-user-account-info-modal.component';
 export * from './components/course-student/course-student.component';
+export * from './entry-points/course-edit-entry-point/course-edit-entry-point.component';
 
 // services
 export * from './services/course-feature-database.service';

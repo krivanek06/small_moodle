@@ -1,13 +1,13 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {
+  Course,
   CourseCategory,
   CourseCreate,
   CourseFeatureDatabaseService,
   CourseFeatureFacadeService,
   CoursePrivate,
-  CoursePublic,
-  StCourseStudent
+  CoursePublic
 } from '@app/features/course-feature';
 import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
 import {v4 as uuid} from 'uuid';
@@ -20,6 +20,8 @@ import {Observable} from 'rxjs';
 })
 export class CourseCreateFormContainerComponent implements OnInit {
   @Output() formSubmitEmitter: EventEmitter<CourseCreate> = new EventEmitter<CourseCreate>();
+  @Input() course: Course;
+
   categories$: Observable<CourseCategory>;
   form: FormGroup;
 
@@ -74,7 +76,13 @@ export class CourseCreateFormContainerComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.addGrading();
+    console.log(this.course)
+    if (!!this.course) {
+      this.addGradingsFromCourse();
+    } else {
+      this.addGrading();
+    }
+
     this.categories$ = this.courseFeatureDatabaseService.getCourseCategories();
   }
 
@@ -85,7 +93,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       return;
     }
     const coursePublic: CoursePublic = {
-      courseId: uuid(),
+      courseId: this.course?.courseId ?? uuid(),
       longName: this.longName.value,
       shortName: this.shortName.value,
       category: this.category.value,
@@ -93,20 +101,20 @@ export class CourseCreateFormContainerComponent implements OnInit {
       durationFrom: this.durationFrom.value,
       year: this.year.value,
       numberOfStudents: this.invitedStudents.length,
-      isOpen: true,
+      isOpen: this.course?.isOpen ?? true,
       gradings: this.gradings.value,
-      numberOfTests: 0,
-      courseGradingResults: [],
+      numberOfTests: this.course?.numberOfTests ?? 0,
+      courseGradingResults: this.course?.courseGradingResults ?? [],
       creator: this.authFeatureStoreService.userMain,
     };
     const coursePrivate: CoursePrivate = {
-      invitedStudents: this.invitedStudents.value,
-      invitedMarkers: this.invitedMarkers.value,
-      markers: [],
-      students: [],
-      receivedStudentsInvitations: [],
-      numberOfUncorrectedTests: 0,
-      confirmedTests: [],
+      invitedStudents: this.course?.invitedStudents ?? this.invitedStudents.value,
+      invitedMarkers: this.course?.invitedMarkers ?? this.invitedMarkers.value,
+      markers: this.course?.markers ?? [],
+      students: this.course?.students ?? [],
+      receivedStudentsInvitations: this.course?.receivedStudentsInvitations ?? [],
+      numberOfUncorrectedTests: this.course?.numberOfUncorrectedTests ?? 0,
+      confirmedTests: this.course?.confirmedTests ?? [],
     };
     this.formSubmitEmitter.emit({coursePublic, coursePrivate});
   }
@@ -168,14 +176,25 @@ export class CourseCreateFormContainerComponent implements OnInit {
     this.invitedStudents.removeAt(students.indexOf(userMain));
   }
 
+  private addGradingsFromCourse() {
+    this.course.gradings.forEach(g => {
+      const formGroup = this.fb.group({
+        mark: [g.mark, [Validators.required]],
+        pointsMin: [g.pointsMin, [Validators.required]],
+        pointsMax: [g.pointsMax, [Validators.required]],
+      });
+      this.gradings.push(formGroup);
+    })
+  }
+
   private initForm() {
     this.form = this.fb.group({
       year: [{value: new Date().getFullYear(), disabled: true}],
-      category: [null, [Validators.required]],
-      shortName: [null, [Validators.required]],
-      longName: [null, [Validators.required]],
-      durationFrom: [null, [Validators.required]],
-      durationTo: [null, [Validators.required]],
+      category: [this.course?.category, [Validators.required]],
+      shortName: [this.course?.shortName, [Validators.required]],
+      longName: [this.course?.longName, [Validators.required]],
+      durationFrom: [this.course?.durationFrom, [Validators.required]],
+      durationTo: [this.course?.durationTo, [Validators.required]],
       gradings: this.fb.array([]),
       markers: this.fb.array([]),
       students: this.fb.array([]),

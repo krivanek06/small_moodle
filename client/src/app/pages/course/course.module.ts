@@ -7,7 +7,8 @@ import {CourseFeatureModule} from '@course-feature/course-feature.module';
 import {AccountFeatureModule} from '@account-feature/account-feature.module';
 import {CoursePreloadGuard} from './guards/course-preload.guard';
 import {CourseMemberInformationModalComponent} from "@app/pages/course/entry-points/course-member-information-modal/course-member-information-modal.component";
-import { FilterCompletedTestFromUpcomingTestsPipe } from './pipes/filter-completed-test-from-upcoming-tests.pipe';
+import {FilterCompletedTestFromUpcomingTestsPipe} from './pipes/filter-completed-test-from-upcoming-tests.pipe';
+import {CourseFacadeService} from "@app/pages/course/services/course-facade.service";
 
 const routes: Routes = [
   {
@@ -25,7 +26,14 @@ const routes: Routes = [
     CourseFeatureModule,
     AccountFeatureModule,
   ],
-  declarations: [CoursePage, CourseMemberInformationModalComponent, FilterCompletedTestFromUpcomingTestsPipe],
+  declarations: [
+    CoursePage,
+    CourseMemberInformationModalComponent,
+    FilterCompletedTestFromUpcomingTestsPipe
+  ],
+  providers: [
+    CourseFacadeService
+  ]
 })
 export class CoursePageModule {
 }

@@ -97,6 +97,13 @@ export class CourseFeatureDatabaseService {
     await this.increaseCourseCategory(courseCreate.coursePublic.category);
   }
 
+  async editCourse(courseCreate: CourseCreate){
+    // save public
+    await this.updateCoursePublicData(courseCreate.coursePublic);
+    // save private
+    await this.updateCoursePrivateData(courseCreate.coursePublic.courseId, courseCreate.coursePrivate);
+  }
+
   async removePersonInvitationFromCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
     const ref = this.getCoursePrivateRef(courseId);
     const coursePrivate = (await ref.get()).data() as CoursePrivate;

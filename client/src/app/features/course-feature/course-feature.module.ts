@@ -24,6 +24,7 @@ import { CourseCreateEntryPointComponent } from './entry-points/course-create-en
 import {CourseStudentComponent} from "@course-feature/components/course-student/course-student.component";
 import {AccountFeatureModule} from "@account-feature/account-feature.module";
 import {CourseEditEntryPointComponent} from "@course-feature/entry-points/course-edit-entry-point/course-edit-entry-point.component";
+import {CourseStudentsInvitationConfirmationPopOverComponent} from "@course-feature/entry-points/course-students-invitation-confirmation-pop-over/course-students-invitation-confirmation-pop-over.component";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {CourseEditEntryPointComponent} from "@course-feature/entry-points/course
     CourseCreateFormContainerComponent,
     CourseCreateEntryPointComponent,
     CourseStudentComponent,
-    CourseEditEntryPointComponent
+    CourseEditEntryPointComponent,
+    CourseStudentsInvitationConfirmationPopOverComponent
   ],
   exports: [
     CoursesActiveTableComponent,
@@ -73,7 +75,8 @@ import {CourseEditEntryPointComponent} from "@course-feature/entry-points/course
     CourseCreateEntryPointComponent,
     CourseFilterManagedOpenPipe,
     CourseStudentComponent,
-    CourseEditEntryPointComponent
+    CourseEditEntryPointComponent,
+    CourseStudentsInvitationConfirmationPopOverComponent
   ],
   imports: [SharedModule, AccountFeatureModule],
 })

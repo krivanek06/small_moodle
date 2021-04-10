@@ -8,6 +8,7 @@ import {StUser, StUserPublic,} from '@app/features/authentication-feature/models
 import {DashboardAuthenticatedFacadeService} from '../../services/dashboard-authenticated-facade.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
+import {Confirmable} from "@app/core";
 
 @Component({
   selector: 'app-dashboard-authenticated',
@@ -24,7 +25,6 @@ export class DashboardAuthenticatedComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('user', this.user)
     this.categories$ = this.dashboardAuthenticatedFacadeService.getCourseCategories();
   }
 
@@ -46,5 +46,10 @@ export class DashboardAuthenticatedComponent implements OnInit {
 
   createCourse() {
     this.dashboardAuthenticatedFacadeService.createCourse();
+  }
+
+  @Confirmable('You invitation has not been accepted yet. Do you want to discard it ?')
+  discardSentInvitation(coursePublic: CoursePublic) {
+    this.dashboardAuthenticatedFacadeService.discardSentInvitation(coursePublic);
   }
 }

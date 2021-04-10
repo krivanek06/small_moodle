@@ -17,6 +17,7 @@ export const buildUserPrivate = (
     locale: locale || null,
     logs: [],
     roles: [],
+    courseSentInvitations: []
   };
   return userPrivate;
 };

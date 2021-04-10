@@ -1,0 +1,27 @@
+<ion-content class="ion-padding">
+  <ion-list-header class="st-flex-col ion-margin">
+    <ion-label class="st-section-title">
+      Please confirm {{ userMain.displayName }} invitation into course
+    </ion-label>
+  </ion-list-header>
+
+
+  <!-- confirmation checkbox -->
+  <ion-list>
+    <ion-item>
+      <ion-label>Confirm</ion-label>
+      <ion-checkbox color="primary" slot="end" [checked]="confirmCheckbox" [(ngModel)]="confirmCheckbox">
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <!-- action buttons -->
+  <ion-buttons class="ion-align-items-center ion-padding">
+    <ion-button class="st-button-full" color="primary" (click)="confirm()" [disabled]="!confirmCheckbox">
+      Confirm
+    </ion-button>
+    <ion-button class="st-button-full" color="danger" (click)="reject()" [disabled]="!confirmCheckbox">
+      Reject
+    </ion-button>
+  </ion-buttons>
+</ion-content>

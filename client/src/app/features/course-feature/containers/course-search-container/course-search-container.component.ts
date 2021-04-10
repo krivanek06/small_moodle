@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {CourseCategory, CourseFeatureDatabaseService, CoursePublic} from '@app/features/course-feature';
 import {Observable} from "rxjs";
-import {switchMap} from "rxjs/operators";
+import {switchMap, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-course-search-container',
@@ -13,7 +13,7 @@ export class CourseSearchContainerComponent implements OnInit {
   @Output() selectedCourseEmitter: EventEmitter<CoursePublic> = new EventEmitter<CoursePublic>();
 
   @Input() allowCourseSelect = false;
-  @Input() defaultCategory: string;
+  @Input() defaultCategory: string = 'all';
 
   form: FormGroup;
 
@@ -37,14 +37,14 @@ export class CourseSearchContainerComponent implements OnInit {
     this.watchForm();
     this.categories$ = this.courseFeatureDatabaseService.getCourseCategories();
 
-    if (!!this.defaultCategory) {
-      this.foundCourses$ = this.courseFeatureDatabaseService.getCoursesBy(this.defaultCategory, 2021);
-    }
+    setTimeout(() => {
+      this.category.patchValue(this.defaultCategory);
+    });
   }
 
-  selectCourse() {
+  selectCourse(coursePublic: CoursePublic) {
     if (this.allowCourseSelect) {
-      // this.selectedCourseEmitter.emit(coursePublic); // TODO change later
+      this.selectedCourseEmitter.emit(coursePublic);
     }
   }
 
@@ -52,6 +52,7 @@ export class CourseSearchContainerComponent implements OnInit {
     this.foundCourses$ = this.form.valueChanges.pipe(
       switchMap(form => this.courseFeatureDatabaseService.getCoursesBy(form.category, form.year))
     )
+
   }
 
   private initForm() {

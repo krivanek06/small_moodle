@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {
+  convertCourseIntoCoursePublic,
+  Course,
   COURSE_ROLES_ENUM,
   CourseFeatureDatabaseService,
   CourseFeatureStoreService,
@@ -10,7 +12,7 @@ import {
   StCourseStudent
 } from '@app/features/course-feature';
 import {PopoverController} from '@ionic/angular';
-import {StUserMain} from '@app/features/authentication-feature';
+import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
 import {COURSE_INVITATION_TYPE} from '../model/course.enum';
 import {IonicDialogService} from '@app/core';
 import {CourseCreate, CourseInviteMemberConfirm,} from '../model/course-module.interface';
@@ -18,6 +20,7 @@ import {InlineInputPopUpComponent} from '@shared/entry-points/inline-input-pop-u
 import {Router} from '@angular/router';
 import {createCourseInvitation} from "@course-feature/utils/course.builder";
 import {CourseMemberInformationModalComponent} from "@app/pages/course/entry-points/course-member-information-modal/course-member-information-modal.component";
+import {CourseStudentsInvitationConfirmationPopOverComponent} from "@course-feature/entry-points/course-students-invitation-confirmation-pop-over/course-students-invitation-confirmation-pop-over.component";
 
 @Injectable({
   providedIn: 'root',
@@ -26,11 +29,33 @@ export class CourseFeatureFacadeService {
   constructor(private popoverController: PopoverController,
               private courseFeatureDatabaseService: CourseFeatureDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
+              private authFeatureStoreService: AuthFeatureStoreService,
               private router: Router) {
   }
 
   navigateToCoursePage() {
     this.router.navigate(['menu', 'course', this.courseFeatureStoreService.course.courseId]);
+  }
+
+  async enrolIntoCourse(course: CoursePublic) {
+    // check if already member
+    if (this.authFeatureStoreService.user.courses.map(c => c.course.courseId).includes(course.courseId)) {
+      IonicDialogService.presentToast(`Your are already enrolled into course ${course.longName}`);
+      return
+    }
+
+    // check if sent or got invitation
+    if (this.authFeatureStoreService.user.courseSentInvitations.map(c => c.courseId).includes(course.courseId)) {
+      IonicDialogService.presentToast(`Your sent and invitation into course ${course.longName}`);
+      return
+    }
+
+    const message = `Do you want to enroll into course ${course.longName}, [${course.year}] as student ?`;
+    if (await IonicDialogService.presentAlertConfirm(message)) {
+      await this.courseFeatureDatabaseService.toggleStudentInvitation(course, this.authFeatureStoreService.userMain, true);
+      await this.courseFeatureDatabaseService.toggleCourseSentInvitations(this.authFeatureStoreService.userMain, course, true);
+      IonicDialogService.presentToast(`Your request has been sent, please wait for confirmation`);
+    }
   }
 
 
@@ -94,6 +119,34 @@ export class CourseFeatureFacadeService {
     return {confirm, role};
   }
 
+  async courseStudentInvitation(userMain: StUserMain, course: Course) {
+    const modal = await this.popoverController.create({
+      component: CourseStudentsInvitationConfirmationPopOverComponent,
+      cssClass: 'custom-popover',
+      componentProps: {
+        userMain
+      },
+    });
+
+    await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+    const accept = resultPromise.data?.accept as boolean;
+    const coursePublic = convertCourseIntoCoursePublic(course);
+
+    if (accept === true) {
+      await this.courseFeatureDatabaseService.toggleStudentInvitation(coursePublic, userMain, false);
+      await this.courseFeatureDatabaseService.increaseStudents(coursePublic.courseId, true);
+      await this.courseFeatureDatabaseService.saveCourseForUser(userMain, coursePublic, COURSE_ROLES_ENUM.STUDENT);
+      await this.courseFeatureDatabaseService.addPersonIntoCourse(coursePublic, userMain, COURSE_ROLES_ENUM.STUDENT);
+      await this.courseFeatureDatabaseService.toggleCourseSentInvitations(userMain, coursePublic, false)
+      IonicDialogService.presentToast(`${userMain.displayName}'s invitation has been accepted`);
+    }else if (accept === false){
+      await this.courseFeatureDatabaseService.toggleStudentInvitation(course, userMain, false);
+      await this.courseFeatureDatabaseService.toggleCourseSentInvitations(userMain, coursePublic, false)
+      IonicDialogService.presentToast(`${userMain.displayName}'s invitation has been declined`);
+    }
+  }
+
   async showCourseStudent(courseStudent: StCourseStudent) {
     const modal = await this.popoverController.create({
       component: CourseMemberInformationModalComponent,
@@ -111,7 +164,6 @@ export class CourseFeatureFacadeService {
         // removing from course
         if (await IonicDialogService.presentAlertConfirm(`Confirm removing ${courseStudent.displayName} from course ${course.longName}`)) {
           await this.courseFeatureDatabaseService.removeStudentFromCourse(course, courseStudent, COURSE_ROLES_ENUM.STUDENT);
-          // TODO
           IonicDialogService.presentToast(`Studnet ${courseStudent.displayName} has been removed from course`);
         }
       } else if (resultPromise.data.grade) {

@@ -11,7 +11,7 @@ import {ModalController} from "@ionic/angular";
 import {IonicDialogService} from "@app/core";
 import {Observable} from "rxjs";
 import {map, withLatestFrom} from "rxjs/operators";
-import {AuthFeatureStoreService, StUserPublic} from "@app/features/authentication-feature";
+import {AuthFeatureStoreService, StUserMain, StUserPublic} from "@app/features/authentication-feature";
 import {CourseTest} from "@app/features/course-test-feature";
 
 @Injectable()
@@ -66,6 +66,10 @@ export class CourseFacadeService {
       await this.courseFeatureDatabaseService.editCourse(courseCreate);
       IonicDialogService.presentToast(`Course ${courseCreate.coursePublic.longName} has been edited`);
     }
+  }
+
+  courseStudentInvitation(userMain: StUserMain) {
+    this.courseFeatureFacadeService.courseStudentInvitation(userMain, this.courseFeatureStoreService.course)
   }
 
 }

@@ -89,7 +89,7 @@
               <!-- students -->
               <ion-list>
                 <ion-list-header>
-                  <ion-label>Students</ion-label>
+                  <ion-label class="st-section-title">Students</ion-label>
                 </ion-list-header>
                 <ion-row>
                   <ion-col *ngFor="let marker of course.students" size="12" size-sm="6" size-md="4">
@@ -102,7 +102,17 @@
                 </ion-row>
               </ion-list>
 
+              <!-- only authorized users -->
               <ng-container *ngIf="isCourseTeacherOrMarker$ | async">
+                <!-- received requests -->
+                <app-account-identification-list
+                  *ngIf="course.receivedStudentsInvitations.length > 0"
+                  (clickedItemEmitter)="showStudentInvitation($event)"
+                  [title]="'Received requests'"
+                  [enableClick]="true"
+                  [members]="course.receivedStudentsInvitations">
+                </app-account-identification-list>
+
                 <!-- invited students -->
                 <app-account-identification-list
                   *ngIf="course.invitedStudents.length > 0"

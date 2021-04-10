@@ -55,15 +55,27 @@
         <!-- sidebar info -->
         <ion-col size="12" size-xl="3">
           <ion-row>
-            <!-- course invitations -->
+            <!-- course received invitations -->
             <ion-col size="12">
-              <app-generic-card [title]="'Course invitations'">
+              <app-generic-card [title]="'Received invitations'">
                 <app-course-invitations
                   [courseInvitations]="user.courseInvitations"
                   (clickedInvitationEmitter)="showCourseInvitation($event)">
                 </app-course-invitations>
               </app-generic-card>
             </ion-col>
+
+            <!-- course sent invitations -->
+            <ion-col size="12">
+              <app-generic-card [title]="'Sent invitations'">
+                <ion-list>
+                  <ion-item button *ngFor="let coursePublic of user.courseSentInvitations" (click)="discardSentInvitation(coursePublic)">
+                    <ion-label>[{{ coursePublic.shortName }}]{{ coursePublic.longName }}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </app-generic-card>
+            </ion-col>
+
 
             <!-- test calendar
             <ion-col size="12">

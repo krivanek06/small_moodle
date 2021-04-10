@@ -28,7 +28,7 @@ export interface CoursePrivate {
   students: StCourseStudent[];
   invitedMarkers: StUserMain[];
   invitedStudents: StUserMain[];
-  receivedStudentsInvitations: StCourseStudent[];
+  receivedStudentsInvitations: StUserMain[];
 }
 
 export interface Course extends CoursePublic, CoursePrivate {

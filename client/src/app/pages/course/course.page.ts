@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {StUserPublic} from '@app/features/authentication-feature';
+import {StUserMain, StUserPublic} from '@app/features/authentication-feature';
 import {Course, StCourseStudent,} from '@app/features/course-feature';
 import {Observable} from 'rxjs';
 import {
@@ -78,5 +78,9 @@ export class CoursePage implements OnInit {
 
   editExistingCourse() {
     this.courseFacadeService.editExistingCourse();
+  }
+
+  showStudentInvitation(userMain: StUserMain) {
+    this.courseFacadeService.courseStudentInvitation(userMain);
   }
 }

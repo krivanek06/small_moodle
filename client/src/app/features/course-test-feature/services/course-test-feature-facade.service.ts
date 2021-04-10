@@ -47,7 +47,8 @@ export class CourseTestFeatureFacadeService {
         const courseTestPublic = convertCourseTestIntoCourseTestPublic(courseTest);
         this.courseFeatureDatabaseService.addCourseTestIntoPublic(courseTestPublic);
       }
-      this.courseTestDatabaseService.saveCourseTest(courseTest);
+      await this.courseTestDatabaseService.saveCourseTest(courseTest);
+      await this.courseFeatureDatabaseService.increaseTests(courseTest.course.courseId, true);
       this.presentToaster(action, courseTest);
       return true
     }
@@ -78,6 +79,7 @@ export class CourseTestFeatureFacadeService {
   async deleteCourseTest(courseTest: CourseTest): Promise<boolean> {
     if (await this.presentDialog('delete', courseTest)) {
       await this.courseTestDatabaseService.deleteCourseTest(courseTest);
+      await this.courseFeatureDatabaseService.increaseTests(courseTest.course.courseId, false);
       this.presentToaster('deleted', courseTest);
       return true;
     }

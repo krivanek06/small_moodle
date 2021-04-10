@@ -7,8 +7,7 @@ import {CourseInvitation} from '@app/features/course-feature';
   styleUrls: ['./course-invitations.component.scss'],
 })
 export class CourseInvitationsComponent implements OnInit {
-  @Output()
-  clickedInvitationEmitter: EventEmitter<CourseInvitation> = new EventEmitter<CourseInvitation>();
+  @Output() clickedInvitationEmitter: EventEmitter<CourseInvitation> = new EventEmitter<CourseInvitation>();
 
   @Input() courseInvitations: CourseInvitation[] = [];
 

@@ -1,14 +1,17 @@
 <!-- select form -->
 <ion-list class="ion-padding ion-text-center">
-  <ion-text class="st-title"> Search course</ion-text>
+  <ion-title class="st-section-title ion-margin-bottom"> Search course</ion-title>
 
   <form [formGroup]="form" style="margin-bottom: 40px">
     <ion-item-group class="st-flex ion-justify-content-between">
       <ng-container *ngIf="categories$ | async as categoryWrapper">
         <ion-item class="st-width-100 ion-margin-horizontal st-item-form">
           <ion-label position="floating">Course category</ion-label>
-          <ion-select *ngIf="categoryWrapper.data[0] as data" [value]="defaultCategory" interface="popover"
+          <ion-select *ngIf="categoryWrapper.data[0] as data"
+                      [value]="defaultCategory"
+                      interface="popover"
                       formControlName="category">
+            <ion-select-option value="all">All categories</ion-select-option>
             <ion-select-option *ngFor="let c of data.categories" [value]="c.name">
               {{ c.name }}
             </ion-select-option>
@@ -30,28 +33,28 @@
 
 <!-- course result -->
 <ion-list class="ion-padding ion-text-center">
-  <ion-text class="st-title" *ngIf="foundCourses$ | async as courses">
-    Courses {{ year.value }} {{ category.value }}, founded {{courses.length}}
-  </ion-text>
+  <ion-title class="st-section-title ion-margin-bottom">
+    Courses {{ year.value }} {{ category.value }}, founded {{(foundCourses$ | async)?.length}}
+  </ion-title>
 
   <ion-item class="st-font-1-bold">
     <ion-label>Name</ion-label>
     <ion-label>Teacher</ion-label>
     <ion-label>Students</ion-label>
-    <ion-label>Success rate</ion-label>
     <ion-label>Tests</ion-label>
     <ion-label>Course start</ion-label>
     <ion-label>Course end</ion-label>
+    <ion-label>Category</ion-label>
   </ion-item>
 
-  <ion-item [button]="allowCourseSelect" *ngFor="let findCourse of foundCourses$ | async" (click)="selectCourse()">
+  <ion-item [button]="allowCourseSelect" *ngFor="let findCourse of foundCourses$ | async" (click)="selectCourse(findCourse)">
     <ion-label>{{ findCourse.longName }}</ion-label>
     <ion-label>{{ findCourse.creator.displayName }}</ion-label>
     <ion-label>{{ findCourse.numberOfStudents }}</ion-label>
-    <ion-label>TODO</ion-label>
     <ion-label>{{ findCourse.numberOfTests }}</ion-label>
     <ion-label>{{ findCourse.durationFrom | date: 'dd.MM.yyyy' }}</ion-label>
     <ion-label>{{ findCourse.durationTo | date: 'dd.MM.yyyy' }}</ion-label>
+    <ion-label>{{ findCourse.category }}</ion-label>
   </ion-item>
 </ion-list>
 

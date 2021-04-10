@@ -6,7 +6,7 @@ import {
   CourseCreateEntryPointComponent,
   CourseFeatureDatabaseService,
   CourseFeatureFacadeService,
-  CourseInvitation,
+  CourseInvitation, CoursePublic,
   CourseSearchModalComponent,
   CoursesUserAccountInfoModalComponent
 } from '@app/features/course-feature';
@@ -29,12 +29,19 @@ export class DashboardAuthenticatedFacadeService {
     return this.courseFeatureDatabaseService.getCourseCategories();
   }
 
+  async discardSentInvitation(coursePublic: CoursePublic) {
+    await this.courseFeatureDatabaseService.toggleStudentInvitation(coursePublic, this.authService.userMain, false);
+    await this.courseFeatureDatabaseService.toggleCourseSentInvitations(this.authService.userMain, coursePublic, false);
+    IonicDialogService.presentToast(`Your invitation has been removed from course ${coursePublic.longName}`);
+  }
+
   async showCourseInvitation(invitation: CourseInvitation) {
     const longName = invitation.course.longName;
     const message = `Accept invitation into course ${longName}`;
     const result = await this.courseFeatureFacadeService.courseMemberInvitationConfirmation(message, invitation.course, invitation.invitedAs, true);
 
     if (result?.confirm) {
+      await this.courseFeatureDatabaseService.increaseStudents(invitation.course.courseId, true);
       await this.courseFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(this.authService.userMain, invitation, false);
       await this.courseFeatureDatabaseService.saveCourseForUser(this.authService.user, invitation.course, invitation.invitedAs);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);

@@ -36,6 +36,7 @@ export interface StUserPrivate {
   logs: UserLogs[];
   activeTest: CourseTestPublic;
   courseInvitations: CourseInvitation[];
+  courseSentInvitations: CoursePublic[];
 }
 
 export interface UserLogs {
@@ -131,6 +132,10 @@ export class StUserClass implements StUser {
 
   get photoURL(): string {
     return this.publicData.photoURL;
+  }
+
+  get courseSentInvitations(): CoursePublic[] {
+    return this.privateData.courseSentInvitations;
   }
 
   isTeacher(): boolean {

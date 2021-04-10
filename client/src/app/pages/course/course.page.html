@@ -15,10 +15,12 @@
     <!-- course info -->
     <app-grid-page-content>
       <div class="st-flex ion-justify-content-between">
-        <ion-text style="font-size: 21px" color="primary" >
+        <ion-text style="font-size: 21px" color="primary">
           Course: [{{ course.shortName }}] {{ course.longName }}
         </ion-text>
-        <ion-button shape="round" fill="solid" color="warning" (click)="editExistingCourse()">
+        <ion-button shape="round" fill="solid" color="warning"
+                    *ngIf="isCourseTeacher$ | async"
+                    (click)="editExistingCourse()">
           Edit course
         </ion-button>
       </div>
@@ -58,7 +60,7 @@
         <ion-col size="12" size-lg="10" size-xl="9">
           <app-generic-card [title]="'Completed tests'">
             <app-course-test-student-completed-table
-              (clickedEmitter)="navigateToCourseTest($event)"
+              (clickedEmitter)="navigateToCompletedCourseTest($event)"
               [courseTakenTests]="studentTests$ | async">
             </app-course-test-student-completed-table>
           </app-generic-card>

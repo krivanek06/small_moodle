@@ -88,7 +88,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
 
   submitForm() {
     this.form.markAllAsTouched();
-    if (this.form.invalid) {
+    if (this.form.invalid || this.gradings.length === 0) {
       this.showUnfilledInformationError = true;
       return;
     }

@@ -1,0 +1,7 @@
+<ng-container *ngIf="courseTakenTest$ | async as courseTakenTest">
+  <!-- test questions -->
+  <app-course-test-form
+    [state]="courseTakenTest.testFormState"
+    [courseTest]="courseTakenTest$ | async">
+  </app-course-test-form>
+</ng-container>

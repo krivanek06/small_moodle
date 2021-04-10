@@ -11,9 +11,9 @@ import {
   CourseTestStateEnum,
   CourseTestTaken
 } from '@app/features/course-test-feature';
-import {first} from "rxjs/operators";
-import {IonicDialogService} from "@app/core";
+import {Confirmable} from "@app/core";
 import {CourseFacadeService} from "@app/pages/course/services/course-facade.service";
+import {CourseTestFeatureFacadeStudentTestService} from "@course-test-feature/services/course-test-feature-facade-student-test.service";
 
 @Component({
   selector: 'app-course',
@@ -29,7 +29,7 @@ export class CoursePage implements OnInit {
 
   constructor(private router: Router,
               private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
+              private courseTestFeatureFacadeStudentTestService: CourseTestFeatureFacadeStudentTestService,
               private courseFacadeService: CourseFacadeService) {
   }
 
@@ -56,20 +56,15 @@ export class CoursePage implements OnInit {
     this.router.navigate([`menu/course-test/${path}/${courseTest.testId}`]);
   }
 
+  @Confirmable('Do you wish to start the test ?')
   async startTest(courseTest: CourseTestPublic) {
-    const completedTests = await this.studentTests$.pipe(first()).toPromise();
-    if (completedTests.map(t => t.testId).includes(courseTest.testId)) {
-      IonicDialogService.presentToast(`You have already start or finished ${courseTest.testName}`);
-      return
-    }
-    if (await this.courseTestFeatureFacadeService.startCourseTest(courseTest)) {
-      this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
-    }
+    await this.courseTestFeatureFacadeStudentTestService.startCourseTest(courseTest);
+    this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
   }
 
-  navigateToCourseTest(courseTestTaken: CourseTestTaken) {
+  navigateToCompletedCourseTest(courseTestTaken: CourseTestTaken) {
     this.courseTestFeatureStoreService.setStudentCourseTest(courseTestTaken);
-    this.router.navigate([`menu/course-test/submit/${courseTestTaken.testId}`]);
+    this.router.navigate([`menu/course-test/completed/${courseTestTaken.testId}`]);
   }
 
   showCourseStudent(courseStudent: StCourseStudent) {

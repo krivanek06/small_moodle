@@ -1,15 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {combineLatest, Observable, timer} from 'rxjs';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {combineLatest, Observable} from 'rxjs';
 import {CourseFeatureFacadeService} from '@app/features/course-feature';
-import {
-  CourseTestFeatureFacadeService,
-  CourseTestFeatureStoreService,
-  CourseTestFormComponent,
-  CourseTestFormStateEnum,
-  CourseTestTaken,
-} from '@app/features/course-test-feature';
-import {filter, first, map, switchMap, take} from "rxjs/operators";
+import {CourseTestFormComponent, CourseTestTaken,} from '@app/features/course-test-feature';
+import {first} from "rxjs/operators";
 import {Confirmable, IonicDialogService} from "@app/core";
+import {CourseTestFeatureFacadeStudentTestService} from "@course-test-feature/services/course-test-feature-facade-student-test.service";
 
 @Component({
   selector: 'app-course-test-submit',
@@ -19,22 +14,20 @@ import {Confirmable, IonicDialogService} from "@app/core";
 export class CourseTestSubmitComponent implements OnInit {
   @ViewChild(CourseTestFormComponent) courseTestForm: CourseTestFormComponent;
 
-  CourseTestFormStateEnum = CourseTestFormStateEnum;
-
   courseTakenTest$: Observable<CourseTestTaken>;
-
   oneMinuteCountdown$: Observable<number>;
   remainingMinutesCountDown$: Observable<number>;
-  minutes$: Observable<number>;
 
-  constructor(private courseTestFacadeService: CourseTestFeatureFacadeService,
-              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
+
+  constructor(private courseTestFeatureFacadeStudentTestService: CourseTestFeatureFacadeStudentTestService,
               private courseFeatureFacadeService: CourseFeatureFacadeService) {
   }
 
   ngOnInit() {
-    this.courseTakenTest$ = this.courseTestFeatureStoreService.getStudentCourseTest();
-    this.initTestCountDown();
+    this.courseTakenTest$ = this.courseTestFeatureFacadeStudentTestService.getStudentCourseTest();
+    this.oneMinuteCountdown$ = this.courseTestFeatureFacadeStudentTestService.getOneMinuteCountdown();
+    this.remainingMinutesCountDown$ = this.courseTestFeatureFacadeStudentTestService.getRemainingMinutesCountDown();
+
     this.monitorAutomaticSubmission();
   }
 
@@ -43,32 +36,14 @@ export class CourseTestSubmitComponent implements OnInit {
     this.sendTestToSubmit();
   }
 
-  private initTestCountDown() {
-    this.minutes$ = this.courseTakenTest$.pipe(
-      filter(x => !!x),
-      map(test => {
-        const finalTime = new Date(new Date(test.timeStarted).getTime() + test.duration * 60000);
-        const minutes = Math.floor((finalTime.getTime() - new Date().getTime()) / 60000);
-        return minutes;
-      })
-    );
+  @HostListener('document:mouseenter', ['$event'])
+  mouseenter() {
+    this.courseTestFeatureFacadeStudentTestService.pauseTimer();
+  }
 
-    this.remainingMinutesCountDown$ = this.minutes$.pipe(
-      filter(minutes => minutes > 0),
-      switchMap(remainingMinutes =>
-        timer(remainingMinutes, 60000).pipe(
-          map(i => remainingMinutes - i),
-          take(remainingMinutes + 1)
-        )));
-
-    this.oneMinuteCountdown$ = this.remainingMinutesCountDown$.pipe(
-      switchMap(tick => {
-        const oneMinute = 60;
-        return timer(oneMinute, 1000).pipe(
-          map(i => oneMinute - i),
-          take(oneMinute + 1)
-        )
-      }));
+  @HostListener('document:mouseleave', ['$event'])
+  mouseleave() {
+    this.courseTestFeatureFacadeStudentTestService.startTimer();
   }
 
   private monitorAutomaticSubmission() {
@@ -81,8 +56,10 @@ export class CourseTestSubmitComponent implements OnInit {
   }
 
   private async sendTestToSubmit() {
-    await this.courseTestFacadeService.submitCompletedCourseTest(this.courseTestForm.submitForm());
+    await this.courseTestFeatureFacadeStudentTestService.submitCourseTest(this.courseTestForm.submitForm());
     this.courseFeatureFacadeService.navigateToCoursePage();
     IonicDialogService.presentToast('Test has been submitted');
   }
 }
+
+

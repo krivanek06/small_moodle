@@ -84,37 +84,7 @@ export class CourseTestFeatureFacadeService {
     return false;
   }
 
-  // TODO pozri zaciatok casu ci mozem zacat / pokracovat test
-  async startCourseTest(courseTest: CourseTestPublic): Promise<boolean> {
-    const courseId = courseTest.course.courseId;
-    const testId = courseTest.testId;
-    const user = this.authFeatureStoreService.userMain;
-    //const studentTest = await this.courseTestDatabaseService.getStudentCourseTest(courseId, testId, user.uid).pipe(first()).toPromise();
 
-    // student already started test
-   /* if (studentTest) {
-      if (await this.presentDialog('continues', courseTest)) {
-        this.courseTestFeatureStoreService.setStudentCourseTest(studentTest);
-        IonicDialogService.presentToast(`You are continuing ${studentTest.testName}`);
-        return true;
-      }
-      return false;
-    }*/
-
-    // student start test first time
-    if (await this.presentDialog('start', courseTest)) {
-      // load course test
-      const test = await this.courseTestDatabaseService.getCourseTest(courseId, testId).pipe(first()).toPromise();
-      const takenTest = convertCourseTestIntoCourseTestTaken(test, user);
-
-      // save for student
-      this.courseTestDatabaseService.saveStudentCourseTest(takenTest);
-      this.courseTestFeatureStoreService.setStudentCourseTest(takenTest);
-      this.presentToaster('started', courseTest);
-      return true;
-    }
-    return false;
-  }
 
   async assignMarkerOnCourseTest(takenTest: CourseTestTaken) {
     const user = this.authFeatureStoreService.userMain;
@@ -128,18 +98,6 @@ export class CourseTestFeatureFacadeService {
     };
     this.courseTestDatabaseService.saveStudentCourseTest(courseTestTaken);
     IonicDialogService.presentToast(`Marker ${user.displayName} has been assign on test ${courseTestTaken.testName}`);
-  }
-
-  async submitCompletedCourseTest({questions}: CourseTest) {
-    const takenTest = this.courseTestFeatureStoreService.studentCourseTest;
-    const courseTestTaken: CourseTestTaken = {
-      ...takenTest,
-      questions,
-      timeEnded: getCurrentIOSDate(),
-      testFormState: CourseTestFormStateEnum.GRADE,
-      timeAwayOfTest: 540, // TODO implement
-    };
-    this.courseTestDatabaseService.saveStudentCourseTest(courseTestTaken);
   }
 
   async gradeCourseTest(oldTest: CourseTestTaken, modifiedTest: CourseTest): Promise<void> {

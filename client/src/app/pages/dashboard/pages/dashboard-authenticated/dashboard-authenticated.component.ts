@@ -24,6 +24,7 @@ export class DashboardAuthenticatedComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('user', this.user)
     this.categories$ = this.dashboardAuthenticatedFacadeService.getCourseCategories();
   }
 

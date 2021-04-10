@@ -38,11 +38,12 @@
     <ion-list-header class="ion-justify-content-center">
       <ion-label class="ion-text-center">Add grade</ion-label>
     </ion-list-header>
-    <ion-buttons class="st-flex ion-justify-content-center">
-      <ion-button *ngFor="let grade of course.gradings" (click)="addGrade(grade)" fill="outline" style="width: 100px">
+    <!-- grading buttons -->
+    <div class="st-flex-col">
+      <ion-button *ngFor="let grade of course.gradings" (click)="addGrade(grade)" fill="outline" class="ion-margin-bottom st-width-100">
         {{ grade.mark }}
       </ion-button>
-    </ion-buttons>
+    </div>
   </ion-list>
 
   <!-- remove buttons -->

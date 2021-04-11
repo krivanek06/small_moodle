@@ -11,6 +11,7 @@ import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
 import {CourseFeatureFacadeService} from "@app/features/course-feature";
+import {Confirmable} from "@app/core";
 
 @Component({
   selector: 'app-course-test-edit',
@@ -53,8 +54,10 @@ export class CourseTestEditComponent implements OnInit {
     }
   }
 
-  sendTestToApproval() {
-    this.courseTestFeatureFacadeService.sendTestToApproval(this.checkForm());
+  @Confirmable('Please confirm sending test for approval')
+  async sendTestToApproval() {
+    await this.courseTestFeatureFacadeService.sendTestToApproval(this.checkForm());
+    this.courseFeatureFacadeService.navigateToCoursePage();
   }
 
   private checkForm(): CourseTest {

@@ -10,15 +10,17 @@
       </ng-container>
 
       <ng-template #decide>
-        <!-- creator's buttons -->
-        <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid">
+        <!-- creator's buttons, in progress -->
+        <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid &&
+            courseTestPublic.testState === CourseTestStateEnum.IN_PROGRESS">
           <ion-button shape="round" fill="solid" color="primary" (click)="saveTest()">Save</ion-button>
           <ion-button shape="round" fill="solid" color="success" (click)="sendToApproval()">Send to approve</ion-button>
           <ion-button shape="round" fill="solid" color="danger" (click)="deleteTest()">Delete</ion-button>
         </ng-container>
 
-        <!-- teachers's buttons -->
-        <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid">
+        <!-- teachers's buttons, waiting for approval -->
+        <ng-container *ngIf="loggedInUser.uid === courseTestPublic.course.creator.uid &&
+        courseTestPublic.testState === CourseTestStateEnum.WAITING_FOR_APPROVAL">
           <ion-button shape="round" fill="solid" color="success" (click)="approveTest(true)">Approve</ion-button>
           <ion-button shape="round" fill="solid" color="danger" (click)="approveTest(false)">Disapprove</ion-button>
         </ng-container>

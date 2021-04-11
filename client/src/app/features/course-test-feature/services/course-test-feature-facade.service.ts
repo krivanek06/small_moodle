@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {getCurrentIOSDate, IonicDialogService} from '@app/core';
+import {IonicDialogService} from '@app/core';
 import {
   CourseTest,
   CourseTestPublic,
@@ -7,10 +7,7 @@ import {
   CourseTestTaken,
 } from '../model/course-test-firebase.model';
 import {CourseTestFormStateEnum, CourseTestStateEnum,} from '../model/course-test.enums';
-import {
-  convertCourseTestIntoCourseTestPublic,
-  convertCourseTestIntoCourseTestTaken,
-} from '../utils/course-test.convertor';
+import {convertCourseTestIntoCourseTestPublic,} from '../utils/course-test.convertor';
 import {AuthFeatureStoreService} from '@app/features/authentication-feature';
 import {CourseTestFeatureDatabaseService, CourseTestFeatureStoreService} from '@app/features/course-test-feature';
 import {
@@ -18,7 +15,7 @@ import {
   CourseFeatureDatabaseService,
   CourseFeatureStoreService
 } from '@app/features/course-feature';
-import {first, switchMap} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -40,7 +37,7 @@ export class CourseTestFeatureFacadeService {
   }
 
   async approveCourseTest(approve: boolean, courseTest: CourseTest): Promise<boolean> {
-    const action = approve ? 'approved' : 'deleted';
+    const action = approve ? 'approved' : 'disapprove';
     if (await this.presentDialog(action, courseTest)) {
       courseTest.testState = approve ? CourseTestStateEnum.APPROVED : CourseTestStateEnum.IN_PROGRESS;
       if (approve) {
@@ -66,14 +63,9 @@ export class CourseTestFeatureFacadeService {
   }
 
   async sendTestToApproval(courseTest: CourseTest) {
-    if (!courseTest) {
-      return;
-    }
-    if (await this.presentDialog('submit for approval test:', courseTest)) {
-      courseTest.testState = CourseTestStateEnum.WAITING_FOR_APPROVAL;
-      this.courseTestDatabaseService.saveCourseTest(courseTest);
-      this.presentToaster('sent for approval', courseTest);
-    }
+    courseTest.testState = CourseTestStateEnum.WAITING_FOR_APPROVAL;
+    await this.courseTestDatabaseService.saveCourseTest(courseTest);
+    this.presentToaster('sent for approval', courseTest);
   }
 
   async deleteCourseTest(courseTest: CourseTest): Promise<boolean> {
@@ -85,7 +77,6 @@ export class CourseTestFeatureFacadeService {
     }
     return false;
   }
-
 
 
   async assignMarkerOnCourseTest(takenTest: CourseTestTaken) {

@@ -7,6 +7,7 @@ import {CourseTestInfoComponent} from './components/course-test-info/course-test
 import {CourseTestFormButtonsComponent} from './components/course-test-form-buttons/course-test-form-buttons.component';
 import {AccountFeatureModule} from '@account-feature/account-feature.module';
 import {CourseTestTakenTableComponent} from './components/course-test-taken-table/course-test-taken-table.component';
+import { TestStateDirective } from './directives/test-state.directive';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {CourseTestTakenTableComponent} from './components/course-test-taken-tabl
     CourseTestInfoComponent,
     CourseTestFormButtonsComponent,
     CourseTestTakenTableComponent,
+    TestStateDirective,
   ],
   imports: [SharedModule, AccountFeatureModule],
   exports: [

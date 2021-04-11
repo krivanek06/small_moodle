@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {CourseTestPublic} from '@app/features/course-test-feature';
+import {CourseTestPublic, CourseTestStateEnum} from '@app/features/course-test-feature';
 import {StUserMain} from '@app/features/authentication-feature';
 
 @Component({
@@ -17,6 +17,8 @@ export class CourseTestFormButtonsComponent implements OnInit, OnChanges {
   @Input() loggedInUser: StUserMain;
 
   showSomething = false;
+
+  CourseTestStateEnum = CourseTestStateEnum;
 
   constructor() {
   }

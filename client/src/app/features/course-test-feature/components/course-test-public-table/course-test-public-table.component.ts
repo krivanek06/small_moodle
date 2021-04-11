@@ -7,8 +7,7 @@ import { CourseTestPublic } from '@app/features/course-test-feature';
   styleUrls: ['./course-test-public-table.component.scss'],
 })
 export class CourseTestPublicTableComponent implements OnInit {
-  @Output()
-  clickedEmitter: EventEmitter<CourseTestPublic> = new EventEmitter<CourseTestPublic>();
+  @Output() clickedEmitter: EventEmitter<CourseTestPublic> = new EventEmitter<CourseTestPublic>();
 
   @Input() courseTests: CourseTestPublic[] = [];
 

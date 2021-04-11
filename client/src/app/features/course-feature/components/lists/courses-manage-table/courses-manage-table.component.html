@@ -3,6 +3,7 @@
   <ion-item class="st-font-1-bold">
     <ion-label>Name</ion-label>
     <ion-label>Role</ion-label>
+    <ion-label>Category</ion-label>
     <!--<ion-label *ngIf="authenticatedUser">Unrated tests</ion-label>
     <ion-label *ngIf="authenticatedUser">Nearest test</ion-label>-->
     <ion-label>Course start</ion-label>
@@ -13,6 +14,7 @@
   <ion-item [button]="enableClick" *ngFor="let userCourse of userCourses" (click)="clickedCourse(userCourse)">
     <ion-label>{{ userCourse.course.longName }}</ion-label>
     <ion-label>{{ userCourse.role }}</ion-label>
+    <ion-label>{{ userCourse.course.category }}</ion-label>
    <!-- <ion-label *ngIf="authenticatedUser">{{userCourse.course.numberOfTests}}</ion-label>
     <ion-label *ngIf="authenticatedUser">{{userCourse.course.confirmedTests | courseNearestTest}}</ion-label>-->
     <ion-label>{{userCourse.course.durationFrom | date: "dd.MM.YYYY"}}</ion-label>

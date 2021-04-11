@@ -5,6 +5,7 @@
     <!--<ion-label *ngIf="authenticatedUser">Points</ion-label>
     <ion-label *ngIf="authenticatedUser">Position</ion-label>
     <ion-label *ngIf="authenticatedUser">Nearest test</ion-label>-->
+    <ion-label>Category</ion-label>
     <ion-label>Course start</ion-label>
     <ion-label>Course end</ion-label>
   </ion-item>
@@ -14,6 +15,7 @@
     <!--<ion-label *ngIf="authenticatedUser">{{course.students | courseReceivedPoints: authenticatedUser.uid}}</ion-label>
     <ion-label *ngIf="authenticatedUser">{{course.students | courseStudentPosition: authenticatedUser.uid}}</ion-label>
     <ion-label *ngIf="authenticatedUser"></ion-label>-->
+    <ion-label>{{ course.category }}</ion-label>
     <ion-label>{{ course.durationFrom | date: "dd.MM.YYYY" }}</ion-label>
     <ion-label>{{ course.durationTo | date: "dd.MM.YYYY" }}</ion-label>
   </ion-item>

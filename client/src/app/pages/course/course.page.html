@@ -107,7 +107,7 @@
                 <!-- received requests -->
                 <app-account-identification-list
                   *ngIf="course.receivedStudentsInvitations.length > 0"
-                  (clickedItemEmitter)="showStudentInvitation($event)"
+                  (clickedItemEmitter)="showStudentReceivedInvitation($event)"
                   [title]="'Received requests'"
                   [enableClick]="true"
                   [members]="course.receivedStudentsInvitations">
@@ -116,14 +116,18 @@
                 <!-- invited students -->
                 <app-account-identification-list
                   *ngIf="course.invitedStudents.length > 0"
+                  (clickedItemEmitter)="removeStudentInvitation($event)"
                   [title]="'Invited students'"
+                  [enableClick]="true"
                   [members]="course.invitedStudents">
                 </app-account-identification-list>
 
                 <!-- invited markers -->
                 <app-account-identification-list
                   *ngIf="course.invitedMarkers.length > 0"
+                  (clickedItemEmitter)="removeMarkerInvitation($event)"
                   [title]="'Invited markers'"
+                  [enableClick]="true"
                   [members]="course.invitedMarkers">
                 </app-account-identification-list>
               </ng-container>
@@ -137,10 +141,6 @@
                 <app-generic-card [title]="'Course grading'">
                   <app-course-grades-table [grades]="course.gradings">
                   </app-course-grades-table>
-                  <!-- changin grades ??? -->
-                  <!--<ion-buttons class="ion-justify-content-end c-small-padding">
-                    <ion-button color="warning" class="c-small-padding">Edit</ion-button>
-                  </ion-buttons> -->
                 </app-generic-card>
               </ion-col>
             </ion-row>

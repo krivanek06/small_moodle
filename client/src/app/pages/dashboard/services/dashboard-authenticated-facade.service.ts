@@ -31,7 +31,7 @@ export class DashboardAuthenticatedFacadeService {
 
   async discardSentInvitation(coursePublic: CoursePublic) {
     await this.courseFeatureDatabaseService.toggleStudentInvitation(coursePublic, this.authService.userMain, false);
-    await this.courseFeatureDatabaseService.toggleCourseSentInvitations(this.authService.userMain, coursePublic, false);
+    await this.courseFeatureDatabaseService.toggleUserCourseSentInvitations(this.authService.userMain, coursePublic, false);
     IonicDialogService.presentToast(`Your invitation has been removed from course ${coursePublic.longName}`);
   }
 
@@ -42,13 +42,13 @@ export class DashboardAuthenticatedFacadeService {
 
     if (result?.confirm) {
       await this.courseFeatureDatabaseService.increaseStudents(invitation.course.courseId, true);
-      await this.courseFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(this.authService.userMain, invitation, false);
+      await this.courseFeatureDatabaseService.toggleUserCourseReceivedInvitation(this.authService.userMain, invitation, false);
       await this.courseFeatureDatabaseService.saveCourseForUser(this.authService.user, invitation.course, invitation.invitedAs);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       IonicDialogService.presentToast(`Course ${longName} invitation has been accepted`);
     } else if (result?.confirm === false) {
-      await this.courseFeatureDatabaseService.addOrRemoveCourseInvitationForPerson(this.authService.userMain, invitation, false);
+      await this.courseFeatureDatabaseService.toggleUserCourseReceivedInvitation(this.authService.userMain, invitation, false);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       IonicDialogService.presentToast(`Course ${longName} invitation has been declined`);
     }

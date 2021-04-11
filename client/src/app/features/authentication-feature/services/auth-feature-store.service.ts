@@ -64,26 +64,6 @@ export class AuthFeatureStoreService {
     this.storageService.removeData(this.AUTH_KEY);
   }
 
-  /*isUserTeacher(): Boolean {
-    return this.user.roles.includes(USER_ROLES_ENUM.TEACHER);
-  }
-
-  isUserTeacherObs(): Observable<Boolean> {
-    return this.getUser().pipe(
-      map((user) => user.roles.includes(USER_ROLES_ENUM.TEACHER))
-    );
-  }
-
-  isUserAdmin(): Boolean {
-    return this.user.roles.includes(USER_ROLES_ENUM.ADMIN);
-  }
-
-  isUserAdminObs(): Observable<Boolean> {
-    return this.getUser().pipe(
-      map((user) => user.roles.includes(USER_ROLES_ENUM.ADMIN))
-    );
-  }*/
-
   private checkSavedUID() {
     const uid = this.getSavedUID();
     if (uid) {
@@ -101,31 +81,7 @@ export class AuthFeatureStoreService {
       }),
       map((userLogin) => {
         return new StUserClass(userLogin.uPublic, userLogin.uPrivate);
-        //return { ...userLogin.uPublic, ...userLogin.uPrivate } as StUser;
       })
     );
-
-    /*combineLatest([
-       this.firestore.doc(`users/${uid}`).valueChanges(),
-       this.firestore.doc(`users/${uid}/private_data/user_private`).valueChanges()
-     ]).pipe(
-       map(([uPublic, uPrivate]) => {
-         return {uPublic, uPrivate} as StUserLogin
-       }),
-       switchMap(userLogin => userLogin.uPublic.courses.map(c =>
-         combineLatest([
-           this.firestore.doc(`courses/${c.course.courseId}`).valueChanges(),
-           this.firestore.doc(`courses/${c.course.courseId}/private/private`).valueChanges()
-         ]).pipe(
-           map(([cPublic, cPrivate]) => {
-             return {cPublic, cPrivate}
-           }),
-         ),
-         switchMap(res => of({userLogin, res}))
-       )),
-      takeUntil(this.destroy$)
-     ).subscribe(res => {
-       res.subscribe(x => console.log('x', x))
-    })*/
   }
 }

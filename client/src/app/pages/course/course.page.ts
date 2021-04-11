@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {StUserMain, StUserPublic} from '@app/features/authentication-feature';
-import {Course, StCourseStudent,} from '@app/features/course-feature';
+import {Course, COURSE_ROLES_ENUM, StCourseStudent,} from '@app/features/course-feature';
 import {Observable} from 'rxjs';
 import {
   CourseTest,
@@ -80,7 +80,15 @@ export class CoursePage implements OnInit {
     this.courseFacadeService.editExistingCourse();
   }
 
-  showStudentInvitation(userMain: StUserMain) {
-    this.courseFacadeService.courseStudentInvitation(userMain);
+  showStudentReceivedInvitation(userMain: StUserMain) {
+    this.courseFacadeService.showStudentReceivedInvitation(userMain);
+  }
+
+  removeStudentInvitation(userMain: StUserMain) {
+    this.courseFacadeService.removeSentInvitation(userMain, COURSE_ROLES_ENUM.STUDENT);
+  }
+
+  removeMarkerInvitation(userMain: StUserMain) {
+    this.courseFacadeService.removeSentInvitation(userMain, COURSE_ROLES_ENUM.MARKER);
   }
 }

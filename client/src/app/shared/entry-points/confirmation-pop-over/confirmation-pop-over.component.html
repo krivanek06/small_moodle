@@ -1,7 +1,7 @@
 <ion-content class="ion-padding">
   <ion-list-header class="st-flex-col ion-margin">
     <ion-label class="st-section-title">
-      Please confirm {{ userMain.displayName }} invitation into course
+      {{ message }}
     </ion-label>
   </ion-list-header>
 
@@ -20,7 +20,7 @@
     <ion-button class="st-button-full" color="primary" (click)="confirm()" [disabled]="!confirmCheckbox">
       Confirm
     </ion-button>
-    <ion-button class="st-button-full" color="danger" (click)="reject()" [disabled]="!confirmCheckbox">
+    <ion-button class="st-button-full" color="danger" (click)="reject()" [disabled]="!confirmCheckbox" *ngIf="showReject">
       Reject
     </ion-button>
   </ion-buttons>

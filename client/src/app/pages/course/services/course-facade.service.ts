@@ -47,7 +47,7 @@ export class CourseFacadeService {
   }
 
   inviteMemberIntoCourse(userPublic: StUserPublic, course: Course) {
-    this.courseFeatureFacadeService.inviteMemberIntoCourse(userPublic, course, COURSE_ROLES_ENUM.STUDENT);
+    this.courseFeatureFacadeService.inviteMemberIntoCourse(userPublic, course, COURSE_ROLES_ENUM.STUDENT, false);
   }
 
   discardCourse() {
@@ -68,8 +68,12 @@ export class CourseFacadeService {
     }
   }
 
-  courseStudentInvitation(userMain: StUserMain) {
-    this.courseFeatureFacadeService.courseStudentInvitation(userMain, this.courseFeatureStoreService.course)
+  showStudentReceivedInvitation(userMain: StUserMain) {
+    this.courseFeatureFacadeService.showStudentReceivedInvitation(userMain, this.courseFeatureStoreService.course)
+  }
+
+  removeSentInvitation(userMain: StUserMain, type: COURSE_ROLES_ENUM){
+    this.courseFeatureFacadeService.removeSentInvitation(this.courseFeatureStoreService.course, userMain, type);
   }
 
 }

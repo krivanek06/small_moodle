@@ -8,6 +8,7 @@ import { HeaderComponent } from './containers/header/header.component';
 import { CustomCalendarComponent } from './components/custom-calendar/custom-calendar.component';
 import { InlineInputPopUpComponent } from './entry-points/inline-input-pop-up/inline-input-pop-up.component';
 import { GridPageContentComponent } from './components/layouts/grid-page-content/grid-page-content.component';
+import {ConfirmationPopOverComponent} from "@shared/entry-points/confirmation-pop-over/confirmation-pop-over.component";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { GridPageContentComponent } from './components/layouts/grid-page-content
     CustomCalendarComponent,
     InlineInputPopUpComponent,
     GridPageContentComponent,
+    ConfirmationPopOverComponent
   ],
   imports: [SharedModulesModule],
   exports: [
@@ -31,6 +33,7 @@ import { GridPageContentComponent } from './components/layouts/grid-page-content
     CustomCalendarComponent,
     InlineInputPopUpComponent,
     GridPageContentComponent,
+    ConfirmationPopOverComponent
   ],
 })
 export class SharedModule {}

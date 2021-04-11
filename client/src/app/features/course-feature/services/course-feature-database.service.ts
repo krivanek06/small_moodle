@@ -12,7 +12,7 @@ import {
 import {first, map} from 'rxjs/operators';
 import {CourseCreate} from '@app/features/course-feature';
 import {COURSE_ROLES_ENUM} from '../model/course.enum';
-import {StUserMain, StUserPublic} from '@app/features/authentication-feature';
+import {StUserMain, StUserPrivate, StUserPublic} from '@app/features/authentication-feature';
 import firebase from 'firebase';
 import {CourseTestPublic} from '@app/features/course-test-feature';
 import {AngularFirestore} from "@angular/fire/firestore";
@@ -38,7 +38,7 @@ export class CourseFeatureDatabaseService {
     const formDate = new Date(year, 0, 1).toISOString();
     const toDate = new Date(year, 11, 31).toISOString();
 
-    if(category === 'all'){
+    if (category === 'all') {
       return this.firestore.collection<CoursePublic>(this.COURSE,
         ref => ref
           .where('durationFrom', '>', formDate)
@@ -109,7 +109,7 @@ export class CourseFeatureDatabaseService {
     await this.increaseCourseCategory(courseCreate.coursePublic.category);
   }
 
-  async editCourse(courseCreate: CourseCreate){
+  async editCourse(courseCreate: CourseCreate) {
     // save public
     await this.updateCoursePublicData(courseCreate.coursePublic);
     // save private
@@ -180,20 +180,22 @@ export class CourseFeatureDatabaseService {
     }
   }
 
-  async addPersonInvitationIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
+  async togglePersonInvitationIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM, add = true) {
+    const fieldValue = firebase.firestore.FieldValue;
     const ref = this.getCoursePrivateRef(courseId);
+
     if (type === COURSE_ROLES_ENUM.STUDENT) {
       ref.set({
-        invitedStudents: firebase.firestore.FieldValue.arrayUnion(userMain),
+        invitedStudents: add ? fieldValue.arrayUnion(userMain) : fieldValue.arrayRemove(userMain),
       }, {merge: true});
     } else if (type === COURSE_ROLES_ENUM.MARKER) {
       ref.set({
-        invitedMarkers: firebase.firestore.FieldValue.arrayUnion(userMain),
+        invitedMarkers: add ? fieldValue.arrayUnion(userMain) : fieldValue.arrayRemove(userMain),
       }, {merge: true});
     }
   }
 
-  async addOrRemoveCourseInvitationForPerson({uid}: StUserMain, invitation: CourseInvitation, add: boolean) {
+  async toggleUserCourseReceivedInvitation({uid}: StUserMain, invitation: CourseInvitation, add: boolean) {
     const field = firebase.firestore.FieldValue;
     this.firestore.collection('users').doc(uid)
       .collection('private_data').doc('user_private')
@@ -202,7 +204,16 @@ export class CourseFeatureDatabaseService {
       }, {merge: true});
   }
 
-  async toggleCourseSentInvitations({uid}: StUserMain, coursePublic: CoursePublic, add: boolean) {
+  async removePersonInvitation(course: Course, userMain: StUserMain){
+    const userPrivateData = await this.firestore.collection<StUserPublic>('users' ).doc(userMain.uid)
+      .collection('private_data').doc('user_private').get().toPromise();
+    const userPrivate = userPrivateData.data() as StUserPrivate;
+    const courseInvitation =  userPrivate.courseInvitations.find(invitation => invitation.course.courseId === course.courseId);
+
+    await this.toggleUserCourseReceivedInvitation(userMain, courseInvitation, false);
+  }
+
+  async toggleUserCourseSentInvitations({uid}: StUserMain, coursePublic: CoursePublic, add: boolean) {
     const field = firebase.firestore.FieldValue;
     this.firestore.collection('users').doc(uid)
       .collection('private_data').doc('user_private')
@@ -226,19 +237,19 @@ export class CourseFeatureDatabaseService {
     }, {merge: true});
   }
 
-  increaseTests(courseId: string, increase = true){
+  increaseTests(courseId: string, increase = true) {
     this.firestore.collection(this.COURSE).doc(courseId).set({
       numberOfTests: firebase.firestore.FieldValue.increment(increase ? 1 : -1)
     }, {merge: true})
   }
 
-  increaseStudents(courseId: string, increase = true){
+  increaseStudents(courseId: string, increase = true) {
     this.firestore.collection(this.COURSE).doc(courseId).set({
       numberOfStudents: firebase.firestore.FieldValue.increment(increase ? 1 : -1)
     }, {merge: true})
   }
 
-  async toggleStudentInvitation({courseId}: CoursePublic, student: StUserMain, save: boolean ){
+  async toggleStudentInvitation({courseId}: CoursePublic, student: StUserMain, save: boolean) {
     const fieldValue = firebase.firestore.FieldValue;
 
     return this.firestore.collection(this.COURSE).doc(courseId).collection(this.PRIVATE).doc(this.PRIVATE).set({

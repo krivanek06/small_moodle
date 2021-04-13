@@ -11,7 +11,7 @@
   </ion-item>
 
   <!-- table body -->
-  <ion-item button *ngFor="let test of courseTests" (click)="clickedTest(test)">
+  <ion-item [button]="enableClicking" *ngFor="let test of courseTests" (click)="clickedTest(test)">
     <ion-label>{{ test.testName }}</ion-label>
     <ion-label>{{ test.createdBy.displayName }}</ion-label>
     <ion-label>{{ test.availableFrom | date: "HH:MM dd.MM.YYYY" }}</ion-label>

@@ -12,6 +12,7 @@ import {
 } from '@app/features/course-test-feature';
 import {AuthFeatureStoreService, StUserMain,} from '@app/features/authentication-feature';
 import {Confirmable} from "@app/core";
+import {Course, CourseFeatureStoreService} from "@app/features/course-feature";
 
 @Component({
   selector: 'app-course-test-preview',
@@ -25,6 +26,7 @@ export class CourseTestPreviewComponent implements OnInit {
   allStudentsResults$: Observable<CourseTestTaken[]>;
   selectedStudentTakenTest$: Observable<CourseTestTaken>;
   user$: Observable<StUserMain>;
+  course$: Observable<Course>;
 
   CourseTestFormStateEnum = CourseTestFormStateEnum;
 
@@ -34,11 +36,13 @@ export class CourseTestPreviewComponent implements OnInit {
     private route: ActivatedRoute,
     private courseTestFacadeService: CourseTestFeatureFacadeService,
     private courseTestFeatureDatabaseService: CourseTestFeatureDatabaseService,
-    private authFeatureStoreService: AuthFeatureStoreService
+    private authFeatureStoreService: AuthFeatureStoreService,
+    private courseFeatureStoreService: CourseFeatureStoreService
   ) {
   }
 
   ngOnInit() {
+    this.course$ = this.courseFeatureStoreService.getCourse();
     this.courseTest$ = this.route.data.pipe(map((x) => x[0]));
     this.user$ = this.authFeatureStoreService.getUserMain();
     this.allStudentsResults$ = this.courseTest$.pipe(

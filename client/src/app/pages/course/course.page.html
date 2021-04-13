@@ -18,11 +18,23 @@
         <ion-text style="font-size: 21px" color="primary">
           Course: [{{ course.shortName }}] {{ course.longName }}
         </ion-text>
-        <ion-button shape="round" fill="solid" color="warning"
-                    *ngIf="isCourseTeacher$ | async"
-                    (click)="editExistingCourse()">
-          Edit course
-        </ion-button>
+        <ion-buttons *ngIf="isCourseTeacher$ | async; else showStatus">
+          <ion-button *ngIf="course.isOpen" shape="round" fill="solid" color="warning" (click)="editExistingCourse()">
+            Edit course
+          </ion-button>
+          <ion-button *ngIf="course.isOpen" shape="round" fill="solid" color="danger" (click)="toggleCloseCourse()">
+            Close course
+          </ion-button>
+          <ion-button *ngIf="!course.isOpen" shape="round" fill="solid" color="success" (click)="toggleCloseCourse()">
+            Reopen course
+          </ion-button>
+        </ion-buttons>
+
+        <ng-template #showStatus>
+          <ion-text *ngIf="!course.isOpen" class="closed-course">
+            Course is closed
+          </ion-text>
+        </ng-template>
       </div>
     </app-grid-page-content>
 
@@ -33,7 +45,7 @@
           (clickedEmitter)="redirectToCourseTest($event)"
           [courseTests]="courseTests$ | async">
         </app-course-test-public-table>
-        <ion-buttons class="ion-justify-content-end st-small-padding">
+        <ion-buttons class="ion-justify-content-end st-small-padding" *ngIf="course.isOpen">
           <ion-button color="primary" class="st-small-padding" (click)="redirectToCourseTestCreate()">
             Create test
           </ion-button>
@@ -48,6 +60,7 @@
           <app-generic-card [title]="'Upcoming tests'">
             <app-course-test-public-table
               (clickedEmitter)="checkStartingTest($event)"
+              [enableClicking]="course.isOpen"
               [courseTests]="course.confirmedTests | filterCompletedTestFromUpcomingTests: (studentTests$ | async)">
             </app-course-test-public-table>
           </app-generic-card>
@@ -96,7 +109,7 @@
                     <app-course-student
                       (clickedItemEmitter)="showCourseStudent($event)"
                       [courseStudent]="marker"
-                      [enableClick]="isCourseTeacherOrMarker$ | async">
+                      [enableClick]="(isCourseTeacherOrMarker$ | async) && course.isOpen">
                     </app-course-student>
                   </ion-col>
                 </ion-row>
@@ -109,7 +122,7 @@
                   *ngIf="course.receivedStudentsInvitations.length > 0"
                   (clickedItemEmitter)="showStudentReceivedInvitation($event)"
                   [title]="'Received requests'"
-                  [enableClick]="true"
+                  [enableClick]="course.isOpen"
                   [members]="course.receivedStudentsInvitations">
                 </app-account-identification-list>
 
@@ -118,7 +131,7 @@
                   *ngIf="course.invitedStudents.length > 0"
                   (clickedItemEmitter)="removeStudentInvitation($event)"
                   [title]="'Invited students'"
-                  [enableClick]="true"
+                  [enableClick]="course.isOpen"
                   [members]="course.invitedStudents">
                 </app-account-identification-list>
 
@@ -127,7 +140,7 @@
                   *ngIf="course.invitedMarkers.length > 0"
                   (clickedItemEmitter)="removeMarkerInvitation($event)"
                   [title]="'Invited markers'"
-                  [enableClick]="true"
+                  [enableClick]="course.isOpen"
                   [members]="course.invitedMarkers">
                 </app-account-identification-list>
               </ng-container>
@@ -144,7 +157,7 @@
                 </app-generic-card>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="isCourseTeacherOrMarker$ | async">
+            <ion-row *ngIf="(isCourseTeacherOrMarker$ | async) && course.isOpen">
               <ion-col size="12">
                 <app-generic-card [title]="'Invite member'">
                   <app-account-search (clickedUserEmitter)="inviteUser($event, course)"></app-account-search>

@@ -31,6 +31,23 @@
   </form>
 </ion-list>
 
+<!-- legend -->
+<ion-toolbar>
+  <ion-item>
+    <ion-label style="display: flex" class="ion-justify-content-center">
+      <div class="legend-container">
+        <div class="rectangle closed-course"></div>
+        <ion-text>Course is closed</ion-text>
+      </div>
+
+      <div class="legend-container">
+        <div class="rectangle member-of-course"></div>
+        <ion-text>You are member of course</ion-text>
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-toolbar>
+
 <!-- course result -->
 <ion-list class="ion-padding ion-text-center">
   <ion-title class="st-section-title ion-margin-bottom">
@@ -45,9 +62,16 @@
     <ion-label>Course start</ion-label>
     <ion-label>Course end</ion-label>
     <ion-label>Category</ion-label>
+    <ion-label>Status</ion-label>
   </ion-item>
 
-  <ion-item [button]="allowCourseSelect" *ngFor="let findCourse of foundCourses$ | async" (click)="selectCourse(findCourse)">
+  <ion-item *ngFor="let findCourse of foundCourses$ | async"
+            [button]="allowCourseSelect && findCourse.isOpen && !userCourseIds.includes(findCourse.courseId)"
+            (click)="selectCourse(findCourse)"
+            [ngClass]="{
+                'closed-course': !findCourse.isOpen,
+                'member-of-course': userCourseIds.includes(findCourse.courseId)
+            }">
     <ion-label>{{ findCourse.longName }}</ion-label>
     <ion-label>{{ findCourse.creator.displayName }}</ion-label>
     <ion-label>{{ findCourse.numberOfStudents }}</ion-label>
@@ -55,6 +79,7 @@
     <ion-label>{{ findCourse.durationFrom | date: 'dd.MM.yyyy' }}</ion-label>
     <ion-label>{{ findCourse.durationTo | date: 'dd.MM.yyyy' }}</ion-label>
     <ion-label>{{ findCourse.category }}</ion-label>
+    <ion-label>{{ findCourse.isOpen ? 'Open' : 'Closed' }}</ion-label>
   </ion-item>
 </ion-list>
 

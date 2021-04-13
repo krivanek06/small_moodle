@@ -10,9 +10,10 @@
 
   <!-- search component -->
   <app-course-search-container
+    *ngIf="user$ | async as user"
     [defaultCategory]="categoryName"
+    [user]="user"
     [allowCourseSelect]="true"
-    (selectedCourseEmitter)="selectCourse($event)"
-  >
+    (selectedCourseEmitter)="selectCourse($event)">
   </app-course-search-container>
 </ion-content>

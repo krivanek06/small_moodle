@@ -195,6 +195,12 @@ export class CourseFeatureDatabaseService {
     }
   }
 
+  async toggleCloseCourse(course: Course) {
+    this.firestore.collection(this.COURSE).doc(course.courseId).set({
+      isOpen: !course.isOpen
+    }, {merge: true});
+  }
+
   async toggleUserCourseReceivedInvitation({uid}: StUserMain, invitation: CourseInvitation, add: boolean) {
     const field = firebase.firestore.FieldValue;
     this.firestore.collection('users').doc(uid)
@@ -204,11 +210,11 @@ export class CourseFeatureDatabaseService {
       }, {merge: true});
   }
 
-  async removePersonInvitation(course: Course, userMain: StUserMain){
-    const userPrivateData = await this.firestore.collection<StUserPublic>('users' ).doc(userMain.uid)
+  async removePersonInvitation(course: Course, userMain: StUserMain) {
+    const userPrivateData = await this.firestore.collection<StUserPublic>('users').doc(userMain.uid)
       .collection('private_data').doc('user_private').get().toPromise();
     const userPrivate = userPrivateData.data() as StUserPrivate;
-    const courseInvitation =  userPrivate.courseInvitations.find(invitation => invitation.course.courseId === course.courseId);
+    const courseInvitation = userPrivate.courseInvitations.find(invitation => invitation.course.courseId === course.courseId);
 
     await this.toggleUserCourseReceivedInvitation(userMain, courseInvitation, false);
   }

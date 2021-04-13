@@ -119,6 +119,30 @@ export class CourseFeatureFacadeService {
     return {confirm, role};
   }
 
+  async toggleCloseCourse() {
+    const course = this.courseFeatureStoreService.course;
+    const textClose = `Please confirm closing course ${course.longName}. No students will be able to sent invitation into course,
+        no test will be created, and you cannot change grades for students.`;
+    const textReopen = `Please confirm reopening course ${course.longName}`;
+
+    const modal = await this.popoverController.create({
+      component: ConfirmationPopOverComponent,
+      cssClass: 'custom-popover',
+      componentProps: {
+        message: course.isOpen ? textClose : textReopen
+      },
+    });
+
+    await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+
+    if (resultPromise.data?.accept) {
+      await this.courseFeatureDatabaseService.toggleCloseCourse(course);
+      const text = course.isOpen ? 'closed' : 'reopened';
+      IonicDialogService.presentToast(`Course ${course.longName} has been ${text}`);
+    };
+  }
+
   async removeSentInvitation(course: Course, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
     const modal = await this.popoverController.create({
       component: ConfirmationPopOverComponent,

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CourseTestPublic } from '@app/features/course-test-feature';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CourseTestPublic} from '@app/features/course-test-feature';
 
 @Component({
   selector: 'app-course-test-public-table',
@@ -10,12 +10,17 @@ export class CourseTestPublicTableComponent implements OnInit {
   @Output() clickedEmitter: EventEmitter<CourseTestPublic> = new EventEmitter<CourseTestPublic>();
 
   @Input() courseTests: CourseTestPublic[] = [];
+  @Input() enableClicking: boolean;
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   clickedTest(courseTest: CourseTestPublic) {
-    this.clickedEmitter.emit(courseTest);
+    if (this.enableClicking) {
+      this.clickedEmitter.emit(courseTest);
+    }
   }
 }

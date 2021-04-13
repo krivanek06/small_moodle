@@ -47,7 +47,7 @@
       Please fill received points for all questions for the selected test
     </div>
 
-    <ion-buttons class="ion-justify-content-end">
+    <ion-buttons class="ion-justify-content-end" *ngIf="(course$ | async).isOpen">
       <ion-button
         *ngIf="selectedStudentTakenTest.testFormState ===  CourseTestFormStateEnum.GRADE &&
        selectedStudentTakenTest.marker?.uid === user.uid"

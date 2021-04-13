@@ -77,4 +77,8 @@ export class CourseFacadeService {
     this.courseFeatureFacadeService.removeSentInvitation(this.courseFeatureStoreService.course, userMain, type);
   }
 
+  async toggleCloseCourse(){
+    this.courseFeatureFacadeService.toggleCloseCourse();
+  }
+
 }

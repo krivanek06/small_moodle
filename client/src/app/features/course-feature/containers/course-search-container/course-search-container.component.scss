@@ -1,5 +1,27 @@
-:host{
+:host {
   .listing-buttons {
     font-size: 24px;
+  }
+
+  .closed-course {
+    background-color: #d66e67;
+  }
+
+  .member-of-course {
+    background-color: #4cd654;
+  }
+
+  .rectangle {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  .legend-container{
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
   }
 }

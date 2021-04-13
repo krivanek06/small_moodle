@@ -60,9 +60,6 @@ export class CoursePage implements OnInit {
         const availableTo = new Date(courseTest.availableTo);
         const now = new Date();
 
-        console.log(availableFrom);
-        console.log(availableTo);
-
         if (availableFrom < now && availableTo > now) {
             await this.startTest(courseTest);
         } else if (availableFrom > now) {
@@ -109,5 +106,9 @@ export class CoursePage implements OnInit {
     private async startTest(courseTest: CourseTestPublic) {
         await this.courseTestFeatureFacadeStudentTestService.startCourseTest(courseTest);
         this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
+    }
+
+    toggleCloseCourse() {
+      this.courseFacadeService.toggleCloseCourse();
     }
 }

@@ -9,7 +9,7 @@
   </ion-toolbar>
 
   <!-- selected user's info -->
-  <ion-toolbar>
+  <ion-toolbar class="ion-margin-bottom">
     <ion-label class="st-display-flex-center">
       <app-account-identification-item
         [userMain]="userPublic"
@@ -17,9 +17,12 @@
       </app-account-identification-item>
     </ion-label>
 
-    <ion-buttons slot="end" *ngIf="authenticatedUser.isTeacher()">
-      <ion-button color="primary" (click)="inviteMemberIntoCourse()">
+    <ion-buttons slot="end" >
+      <ion-button *ngIf="authenticatedUser.isTeacher()" color="primary" shape="round" fill="outline" (click)="inviteMemberIntoCourse()">
         Invite into course
+      </ion-button>
+      <ion-button *ngIf="authenticatedUser.isAdmin()" color="dark" shape="round" fill="outline" (click)="addRole()">
+        Add role
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -29,7 +32,7 @@
     <!-- courses manage -->
     <ion-row>
       <ion-col size="12">
-        <ion-title>Manage courses</ion-title>
+        <ion-title class="st-section-title">Manage courses</ion-title>
         <app-courses-manage-table
           [enableClick]="false"
           [userCourses]="userPublic.courses | courseFilterManaged">
@@ -40,7 +43,7 @@
     <!-- courses active -->
     <ion-row>
       <ion-col size="12">
-        <ion-title>Active courses</ion-title>
+        <ion-title class="st-section-title">Active courses</ion-title>
         <app-courses-active-table
           [enableClick]="false"
           [courses]="userPublic.courses | courseFilterActive">
@@ -51,7 +54,7 @@
     <!-- courses completed -->
     <ion-row>
       <ion-col size="12">
-        <ion-title>Completed courses</ion-title>
+        <ion-title class="st-section-title">Completed courses</ion-title>
         <app-courses-completed-table
           [enableClick]="false"
           [courses]="userPublic.courses | courseFilterCompleted">

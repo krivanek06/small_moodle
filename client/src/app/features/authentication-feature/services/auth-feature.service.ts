@@ -68,9 +68,5 @@ export class AuthFeatureService {
     this.firestore.doc(`users/${user.uid}`).set(userPublic);
     this.firestore.doc(`users/${user.uid}/private_data/user_private`).set(userPrivate);
     return new StUserClass(userPublic, userPrivate);
-    /*return {
-      ...userPublic,
-      ...userPrivate,
-    };*/
   }
 }

@@ -1,0 +1,21 @@
+<ion-content class="ion-padding">
+  <ion-toolbar>
+    <ion-title class="st-section-title ion-text-center">
+      Mark roles to add for user {{ user.displayName }}
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item button *ngFor="let role of existingRoles" (click)="toggleRole(role)" lines="none"
+              [ngClass]="{'highlight': roles.includes(role)}">
+      <ion-label class="ion-text-center">
+        {{ role | titlecase }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list style="display: flex; justify-content: space-evenly">
+    <ion-button color="primary" fill="outline" shape="round" size="small" (click)="save()">Save</ion-button>
+    <ion-button color="danger" fill="outline" shape="round" size="small" (click)="cancel()">Cancel</ion-button>
+  </ion-list>
+</ion-content>

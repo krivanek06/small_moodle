@@ -4,91 +4,110 @@ import {StUserMain, StUserPublic} from '@app/features/authentication-feature';
 import {Course, COURSE_ROLES_ENUM, StCourseStudent,} from '@app/features/course-feature';
 import {Observable} from 'rxjs';
 import {
-  CourseTest,
-  CourseTestFeatureFacadeService,
-  CourseTestFeatureStoreService,
-  CourseTestPublic,
-  CourseTestStateEnum,
-  CourseTestTaken
+    CourseTest,
+    CourseTestFeatureStoreService,
+    CourseTestPublic,
+    CourseTestStateEnum,
+    CourseTestTaken
 } from '@app/features/course-test-feature';
-import {Confirmable} from "@app/core";
+import {Confirmable, IonicDialogService} from "@app/core";
 import {CourseFacadeService} from "@app/pages/course/services/course-facade.service";
 import {CourseTestFeatureFacadeStudentTestService} from "@course-test-feature/services/course-test-feature-facade-student-test.service";
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.page.html',
-  styleUrls: ['./course.page.scss'],
+    selector: 'app-course',
+    templateUrl: './course.page.html',
+    styleUrls: ['./course.page.scss'],
 })
 export class CoursePage implements OnInit {
-  course$: Observable<Course>;
-  courseTests$: Observable<CourseTest[]>;
-  studentTests$: Observable<CourseTestTaken[]>;
-  isCourseTeacherOrMarker$: Observable<boolean>;
-  isCourseTeacher$: Observable<boolean>;
+    course$: Observable<Course>;
+    courseTests$: Observable<CourseTest[]>;
+    studentTests$: Observable<CourseTestTaken[]>;
+    isCourseTeacherOrMarker$: Observable<boolean>;
+    isCourseTeacher$: Observable<boolean>;
 
-  constructor(private router: Router,
-              private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private courseTestFeatureFacadeStudentTestService: CourseTestFeatureFacadeStudentTestService,
-              private courseFacadeService: CourseFacadeService) {
-  }
+    constructor(private router: Router,
+                private courseTestFeatureStoreService: CourseTestFeatureStoreService,
+                private courseTestFeatureFacadeStudentTestService: CourseTestFeatureFacadeStudentTestService,
+                private courseFacadeService: CourseFacadeService) {
+    }
 
-  ngOnInit() {
-    this.course$ = this.courseFacadeService.getCourse();
-    this.courseTests$ = this.courseTestFeatureStoreService.getAllCourseTests();
-    this.studentTests$ = this.courseTestFeatureStoreService.getOneStudentAllCourseTests();
-    this.isCourseTeacherOrMarker$ = this.courseFacadeService.isCourseTeacherOrMarker();
-    this.isCourseTeacher$ = this.courseFacadeService.isCourseTeacher();
+    ngOnInit() {
+        this.course$ = this.courseFacadeService.getCourse();
+        this.courseTests$ = this.courseTestFeatureStoreService.getAllCourseTests();
+        this.studentTests$ = this.courseTestFeatureStoreService.getOneStudentAllCourseTests();
+        this.isCourseTeacherOrMarker$ = this.courseFacadeService.isCourseTeacherOrMarker();
+        this.isCourseTeacher$ = this.courseFacadeService.isCourseTeacher();
 
-    this.course$.subscribe(console.log)
-  }
+        this.course$.subscribe(console.log)
+    }
 
-  async inviteUser(userPublic: StUserPublic, course: Course) {
-    this.courseFacadeService.inviteMemberIntoCourse(userPublic, course);
-  }
+    async inviteUser(userPublic: StUserPublic, course: Course) {
+        this.courseFacadeService.inviteMemberIntoCourse(userPublic, course);
+    }
 
-  redirectToCourseTestCreate() {
-    this.router.navigate(['menu', 'course-test', 'create']);
-  }
+    redirectToCourseTestCreate() {
+        this.router.navigate(['menu', 'course-test', 'create']);
+    }
 
-  redirectToCourseTest(courseTest: CourseTestPublic) {
-    const path = courseTest.testState === CourseTestStateEnum.APPROVED ? 'preview' : 'edit';
-    this.router.navigate([`menu/course-test/${path}/${courseTest.testId}`]);
-  }
+    redirectToCourseTest(courseTest: CourseTestPublic) {
+        const path = courseTest.testState === CourseTestStateEnum.APPROVED ? 'preview' : 'edit';
+        this.router.navigate([`menu/course-test/${path}/${courseTest.testId}`]);
+    }
 
-  @Confirmable('Do you wish to start the test ?')
-  async startTest(courseTest: CourseTestPublic) {
-    await this.courseTestFeatureFacadeStudentTestService.startCourseTest(courseTest);
-    this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
-  }
+    async checkStartingTest(courseTest: CourseTestPublic) {
+        const availableFrom = new Date(courseTest.availableFrom);
+        const availableTo = new Date(courseTest.availableTo);
+        const now = new Date();
 
-  navigateToCompletedCourseTest(courseTestTaken: CourseTestTaken) {
-    this.courseTestFeatureStoreService.setStudentCourseTest(courseTestTaken);
-    this.router.navigate([`menu/course-test/completed/${courseTestTaken.testId}`]);
-  }
+        console.log(availableFrom);
+        console.log(availableTo);
 
-  showCourseStudent(courseStudent: StCourseStudent) {
-    this.courseFacadeService.showCourseStudent(courseStudent);
-  }
+        if (availableFrom < now && availableTo > now) {
+            await this.startTest(courseTest);
+        } else if (availableFrom > now) {
+            IonicDialogService.presentToast(`You can start test only at ${availableFrom}`);
+        } else if (availableTo < now) {
+            IonicDialogService.presentToast(`You could only start test until ${availableTo}, it's too late now`);
+        } else{
+          console.log('Should not happen')
+        }
 
-  backToDashboard() {
-    this.courseTestFeatureStoreService.discardStudentCourseTest();
-    this.courseFacadeService.discardCourse();
-  }
+    }
 
-  editExistingCourse() {
-    this.courseFacadeService.editExistingCourse();
-  }
+    navigateToCompletedCourseTest(courseTestTaken: CourseTestTaken) {
+        this.courseTestFeatureStoreService.setStudentCourseTest(courseTestTaken);
+        this.router.navigate([`menu/course-test/completed/${courseTestTaken.testId}`]);
+    }
 
-  showStudentReceivedInvitation(userMain: StUserMain) {
-    this.courseFacadeService.showStudentReceivedInvitation(userMain);
-  }
+    showCourseStudent(courseStudent: StCourseStudent) {
+        this.courseFacadeService.showCourseStudent(courseStudent);
+    }
 
-  removeStudentInvitation(userMain: StUserMain) {
-    this.courseFacadeService.removeSentInvitation(userMain, COURSE_ROLES_ENUM.STUDENT);
-  }
+    backToDashboard() {
+        this.courseTestFeatureStoreService.discardStudentCourseTest();
+        this.courseFacadeService.discardCourse();
+    }
 
-  removeMarkerInvitation(userMain: StUserMain) {
-    this.courseFacadeService.removeSentInvitation(userMain, COURSE_ROLES_ENUM.MARKER);
-  }
+    editExistingCourse() {
+        this.courseFacadeService.editExistingCourse();
+    }
+
+    showStudentReceivedInvitation(userMain: StUserMain) {
+        this.courseFacadeService.showStudentReceivedInvitation(userMain);
+    }
+
+    removeStudentInvitation(userMain: StUserMain) {
+        this.courseFacadeService.removeSentInvitation(userMain, COURSE_ROLES_ENUM.STUDENT);
+    }
+
+    removeMarkerInvitation(userMain: StUserMain) {
+        this.courseFacadeService.removeSentInvitation(userMain, COURSE_ROLES_ENUM.MARKER);
+    }
+
+    @Confirmable('Do you wish to start the test ?')
+    private async startTest(courseTest: CourseTestPublic) {
+        await this.courseTestFeatureFacadeStudentTestService.startCourseTest(courseTest);
+        this.router.navigate([`menu/course-test/submit/${courseTest.testId}`]);
+    }
 }

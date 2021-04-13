@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {
-  Course, COURSE_ROLES_ENUM,
+  Course,
+  COURSE_ROLES_ENUM,
   CourseCreate,
   CourseEditEntryPointComponent,
   CourseFeatureDatabaseService,
   CourseFeatureFacadeService,
-  CourseFeatureStoreService, StCourseStudent
+  CourseFeatureStoreService,
+  StCourseStudent
 } from "@app/features/course-feature";
 import {ModalController} from "@ionic/angular";
 import {IonicDialogService} from "@app/core";
 import {Observable} from "rxjs";
 import {map, withLatestFrom} from "rxjs/operators";
 import {AuthFeatureStoreService, StUserMain, StUserPublic} from "@app/features/authentication-feature";
-import {CourseTest} from "@app/features/course-test-feature";
 
 @Injectable()
 export class CourseFacadeService {
@@ -72,7 +73,7 @@ export class CourseFacadeService {
     this.courseFeatureFacadeService.showStudentReceivedInvitation(userMain, this.courseFeatureStoreService.course)
   }
 
-  removeSentInvitation(userMain: StUserMain, type: COURSE_ROLES_ENUM){
+  removeSentInvitation(userMain: StUserMain, type: COURSE_ROLES_ENUM) {
     this.courseFeatureFacadeService.removeSentInvitation(this.courseFeatureStoreService.course, userMain, type);
   }
 

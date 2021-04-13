@@ -3,6 +3,7 @@ import {ModalController, NavParams} from '@ionic/angular';
 import {AuthFeatureStoreService, StUser, StUserPublic} from '@app/features/authentication-feature';
 import {CourseFeatureFacadeService} from '@app/features/course-feature';
 import {convertStUserPublicToMain} from '@app/features/account-feature';
+import {AccountFeatureFacadeService} from "@account-feature/services/account-feature-facade.service";
 
 @Component({
   selector: 'app-courses-user-account-info-modal',
@@ -11,13 +12,14 @@ import {convertStUserPublicToMain} from '@app/features/account-feature';
 })
 export class CoursesUserAccountInfoModalComponent implements OnInit {
   userPublic: StUserPublic;
-  authenticatedUser: StUser;
+  authenticatedUser: StUser; // me who is logged in
 
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private courseFeatureServiceService: CourseFeatureFacadeService,
-    private authFeatureStoreService: AuthFeatureStoreService
+    private courseFeatureFacadeService: CourseFeatureFacadeService,
+    private authFeatureStoreService: AuthFeatureStoreService,
+    private accountFeatureFacadeService: AccountFeatureFacadeService
   ) {
   }
 
@@ -32,6 +34,11 @@ export class CoursesUserAccountInfoModalComponent implements OnInit {
 
   inviteMemberIntoCourse() {
     const userMain = convertStUserPublicToMain(this.userPublic);
-    this.courseFeatureServiceService.inviteMember(userMain);
+    this.courseFeatureFacadeService.inviteMember(userMain);
+  }
+
+  addRole() {
+    const userMain = convertStUserPublicToMain(this.userPublic);
+    this.accountFeatureFacadeService.showUserRoles(userMain);
   }
 }

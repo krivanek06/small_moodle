@@ -47,7 +47,7 @@
         <ion-col size="12" size-lg="10" size-xl="9">
           <app-generic-card [title]="'Upcoming tests'">
             <app-course-test-public-table
-              (clickedEmitter)="startTest($event)"
+              (clickedEmitter)="checkStartingTest($event)"
               [courseTests]="course.confirmedTests | filterCompletedTestFromUpcomingTests: (studentTests$ | async)">
             </app-course-test-public-table>
           </app-generic-card>

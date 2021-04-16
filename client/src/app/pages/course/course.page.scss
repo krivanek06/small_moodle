@@ -1,9 +1,33 @@
-:host{
+@import "variables";
+
+:host {
   .closed-course {
     color: white;
     font-size: 18px;
     background-color: red;
     border-radius: 6px;
     padding: 6px;
+  }
+
+  .title-button-container {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: #{$st-var-md-split}) {
+      display: block;
+    }
+  }
+
+  .modification-button {
+    @media (max-width: #{$st-var-md-split}) {
+      margin-top: 32px;
+      margin-bottom: 16px;
+      width: 100%;
+    }
+    @media (max-width: #{$st-var-sm-split}) {
+      margin-top: 25px;
+      margin-bottom: 0;
+      width: 100%;
+    }
   }
 }

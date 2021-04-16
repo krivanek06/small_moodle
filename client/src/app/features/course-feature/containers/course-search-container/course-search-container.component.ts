@@ -1,6 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {CourseCategory, CourseFeatureDatabaseService, CoursePublic} from '@app/features/course-feature';
+import {
+  COURSE_ROLES_ENUM,
+  CourseCategory,
+  CourseFeatureDatabaseService,
+  CoursePublic
+} from '@app/features/course-feature';
 import {Observable} from "rxjs";
 import {switchMap} from "rxjs/operators";
 import {StUser} from "@app/features/authentication-feature";
@@ -18,7 +23,8 @@ export class CourseSearchContainerComponent implements OnInit {
   @Input() user: StUser;
 
   form: FormGroup;
-  userCourseIds: string[] = [];
+  userMemberOfCourseIds: string[] = [];
+  userCompletedCourseIds: string[] = [];
   foundCourses$: Observable<CoursePublic[]>;
   categories$: Observable<CourseCategory>;
 
@@ -46,12 +52,21 @@ export class CourseSearchContainerComponent implements OnInit {
     });
 
     if (this.user) {
-      this.userCourseIds = this.user.courses.map(c => c.course.courseId);
+      this.userMemberOfCourseIds = this.user.courses.filter(c => {
+        return c.role === COURSE_ROLES_ENUM.STUDENT ? !c.courseStudent.receivedGrade : true
+      }).map(c => c.course.courseId);
+
+      this.userCompletedCourseIds = this.user.courses
+        .filter(c => c.role === COURSE_ROLES_ENUM.STUDENT && !!c.courseStudent.receivedGrade)
+        .map(c => c.course.courseId);
     }
   }
 
   selectCourse(coursePublic: CoursePublic) {
-    if (this.allowCourseSelect && coursePublic.isOpen && !this.userCourseIds.includes(coursePublic.courseId)) {
+    if (this.allowCourseSelect &&
+      coursePublic.isOpen &&
+      !this.userMemberOfCourseIds.includes(coursePublic.courseId) &&
+      !this.userCompletedCourseIds.includes(coursePublic.courseId)) {
       this.selectedCourseEmitter.emit(coursePublic);
     }
   }

@@ -24,11 +24,10 @@
 <ng-container *ngIf="selectedStudentTakenTest$ | async as selectedStudentTakenTest; else testPreview">
   <ng-container *ngIf="user$ | async as user">
     <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-button color="danger" shape="round" fill="solid" (click)="cancelSelectedTest()">
-          Cancel
-        </ion-button>
-      </ion-buttons>
+      <ion-button class="modification-button ion-float-end" color="danger" shape="round" fill="solid"
+                  (click)="cancelSelectedTest()">
+        Cancel
+      </ion-button>
     </ion-toolbar>
     <!-- test info -->
     <app-course-test-info
@@ -49,12 +48,14 @@
 
     <ion-buttons class="ion-justify-content-end" *ngIf="(course$ | async).isOpen">
       <ion-button
+        class="modification-button"
         *ngIf="selectedStudentTakenTest.testFormState ===  CourseTestFormStateEnum.GRADE &&
        selectedStudentTakenTest.marker?.uid === user.uid"
         color="primary" (click)="gradeTest(selectedStudentTakenTest)" shape="round" fill="solid">
         Grade
       </ion-button>
       <ion-button
+        class="modification-button"
         *ngIf=" selectedStudentTakenTest.testFormState === CourseTestFormStateEnum.GRADED"
         color="warning" (click)="reopenTest(selectedStudentTakenTest)" shape="round" fill="solid">
         Reopen test

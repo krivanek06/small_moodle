@@ -30,14 +30,16 @@
 
     <!-- add course category -->
     <ion-item-group class="st-flex-space-between">
-      <ion-item class="st-width-49" lines="none"></ion-item>
+      <ion-item class="st-width-49 ion-hide-sm-down" lines="none"></ion-item>
       <ion-item class="st-width-49" lines="none">
         <ion-label class="ion-justify-content-center" style="display: flex">
-          <ion-button shape="round" fill="outline" type="button" color="primary" (click)="addCategory()">
+          <ion-button class="st-width-full-sm-screen" shape="round" fill="outline" type="button" color="primary"
+                      (click)="addCategory()">
             Add new category
           </ion-button>
         </ion-label>
       </ion-item>
+      <ion-item class="st-width-49 ion-hide-sm-up" lines="none"></ion-item>
     </ion-item-group>
 
     <!-- course start + end -->
@@ -98,7 +100,9 @@
     </div>
 
     <ion-buttons class="ion-justify-content-center">
-      <ion-button shape="round" fill="outline" type="button" color="primary" (click)="addGrading()">Add grade
+      <ion-button class="st-width-full-sm-screen" shape="round" fill="outline" type="button" color="primary"
+                  (click)="addGrading()">
+        Add grade
       </ion-button>
     </ion-buttons>
   </ion-list>
@@ -133,7 +137,7 @@
 
   <!-- submit -->
   <ion-buttons class="ion-justify-content-center ion-margin-vertical">
-    <ion-button shape="round" fill="solid" type="submit" color="primary">
+    <ion-button class="st-width-full-sm-screen" shape="round" fill="solid" type="submit" color="primary">
       {{ !!course ? 'Save' : 'Create' }}
     </ion-button>
   </ion-buttons>

@@ -7,7 +7,7 @@
 
   .c-comment-item {
     width: 50%;
-    @media (max-width: #{$st-var-xs-split}) {
+    @media (max-width: #{$st-var-sm-split}) {
       width: 100%;
     }
   }
@@ -18,6 +18,12 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+    @media (max-width: #{$st-var-md-split}) {
+      display: block;
+      padding-left: 4px;
+      padding-right: 4px;
+      padding-top: 10px;
+    }
   }
 
   .c-question-wrapper {

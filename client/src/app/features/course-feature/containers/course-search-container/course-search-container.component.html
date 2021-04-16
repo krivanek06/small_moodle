@@ -36,13 +36,18 @@
   <ion-item>
     <ion-label style="display: flex" class="ion-justify-content-center">
       <div class="legend-container">
-        <div class="rectangle closed-course"></div>
-        <ion-text>Course is closed</ion-text>
+        <div class="rectangle st-completed-courses"></div>
+        <ion-text class="st-completed-courses-text st-font-size-16">Completed</ion-text>
+      </div>
+
+      <div class="legend-container">
+        <div class="rectangle st-closed-course"></div>
+        <ion-text class="st-closed-course-text st-font-size-16">Closed</ion-text>
       </div>
 
       <div class="legend-container">
         <div class="rectangle member-of-course"></div>
-        <ion-text>You are member of course</ion-text>
+        <ion-text class="member-of-course-text st-font-size-16">Member</ion-text>
       </div>
     </ion-label>
   </ion-item>
@@ -56,30 +61,34 @@
 
   <ion-item class="st-font-1-bold">
     <ion-label>Name</ion-label>
-    <ion-label>Teacher</ion-label>
-    <ion-label>Students</ion-label>
+    <ion-label class="ion-hide-sm-down">Teacher</ion-label>
+    <ion-label class="ion-hide-md-down">Students</ion-label>
     <ion-label>Tests</ion-label>
     <ion-label>Course start</ion-label>
-    <ion-label>Course end</ion-label>
+    <ion-label class="ion-hide-sm-down">Course end</ion-label>
     <ion-label>Category</ion-label>
-    <ion-label>Status</ion-label>
+    <ion-label class="ion-hide-md-down">Status</ion-label>
   </ion-item>
 
   <ion-item *ngFor="let findCourse of foundCourses$ | async"
-            [button]="allowCourseSelect && findCourse.isOpen && !userCourseIds.includes(findCourse.courseId)"
+            style="border-radius: 8px"
+            [button]="allowCourseSelect && findCourse.isOpen
+            && !userMemberOfCourseIds.includes(findCourse.courseId) && !userCompletedCourseIds.includes(findCourse.courseId)"
             (click)="selectCourse(findCourse)"
             [ngClass]="{
-                'closed-course': !findCourse.isOpen,
-                'member-of-course': userCourseIds.includes(findCourse.courseId)
+                'st-closed-course': !findCourse.isOpen && !userCompletedCourseIds.includes(findCourse.courseId),
+                'member-of-course': userMemberOfCourseIds.includes(findCourse.courseId),
+                'st-completed-courses': userCompletedCourseIds.includes(findCourse.courseId)
             }">
-    <ion-label>{{ findCourse.longName }}</ion-label>
-    <ion-label>{{ findCourse.creator.displayName }}</ion-label>
-    <ion-label>{{ findCourse.numberOfStudents }}</ion-label>
+    <ion-label class="ion-hide-md-down">{{ findCourse.longName }}</ion-label>
+    <ion-label class="ion-hide-md-up">{{ findCourse.shortName }}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{ findCourse.creator.displayName }}</ion-label>
+    <ion-label class="ion-hide-md-down">{{ findCourse.numberOfStudents }}</ion-label>
     <ion-label>{{ findCourse.numberOfTests }}</ion-label>
     <ion-label>{{ findCourse.durationFrom | date: 'dd.MM.yyyy' }}</ion-label>
-    <ion-label>{{ findCourse.durationTo | date: 'dd.MM.yyyy' }}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{ findCourse.durationTo | date: 'dd.MM.yyyy' }}</ion-label>
     <ion-label>{{ findCourse.category }}</ion-label>
-    <ion-label>{{ findCourse.isOpen ? 'Open' : 'Closed' }}</ion-label>
+    <ion-label class="ion-hide-md-down">{{ findCourse.isOpen ? 'Open' : 'Closed' }}</ion-label>
   </ion-item>
 </ion-list>
 

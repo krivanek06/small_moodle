@@ -253,7 +253,10 @@
   }
 
   ion-button {
-    min-width: 175px;
+    min-width: 160px;
+    @media (max-width: #{$st-var-sm-split}) {
+      min-width: 0;
+    }
   }
 
 

@@ -241,12 +241,21 @@ ion-spinner {
   }
 }
 
+.st-width-full-sm-screen {
+  @media (max-width: #{$st-var-sm-split}) {
+    width: 100% !important;
+  }
+}
+
 .st-width-100 {
   width: 100%;
 }
 
 .st-width-49 {
   width: 49%;
+  @media (max-width: #{$st-var-sm-split}) {
+    width: 100% !important;
+  }
 }
 
 .st-width-32 {
@@ -445,12 +454,9 @@ ion-skeleton-text {
 }
 
 .st-flex-row-small-col {
-  display: flex !important;
-  flex-flow: row !important;
-  align-items: center !important;
+  display: flex;
   @media (max-width: #{$st-var-sm-split}) {
-    flex-flow: column !important;
-    justify-content: center !important;
+    flex-flow: column;
   }
 }
 
@@ -458,7 +464,7 @@ ion-skeleton-text {
   display: flex;
   justify-content: space-between;
   flex-flow: row;
-  @media (max-width: #{$st-var-md-split}) {
+  @media (max-width: #{$st-var-sm-split}) {
     flex-flow: column !important;
   }
 }
@@ -466,6 +472,24 @@ ion-skeleton-text {
 .st-flex-col {
   display: flex !important;
   flex-flow: column !important;
+}
+
+.st-closed-course {
+  background-color: #d66e67;
+  border-radius: 8px;
+}
+
+.st-closed-course-text {
+  color: #d66e67;
+}
+
+.st-completed-courses {
+  background-color: #4cd654;
+  border-radius: 8px;
+}
+
+.st-completed-courses-text {
+  color: #4cd654;
 }
 
 .st-hide-xxl-down {

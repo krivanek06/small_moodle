@@ -1,4 +1,4 @@
-<ion-grid class="ion-padding-horizontal">
+<ion-grid>
   <ion-row class="ion-justify-content-center">
     <ion-col size="12" size-lg="10">
 
@@ -34,12 +34,24 @@
 
             <!-- courses completed -->
             <ion-col size="12">
-              <app-generic-card [title]="'Completed courses'">
+              <app-generic-card [title]="'Graded courses'">
                 <app-courses-completed-table
                   (clickedCourseEmitter)="redirectToCourse($event)"
                   [authenticatedUser]="user"
                   [courses]="user.courses | courseFilterCompleted">
                 </app-courses-completed-table>
+              </app-generic-card>
+            </ion-col>
+
+            <!-- courses closed -->
+            <ion-col size="12" *ngIf="(user.courses | courseFilterClosed).length > 0">
+              <app-generic-card [title]="'Closed courses'">
+                <app-courses-manage-table
+                  [classes]="'st-closed-course'"
+                  (clickedCourseEmitter)="redirectToCourse($event)"
+                  [authenticatedUser]="user"
+                  [userCourses]="user.courses | courseFilterClosed">
+                </app-courses-manage-table>
               </app-generic-card>
             </ion-col>
 

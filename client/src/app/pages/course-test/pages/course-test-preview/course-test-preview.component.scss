@@ -1,0 +1,9 @@
+@import "variables";
+
+:host {
+  .modification-button {
+    @media (max-width: #{$st-var-sm-split}) {
+      width: 100%;
+    }
+  }
+}

@@ -14,18 +14,21 @@
 
     <!-- course info -->
     <app-grid-page-content>
-      <div class="st-flex ion-justify-content-between">
+      <div class="title-button-container">
         <ion-text style="font-size: 21px" color="primary">
           Course: [{{ course.shortName }}] {{ course.longName }}
         </ion-text>
-        <ion-buttons *ngIf="isCourseTeacher$ | async; else showStatus">
-          <ion-button *ngIf="course.isOpen" shape="round" fill="solid" color="warning" (click)="editExistingCourse()">
+        <ion-buttons *ngIf="isCourseTeacher$ | async; else showStatus" class="st-flex-row-small-col">
+          <ion-button class="modification-button" *ngIf="course.isOpen" shape="round" fill="solid" color="warning"
+                      (click)="editExistingCourse()">
             Edit course
           </ion-button>
-          <ion-button *ngIf="course.isOpen" shape="round" fill="solid" color="danger" (click)="toggleCloseCourse()">
+          <ion-button class="modification-button" *ngIf="course.isOpen" shape="round" fill="solid" color="danger"
+                      (click)="toggleCloseCourse()">
             Close course
           </ion-button>
-          <ion-button *ngIf="!course.isOpen" shape="round" fill="solid" color="success" (click)="toggleCloseCourse()">
+          <ion-button class="modification-button" *ngIf="!course.isOpen" shape="round" fill="solid" color="success"
+                      (click)="toggleCloseCourse()">
             Reopen course
           </ion-button>
         </ion-buttons>
@@ -42,6 +45,7 @@
     <app-grid-page-content *ngIf="isCourseTeacherOrMarker$ | async; else studentView">
       <app-generic-card [title]="'Course tests'">
         <app-course-test-public-table
+          [enableClicking]="true"
           (clickedEmitter)="redirectToCourseTest($event)"
           [courseTests]="courseTests$ | async">
         </app-course-test-public-table>

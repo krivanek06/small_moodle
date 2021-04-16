@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content>
   <ng-container *ngIf=" user$ | async as user; else unauthenticated">
     <app-dashboard-authenticated [user]="user"></app-dashboard-authenticated>
   </ng-container>

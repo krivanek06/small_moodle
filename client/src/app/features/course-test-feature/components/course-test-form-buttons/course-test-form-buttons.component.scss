@@ -1,7 +1,25 @@
+@import "variables";
+
 :host {
   ion-button {
     font-size: 17px;
     margin-right: 5px;
     margin-left: 5px;
+    @media (max-width: #{$st-var-sm-split}) {
+      width: 100%;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    @media (max-width: #{$st-var-sm-split}) {
+      display: block;
+    }
+  }
+  ion-button{
+    @media (max-width: #{$st-var-sm-split}) {
+      margin: 5px;
+    }
   }
 }

@@ -154,9 +154,18 @@ export class CourseFeatureDatabaseService {
     // update students grade
     const index = course.students.findIndex(s => s.uid === courseStudent.uid);
     course.students[index].receivedGrade = grade.mark;
-
+    // update student's grade in course collection
     await ref.set({students: course.students}, {merge: true});
 
+    // update student's grade in users collection
+    const usersRef = await this.firestore.collection<StUserPublic>('users').doc(courseStudent.uid).ref;
+    const userPublic = (await usersRef.get()).data();
+
+    // update by index
+    const courseUpdateIndex = userPublic.courses.findIndex(c => c.course.courseId === course.courseId);
+    userPublic.courses[courseUpdateIndex].courseStudent.receivedGrade = grade.mark;
+
+    await usersRef.set(userPublic);
   }
 
   async addPersonIntoCourse({courseId}: CoursePublic, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
@@ -196,9 +205,16 @@ export class CourseFeatureDatabaseService {
   }
 
   async toggleCloseCourse(course: Course) {
+    // close course on course collections
     this.firestore.collection(this.COURSE).doc(course.courseId).set({
       isOpen: !course.isOpen
     }, {merge: true});
+
+    // close course for teacher and markers
+    for (const marker of course.markers) {
+      await this.closeCourseForUser(course, marker);
+    }
+    await this.closeCourseForUser(course, course.creator);
   }
 
   async toggleUserCourseReceivedInvitation({uid}: StUserMain, invitation: CourseInvitation, add: boolean) {
@@ -227,7 +243,6 @@ export class CourseFeatureDatabaseService {
         courseSentInvitations: add ? field.arrayUnion(coursePublic) : field.arrayRemove(coursePublic),
       }, {merge: true});
   }
-
 
   saveCourseForUser(userMain: StUserMain, course: CoursePublic, role: COURSE_ROLES_ENUM) {
     const userCourse = createUserCourse(userMain, course, role);
@@ -261,6 +276,17 @@ export class CourseFeatureDatabaseService {
     return this.firestore.collection(this.COURSE).doc(courseId).collection(this.PRIVATE).doc(this.PRIVATE).set({
       receivedStudentsInvitations: save ? fieldValue.arrayUnion(student) : fieldValue.arrayRemove(student)
     }, {merge: true});
+  }
+
+  private async closeCourseForUser(course: Course, userMain: StUserMain) {
+    const usersRef = await this.firestore.collection<StUserPublic>('users').doc(userMain.uid).ref;
+    const userPublic = (await usersRef.get()).data();
+
+    // update by index
+    const courseUpdateIndex = userPublic.courses.findIndex(c => c.course.courseId === course.courseId);
+    userPublic.courses[courseUpdateIndex].course.isOpen = !course.isOpen; // close for marker
+
+    await usersRef.set(userPublic);
   }
 
   private getCoursePrivateRef(courseId: string): DocumentReference<DocumentData> {

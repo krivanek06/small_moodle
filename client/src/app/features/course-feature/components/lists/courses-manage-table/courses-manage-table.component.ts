@@ -13,6 +13,7 @@ export class CoursesManageTableComponent implements OnInit {
   @Input() userCourses: StUserCourse[] = [];
   @Input() enableClick = true;
   @Input() authenticatedUser: StUserMain;
+  @Input() classes: string;
 
   constructor() {}
 

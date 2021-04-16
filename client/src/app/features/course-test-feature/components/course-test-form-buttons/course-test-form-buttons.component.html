@@ -1,6 +1,6 @@
 <ion-toolbar *ngIf="showSomething">
   <ng-container *ngIf="courseTestPublic; else createCourse">
-    <ion-buttons class="ion-justify-content-end" *ngIf="loggedInUser">
+    <ion-buttons class="button-container" *ngIf="loggedInUser">
       <!-- I am creator and teacher -->
       <ng-container *ngIf="loggedInUser.uid === courseTestPublic.createdBy.uid &&
                   loggedInUser.uid === courseTestPublic.course.creator.uid;  else decide ">
@@ -30,7 +30,7 @@
 
   <!-- save / delete -->
   <ng-template #createCourse>
-    <ion-buttons class="ion-justify-content-end">
+    <ion-buttons class="button-container">
       <ion-button shape="round" fill="solid" color="primary" (click)="saveTest()">Save</ion-button>
     </ion-buttons>
   </ng-template>

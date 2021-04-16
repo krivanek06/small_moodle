@@ -6,18 +6,23 @@
     <ion-label>Category</ion-label>
     <!--<ion-label *ngIf="authenticatedUser">Unrated tests</ion-label>
     <ion-label *ngIf="authenticatedUser">Nearest test</ion-label>-->
-    <ion-label>Course start</ion-label>
-    <ion-label>Course end</ion-label>
+    <ion-label class="ion-hide-sm-down">Course start</ion-label>
+    <ion-label class="ion-hide-sm-down">Course end</ion-label>
   </ion-item>
 
   <!-- table body -->
-  <ion-item [button]="enableClick" *ngFor="let userCourse of userCourses" (click)="clickedCourse(userCourse)">
-    <ion-label>{{ userCourse.course.longName }}</ion-label>
+  <ion-item [button]="enableClick"
+            [class]="classes"
+            *ngFor="let userCourse of userCourses"
+            [ngClass]="{'st-flex-col': !userCourse.course.isOpen}"
+            (click)="clickedCourse(userCourse)">
+    <ion-label class="ion-hide-sm-down">{{ userCourse.course.longName }}</ion-label>
+    <ion-label class="ion-hide-sm-up">{{ userCourse.course.shortName }}</ion-label>
     <ion-label>{{ userCourse.role }}</ion-label>
     <ion-label>{{ userCourse.course.category }}</ion-label>
    <!-- <ion-label *ngIf="authenticatedUser">{{userCourse.course.numberOfTests}}</ion-label>
     <ion-label *ngIf="authenticatedUser">{{userCourse.course.confirmedTests | courseNearestTest}}</ion-label>-->
-    <ion-label>{{userCourse.course.durationFrom | date: "dd.MM.YYYY"}}</ion-label>
-    <ion-label>{{userCourse.course.durationTo | date: "dd.MM.YYYY"}}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{userCourse.course.durationFrom | date: "dd.MM.YYYY"}}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{userCourse.course.durationTo | date: "dd.MM.YYYY"}}</ion-label>
   </ion-item>
 </ion-list>

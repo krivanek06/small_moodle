@@ -3,12 +3,13 @@
     font-size: 24px;
   }
 
-  .closed-course {
-    background-color: #d66e67;
+  .member-of-course {
+    background-color: #d6b44b;
+    border-radius: 8px;
   }
 
-  .member-of-course {
-    background-color: #4cd654;
+  .member-of-course-text {
+    color: #d6b44b;
   }
 
   .rectangle {
@@ -17,7 +18,7 @@
     margin-right: 5px;
   }
 
-  .legend-container{
+  .legend-container {
     position: relative;
     margin-left: 10px;
     margin-right: 10px;

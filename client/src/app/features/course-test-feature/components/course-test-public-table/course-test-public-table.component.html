@@ -3,10 +3,10 @@
   <ion-item class="st-font-1-bold">
     <ion-label>Name</ion-label>
     <ion-label>Creator</ion-label>
-    <ion-label>Available from</ion-label>
-    <ion-label>Available to</ion-label>
-    <ion-label>Duration</ion-label>
-    <ion-label>Points</ion-label>
+    <ion-label class="ion-hide-sm-down">Available from</ion-label>
+    <ion-label class="ion-hide-md-down">Available to</ion-label>
+    <ion-label class="ion-hide-md-down">Duration</ion-label>
+    <ion-label class="ion-hide-md-down">Points</ion-label>
     <ion-label>State</ion-label>
   </ion-item>
 
@@ -14,10 +14,10 @@
   <ion-item [button]="enableClicking" *ngFor="let test of courseTests" (click)="clickedTest(test)">
     <ion-label>{{ test.testName }}</ion-label>
     <ion-label>{{ test.createdBy.displayName }}</ion-label>
-    <ion-label>{{ test.availableFrom | date: "HH:MM dd.MM.YYYY" }}</ion-label>
-    <ion-label>{{ test.availableTo | date: "HH:MM dd.MM.YYYY" }}</ion-label>
-    <ion-label>{{ test.duration }}</ion-label>
-    <ion-label>{{ test.testPoints }}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{ test.availableFrom | date: "HH:MM dd.MM.YYYY" }}</ion-label>
+    <ion-label class="ion-hide-md-down">{{ test.availableTo | date: "HH:MM dd.MM.YYYY" }}</ion-label>
+    <ion-label class="ion-hide-md-down">{{ test.duration }}</ion-label>
+    <ion-label class="ion-hide-md-down">{{ test.testPoints }}</ion-label>
     <ion-label appTestState [testState]="test.testState">{{ test.testState }}</ion-label>
   </ion-item>
 </ion-list>

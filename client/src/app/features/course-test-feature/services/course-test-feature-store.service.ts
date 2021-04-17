@@ -35,9 +35,6 @@ export class CourseTestFeatureStoreService {
   }
 
   get studentCourseTest(): CourseTestTaken {
-    if (!this.studentCourseTest$.getValue()) {
-      throw new Error('trying to access CourseTestTaken for student, but does not exists');
-    }
     return this.studentCourseTest$.getValue();
   }
 

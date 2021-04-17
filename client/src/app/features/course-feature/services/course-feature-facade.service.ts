@@ -22,6 +22,8 @@ import {createCourseInvitation} from "@course-feature/utils/course.builder";
 import {CourseMemberInformationModalComponent} from "@app/pages/course/entry-points/course-member-information-modal/course-member-information-modal.component";
 import {ConfirmationPopOverComponent} from "@shared/entry-points/confirmation-pop-over/confirmation-pop-over.component";
 import {LoggerService} from "@core/services/logger.service";
+import {from} from "rxjs";
+import {CourseTestFeatureDatabaseService} from "@app/features/course-test-feature";
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +33,7 @@ export class CourseFeatureFacadeService {
               private courseFeatureDatabaseService: CourseFeatureDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
               private authFeatureStoreService: AuthFeatureStoreService,
+              private courseTestFeatureDatabaseService: CourseTestFeatureDatabaseService,
               private loggerService: LoggerService,
               private router: Router) {
   }
@@ -212,11 +215,18 @@ export class CourseFeatureFacadeService {
   }
 
   async showCourseStudent(courseStudent: StCourseStudent) {
+    const studentTests = await this.courseTestFeatureDatabaseService.getOneStudentAllCourseTests(
+      this.courseFeatureStoreService.course.courseId,
+      courseStudent.uid
+    );
+
     const modal = await this.popoverController.create({
       component: CourseMemberInformationModalComponent,
       cssClass: 'custom-popover',
       componentProps: {
-        courseStudent
+        courseStudent,
+        studentTests,
+        course: this.courseFeatureStoreService.course
       },
     });
     await modal.present();

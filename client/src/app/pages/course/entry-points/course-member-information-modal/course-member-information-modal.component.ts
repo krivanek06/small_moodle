@@ -10,27 +10,19 @@ import {from, Observable} from "rxjs";
   styleUrls: ['./course-member-information-modal.component.scss'],
 })
 export class CourseMemberInformationModalComponent implements OnInit {
-  studentsTests$: Observable<CourseTestTaken[]>;
+  studentTests: CourseTestTaken[] = [];
 
   courseStudent: StCourseStudent;
   course: Course;
 
   constructor(private popoverController: PopoverController,
-              private navParams: NavParams,
-              private courseFeatureStoreService: CourseFeatureStoreService,
-              private courseTestFeatureDatabaseService: CourseTestFeatureDatabaseService) {
+              private navParams: NavParams) {
   }
 
   ngOnInit() {
     this.courseStudent = this.navParams.get('courseStudent');
-    this.course = this.courseFeatureStoreService.course;
-
-    this.studentsTests$ = from(this.courseTestFeatureDatabaseService.getOneStudentAllCourseTests(
-      this.course.courseId,
-      this.courseStudent.uid
-    ));
-
-    this.studentsTests$.subscribe(c => console.log('should got studetn tests', c))
+    this.course = this.navParams.get('course');
+    this.studentTests = this.navParams.get('studentTests');
   }
 
   dismissModal() {

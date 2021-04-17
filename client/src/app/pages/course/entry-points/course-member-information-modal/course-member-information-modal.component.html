@@ -13,7 +13,7 @@
   </ion-toolbar>
 
   <!-- user info -->
-  <ion-list *ngIf="studentsTests$ | async as studentTests" class="ion-padding-horizontal">
+  <ion-list class="ion-padding-horizontal">
     <!-- user test info -->
     <ion-item *ngFor="let studentTest of studentTests">
       <ion-label>{{ studentTest.testName }}</ion-label>

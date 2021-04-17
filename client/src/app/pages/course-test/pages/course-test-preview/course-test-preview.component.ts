@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable, Subject} from 'rxjs';
 import {
   CourseTest,
   CourseTestFeatureDatabaseService,
@@ -13,6 +13,12 @@ import {
 import {AuthFeatureStoreService, StUserMain,} from '@app/features/authentication-feature';
 import {Confirmable} from "@app/core";
 import {Course, CourseFeatureStoreService} from "@app/features/course-feature";
+
+interface TestStartingInfo {
+  started: number;
+  finished: number;
+  notStarted: number;
+}
 
 @Component({
   selector: 'app-course-test-preview',
@@ -27,6 +33,7 @@ export class CourseTestPreviewComponent implements OnInit {
   selectedStudentTakenTest$: Observable<CourseTestTaken>;
   user$: Observable<StUserMain>;
   course$: Observable<Course>;
+  testStartingInfo$: Observable<TestStartingInfo> = new Subject();
 
   CourseTestFormStateEnum = CourseTestFormStateEnum;
 
@@ -52,6 +59,7 @@ export class CourseTestPreviewComponent implements OnInit {
         )
       )
     );
+    this.calculateTestStatingInfo();
   }
 
   getStudentTest(courseTestTaken: CourseTestTaken) {
@@ -82,5 +90,19 @@ export class CourseTestPreviewComponent implements OnInit {
 
   reopenTest(selectedStudentTakenTest: CourseTestTaken) {
     this.courseTestFacadeService.reopenTest(selectedStudentTakenTest);
+  }
+
+  private calculateTestStatingInfo() {
+    this.testStartingInfo$ = combineLatest([
+      this.allStudentsResults$,
+      this.course$
+    ]).pipe(
+      map(([allStudentTests, course]) => {
+        const finished = allStudentTests.filter(tests => !!tests.timeEnded).length;
+        const started = allStudentTests.length - finished;
+        const notStarted = course.students.length - started - finished;
+        return {started, finished, notStarted} as TestStartingInfo;
+      })
+    )
   }
 }

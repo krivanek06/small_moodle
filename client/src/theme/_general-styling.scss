@@ -416,9 +416,7 @@ ion-skeleton-text {
 .st-flex-row-sm-col {
   display: flex !important;
   flex-flow: row !important;
-  align-items: center !important;
   @media (max-width: #{$st-var-sm-split}) {
-    align-items: start !important;
     flex-flow: column !important;
   }
 }

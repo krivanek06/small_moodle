@@ -12,8 +12,8 @@
   <!-- table body -->
   <ion-item button *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
     <ion-label>{{ test.student?.displayName }}</ion-label>
-    <ion-label class="ion-hide-sm-down">{{ test.timeStarted | date: "HH:mm:ss dd.MM.YYYY" }}</ion-label>
-    <ion-label class="ion-hide-sm-down">{{ test.timeEnded | date: "HH:mm:ss dd.MM.YYYY" }}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{ test.timeStarted | date: "HH:mm:ss" }}</ion-label>
+    <ion-label class="ion-hide-sm-down">{{ test.timeEnded | date: "HH:mm:ss" }}</ion-label>
     <ion-label>{{ test.timeAwayOfTest }} seconds</ion-label>
     <ion-label class="ion-hide-md-down">{{ test.marker?.displayName }}</ion-label>
     <ion-label>

@@ -8,14 +8,14 @@
   </ion-item>
 
   <!-- table body -->
-  <ion-item
-    button
-    *ngFor="let test of courseTakenTests"
-    (click)="clickedTest(test)"
-  >
+  <ion-item button *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
     <ion-label>{{ test.testName }}</ion-label>
     <ion-label>{{ test.availableFrom | date: "dd.MM.YYYY" }}</ion-label>
-    <ion-label>{{ test.receivedPoints }}</ion-label>
+    <ion-label>
+      <ng-container *ngIf="test.receivedPoints">
+        {{ test.receivedPoints }} ({{(1 / test.testPoints) * test.receivedPoints | percent}}) / {{ test.testPoints }}
+      </ng-container>
+    </ion-label>
     <ion-label>{{ test.marker?.displayName }}</ion-label>
   </ion-item>
 </ion-list>

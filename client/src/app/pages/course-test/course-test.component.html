@@ -14,11 +14,13 @@
       </app-grid-page-content>
 
       <!-- course info -->
-      <app-grid-page-content>
-        <ion-title style="font-size: 21px" color="primary">
-          Course: [{{ course.shortName }}] {{ course.longName }}
-        </ion-title>
-      </app-grid-page-content>
+      <ion-row class="ion-justify-content-center ion-margin-bottom">
+        <ion-col size="12" size-lg="10" size-xl="9">
+          <ion-title style="font-size: 21px" color="primary">
+            Course: [{{ course.shortName }}] {{ course.longName }}
+          </ion-title>
+        </ion-col>
+      </ion-row>
     </ng-container>
 
     <!-- router -->

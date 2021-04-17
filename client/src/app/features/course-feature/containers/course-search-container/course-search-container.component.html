@@ -64,9 +64,9 @@
     <ion-label class="ion-hide-sm-down">Teacher</ion-label>
     <ion-label class="ion-hide-md-down">Students</ion-label>
     <ion-label>Tests</ion-label>
-    <ion-label>Course start</ion-label>
-    <ion-label class="ion-hide-sm-down">Course end</ion-label>
     <ion-label>Category</ion-label>
+    <ion-label>Start</ion-label>
+    <ion-label class="ion-hide-sm-down">End</ion-label>
     <ion-label class="ion-hide-md-down">Status</ion-label>
   </ion-item>
 
@@ -85,9 +85,9 @@
     <ion-label class="ion-hide-sm-down">{{ findCourse.creator.displayName }}</ion-label>
     <ion-label class="ion-hide-md-down">{{ findCourse.numberOfStudents }}</ion-label>
     <ion-label>{{ findCourse.numberOfTests }}</ion-label>
+    <ion-label>{{ findCourse.category }}</ion-label>
     <ion-label>{{ findCourse.durationFrom | date: 'dd.MM.yyyy' }}</ion-label>
     <ion-label class="ion-hide-sm-down">{{ findCourse.durationTo | date: 'dd.MM.yyyy' }}</ion-label>
-    <ion-label>{{ findCourse.category }}</ion-label>
     <ion-label class="ion-hide-md-down">{{ findCourse.isOpen ? 'Open' : 'Closed' }}</ion-label>
   </ion-item>
 </ion-list>

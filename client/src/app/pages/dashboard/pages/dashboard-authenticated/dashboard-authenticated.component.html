@@ -58,7 +58,8 @@
             <!-- user logs -->
             <ion-col size="12">
               <app-generic-card [title]="'Latest activities'">
-                <app-account-logs></app-account-logs>
+                <app-account-logs [logs]="user.logs" (removeLogsEmitter)="removeLogs()">
+                </app-account-logs>
               </app-generic-card>
             </ion-col>
           </ion-row>

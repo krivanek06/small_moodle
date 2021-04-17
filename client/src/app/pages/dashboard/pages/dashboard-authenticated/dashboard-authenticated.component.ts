@@ -52,4 +52,8 @@ export class DashboardAuthenticatedComponent implements OnInit {
   discardSentInvitation(coursePublic: CoursePublic) {
     this.dashboardAuthenticatedFacadeService.discardSentInvitation(coursePublic);
   }
+
+  removeLogs() {
+    this.dashboardAuthenticatedFacadeService.removeLogs();
+  }
 }

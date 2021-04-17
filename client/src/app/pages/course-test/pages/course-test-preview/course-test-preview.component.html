@@ -40,9 +40,9 @@
       [courseTest]="selectedStudentTakenTest">
     </app-course-test-form>
 
-    <div class="st-error" *ngIf="gradingError">
+    <ion-toolbar class="st-error" *ngIf="gradingError">
       Please fill received points for all questions for the selected test
-    </div>
+    </ion-toolbar>
 
     <ion-buttons class="ion-justify-content-end" *ngIf="(course$ | async).isOpen">
       <ion-button

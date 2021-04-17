@@ -9,11 +9,13 @@ import { CustomCalendarComponent } from './components/custom-calendar/custom-cal
 import { InlineInputPopUpComponent } from './entry-points/inline-input-pop-up/inline-input-pop-up.component';
 import { GridPageContentComponent } from './components/layouts/grid-page-content/grid-page-content.component';
 import {ConfirmationPopOverComponent} from "@shared/entry-points/confirmation-pop-over/confirmation-pop-over.component";
+import {ReversePipe} from "./pipes/reverse.pipe";
 
 @NgModule({
   declarations: [
     RelativeTimePipe,
     ObjNgForPipe,
+    ReversePipe,
     DefaultImgDirective,
     GenericCardComponent,
     HeaderComponent,
@@ -33,7 +35,8 @@ import {ConfirmationPopOverComponent} from "@shared/entry-points/confirmation-po
     CustomCalendarComponent,
     InlineInputPopUpComponent,
     GridPageContentComponent,
-    ConfirmationPopOverComponent
+    ConfirmationPopOverComponent,
+    ReversePipe
   ],
 })
 export class SharedModule {}

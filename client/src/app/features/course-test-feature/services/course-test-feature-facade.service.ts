@@ -17,6 +17,7 @@ import {
 } from '@app/features/course-feature';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {LoggerService} from "@core/services/logger.service";
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class CourseTestFeatureFacadeService {
               private courseTestDatabaseService: CourseTestFeatureDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
               private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private courseFeatureDatabaseService: CourseFeatureDatabaseService) {
+              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+              private loggerService: LoggerService) {
   }
 
   getAllStudentsResultsForCourseTests(testId: string): Observable<CourseTestTaken[]> {
@@ -43,6 +45,19 @@ export class CourseTestFeatureFacadeService {
       if (approve) {
         const courseTestPublic = convertCourseTestIntoCourseTestPublic(courseTest);
         this.courseFeatureDatabaseService.addCourseTestIntoPublic(courseTestPublic);
+
+        const date = new Date(courseTest.availableFrom);
+        const time = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+        const message = `Test ${courseTest.testName} has been approved for course ${courseTest.course.longName}.
+                          Available from ${time}, duration ${courseTest.duration} min., points ${courseTest.testPoints}`;
+        this.loggerService.logMessageUser([
+          courseTest.createdBy,
+          ...this.courseFeatureStoreService.course.markers,
+          ...this.courseFeatureStoreService.course.students],
+          message);
+      }else{
+        const message = `Test ${courseTest.testName} has been disapproved in course ${courseTest.course.longName}`;
+        this.loggerService.logMessageUser([courseTest.createdBy, ...this.courseFeatureStoreService.course.markers], message);
       }
       await this.courseTestDatabaseService.saveCourseTest(courseTest);
       await this.courseFeatureDatabaseService.increaseTests(courseTest.course.courseId, true);
@@ -72,6 +87,10 @@ export class CourseTestFeatureFacadeService {
     if (await this.presentDialog('delete', courseTest)) {
       await this.courseTestDatabaseService.deleteCourseTest(courseTest);
       await this.courseFeatureDatabaseService.increaseTests(courseTest.course.courseId, false);
+
+      const message = `Test ${courseTest.testName} has been deleted in course ${courseTest.course.longName}`;
+      this.loggerService.logMessageUser([courseTest.createdBy, ...this.courseFeatureStoreService.course.markers], message);
+
       this.presentToaster('deleted', courseTest);
       return true;
     }
@@ -107,6 +126,7 @@ export class CourseTestFeatureFacadeService {
       receivedPoints,
       testFormState: CourseTestFormStateEnum.GRADED,
     };
+    this.loggerService.logAddPointsToTest(courseTest);
 
     // update student points
     await this.updateStudentTotalPoints(courseTest);

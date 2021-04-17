@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {LogModel} from "@core/models/Log.model";
+import {Confirmable} from "@app/core";
 
 @Component({
   selector: 'app-account-logs',
@@ -6,7 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-logs.component.scss'],
 })
 export class AccountLogsComponent implements OnInit {
-  constructor() {}
+  @Output() removeLogsEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-  ngOnInit() {}
+  @Input() logs: LogModel[] = [];
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
+
+  @Confirmable('Please confirm removing all your previous logs')
+  removeLogs() {
+    this.removeLogsEmitter.emit();
+  }
 }

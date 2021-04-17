@@ -1,22 +1,17 @@
 <ion-list>
+  <ion-item lines="none">
+    <ion-button slot="end" shape="round" fill="clear" color="danger" (click)="removeLogs()">
+      Remove logs
+    </ion-button>
+  </ion-item>
   <!-- table header -->
   <ion-item class="st-font-1-bold">
     <ion-label>Date</ion-label>
     <ion-label>Message</ion-label>
   </ion-item>
 
-  <ion-item>
-    <ion-label>20.03.2020</ion-label>
-    <ion-label>You have been added into course 1 as a student</ion-label>
-  </ion-item>
-
-  <ion-item button>
-    <ion-label>20.03.2020</ion-label>
-    <ion-label>Yor assigment has been graded, click to see it</ion-label>
-  </ion-item>
-
-  <ion-item button>
-    <ion-label>20.03.2020</ion-label>
-    <ion-label>Yor assigment has been graded, click to see it</ion-label>
+  <ion-item *ngFor="let log of logs | reverse ">
+    <ion-label>{{ log.date | date: 'H:mm dd.MM.YYYY' }}</ion-label>
+    <ion-label>{{ log.message }}</ion-label>
   </ion-item>
 </ion-list>

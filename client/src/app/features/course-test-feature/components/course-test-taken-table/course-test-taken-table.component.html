@@ -10,7 +10,7 @@
   </ion-item>
 
   <!-- table body -->
-  <ion-item button *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
+  <ion-item [button]="!!test.timeEnded" *ngFor="let test of courseTakenTests" (click)="clickedTest(test)">
     <ion-label>{{ test.student?.displayName }}</ion-label>
     <ion-label class="ion-hide-sm-down">{{ test.timeStarted | date: "HH:mm:ss" }}</ion-label>
     <ion-label class="ion-hide-sm-down">{{ test.timeEnded | date: "HH:mm:ss" }}</ion-label>

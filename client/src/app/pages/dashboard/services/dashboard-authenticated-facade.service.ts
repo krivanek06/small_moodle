@@ -6,13 +6,15 @@ import {
   CourseCreateEntryPointComponent,
   CourseFeatureDatabaseService,
   CourseFeatureFacadeService,
-  CourseInvitation, CoursePublic,
+  CourseInvitation,
+  CoursePublic,
   CourseSearchModalComponent,
   CoursesUserAccountInfoModalComponent
 } from '@app/features/course-feature';
 import {ModalController, PopoverController} from '@ionic/angular';
 import {IonicDialogService} from '@app/core';
 import {Observable} from "rxjs";
+import {LoggerService} from "@core/services/logger.service";
 
 @Injectable()
 export class DashboardAuthenticatedFacadeService {
@@ -21,7 +23,8 @@ export class DashboardAuthenticatedFacadeService {
     private popoverController: PopoverController,
     private courseFeatureFacadeService: CourseFeatureFacadeService,
     private authService: AuthFeatureStoreService,
-    private courseFeatureDatabaseService: CourseFeatureDatabaseService
+    private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+    private loggerService: LoggerService
   ) {
   }
 
@@ -32,6 +35,9 @@ export class DashboardAuthenticatedFacadeService {
   async discardSentInvitation(coursePublic: CoursePublic) {
     await this.courseFeatureDatabaseService.toggleStudentInvitation(coursePublic, this.authService.userMain, false);
     await this.courseFeatureDatabaseService.toggleUserCourseSentInvitations(this.authService.userMain, coursePublic, false);
+
+    const message = `Your invitation request into course ${coursePublic.longName} has been removed`;
+    this.loggerService.logMessageUser([this.authService.userMain], message);
     IonicDialogService.presentToast(`Your invitation has been removed from course ${coursePublic.longName}`);
   }
 
@@ -46,10 +52,18 @@ export class DashboardAuthenticatedFacadeService {
       await this.courseFeatureDatabaseService.saveCourseForUser(this.authService.user, invitation.course, invitation.invitedAs);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
+
+      const message = `You accepted ${invitation.course.longName}'s invitation into course`;
+      this.loggerService.logMessageUser([this.authService.userMain], message);
+
       IonicDialogService.presentToast(`Course ${longName} invitation has been accepted`);
     } else if (result?.confirm === false) {
       await this.courseFeatureDatabaseService.toggleUserCourseReceivedInvitation(this.authService.userMain, invitation, false);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
+
+      const message = `You declined ${invitation.course.longName}'s invitation into course`;
+      this.loggerService.logMessageUser([this.authService.userMain], message);
+
       IonicDialogService.presentToast(`Course ${longName} invitation has been declined`);
     }
   }
@@ -82,7 +96,14 @@ export class DashboardAuthenticatedFacadeService {
     const courseCreate = resultPromise.data?.courseCreate as CourseCreate;
     if (courseCreate) {
       await this.courseFeatureFacadeService.addNewCourse(courseCreate);
+      const message = `Course ${courseCreate.coursePublic.longName} has been created`;
+      this.loggerService.logMessageUser([courseCreate.coursePublic.creator], message);
       IonicDialogService.presentToast(`Course ${courseCreate.coursePublic.longName} been created`);
     }
+  }
+
+  async removeLogs() {
+    await this.loggerService.removeLogs(this.authService.user);
+    IonicDialogService.presentToast('Your logs have been removed');
   }
 }

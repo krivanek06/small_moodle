@@ -7,6 +7,7 @@ import {
 import {USER_LOG_TYPE_ENUM, USER_ROLES_ENUM} from './user.enums';
 import {CourseTestPublic} from '@app/features/course-test-feature';
 import {COURSE_ROLES_ENUM} from '@app/features/course-feature';
+import {LogModel} from "@core/models/Log.model";
 
 export interface StUserMain {
   uid: string;
@@ -33,16 +34,10 @@ export interface StUserPrivate {
   email: string;
   locale: string;
   roles: string[];
-  logs: UserLogs[];
+  logs: LogModel[];
   activeTest: CourseTestPublic;
   courseInvitations: CourseInvitation[];
   courseSentInvitations: CoursePublic[];
-}
-
-export interface UserLogs {
-  message: string;
-  type: USER_LOG_TYPE_ENUM;
-  id: string;
 }
 
 export interface StUserLogin {
@@ -118,7 +113,7 @@ export class StUserClass implements StUser {
     return this.privateData.locale;
   }
 
-  get logs(): UserLogs[] {
+  get logs(): LogModel[] {
     return this.privateData.logs;
   }
 
@@ -139,10 +134,10 @@ export class StUserClass implements StUser {
   }
 
   isTeacher(): boolean {
-    return this.roles.includes(USER_ROLES_ENUM.TEACHER)
+    return this.roles?.includes(USER_ROLES_ENUM.TEACHER)
   }
 
   isAdmin(): boolean {
-    return this.roles.includes(USER_ROLES_ENUM.ADMIN)
+    return this.roles?.includes(USER_ROLES_ENUM.ADMIN)
   }
 }

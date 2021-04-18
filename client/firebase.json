@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "SmallMoodle",
-      "public": "dist",
+      "public": "www",
       "ignore": [
         "firebase.json",
         "**/.*",

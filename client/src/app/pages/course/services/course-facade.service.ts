@@ -3,24 +3,24 @@ import {
   Course,
   COURSE_ROLES_ENUM,
   CourseCreate,
-  CourseEditEntryPointComponent,
-  CourseFeatureDatabaseService,
-  CourseFeatureFacadeService,
+  CourseDatabaseService,
   CourseFeatureStoreService,
-  StCourseStudent
-} from "@app/features/course-feature";
+  StCourseStudent,
+  AuthFeatureStoreService, StUserMain, StUserPublic
+} from "@app/core";
 import {ModalController} from "@ionic/angular";
 import {IonicDialogService} from "@app/core";
 import {Observable} from "rxjs";
 import {map, withLatestFrom} from "rxjs/operators";
-import {AuthFeatureStoreService, StUserMain, StUserPublic} from "@app/features/authentication-feature";
+import {CourseFeatureFacadeService} from "@course-feature/services";
+import {CourseEditEntryPointComponent} from "@course-feature/entry-points";
 
 @Injectable()
 export class CourseFacadeService {
 
   constructor(private courseFeatureStoreService: CourseFeatureStoreService,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
-              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+              private courseFeatureDatabaseService: CourseDatabaseService,
               private authFeatureStoreService: AuthFeatureStoreService,
               private modalController: ModalController) {
   }

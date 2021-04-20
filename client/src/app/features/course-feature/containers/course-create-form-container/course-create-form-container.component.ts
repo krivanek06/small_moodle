@@ -1,17 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {v4 as uuid} from 'uuid';
+import {Observable} from 'rxjs';
 import {
   Course,
   CourseCategory,
   CourseCreate,
-  CourseFeatureDatabaseService,
-  CourseFeatureFacadeService,
+  CourseDatabaseService,
   CoursePrivate,
-  CoursePublic
-} from '@app/features/course-feature';
-import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
-import {v4 as uuid} from 'uuid';
-import {Observable} from 'rxjs';
+  CoursePublic,
+  AuthFeatureStoreService,
+  StUserMain
+} from '@app/core';
+import {CourseFeatureFacadeService} from '../../services';
+
 
 @Component({
   selector: 'app-course-create-form-container',
@@ -33,7 +35,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private courseFeatureFacadeService: CourseFeatureFacadeService,
-    private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+    private courseFeatureDatabaseService: CourseDatabaseService,
     private authFeatureStoreService: AuthFeatureStoreService
   ) {
   }
@@ -100,7 +102,7 @@ export class CourseCreateFormContainerComponent implements OnInit {
       durationTo: this.durationTo.value,
       durationFrom: this.durationFrom.value,
       year: this.year.value,
-      numberOfStudents: this.invitedStudents.length,
+      numberOfStudents: this.course?.students.length ?? 0, //this.invitedStudents.length,
       isOpen: this.course?.isOpen ?? true,
       gradings: this.gradings.value,
       numberOfTests: this.course?.numberOfTests ?? 0,

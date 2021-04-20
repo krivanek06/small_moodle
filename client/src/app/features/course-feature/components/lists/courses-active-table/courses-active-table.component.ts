@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StUserMain} from '@app/features/authentication-feature';
-import {Course, CoursePublic} from "@app/features/course-feature";
+import {CoursePublic, StUserMain} from "@app/core";
 
 @Component({
   selector: 'app-courses-active-table',

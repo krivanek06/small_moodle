@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from '@ionic/angular';
-import {CourseFeatureFacadeService, CoursePublic} from '@app/features/course-feature';
-import {AuthFeatureStoreService, StUser} from "@app/features/authentication-feature";
 import {Observable} from "rxjs";
+import {AuthFeatureStoreService, CoursePublic, StUser} from "@app/core";
 
 @Component({
   selector: 'app-course-search-modal',
@@ -14,7 +13,6 @@ export class CourseSearchModalComponent implements OnInit {
   user$: Observable<StUser>;
 
   constructor(private modalController: ModalController,
-              private courseFeatureFacadeService: CourseFeatureFacadeService,
               private authFeatureStoreService: AuthFeatureStoreService,
               private navParams: NavParams) {
   }
@@ -25,7 +23,7 @@ export class CourseSearchModalComponent implements OnInit {
   }
 
   selectCourse(course: CoursePublic) {
-    this.courseFeatureFacadeService.enrolIntoCourse(course);
+    this.modalController.dismiss({enroll: course});
   }
 
   dismissModal() {

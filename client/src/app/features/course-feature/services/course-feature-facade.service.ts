@@ -1,39 +1,40 @@
 import {Injectable} from '@angular/core';
+import {PopoverController} from '@ionic/angular';
+import {Router} from '@angular/router';
+import {ConfirmationPopOverComponent, InlineInputPopUpComponent} from "@app/shared";
 import {
-  convertCourseIntoCoursePublic,
-  Course,
-  COURSE_ROLES_ENUM,
-  CourseFeatureDatabaseService,
+  AuthFeatureStoreService,
+  Course, COURSE_INVITATION_TYPE,
+  COURSE_ROLES_ENUM, CourseCreate,
+  CourseDatabaseService,
   CourseFeatureStoreService,
   CourseGrading,
+  CoursePublic,
+  CourseTestDatabaseService,
+  IonicDialogService,
+  LoggerService,
+  StCourseStudent,
+  StUserMain
+} from '@app/core';
+import {
   CourseInvitationConfirmationPopOverComponent,
   CourseInviteMemberPopOverComponent,
-  CoursePublic,
-  StCourseStudent
-} from '@app/features/course-feature';
-import {PopoverController} from '@ionic/angular';
-import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
-import {COURSE_INVITATION_TYPE} from '../model/course.enum';
-import {IonicDialogService} from '@app/core';
-import {CourseCreate, CourseInviteMemberConfirm,} from '../model/course-module.interface';
-import {InlineInputPopUpComponent} from '@shared/entry-points/inline-input-pop-up/inline-input-pop-up.component';
-import {Router} from '@angular/router';
-import {createCourseInvitation} from "@course-feature/utils/course.builder";
-import {CourseMemberInformationModalComponent} from "@app/pages/course/entry-points/course-member-information-modal/course-member-information-modal.component";
-import {ConfirmationPopOverComponent} from "@shared/entry-points/confirmation-pop-over/confirmation-pop-over.component";
-import {LoggerService} from "@core/services/logger.service";
-import {from} from "rxjs";
-import {CourseTestFeatureDatabaseService} from "@app/features/course-test-feature";
+  CourseMemberInformationModalComponent
+} from '../entry-points'
+
+import {CourseInviteMemberConfirm} from '../model';
+import {convertCourseIntoCoursePublic, createCourseInvitation, createUserCourse} from "../utils";
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseFeatureFacadeService {
   constructor(private popoverController: PopoverController,
-              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+              private courseFeatureDatabaseService: CourseDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
               private authFeatureStoreService: AuthFeatureStoreService,
-              private courseTestFeatureDatabaseService: CourseTestFeatureDatabaseService,
+              private courseTestFeatureDatabaseService: CourseTestDatabaseService,
               private loggerService: LoggerService,
               private router: Router) {
   }
@@ -150,7 +151,8 @@ export class CourseFeatureFacadeService {
         ...course.students
       ], `Course has been ${text} by ${course.creator.displayName}`);
       IonicDialogService.presentToast(`Course ${course.longName} has been ${text}`);
-    };
+    }
+    ;
   }
 
   async removeSentInvitation(course: Course, userMain: StUserMain, type: COURSE_ROLES_ENUM) {
@@ -196,7 +198,8 @@ export class CourseFeatureFacadeService {
     if (resultPromise.data?.accept) {
       await this.courseFeatureDatabaseService.toggleStudentInvitation(coursePublic, userMain, false);
       await this.courseFeatureDatabaseService.increaseStudents(coursePublic.courseId, true);
-      await this.courseFeatureDatabaseService.saveCourseForUser(userMain, coursePublic, COURSE_ROLES_ENUM.STUDENT);
+      const userCourse = createUserCourse(userMain, coursePublic, COURSE_ROLES_ENUM.STUDENT);
+      await this.courseFeatureDatabaseService.saveCourseForUser(userCourse);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(coursePublic, userMain, COURSE_ROLES_ENUM.STUDENT);
       await this.courseFeatureDatabaseService.toggleUserCourseSentInvitations(userMain, coursePublic, false);
 
@@ -286,11 +289,8 @@ export class CourseFeatureFacadeService {
       this.sendCourseInvitation(m, courseCreate.coursePublic, COURSE_ROLES_ENUM.MARKER));
 
     // update my data -> course manage
-    this.courseFeatureDatabaseService.saveCourseForUser(
-      courseCreate.coursePublic.creator,
-      courseCreate.coursePublic,
-      COURSE_ROLES_ENUM.TEACHER
-    );
+    const userCourse = createUserCourse(courseCreate.coursePublic.creator, courseCreate.coursePublic, COURSE_ROLES_ENUM.TEACHER);
+    this.courseFeatureDatabaseService.saveCourseForUser(userCourse);
   }
 
   private async sendCourseInvitation(student: StUserMain, coursePublic: CoursePublic, role: COURSE_ROLES_ENUM): Promise<void> {

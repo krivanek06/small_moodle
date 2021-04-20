@@ -1,17 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {
-  CourseTest,
-  CourseTestFeatureDatabaseService,
-  CourseTestFeatureFacadeService,
-  CourseTestFormComponent,
-  CourseTestFormStateEnum
-} from '@app/features/course-test-feature';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
+import {
+  CourseTest,
+  CourseTestDatabaseService,
+  CourseTestFormStateEnum,
+  AuthFeatureStoreService,
+  StUserMain,
+  Confirmable
+} from '@app/core';
 import {CourseFeatureFacadeService} from "@app/features/course-feature";
-import {Confirmable} from "@app/core";
+import {CourseTestFormComponent, CourseTestFeatureFacadeService} from "@app/features/course-test-feature";
+
 
 @Component({
   selector: 'app-course-test-edit',
@@ -27,7 +28,7 @@ export class CourseTestEditComponent implements OnInit {
   errorMessage: string;
 
   constructor(private courseTestFeatureFacadeService: CourseTestFeatureFacadeService,
-              private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+              private courseTestDatabaseService: CourseTestDatabaseService,
               private authFeatureStoreService: AuthFeatureStoreService,
               private courseFeatureFacadeService: CourseFeatureFacadeService,
               private route: ActivatedRoute) {

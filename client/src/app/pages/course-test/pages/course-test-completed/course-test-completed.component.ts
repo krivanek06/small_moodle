@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {CourseTestFeatureStoreService, CourseTestTaken} from "@app/features/course-test-feature";
+import {CourseTestFeatureStoreService, CourseTestTaken} from "@app/core";
 
 @Component({
   selector: 'app-course-test-completed',

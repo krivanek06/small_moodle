@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavParams, PopoverController} from "@ionic/angular";
-import {StUser} from "@app/features/authentication-feature";
-import {Confirmable} from "@app/core";
+import {Confirmable, StUser} from "@app/core";
 
 @Component({
   selector: 'app-display-roles-pop-over',

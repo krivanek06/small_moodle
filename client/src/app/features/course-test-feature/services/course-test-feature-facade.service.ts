@@ -1,33 +1,33 @@
 import {Injectable} from '@angular/core';
-import {IonicDialogService} from '@app/core';
-import {
-  CourseTest,
-  CourseTestPublic,
-  CourseTestReceivedPoints,
-  CourseTestTaken,
-} from '../model/course-test-firebase.model';
-import {CourseTestFormStateEnum, CourseTestStateEnum,} from '../model/course-test.enums';
-import {convertCourseTestIntoCourseTestPublic,} from '../utils/course-test.convertor';
-import {AuthFeatureStoreService} from '@app/features/authentication-feature';
-import {CourseTestFeatureDatabaseService, CourseTestFeatureStoreService} from '@app/features/course-test-feature';
-import {
-  convertCourseIntoCoursePrivate,
-  CourseFeatureDatabaseService,
-  CourseFeatureStoreService
-} from '@app/features/course-feature';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {LoggerService} from "@core/services/logger.service";
+import {
+  AuthFeatureStoreService,
+  CourseDatabaseService,
+  CourseFeatureStoreService,
+  CourseTestDatabaseService, CourseTestFeatureStoreService,
+  IonicDialogService,
+  LoggerService,
+  CourseTest,
+  CourseTestFormStateEnum,
+  CourseTestPublic,
+  CourseTestReceivedPoints,
+  CourseTestStateEnum,
+  CourseTestTaken,
+} from '@app/core';
+import {convertCourseTestIntoCourseTestPublic,} from '../utils';
+import {convertCourseIntoCoursePrivate} from '@app/features/course-feature';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseTestFeatureFacadeService {
   constructor(private authFeatureStoreService: AuthFeatureStoreService,
-              private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+              private courseTestDatabaseService: CourseTestDatabaseService,
               private courseFeatureStoreService: CourseFeatureStoreService,
               private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+              private courseFeatureDatabaseService: CourseDatabaseService,
               private loggerService: LoggerService) {
   }
 
@@ -47,15 +47,15 @@ export class CourseTestFeatureFacadeService {
         this.courseFeatureDatabaseService.addCourseTestIntoPublic(courseTestPublic);
 
         const date = new Date(courseTest.availableFrom);
-        const time = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+        const time = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
         const message = `Test ${courseTest.testName} has been approved for course ${courseTest.course.longName}.
                           Available from ${time}, duration ${courseTest.duration} min., points ${courseTest.testPoints}`;
         this.loggerService.logMessageUser([
-          courseTest.createdBy,
-          ...this.courseFeatureStoreService.course.markers,
-          ...this.courseFeatureStoreService.course.students],
+            courseTest.createdBy,
+            ...this.courseFeatureStoreService.course.markers,
+            ...this.courseFeatureStoreService.course.students],
           message);
-      }else{
+      } else {
         const message = `Test ${courseTest.testName} has been disapproved in course ${courseTest.course.longName}`;
         this.loggerService.logMessageUser([courseTest.createdBy, ...this.courseFeatureStoreService.course.markers], message);
       }

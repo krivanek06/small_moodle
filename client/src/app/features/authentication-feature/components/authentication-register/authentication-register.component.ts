@@ -1,13 +1,12 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   OnInit,
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterIUser } from '../../models/user.interface';
-import { IonicDialogService } from '../../../../core/services/ionic-dialog.service';
+import {RegisterIUser} from "../../models";
+import {IonicDialogService} from "@app/core";
 
 @Component({
   selector: 'app-authentication-register',
@@ -33,9 +32,7 @@ export class AuthenticationRegisterComponent implements OnInit {
 
   register() {
     if (this.registrationForm.invalid) {
-      IonicDialogService.presentToast(
-        'Form is invalid, please fill all fields'
-      );
+      IonicDialogService.presentToast('Form is invalid, please fill all fields');
       return;
     }
     if (this.password1.value !== this.password2.value) {

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StUserMain} from '@app/features/authentication-feature';
+import {StUserMain} from "@app/core";
 
 @Component({
   selector: 'app-account-identification-list',

@@ -9,6 +9,8 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { RouteReuseStrategy } from '@angular/router';
+import {CoreModule} from "@core/core.module";
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,6 +20,7 @@ import { RouteReuseStrategy } from '@angular/router';
     AppRoutingModule,
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
+    CoreModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

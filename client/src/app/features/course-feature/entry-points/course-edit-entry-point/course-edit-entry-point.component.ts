@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {Course, CourseCreate, CourseFeatureStoreService} from "@app/features/course-feature";
 import {ModalController} from "@ionic/angular";
-import {Confirmable} from "@app/core";
+import {Confirmable, Course, CourseCreate, CourseFeatureStoreService} from "@app/core";
 
 @Component({
   selector: 'app-course-edit-entry-point',

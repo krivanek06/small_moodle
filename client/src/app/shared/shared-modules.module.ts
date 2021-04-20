@@ -8,7 +8,6 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {IonicModule} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {NgCalendarModule} from 'ionic2-calendar';
-import {IonicDialogService} from '@app/core';
 
 
 @NgModule({
@@ -35,11 +34,8 @@ import {IonicDialogService} from '@app/core';
     AngularFireStorageModule,
     IonicModule,
     NgCalendarModule
-  ],
-  providers: [IonicDialogService],
+  ]
 })
 export class SharedModulesModule {
-  public constructor(ionicDialogService: IonicDialogService) {
-    // ^^^ forces an instance to be created
-  }
+
 }

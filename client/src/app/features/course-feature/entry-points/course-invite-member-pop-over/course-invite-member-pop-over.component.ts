@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NavParams, PopoverController} from '@ionic/angular';
 import {FormGroup} from '@angular/forms';
-import {AuthFeatureStoreService, StUser, StUserMain} from "@app/features/authentication-feature";
-import {CoursePublic} from "@app/features/course-feature";
 import {Observable} from "rxjs";
+import {AuthFeatureStoreService, CoursePublic, StUser, StUserMain} from "@app/core";
 
 @Component({
   selector: 'app-course-invite-member-pop-over',

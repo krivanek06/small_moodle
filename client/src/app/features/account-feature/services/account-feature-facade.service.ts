@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {StUserMain} from "@app/features/authentication-feature";
 import {PopoverController} from "@ionic/angular";
-import {DisplayRolesPopOverComponent} from "@account-feature/entry-points/display-roles-pop-over/display-roles-pop-over.component";
-import {AccountFeatureDatabaseService} from "@app/features/account-feature";
+import {DisplayRolesPopOverComponent} from "../entry-points";
 import {first} from "rxjs/operators";
-import {IonicDialogService} from "@app/core";
+import {AccountDatabaseService, IonicDialogService, StUserMain} from "@app/core";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,7 @@ import {IonicDialogService} from "@app/core";
 export class AccountFeatureFacadeService {
 
   constructor(private popoverController: PopoverController,
-              private accountFeatureDatabaseService: AccountFeatureDatabaseService) {
+              private accountFeatureDatabaseService: AccountDatabaseService) {
   }
 
   async showUserRoles(userMain: StUserMain) {

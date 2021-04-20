@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseTestPublic} from '@app/features/course-test-feature';
+import {CourseTestPublic} from "@app/core";
 
 @Component({
   selector: 'app-course-test-public-table',

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CourseTestTaken } from '@app/features/course-test-feature';
-import { CourseTestFormStateEnum } from '../../model/course-test.enums';
+import {CourseTestFormStateEnum, CourseTestTaken} from "@app/core";
 
 @Component({
   selector: 'app-course-test-info',

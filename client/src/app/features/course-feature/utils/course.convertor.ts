@@ -1,4 +1,4 @@
-import {Course, CoursePrivate, CoursePublic, CoursePublicMain,} from '../model/courses-firebase.interface';
+import {Course, CoursePrivate, CoursePublic, CoursePublicMain,} from '@app/core';
 
 
 export const convertCourseIntoCourseMain = (course: Course): CoursePublicMain => {

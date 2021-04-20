@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
-import { AuthenticationLoginComponent } from './components/authentication-login/authentication-login.component';
-import { AuthenticationRegisterComponent } from './components/authentication-register/authentication-register.component';
-import { AuthenticationModalComponent } from './entry-points/authentication-modal/authentication-modal.component';
-import { SharedModule } from '../../shared/shared.module';
+import {NgModule} from '@angular/core';
+import {AuthenticationLoginComponent, AuthenticationRegisterComponent} from './components';
+import {AuthenticationModalComponent} from './entry-points';
+import {IonicModule} from "@ionic/angular";
+import {ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+
 
 @NgModule({
   declarations: [
@@ -10,6 +12,11 @@ import { SharedModule } from '../../shared/shared.module';
     AuthenticationRegisterComponent,
     AuthenticationModalComponent,
   ],
-  imports: [SharedModule],
+  imports: [
+    IonicModule,
+    ReactiveFormsModule,
+    CommonModule
+  ],
 })
-export class AuthenticationFeatureModule {}
+export class AuthenticationFeatureModule {
+}

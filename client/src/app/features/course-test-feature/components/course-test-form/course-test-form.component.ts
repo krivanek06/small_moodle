@@ -1,10 +1,15 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {CourseTest, CourseTestQuestion, CourseTestTaken,} from '../../model/course-test-firebase.model';
 import {v4 as uuid} from 'uuid';
-import {CourseTestFormStateEnum, CourseTestStateEnum,} from '../../model/course-test.enums';
-import {StUserMain} from '@app/features/authentication-feature';
-import {getCurrentIOSDate} from '@app/core';
+import {
+  CourseTest,
+  CourseTestFormStateEnum,
+  CourseTestQuestion,
+  CourseTestStateEnum,
+  CourseTestTaken,
+  getCurrentIOSDate,
+  StUserMain,
+} from '@app/core';
 
 @Component({
   selector: 'app-course-test-form',

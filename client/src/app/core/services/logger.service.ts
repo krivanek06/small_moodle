@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
-import {StUserMain} from "@app/features/authentication-feature";
-import {CourseTestTaken} from "@app/features/course-test-feature";
-import {LogModel} from "@core/models/Log.model";
-import {getCurrentIOSDate} from "@app/core";
 import firebase from "firebase";
+
+import {LogModel, StUserMain, CourseTestTaken} from "../models";
+import {getCurrentIOSDate} from "../utils";
 
 @Injectable({
   providedIn: 'root'

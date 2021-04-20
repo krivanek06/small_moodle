@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Course, CoursePublic } from '../model/courses-firebase.interface';
-import { StUserCourse } from '@app/features/authentication-feature';
-import { COURSE_ROLES_ENUM } from '../model/course.enum';
+import {COURSE_ROLES_ENUM, CoursePublic, StUserCourse} from "@app/core";
 
 @Pipe({
   name: 'courseFilterActive',

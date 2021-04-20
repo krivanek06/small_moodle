@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {CourseTestReceivedPoints} from "@app/features/course-test-feature";
+import {CourseTestReceivedPoints} from "@app/core";
 
 @Pipe({
   name: 'courseReceivedPoints',

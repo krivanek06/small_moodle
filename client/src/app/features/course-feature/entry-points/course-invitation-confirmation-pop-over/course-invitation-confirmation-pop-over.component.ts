@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams, PopoverController } from '@ionic/angular';
-import {COURSE_ROLES_ENUM, CoursePublic} from '@app/features/course-feature';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import {COURSE_ROLES_ENUM, CoursePublic} from "@app/core";
 
 @Component({
   selector: 'app-course-invitation-confirmation-pop-over',

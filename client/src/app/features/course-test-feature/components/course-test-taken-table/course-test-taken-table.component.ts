@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CourseTestTaken } from '@app/features/course-test-feature';
+import {CourseTestTaken} from "@app/core";
 
 @Component({
   selector: 'app-course-test-taken-table',

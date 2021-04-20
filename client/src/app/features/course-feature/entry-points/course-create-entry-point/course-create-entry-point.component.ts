@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {CourseCreate} from '@app/features/course-feature';
+import {CourseCreate} from "@app/core";
 
 @Component({
   selector: 'app-course-create-entry-point',

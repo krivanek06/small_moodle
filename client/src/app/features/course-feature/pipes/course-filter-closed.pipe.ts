@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {StUserCourse} from "@app/features/authentication-feature";
-import {COURSE_ROLES_ENUM, CoursePublic} from "@app/features/course-feature";
+import {COURSE_ROLES_ENUM, StUserCourse} from "@app/core";
 
 @Pipe({
   name: 'courseFilterClosed'

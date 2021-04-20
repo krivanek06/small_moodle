@@ -1,14 +1,18 @@
 import {Injectable} from '@angular/core';
-import {
-  convertCourseTestIntoCourseTestTaken, CourseTest,
-  CourseTestFeatureDatabaseService,
-  CourseTestFeatureStoreService, CourseTestFormStateEnum,
-  CourseTestPublic, CourseTestTaken
-} from "@app/features/course-test-feature";
-import {filter, first, map, switchMap, take, takeUntil} from "rxjs/operators";
-import {AuthFeatureStoreService} from "@app/features/authentication-feature";
-import {getCurrentIOSDate, IonicDialogService} from "@app/core";
 import {BehaviorSubject, interval, Observable, Subject, timer} from "rxjs";
+import {filter, first, map, switchMap, take, takeUntil} from "rxjs/operators";
+import {
+  AuthFeatureStoreService,
+  CourseTest,
+  CourseTestDatabaseService,
+  CourseTestFeatureStoreService,
+  CourseTestFormStateEnum,
+  CourseTestPublic,
+  CourseTestTaken,
+  getCurrentIOSDate,
+  IonicDialogService
+} from "@app/core";
+import {convertCourseTestIntoCourseTestTaken} from "../utils";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +26,7 @@ export class CourseTestFeatureFacadeStudentTestService {
   private remainingMinutesCountDown$: Observable<number>;
 
   constructor(private courseTestFeatureStoreService: CourseTestFeatureStoreService,
-              private courseTestDatabaseService: CourseTestFeatureDatabaseService,
+              private courseTestDatabaseService: CourseTestDatabaseService,
               private authFeatureStoreService: AuthFeatureStoreService) {
   }
 

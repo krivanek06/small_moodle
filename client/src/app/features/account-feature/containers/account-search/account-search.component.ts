@@ -1,9 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {StUserPublic} from '@app/features/authentication-feature';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {AccountFeatureDatabaseService} from '@app/features/account-feature';
 import {Observable, of} from 'rxjs';
+import {AccountDatabaseService, StUserPublic} from "@app/core";
 
 @Component({
   selector: 'app-account-search',
@@ -17,7 +16,7 @@ export class AccountSearchComponent implements OnInit {
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private accountFeatureService: AccountFeatureDatabaseService) {
+              private accountFeatureService: AccountDatabaseService) {
   }
 
   get displayName(): AbstractControl {

@@ -1,7 +1,11 @@
-import {CourseTest, CourseTestPublic, CourseTestTaken,} from '../model/course-test-firebase.model';
-import {StUserMain} from '@app/features/authentication-feature';
-import {CourseTestFormStateEnum} from '../model/course-test.enums';
-import {getCurrentIOSDate} from '@app/core';
+import {
+  CourseTest,
+  CourseTestFormStateEnum,
+  CourseTestPublic,
+  CourseTestTaken,
+  getCurrentIOSDate,
+  StUserMain
+} from '@app/core';
 
 export const convertCourseTestIntoCourseTestTaken = (courseTest: CourseTest, student: StUserMain): CourseTestTaken => {
   return {

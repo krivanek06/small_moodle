@@ -1,14 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 import {
   CourseCategory,
   CourseInvitation,
   CoursePublic,
-} from '@app/features/course-feature/model/courses-firebase.interface';
-import {StUser, StUserPublic,} from '@app/features/authentication-feature/models/user.interface';
+  StUser,
+  StUserPublic,
+  Confirmable
+} from '@app/core';
 import {DashboardAuthenticatedFacadeService} from '../../services/dashboard-authenticated-facade.service';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {Confirmable} from "@app/core";
+
 
 @Component({
   selector: 'app-dashboard-authenticated',

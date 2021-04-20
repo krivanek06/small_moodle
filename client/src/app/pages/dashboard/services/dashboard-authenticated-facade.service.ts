@@ -1,20 +1,25 @@
 import {Injectable} from '@angular/core';
-import {AuthFeatureStoreService, StUserPublic} from '@app/features/authentication-feature';
+import {ModalController, PopoverController} from '@ionic/angular';
+import {Observable} from "rxjs";
 import {
+  AuthFeatureStoreService,
   CourseCategory,
   CourseCreate,
-  CourseCreateEntryPointComponent,
-  CourseFeatureDatabaseService,
-  CourseFeatureFacadeService,
+  CourseDatabaseService,
   CourseInvitation,
   CoursePublic,
+  IonicDialogService,
+  LoggerService,
+  StUserPublic,
+} from '@app/core';
+import {
+  CourseCreateEntryPointComponent,
+  CourseFeatureFacadeService,
   CourseSearchModalComponent,
-  CoursesUserAccountInfoModalComponent
-} from '@app/features/course-feature';
-import {ModalController, PopoverController} from '@ionic/angular';
-import {IonicDialogService} from '@app/core';
-import {Observable} from "rxjs";
-import {LoggerService} from "@core/services/logger.service";
+  CoursesUserAccountInfoModalComponent,
+  createUserCourse
+} from "@app/features/course-feature";
+import {AccountFeatureFacadeService} from "@account-feature/services";
 
 @Injectable()
 export class DashboardAuthenticatedFacadeService {
@@ -23,7 +28,8 @@ export class DashboardAuthenticatedFacadeService {
     private popoverController: PopoverController,
     private courseFeatureFacadeService: CourseFeatureFacadeService,
     private authService: AuthFeatureStoreService,
-    private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+    private courseFeatureDatabaseService: CourseDatabaseService,
+    private accountFeatureFacadeService: AccountFeatureFacadeService,
     private loggerService: LoggerService
   ) {
   }
@@ -49,7 +55,9 @@ export class DashboardAuthenticatedFacadeService {
     if (result?.confirm) {
       await this.courseFeatureDatabaseService.increaseStudents(invitation.course.courseId, true);
       await this.courseFeatureDatabaseService.toggleUserCourseReceivedInvitation(this.authService.userMain, invitation, false);
-      await this.courseFeatureDatabaseService.saveCourseForUser(this.authService.user, invitation.course, invitation.invitedAs);
+
+      const userCourse = createUserCourse(this.authService.user, invitation.course, invitation.invitedAs);
+      await this.courseFeatureDatabaseService.saveCourseForUser(userCourse);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
 
@@ -75,6 +83,10 @@ export class DashboardAuthenticatedFacadeService {
       cssClass: 'custom-modal',
     });
     await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+    if(resultPromise.data?.enroll){
+      this.courseFeatureFacadeService.enrolIntoCourse(resultPromise.data.enroll);
+    }
   }
 
   async showUserInformation(userPublic: StUserPublic) {
@@ -84,6 +96,12 @@ export class DashboardAuthenticatedFacadeService {
       cssClass: 'custom-modal',
     });
     await modal.present();
+    const resultPromise = await modal.onDidDismiss();
+    if(resultPromise.data?.inviteMember){
+      this.courseFeatureFacadeService.inviteMember(resultPromise.data.inviteMember);
+    }else if(resultPromise.data?.addRole){
+      this.accountFeatureFacadeService.showUserRoles(resultPromise.data?.addRole);
+    }
   }
 
   async createCourse() {

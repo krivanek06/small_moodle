@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot,} from '@angular/router';
-import {CourseFeatureStoreService} from '@app/features/course-feature';
-import {CourseTestFeatureStoreService} from '@app/features/course-test-feature';
-import {AuthFeatureStoreService} from '@app/features/authentication-feature';
 import {first} from 'rxjs/operators';
+import {AuthFeatureStoreService, CourseFeatureStoreService, CourseTestFeatureStoreService} from "@app/core";
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {CourseTestPublic, CourseTestStateEnum} from '@app/features/course-test-feature';
-import {StUserMain} from '@app/features/authentication-feature';
+import {CourseTestPublic, CourseTestStateEnum, StUserMain} from "@app/core";
+
+
 
 @Component({
   selector: 'app-course-test-form-buttons',

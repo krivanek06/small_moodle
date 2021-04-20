@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {AuthFeatureStoreService, StUser} from '@app/features/authentication-feature';
+import {AuthFeatureStoreService, StUser} from '@app/core';
 
 @Component({
   selector: 'app-dashboard',

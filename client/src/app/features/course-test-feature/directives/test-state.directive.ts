@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Input, OnInit} from '@angular/core';
-import {CourseTestStateEnum} from "@app/features/course-test-feature";
+import {CourseTestStateEnum} from "@app/core";
 
 @Directive({
   selector: '[appTestState]'

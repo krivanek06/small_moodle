@@ -1,10 +1,9 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
 import {CourseFeatureFacadeService} from '@app/features/course-feature';
-import {CourseTestFormComponent, CourseTestTaken,} from '@app/features/course-test-feature';
+import {CourseTestFeatureFacadeStudentTestService, CourseTestFormComponent} from '@app/features/course-test-feature';
 import {first} from "rxjs/operators";
-import {Confirmable, IonicDialogService} from "@app/core";
-import {CourseTestFeatureFacadeStudentTestService} from "@course-test-feature/services/course-test-feature-facade-student-test.service";
+import {Confirmable, CourseTestTaken, IonicDialogService} from "@app/core";
 
 @Component({
   selector: 'app-course-test-submit',

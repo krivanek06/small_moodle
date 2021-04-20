@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { StCourseStudent } from '../model/courses-firebase.interface';
+import { StCourseStudent } from '@app/core';
 
 @Pipe({
   name: 'courseStudentPosition',

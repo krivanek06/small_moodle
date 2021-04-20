@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot,} from '@angular/router';
 import {Observable} from 'rxjs';
-import {CourseTest, CourseTestFeatureDatabaseService} from '@app/features/course-test-feature';
-import {CourseFeatureStoreService} from '@app/features/course-feature';
 import {first, map, switchMap} from 'rxjs/operators';
+import {CourseFeatureStoreService, CourseTest, CourseTestDatabaseService} from "@app/core";
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import {first, map, switchMap} from 'rxjs/operators';
 export class CourseTestPreloadGuard implements Resolve<CourseTest> {
   constructor(
     private courseFeatureStoreService: CourseFeatureStoreService,
-    private courseTestDatabaseService: CourseTestFeatureDatabaseService
+    private courseTestDatabaseService: CourseTestDatabaseService
   ) {
   }
 

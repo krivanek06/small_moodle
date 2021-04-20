@@ -1,16 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {
-  CourseTestFeatureFacadeService,
-  CourseTestFormComponent,
-  CourseTestFormStateEnum
-} from '@app/features/course-test-feature';
-import {
-  convertCourseIntoCourseMain,
-  CourseFeatureFacadeService,
-  CourseFeatureStoreService
-} from '@app/features/course-feature';
-import {AuthFeatureStoreService, StUserMain} from '@app/features/authentication-feature';
 import {Observable} from 'rxjs';
+import {CourseTestFeatureFacadeService, CourseTestFormComponent,} from '@app/features/course-test-feature';
+import {convertCourseIntoCourseMain, CourseFeatureFacadeService,} from '@app/features/course-feature';
+import {AuthFeatureStoreService, StUserMain, CourseTestFormStateEnum, CourseFeatureStoreService} from '@app/core';
+
 
 @Component({
   selector: 'app-course-test-create',

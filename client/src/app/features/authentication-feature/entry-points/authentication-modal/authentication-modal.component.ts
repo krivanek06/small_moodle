@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthFeatureService } from '../../services/auth-feature.service';
-import { AuthenticationLoginComponent } from '../../components/authentication-login/authentication-login.component';
-import { AuthenticationRegisterComponent } from '../../components/authentication-register/authentication-register.component';
-import { IonicDialogService } from '../../../../core/services/ionic-dialog.service';
-import { LoginIUser, RegisterIUser } from '../../models/user.interface';
-import { PopoverController } from '@ionic/angular';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {IonicDialogService} from '@app/core';
+import {PopoverController} from '@ionic/angular';
+
+import {AuthFeatureService} from '../../services';
+import {AuthenticationLoginComponent, AuthenticationRegisterComponent} from '../../components';
+import {LoginIUser, RegisterIUser} from '../../models';
+
 
 @Component({
   selector: 'app-authentication-modal',
@@ -21,9 +22,11 @@ export class AuthenticationModalComponent implements OnInit {
   constructor(
     private authFeatureService: AuthFeatureService,
     private popoverController: PopoverController
-  ) {}
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   segmentChanged(event: CustomEvent) {
     this.segmentValue = event.detail.value;

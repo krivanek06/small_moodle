@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { COURSE_ROLES_ENUM } from '../../../model/course.enum';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {COURSE_ROLES_ENUM} from "@app/core";
 
 @Component({
   selector: 'app-course-member-type-radio',

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CourseGrading } from '@app/features/course-feature';
+import {CourseGrading} from "@app/core";
 
 @Component({
   selector: 'app-course-grades-table',

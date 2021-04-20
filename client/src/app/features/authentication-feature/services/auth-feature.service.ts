@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Router} from '@angular/router';
+import {AuthFeatureStoreService, StUser, StUserClass} from '@app/core';
+import {buildUserPrivate, buildUserPublic} from '../utils';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {LoginIUser, RegisterIUser} from "../models";
 
 import auth from 'firebase';
 import firebase from 'firebase';
-import { Router } from '@angular/router';
-import {LoginIUser, RegisterIUser, StUser, StUserClass} from '../models/user.interface';
-import { buildUserPrivate, buildUserPublic } from '../utils/user.builder';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthFeatureStoreService } from './auth-feature-store.service';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({
@@ -19,7 +19,8 @@ export class AuthFeatureService {
     private firestore: AngularFirestore,
     private authFeatureStoreService: AuthFeatureStoreService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   async googleSignIn(): Promise<void> {
     const provider = new auth.auth.GoogleAuthProvider();

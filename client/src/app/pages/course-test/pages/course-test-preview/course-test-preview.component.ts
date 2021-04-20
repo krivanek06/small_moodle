@@ -3,16 +3,17 @@ import {ActivatedRoute} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {combineLatest, Observable, Subject} from 'rxjs';
 import {
+  AuthFeatureStoreService,
+  Confirmable,
+  Course,
+  CourseFeatureStoreService,
   CourseTest,
-  CourseTestFeatureDatabaseService,
-  CourseTestFeatureFacadeService,
-  CourseTestFormComponent,
+  CourseTestDatabaseService,
   CourseTestFormStateEnum,
   CourseTestTaken,
-} from '@app/features/course-test-feature';
-import {AuthFeatureStoreService, StUserMain,} from '@app/features/authentication-feature';
-import {Confirmable} from "@app/core";
-import {Course, CourseFeatureStoreService} from "@app/features/course-feature";
+  StUserMain
+} from '@app/core';
+import {CourseTestFeatureFacadeService, CourseTestFormComponent} from "@app/features/course-test-feature";
 
 interface TestStartingInfo {
   started: number;
@@ -42,7 +43,7 @@ export class CourseTestPreviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseTestFacadeService: CourseTestFeatureFacadeService,
-    private courseTestFeatureDatabaseService: CourseTestFeatureDatabaseService,
+    private courseTestFeatureDatabaseService: CourseTestDatabaseService,
     private authFeatureStoreService: AuthFeatureStoreService,
     private courseFeatureStoreService: CourseFeatureStoreService
   ) {

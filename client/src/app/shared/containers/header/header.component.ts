@@ -1,13 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PopoverController} from '@ionic/angular';
-import {
-  AuthenticationModalComponent,
-  AuthFeatureService,
-  AuthFeatureStoreService,
-  StUser
-} from '@app/features/authentication-feature';
+import {AuthenticationModalComponent, AuthFeatureService,} from '@app/features/authentication-feature';
 import {Observable} from 'rxjs';
-import {IonicDialogService} from '@app/core';
+import {AuthFeatureStoreService, IonicDialogService, StUser} from '@app/core';
 import {Router} from '@angular/router';
 
 @Component({

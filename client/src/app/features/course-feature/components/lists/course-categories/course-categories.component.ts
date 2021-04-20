@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CourseCategory } from '@app/features/course-feature';
+import {CourseCategory} from "@app/core";
 
 @Component({
   selector: 'app-course-categories',

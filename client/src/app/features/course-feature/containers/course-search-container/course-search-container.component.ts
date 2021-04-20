@@ -1,14 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {
-  COURSE_ROLES_ENUM,
-  CourseCategory,
-  CourseFeatureDatabaseService,
-  CoursePublic
-} from '@app/features/course-feature';
 import {Observable} from "rxjs";
 import {switchMap} from "rxjs/operators";
-import {StUser} from "@app/features/authentication-feature";
+import {COURSE_ROLES_ENUM, CourseCategory, CourseDatabaseService, CoursePublic, StUser} from "@app/core";
 
 @Component({
   selector: 'app-course-search-container',
@@ -29,7 +23,7 @@ export class CourseSearchContainerComponent implements OnInit {
   categories$: Observable<CourseCategory>;
 
 
-  constructor(private courseFeatureDatabaseService: CourseFeatureDatabaseService,
+  constructor(private courseFeatureDatabaseService: CourseDatabaseService,
               private fb: FormBuilder) {
   }
 

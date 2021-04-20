@@ -3,10 +3,11 @@ import {
   COURSE_ROLES_ENUM,
   CourseInvitation,
   CoursePublic,
-  StCourseStudent
-} from "@app/features/course-feature";
-import {getCurrentIOSDate} from "@app/core";
-import {StUserCourse, StUserMain} from "@app/features/authentication-feature";
+  getCurrentIOSDate,
+  StCourseStudent,
+  StUserCourse,
+  StUserMain
+} from "@app/core";
 
 export const createCourseInvitation = (coursePublic: CoursePublic, role: COURSE_ROLES_ENUM, invitationType: COURSE_INVITATION_TYPE): CourseInvitation => {
   return {

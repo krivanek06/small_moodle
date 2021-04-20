@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {LogModel} from "@core/models/Log.model";
-import {Confirmable} from "@app/core";
+import {Confirmable, LogModel} from "@app/core";
 
 @Component({
   selector: 'app-account-logs',

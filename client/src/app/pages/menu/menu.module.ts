@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { MenuPage } from './menu.page';
-import { RouterModule, Routes } from '@angular/router';
-import { SharedModule } from '../../shared/shared.module';
-import { AuthenticationFeatureModule } from '../../features/authentication-feature/authentication-feature.module';
+import {NgModule} from '@angular/core';
+import {MenuPage} from './menu.page';
+import {RouterModule, Routes} from '@angular/router';
+import {SharedModule} from '@shared/shared.module';
+import {AuthenticationFeatureModule} from '@app/features/authentication-feature';
 
 const routes: Routes = [
   {
@@ -16,22 +16,15 @@ const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: () =>
-          import('../dashboard/dashboard.module').then(
-            (m) => m.DashboardPageModule
-          ),
+        loadChildren: () => import('../dashboard/dashboard.module').then((m) => m.DashboardPageModule),
       },
       {
         path: 'course-test',
-        loadChildren: () =>
-          import('../course-test/course-test.module').then(
-            (m) => m.CourseTestModule
-          ),
+        loadChildren: () => import('../course-test/course-test.module').then((m) => m.CourseTestModule),
       },
       {
         path: 'course/:id',
-        loadChildren: () =>
-          import('../course/course.module').then((m) => m.CoursePageModule),
+        loadChildren: () => import('../course/course.module').then((m) => m.CoursePageModule),
       },
     ],
   },
@@ -45,4 +38,5 @@ const routes: Routes = [
   ],
   declarations: [MenuPage],
 })
-export class MenuPageModule {}
+export class MenuPageModule {
+}

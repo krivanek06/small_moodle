@@ -4,13 +4,16 @@ import {Router} from '@angular/router';
 import {ConfirmationPopOverComponent, InlineInputPopUpComponent} from "@app/shared";
 import {
   AuthFeatureStoreService,
-  Course, COURSE_INVITATION_TYPE,
-  COURSE_ROLES_ENUM, CourseCreate,
+  Course,
+  COURSE_INVITATION_TYPE,
+  COURSE_ROLES_ENUM,
+  CourseCreate,
   CourseDatabaseService,
   CourseFeatureStoreService,
   CourseGrading,
   CoursePublic,
   CourseTestDatabaseService,
+  CourseTestStateEnum,
   IonicDialogService,
   LoggerService,
   StCourseStudent,
@@ -24,6 +27,7 @@ import {
 
 import {CourseInviteMemberConfirm} from '../model';
 import {convertCourseIntoCoursePublic, createCourseInvitation, createUserCourse} from "../utils";
+import {first} from "rxjs/operators";
 
 
 @Injectable({
@@ -218,10 +222,12 @@ export class CourseFeatureFacadeService {
   }
 
   async showCourseStudent(courseStudent: StCourseStudent) {
-    const studentTests = await this.courseTestFeatureDatabaseService.getOneStudentAllCourseTests(
-      this.courseFeatureStoreService.course.courseId,
-      courseStudent.uid
-    );
+    const courseId = this.courseFeatureStoreService.course.courseId;
+    const studentTests = await this.courseTestFeatureDatabaseService.getOneStudentAllCourseTests(courseId, courseStudent.uid);
+
+    const allTests = await this.courseTestFeatureDatabaseService.getAllCourseTests(courseId).pipe(first()).toPromise();
+    const studentTestsIds = studentTests.map(t => t.testId);
+    const notTakenTests = allTests.filter(t => t.testState === CourseTestStateEnum.APPROVED && !studentTestsIds.includes(t.testId));
 
     const modal = await this.popoverController.create({
       component: CourseMemberInformationModalComponent,
@@ -229,6 +235,7 @@ export class CourseFeatureFacadeService {
       componentProps: {
         courseStudent,
         studentTests,
+        notTakenTests,
         course: this.courseFeatureStoreService.course
       },
     });

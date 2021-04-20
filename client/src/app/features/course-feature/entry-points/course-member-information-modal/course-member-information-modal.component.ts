@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavParams, PopoverController} from "@ionic/angular";
-import {Course, CourseGrading, CourseTestTaken, StCourseStudent} from "@app/core";
+import {Course, CourseGrading, CourseTest, CourseTestTaken, StCourseStudent} from "@app/core";
 
 @Component({
   selector: 'app-course-member-information-modal',
@@ -9,7 +9,7 @@ import {Course, CourseGrading, CourseTestTaken, StCourseStudent} from "@app/core
 })
 export class CourseMemberInformationModalComponent implements OnInit {
   studentTests: CourseTestTaken[] = [];
-
+  notTakenTests: CourseTest[] = [];
   courseStudent: StCourseStudent;
   course: Course;
 
@@ -21,6 +21,9 @@ export class CourseMemberInformationModalComponent implements OnInit {
     this.courseStudent = this.navParams.get('courseStudent');
     this.course = this.navParams.get('course');
     this.studentTests = this.navParams.get('studentTests');
+    this.notTakenTests = this.navParams.get('notTakenTests');
+
+    console.log(this.notTakenTests)
   }
 
   dismissModal() {

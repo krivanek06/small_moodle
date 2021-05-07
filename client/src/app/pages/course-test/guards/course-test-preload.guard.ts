@@ -14,19 +14,14 @@ export class CourseTestPreloadGuard implements Resolve<CourseTest> {
   ) {
   }
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<CourseTest> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<CourseTest> {
     const testId = route.paramMap.get('testId');
-    return this.courseFeatureStoreService
-      .getCourse()
-      .pipe(map((c) => c.courseId))
-      .pipe(
-        switchMap((courseId) =>
-          this.courseTestDatabaseService.getCourseTest(courseId, testId)
-        ),
-        first()
-      );
+    return this.courseFeatureStoreService.getCourse().pipe(
+      map((c) => c.courseId),
+      switchMap((courseId) =>
+        this.courseTestDatabaseService.getCourseTest(courseId, testId)
+      ),
+      first()
+    );
   }
 }

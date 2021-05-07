@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
+import {filter, map, takeUntil} from 'rxjs/operators';
+import {AngularFirestore} from '@angular/fire/firestore';
 
-import { StorageService } from './storage.service';
+import {StorageService} from './storage.service';
 import {StUser, StUserClass, StUserLogin, StUserMain} from '../../models';
-import { convertStUserIntoStUserMain } from '../../utils';
+import {convertStUserIntoStUserMain} from '../../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -48,10 +48,10 @@ export class AuthFeatureStoreService {
     if (this.user$.getValue() && this.user$.getValue().uid === userId) {
       return;
     }
+    this.storageService.saveData(this.AUTH_KEY, userId);
     this.loadUser(userId).pipe(takeUntil(this.destroy$)).subscribe((stUser) => {
-        this.storageService.saveData(this.AUTH_KEY, userId);
-        this.user$.next(stUser);
-      });
+      this.user$.next(stUser);
+    });
   }
 
   getSavedUID(): string {
@@ -77,7 +77,7 @@ export class AuthFeatureStoreService {
       this.firestore.doc(`users/${uid}/private_data/user_private`).valueChanges(),
     ]).pipe(
       map(([uPublic, uPrivate]) => {
-        return { uPublic, uPrivate } as StUserLogin;
+        return {uPublic, uPrivate} as StUserLogin;
       }),
       map((userLogin) => {
         return new StUserClass(userLogin.uPublic, userLogin.uPrivate);

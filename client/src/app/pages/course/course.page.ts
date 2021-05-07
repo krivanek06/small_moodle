@@ -19,7 +19,6 @@ import {CourseTestFeatureFacadeStudentTestService} from "@course-test-feature/se
 import {CourseFacadeService} from "@app/pages/course/services/course-facade.service";
 
 
-
 @Component({
   selector: 'app-course',
   templateUrl: './course.page.html',
@@ -44,8 +43,6 @@ export class CoursePage implements OnInit {
     this.studentTests$ = this.courseTestFeatureStoreService.getOneStudentAllCourseTests();
     this.isCourseTeacherOrMarker$ = this.courseFacadeService.isCourseTeacherOrMarker();
     this.isCourseTeacher$ = this.courseFacadeService.isCourseTeacher();
-
-    this.course$.subscribe(console.log)
   }
 
   async inviteUser(userPublic: StUserPublic, course: Course) {
@@ -88,7 +85,6 @@ export class CoursePage implements OnInit {
   }
 
   backToDashboard() {
-    this.courseTestFeatureStoreService.discardStudentCourseTest();
     this.courseFacadeService.discardCourse();
   }
 

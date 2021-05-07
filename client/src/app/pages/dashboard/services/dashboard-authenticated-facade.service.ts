@@ -56,8 +56,8 @@ export class DashboardAuthenticatedFacadeService {
       await this.courseFeatureDatabaseService.increaseStudents(invitation.course.courseId, true);
       await this.courseFeatureDatabaseService.toggleUserCourseReceivedInvitation(this.authService.userMain, invitation, false);
 
-      const userCourse = createUserCourse(this.authService.user, invitation.course, invitation.invitedAs);
-      await this.courseFeatureDatabaseService.saveCourseForUser(userCourse);
+      const userCourse = createUserCourse(this.authService.userMain, invitation.course, invitation.invitedAs);
+      await this.courseFeatureDatabaseService.saveCourseForUser(userCourse, this.authService.userMain.uid);
       await this.courseFeatureDatabaseService.removePersonInvitationFromCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(invitation.course, this.authService.userMain, invitation.invitedAs);
 

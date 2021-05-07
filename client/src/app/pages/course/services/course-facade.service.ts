@@ -14,6 +14,7 @@ import {Observable} from "rxjs";
 import {map, withLatestFrom} from "rxjs/operators";
 import {CourseFeatureFacadeService} from "@course-feature/services";
 import {CourseEditEntryPointComponent} from "@course-feature/entry-points";
+import {convertCourseIntoCoursePublic} from "@course-feature/utils";
 
 @Injectable()
 export class CourseFacadeService {
@@ -48,7 +49,8 @@ export class CourseFacadeService {
   }
 
   inviteMemberIntoCourse(userPublic: StUserPublic, course: Course) {
-    this.courseFeatureFacadeService.inviteMemberIntoCourse(userPublic, course, COURSE_ROLES_ENUM.STUDENT, false);
+    const coursePublic = convertCourseIntoCoursePublic(course);
+    this.courseFeatureFacadeService.inviteMemberIntoCourse(userPublic, coursePublic, COURSE_ROLES_ENUM.STUDENT, false);
   }
 
   discardCourse() {

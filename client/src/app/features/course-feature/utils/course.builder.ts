@@ -1,4 +1,5 @@
 import {
+  Course,
   COURSE_INVITATION_TYPE,
   COURSE_ROLES_ENUM,
   CourseInvitation,
@@ -8,6 +9,7 @@ import {
   StUserCourse,
   StUserMain
 } from "@app/core";
+import {convertCourseIntoCoursePublic} from "@app/features/course-feature";
 
 export const createCourseInvitation = (coursePublic: CoursePublic, role: COURSE_ROLES_ENUM, invitationType: COURSE_INVITATION_TYPE): CourseInvitation => {
   return {
@@ -32,7 +34,7 @@ export const createCourseStudent = (userMain: StUserMain): StCourseStudent => {
 
 export const createUserCourse = (userMain: StUserMain, course: CoursePublic, role: COURSE_ROLES_ENUM): StUserCourse => {
   return {
-    courseStudent: role === COURSE_ROLES_ENUM.STUDENT ? createCourseStudent(userMain) : null,
+    courseStudent: role === COURSE_ROLES_ENUM.STUDENT ? userMain : null,
     course: course,
     role: role
   }

@@ -203,7 +203,7 @@ export class CourseFeatureFacadeService {
       await this.courseFeatureDatabaseService.toggleStudentInvitation(coursePublic, userMain, false);
       await this.courseFeatureDatabaseService.increaseStudents(coursePublic.courseId, true);
       const userCourse = createUserCourse(userMain, coursePublic, COURSE_ROLES_ENUM.STUDENT);
-      await this.courseFeatureDatabaseService.saveCourseForUser(userCourse);
+      await this.courseFeatureDatabaseService.saveCourseForUser(userCourse, userCourse.courseStudent.uid);
       await this.courseFeatureDatabaseService.addPersonIntoCourse(coursePublic, userMain, COURSE_ROLES_ENUM.STUDENT);
       await this.courseFeatureDatabaseService.toggleUserCourseSentInvitations(userMain, coursePublic, false);
 
@@ -297,7 +297,7 @@ export class CourseFeatureFacadeService {
 
     // update my data -> course manage
     const userCourse = createUserCourse(courseCreate.coursePublic.creator, courseCreate.coursePublic, COURSE_ROLES_ENUM.TEACHER);
-    this.courseFeatureDatabaseService.saveCourseForUser(userCourse);
+    this.courseFeatureDatabaseService.saveCourseForUser(userCourse, this.authFeatureStoreService.userMain.uid);
   }
 
   private async sendCourseInvitation(student: StUserMain, coursePublic: CoursePublic, role: COURSE_ROLES_ENUM): Promise<void> {

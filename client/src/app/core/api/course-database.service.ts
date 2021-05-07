@@ -246,8 +246,8 @@ export class CourseDatabaseService {
       }, {merge: true});
   }
 
-  saveCourseForUser(userCourse: StUserCourse) {
-    this.firestore.collection('users').doc(userCourse.courseStudent.uid).set({
+  saveCourseForUser(userCourse: StUserCourse, userId: string) {
+    this.firestore.collection('users').doc(userId).set({
       courses: firebase.firestore.FieldValue.arrayUnion(userCourse),
     }, {merge: true});
   }

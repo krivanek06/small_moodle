@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Course, CourseFeatureStoreService, CourseTestFeatureStoreService} from "@app/core";
 
@@ -7,7 +7,7 @@ import {Course, CourseFeatureStoreService, CourseTestFeatureStoreService} from "
   templateUrl: './course-test.component.html',
   styleUrls: ['./course-test.component.scss'],
 })
-export class CourseTestComponent implements OnInit {
+export class CourseTestComponent implements OnInit, OnDestroy {
   course$: Observable<Course>;
 
   constructor(private courseFeatureStoreService: CourseFeatureStoreService,
@@ -18,7 +18,8 @@ export class CourseTestComponent implements OnInit {
     this.course$ = this.courseFeatureStoreService.getCourse();
   }
 
-  backToCourse() {
+  ngOnDestroy(): void {
     this.courseTestFeatureStoreService.discardStudentCourseTest();
   }
 }
+

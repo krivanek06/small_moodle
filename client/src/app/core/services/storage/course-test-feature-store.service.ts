@@ -28,11 +28,11 @@ export class CourseTestFeatureStoreService {
    */
   private allCourseTests$: BehaviorSubject<CourseTest[]> = new BehaviorSubject<CourseTest[]>([]);
 
+  private allCourseTestsDestroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private courseTestDatabaseService: CourseTestDatabaseService,
-    private storageService: StorageService
-  ) {
-    this.checkSavedStudentTestId();
+    private storageService: StorageService) {
   }
 
   get studentCourseTest(): CourseTestTaken {
@@ -69,10 +69,7 @@ export class CourseTestFeatureStoreService {
   }
 
   async setOneStudentAllCourseTests(courseId: string, userId: string) {
-    const studentTests = await this.courseTestDatabaseService.getOneStudentAllCourseTests(
-      courseId,
-      userId
-    );
+    const studentTests = await this.courseTestDatabaseService.getOneStudentAllCourseTests(courseId, userId);
     this.oneStudentAllCourseTests$.next(studentTests);
   }
 
@@ -82,22 +79,15 @@ export class CourseTestFeatureStoreService {
 
   setAllCourseTests(courseId: string) {
     if (this.allCourseTests$.getValue().length > 0 && this.allCourseTests$.getValue()[0].course.courseId === courseId) {
+      console.log('Course tests same ID, does not load tests')
       return;
     }
-    this.courseTestDatabaseService.getAllCourseTests(courseId)
-      .subscribe((tests) => {
-        console.log('tests arrived', tests);
-        this.allCourseTests$.next(tests);
-      });
-  }
-
-  private checkSavedStudentTestId() {
-    // TODO save only active test ID ??? Should I save it ?
-    /*const takenTest = JSON.parse(
-      this.storageService.getData(this.COURSE_TEST_ACTIVE_KEY) as string
-    ) as CourseTestTaken;
-    if (takenTest) {
-      this.setStudentCourseTest(takenTest);
-    }*/
+    this.allCourseTestsDestroy$.next(true);
+    this.courseTestDatabaseService.getAllCourseTests(courseId).pipe(
+      takeUntil(this.allCourseTestsDestroy$)
+    ).subscribe((tests) => {
+      console.log('tests arrived', tests);
+      this.allCourseTests$.next(tests);
+    });
   }
 }

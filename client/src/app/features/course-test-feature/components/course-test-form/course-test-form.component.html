@@ -78,12 +78,47 @@
             <ion-textarea autoGrow="true" placeholder="Add question" formControlName="question"></ion-textarea>
           </ion-item>
 
-          <ion-item class="st-item-form"
-                    [ngClass]="{'st-item-form-disabled': control.get('answer').disabled}"
-                    *ngIf=" this.state !== CourseTestFormStateEnum.CREATE &&  this.state !== CourseTestFormStateEnum.PREVIEW  ">
-            <ion-label position="floating">Answer</ion-label>
-            <ion-textarea autoGrow="true" placeholder="Add Answer" formControlName="answer"></ion-textarea>
+          <ion-item *ngIf="this.state === CourseTestFormStateEnum.CREATE">
+            <ion-label>
+              <ion-text style="color: #503504; font-size: 15px;">
+                Check if answer should be Yes / No button
+              </ion-text>
+            </ion-label>
+            <ion-checkbox color="primary" formControlName="isButton"></ion-checkbox>
           </ion-item>
+
+          <ng-container *ngIf="!control.get('isButton').value; else buttons">
+            <ion-item class="st-item-form"
+                      [ngClass]="{'st-item-form-disabled': control.get('answer').disabled}"
+                      *ngIf="this.state !== CourseTestFormStateEnum.CREATE &&  this.state !== CourseTestFormStateEnum.PREVIEW">
+              <ion-label position="floating">Answer</ion-label>
+              <ion-textarea autoGrow="true" placeholder="Add Answer" formControlName="answer"></ion-textarea>
+            </ion-item>
+          </ng-container>
+
+          <ng-template #buttons>
+            <ion-item
+              *ngIf="this.state !== CourseTestFormStateEnum.CREATE &&  this.state !== CourseTestFormStateEnum.PREVIEW">
+              <ion-button
+                [disabled]="control.get('answer').disabled"
+                style="width: 50%; height: 35px;"
+                (click)="setAnswer(i, true)"
+                color="success"
+                shape="round"
+                [fill]="control.get('answer').value === true ? 'solid' : 'clear'">
+                Yes
+              </ion-button>
+              <ion-button
+                [disabled]="control.get('answer').disabled"
+                style="width: 50%; height: 35px;"
+                (click)="setAnswer(i, false)"
+                color="danger"
+                shape="round"
+                [fill]="control.get('answer').value === false ? 'solid' : 'clear'">
+                No
+              </ion-button>
+            </ion-item>
+          </ng-template>
 
           <ion-item-group class="st-flex-end" *ngIf=" state === CourseTestFormStateEnum.GRADE ||
               (!!control.get('markerComment').value &&  state === CourseTestFormStateEnum.GRADED) ">

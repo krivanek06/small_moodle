@@ -30,6 +30,7 @@ export interface CourseTestQuestion {
   markerComment?: string;
   receivedPoints?: number;
   answerTime?: number;
+  isButton?: boolean;
 }
 
 export interface CourseTestResult {

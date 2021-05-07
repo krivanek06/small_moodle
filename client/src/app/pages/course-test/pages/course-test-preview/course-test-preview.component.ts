@@ -75,7 +75,7 @@ export class CourseTestPreviewComponent implements OnInit {
   gradeTest(test: CourseTestTaken) {
     const courseTest = this.courseTestForm.submitForm();
     if (courseTest) {
-      this.courseTestFacadeService.gradeCourseTest(test, this.courseTestForm.submitForm());
+      this.courseTestFacadeService.gradeCourseTest(test, courseTest);
     } else {
       this.gradingError = true
     }

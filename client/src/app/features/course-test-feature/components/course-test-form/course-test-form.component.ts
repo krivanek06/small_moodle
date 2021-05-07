@@ -60,9 +60,11 @@ export class CourseTestFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.initComponent();
+    this.form.valueChanges.subscribe(x => console.log('x', x))
   }
 
   ngOnInit() {
+
   }
 
   public submitForm(): CourseTest {
@@ -96,22 +98,34 @@ export class CourseTestFormComponent implements OnInit, OnChanges {
       this.courseTest?.marker?.uid === this.user?.uid;
 
     const formGroup = this.fb.group({
-      question: [{value: question?.question ?? '', disabled: !this.isCreatingState,}, [Validators.required],],
-      points: [{
-        value: question?.points ?? 1, disabled: !this.isCreatingState,
-      }, [Validators.required, Validators.min(1)]],
-      answer: [{value: question?.answer || null, disabled: this.state !== CourseTestFormStateEnum.TAKE,}],
-      markerComment: [{value: question?.markerComment || null, disabled: !isGrading,},],
-      receivedPoints: [{
-        value: question?.receivedPoints || null, disabled: !isGrading,
-      }, isGrading ? [Validators.required] : [],],
+      question: [
+        {value: question?.question ?? '', disabled: !this.isCreatingState,},
+        [Validators.required]
+      ],
+      points: [
+        {value: question?.points ?? 1, disabled: !this.isCreatingState,},
+        [Validators.required, Validators.min(1)]],
+      answer: [
+        {value: question?.answer ?? null, disabled: this.state !== CourseTestFormStateEnum.TAKE}
+      ],
+      markerComment: [
+        {value: question?.markerComment || null, disabled: !isGrading,}
+      ],
+      receivedPoints: [
+        {value: question?.receivedPoints || null, disabled: !isGrading},
+        isGrading ? [Validators.required] : [],],
       answerTime: [question?.answerTime || null,],
+      isButton: [question?.isButton || false],
     });
     this.questions.push(formGroup);
   }
 
   deleteQuestion(i: number) {
     this.questions.removeAt(i);
+  }
+
+  setAnswer(i: number, b: boolean) {
+    this.questions.at(i).get('answer').patchValue(b);
   }
 
   private initComponent() {

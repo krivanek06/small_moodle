@@ -5,6 +5,6 @@ Technologies used: angular v11, ionic and firebase
 
 Project was realized in 2021
 
-![Moodle1](images/moodle1.png)
-![Moodle2](images/moodle2.png)
-![Moodle3](images/moodle3.png)
+![Moodle1](images/moodle1.PNG)
+![Moodle2](images/moodle2.PNG)
+![Moodle3](images/moodle3.PNG)
